@@ -5,7 +5,7 @@ import React from 'react'
 //actions
 export const ActionTypes = {
     Oon:"Oon",
-    Aon:"Aon"
+    Aon:"Aon",
 }
 
 //action creators
@@ -25,7 +25,8 @@ export const Actions = {
 //reducer
 const initialState = {
     messageKey:0,
-    messageComps: []
+    messageComps: [],
+    messageAreaBottom: window.innerHeight
 }
 
 export const reducer = (state = initialState, action) => {
@@ -34,19 +35,28 @@ export const reducer = (state = initialState, action) => {
             return {
                 messageKey: state.messageKey+1,
                 messageComps: [                    
+                    ...state.messageComps,
                     <Oon key= {state.messageKey}/>,
-                    ...state.messageComps
-                ]
+                ],
+                messageAreaBottom: state.messageAreaBottom+window.innerHeight
             }
         }
 
         case ActionTypes.Aon: {
             return {
                 messageKey: state.messageKey+1,
-                messageComps: [                    
+                messageComps: [                                        
+                    ...state.messageComps,
                     <Aon key= {state.messageKey}/>,
-                    ...state.messageComps
-                ]
+                ],
+                messageAreaBottom: state.messageAreaBottom+window.innerHeight
+            }
+        }
+
+        case ActionTypes.ScrollMessagesBottom: {
+            return {
+                ...state,
+
             }
         }
 

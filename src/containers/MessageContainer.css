@@ -1,0 +1,16 @@
+#messageArea {
+    height: 80vh;
+    overflow: scroll;
+}
+
+.fade {
+    opacity:1;
+}
+
+.fade-enter {
+    opacity:0;
+}
+
+#messageArea {
+    border: 1px solid gray;
+}

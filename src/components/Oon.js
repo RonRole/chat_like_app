@@ -1,5 +1,6 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 class Oon extends React.Component {
     constructor(props){
@@ -12,7 +13,7 @@ class Oon extends React.Component {
 
     render(){
         return (
-            <h1 style={this.style}>オォン!</h1>
+            <Alert variant="danger">オォン!</Alert>
         )
     }
 }
