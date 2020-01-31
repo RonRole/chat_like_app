@@ -1,0 +1,10 @@
+#login_form {
+    display: grid;
+    justify-content: center;
+}
+
+input {
+    display:grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+}

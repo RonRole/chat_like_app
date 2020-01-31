@@ -1,13 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Row, Col, Container } from 'react-bootstrap'
+import { Container, Alert } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import "./MessageContainer.css"
 
 class MessagesContainer extends React.Component {
-    constructor(props){
-        super(props)
-    }
 
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
@@ -18,13 +15,13 @@ class MessagesContainer extends React.Component {
         return (
             <Container id = "messageArea">
                 <TransitionGroup>
-                {this.props.messageComponents.map((component,index) => {
-                    return (
-                        <CSSTransition key={index} timeout= {100} classNames="fade">
-                            {component}
-                        </CSSTransition>
-                    )
-                })}
+                    {this.props.messages.map((message,index) => {
+                        return (
+                            <CSSTransition key={index} timeout= {100} classNames="fade">
+                                <Alert variant={message.className} key={index}>{message.text}</Alert>
+                            </CSSTransition>
+                        )
+                    })}
                 </TransitionGroup>
             </Container>
         )
@@ -33,7 +30,7 @@ class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        messageComponents: state.messageComps,
+        messages: state.messages,
         messageAreaBottom: state.messageAreaBottom
     }
 }
