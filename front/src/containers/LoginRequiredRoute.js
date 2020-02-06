@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
-import LoginPage from '../components/LoginPage'
+import LoginPage from '../containers/LoginPage'
 
 class LoginRequiredRoute extends React.Component {
 
@@ -18,7 +18,7 @@ class LoginRequiredRoute extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn:state.isLoggedIn
+        isLoggedIn:state.logReducer.isLoggedIn
     }
 }
 

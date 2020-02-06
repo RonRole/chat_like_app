@@ -1,3 +1,7 @@
+import {takeLatest, put, call, take, takeEvery, all} from 'redux-saga/effects'
+import socket from '../socket/SocketSettings'
+
+
 //color settings
 export const Variants = {
     oon:"primary",
@@ -6,42 +10,54 @@ export const Variants = {
 
 //actions
 const ActionTypes = {
-    AddMessage:"AddMessage",
-    LogIn:"LogIn",
-    LogOut:"LogOut"
+    ADD_MESSAGE    :"ADD_MESSAGE",
+    RECEIVE_MESSAGE:"RECEIVE_MESSAGE"
 }
 
 //action creators
 export const Actions = {
     addMessage:(className = "", text) => {
         return {
-            type:ActionTypes.AddMessage,
+            type:ActionTypes.ADD_MESSAGE,
             className:className,
             text:text
         }
     },
-    login: () => {
+    receiveMessage:(className = "secondary", text) => {
         return {
-            type:ActionTypes.LogIn
-        }
-    },
-    logout: () => {
-        return {
-            type:ActionTypes.LogOut
+            type:ActionTypes.RECEIVE_MESSAGE,
+            className:className,
+            text:text
         }
     }
 }
+
+//saga
+function* handleAddMessage() {
+    while(true) {
+        const action = yield take(ActionTypes.ADD_MESSAGE)
+        socket.emit('sendMessage', {className:action.className, text:action.text})
+    }
+}
+
+export function* messageSaga() {
+    yield all([
+        handleAddMessage(),
+    ])
+}
+
 
 //reducer
 const initialState = {
     messages: [],
     messageAreaBottom: window.innerHeight,
-    isLoggedIn:false,
 }
 
-export const reducer = (state = initialState, action) => {
+//reducer
+export const messageReducer = (state = initialState, action) => {
     switch(action.type){
-        case ActionTypes.AddMessage: {
+        case ActionTypes.ADD_MESSAGE:
+        case ActionTypes.RECEIVE_MESSAGE: {
             return {
                 ...state,
                 messages: [                    
@@ -52,20 +68,6 @@ export const reducer = (state = initialState, action) => {
                     }                    
                 ],
                 messageAreaBottom: state.messageAreaBottom+window.innerHeight,
-            }
-        }
-
-        case ActionTypes.LogIn: {
-            return {
-                ...state,
-                isLoggedIn:true
-            }
-        }
-
-        case ActionTypes.LogOut: {
-            return {
-                ...state,
-                isLoggedIn:false
             }
         }
 

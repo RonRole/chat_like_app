@@ -3,9 +3,10 @@ import {connect} from 'react-redux'
 import { Container, Alert } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import "./MessageContainer.css"
+import { Actions } from '../modules/MessageModule'
+import io from 'socket.io-client'
 
 class MessagesContainer extends React.Component {
-
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
         messageArea.scrollTo(0, this.props.messageAreaBottom)
@@ -30,10 +31,10 @@ class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        messages: state.messages,
-        messageAreaBottom: state.messageAreaBottom
+        messages: state.appReducer.messages,
+        messageAreaBottom: state.appReducer.messageAreaBottom
     }
 }
 
-export default connect(mapStateToProps, null)(MessagesContainer);
+export default connect(mapStateToProps)(MessagesContainer);
 

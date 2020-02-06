@@ -1,15 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import './LoginPage.css'
-import {Actions} from '../modules/AppModule'
+import {LogActions} from '../modules/LoginModule'
 import { Alert,Container } from 'react-bootstrap'
 
 class LoginPage extends React.Component {
-
-    componentDidUpdate(){
-        alert(`isLoggedIn?:${this.props.isLoggedIn}`)
-        console.log(this.props)
-    }
 
     render(){
         return(
@@ -30,14 +25,14 @@ class LoginPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.isLoggedIn,
+        isLoggedIn: state.logReducer.isLoggedIn,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login:() => dispatch(Actions.login()),
-        logout:()=> dispatch(Actions.logout())
+        login:() => dispatch(LogActions.login()),
+        logout:()=> dispatch(LogActions.logout())
     }
 }
 
