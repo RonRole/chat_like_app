@@ -1,6 +1,6 @@
 import React from 'react'
 import MessagesContainer from '../containers/MessagesContainer'
-import MessageButtonContainer from '../containers/MessageButtonContainer'
+import MessageFormContainer from '../containers/MessageFormContainer'
 import { Container } from 'react-bootstrap'
 
 class MessagePage extends React.Component {
@@ -8,7 +8,7 @@ class MessagePage extends React.Component {
         return (
             <Container>
                 <MessagesContainer />
-                <MessageButtonContainer/>
+                <MessageFormContainer/>
             </Container>
         )
     }

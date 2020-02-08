@@ -20,6 +20,7 @@ export const Actions = {
         return {
             type:ActionTypes.ADD_MESSAGE,
             className:className,
+            md:{span:6, offset:6},
             text:text
         }
     },
@@ -27,6 +28,7 @@ export const Actions = {
         return {
             type:ActionTypes.RECEIVE_MESSAGE,
             className:className,
+            md:{span:6},
             text:text
         }
     }
@@ -64,7 +66,8 @@ export const messageReducer = (state = initialState, action) => {
                     ...state.messages,
                     {
                         className:action.className,
-                        text:action.text
+                        text:action.text,
+                        md:action.md
                     }                    
                 ],
                 messageAreaBottom: state.messageAreaBottom+window.innerHeight,

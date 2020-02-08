@@ -1,10 +1,11 @@
 #messageArea {
-    height: 80vh;
+    height: 70vh;
     overflow: scroll;
 }
 
-.fade {
+.fade-enter-done {
     opacity:1;
+    transition: all 100ms ease-in;
 }
 
 .fade-enter {

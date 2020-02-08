@@ -7,8 +7,8 @@ server.listen(8000)
 
 io.sockets.on('connection', socket => {
     socket.on('sendMessage',({className="",text=""}) => {
-        console.log(`class:${className} text:${text}`)
-        socket.broadcast.emit('return', {className:className, text:text})
+        console.log(`class:${"secondary"} text:${text}`)
+        socket.broadcast.emit('return', {className:"secondary", text:text})
     })
 })
 
