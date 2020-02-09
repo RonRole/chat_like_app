@@ -46,11 +46,12 @@ export function* logSaga() {
     ])
 }
 
-    
-
 //reducer
 const initialState = {
-    isLoggedIn:false,
+    isLoggedIn: Axios.get('http://localhost:4000/login')
+                        .then(response => console.log(response))
+                        .catch(err => console.log(err))
+        
 }
 
 export const logReducer = (state = initialState, action) => {

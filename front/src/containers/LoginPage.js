@@ -11,7 +11,7 @@ class LoginPage extends React.Component {
             <Container>
                 {this.props.location.flash ? 
                     <Alert variant="danger">{this.props.location.flash}</Alert> : ""}
-                <form action="/login" method="post" id="login_form">
+                <form action="localhost:4000/login" method="post" id="login_form">
                     <input type="text" name="loginName"/>
                     <input type="email" name="loginEmail"/>
                     <input type="submit" value="ログイン!"/>
