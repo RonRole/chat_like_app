@@ -1,18 +1,27 @@
-import {takeLatest, put, call, take, takeEvery, all} from 'redux-saga/effects'
+import {takeLatest, put, call, take, takeEvery, all, putResolve} from 'redux-saga/effects'
 import Axios from 'axios'
-
+import { useLayoutEffect } from 'react'
 
 //actions
 const LogActionTypes = {
+    DEF_LOG_IN:"DEF_LOG_IN",
     LOG_IN:"LOG_IN",
     LOG_OUT:"LOG_OUT"
 }
 
 //action creators
 export const LogActions = {
-    login: () => {
+    defLogin:(info={name:"",password:""}) => {
         return {
-            type:LogActionTypes.LOG_IN
+            type:LogActionTypes.LOG_IN,
+            info:info
+        }
+    },
+    login: (info = {name:"",password:""}, loadFinished = ()=>console.log("load finish!")) => {
+        return {
+            type:LogActionTypes.LOG_IN,
+            info:info,
+            loadFinished:loadFinished
         }
     },
     logout: () => {
@@ -22,19 +31,40 @@ export const LogActions = {
     }
 }
 
+const confirmLogin = (infoToLogin) => {
+    return Axios.post('http://localhost:4000/login', infoToLogin)
+                .then(response => {
+                    console.log(response)
+                    return response.data
+                })
+                .catch(error => {
+                    console.log(error)
+                    alert("ログインに失敗しました")
+                    return;
+                })
+}
+
 //saga
 function* handleGetLoginStart() {
     while(true) {
-        yield take(LogActionTypes.LOG_IN)
-        console.log(`${LogActionTypes.LOG_IN} is called!`)
-        yield put(LogActions.login());
+        const loginAction = yield take(LogActionTypes.LOG_IN)
+        //初期処理
+        const loginResult = yield call(confirmLogin, loginAction.info)
+        console.log(`loginResult:${loginResult}`)
+        loginAction.loadFinished();
+        if(loginResult && loginResult.isLoggedIn){
+            alert(`ようこそ!${loginResult.name}さん!`)
+            yield put(LogActions.login())
+        }
+        else {
+            yield put(LogActions.logout())
+        }
     }
 }
 
 function* handleGetLogoutStart() {
     while(true) {
         yield take(LogActionTypes.LOG_OUT)
-        console.log("KENGO")
         yield put(LogActions.logout());
     }
 }
@@ -46,12 +76,8 @@ export function* logSaga() {
     ])
 }
 
-//reducer
 const initialState = {
-    isLoggedIn: Axios.get('http://localhost:4000/login')
-                        .then(response => console.log(response))
-                        .catch(err => console.log(err))
-        
+    isLoggedIn: false
 }
 
 export const logReducer = (state = initialState, action) => {
