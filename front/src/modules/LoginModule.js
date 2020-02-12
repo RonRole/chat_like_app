@@ -11,17 +11,28 @@ const LogActionTypes = {
 
 //action creators
 export const LogActions = {
-    defLogin:(info={name:"",password:""}) => {
+    defLogin:({
+                session  ={name:"",password:""},
+                ifSuccess=()=>console.log("login success"),
+                ifFail   =()=>console.log("login failed")
+             }) => {
         return {
             type:LogActionTypes.LOG_IN,
-            info:info
+            session:session,
+            ifSuccess:ifSuccess,
+            ifFail:ifFail
         }
     },
-    login: (info = {name:"",password:""}, loadFinished = ()=>console.log("load finish!")) => {
+    login: ({
+                session  ={name:"",password:""},
+                ifSuccess=()=>console.log("login success"),
+                ifFail   =()=>console.log("login failed")
+            }) => {
         return {
             type:LogActionTypes.LOG_IN,
-            info:info,
-            loadFinished:loadFinished
+            session:session,
+            ifSuccess:ifSuccess,
+            ifFail:ifFail
         }
     },
     logout: () => {
@@ -34,13 +45,10 @@ export const LogActions = {
 const confirmLogin = (infoToLogin) => {
     return Axios.post('http://localhost:4000/login', infoToLogin)
                 .then(response => {
-                    console.log(response)
                     return response.data
                 })
                 .catch(error => {
-                    console.log(error)
-                    alert("ログインに失敗しました")
-                    return;
+                    return error;
                 })
 }
 
@@ -49,14 +57,13 @@ function* handleGetLoginStart() {
     while(true) {
         const loginAction = yield take(LogActionTypes.LOG_IN)
         //初期処理
-        const loginResult = yield call(confirmLogin, loginAction.info)
-        console.log(`loginResult:${loginResult}`)
-        loginAction.loadFinished();
+        const loginResult = yield call(confirmLogin, loginAction.session)
         if(loginResult && loginResult.isLoggedIn){
-            alert(`ようこそ!${loginResult.name}さん!`)
-            yield put(LogActions.login())
+            loginAction.ifSuccess(loginResult)
+            yield put(LogActions.login({}))
         }
         else {
+            loginAction.ifFail(loginResult)
             yield put(LogActions.logout())
         }
     }

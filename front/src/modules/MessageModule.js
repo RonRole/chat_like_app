@@ -1,4 +1,4 @@
-import {takeLatest, put, call, take, takeEvery, all} from 'redux-saga/effects'
+import {take, all} from 'redux-saga/effects'
 import socket from '../socket/SocketSettings'
 
 

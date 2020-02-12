@@ -1,11 +1,10 @@
-import {logReducer, logSaga, LogActions} from './modules/LoginModule'
+import {logReducer, logSaga } from './modules/LoginModule'
 import {messageReducer, messageSaga, Actions} from './modules/MessageModule'
 import socket from './socket/SocketSettings'
-import {createStore, combineReducers, compose, applyMiddleware} from 'redux'
+import {createStore, combineReducers, applyMiddleware} from 'redux'
 
 //saga
 import createSagaMiddleware from 'redux-saga'
-import Axios from 'axios'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()

@@ -4,9 +4,8 @@ class SessionsController < ApplicationController
     end
 
     def create
-        sleep(5)
-        @current_user = User.find_by(name:params[:session][:name])
-        if(@current_user && @current_user.authenticate(params[:session][:password]))
+        @current_user = User.find_by(name:params[:name])
+        if(@current_user && @current_user.authenticate(params[:password]))
             render :json => {name: @current_user.name, isLoggedIn:true}
         else
             render :json => {isLoggedIn:false}
