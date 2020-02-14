@@ -5,12 +5,12 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 
 //saga
 import createSagaMiddleware from 'redux-saga'
+import { talkRoomReducer, talkRoomSaga } from './modules/TaklRoomModule'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
-
 //store setting
-const store = createStore(combineReducers({appReducer: messageReducer,logReducer}), applyMiddleware(sagaMiddleware))
+const store = createStore(combineReducers({appReducer: messageReducer,logReducer, talkRoomReducer}), applyMiddleware(sagaMiddleware))
 
 //client-socket listening 
 socket.on('return', (response) => {
@@ -19,5 +19,6 @@ socket.on('return', (response) => {
 
 sagaMiddleware.run(logSaga)
 sagaMiddleware.run(messageSaga)
+sagaMiddleware.run(talkRoomSaga)
 
 export default store;

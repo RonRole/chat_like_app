@@ -5,13 +5,13 @@ import { connect } from 'react-redux'
 class LoginRequiredRoute extends React.Component {
 
     render(){
-       if(!this.props.isLoggedIn){
+        if(!this.props.isLoggedIn){
            return  <Route path={this.props.path} render={()=><Redirect to={{
                pathname:"/login",
                flash:"ログインしろよ",
            }}/>}/>
-       }
-       return <Route path={this.props.path} component={this.props.component}/>    
+        }
+        return <Route exact={this.props.exact} path={this.props.path} component={this.props.component}/>
     }
 }
 

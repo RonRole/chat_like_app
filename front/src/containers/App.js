@@ -3,15 +3,17 @@ import React, { Component } from 'react';
 import MessagesPage from '../components/MessagesPage'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route} from 'react-router-dom';
+import { BrowserRouter, Route, Switch} from 'react-router-dom';
 
-import Navigation from './Navigation'
+import Navigation from '../components/Navigation'
 import AboutPage from '../components/AboutPage';
 import LoginRequiredRoute from './LoginRequiredRoute';
 import LoginPage from './LoginPage';
+import TalkRoomPage from './TalkRoomPage'
 import { LogActions } from '../modules/LoginModule';
 import { connect } from 'react-redux';
 import { Spinner } from 'react-bootstrap';
+import MessagesContainer from './MessagesContainer';
 
 
 class App extends Component {
@@ -22,15 +24,11 @@ class App extends Component {
   componentDidMount(){
     this.props.defaultLogin(
       {
-        session:{name:"st",password:"test"}, 
-        ifSuccess:(loginResult)=>{
-          alert(`ようこそ!${loginResult.name}さん!`)
+        session:{name:"test",password:"test"},
+        then: ()=> {
           this.setState({defLoginIsFinished:true})
         },
-        ifFail:(error)=>{
-          //alert("ログインできませんでした")
-          this.setState({defLoginIsFinished:true})
-        }
+        history: this.props.history
       }
     )
   }
@@ -46,12 +44,14 @@ class App extends Component {
       )
     }
     return (
-      <BrowserRouter history={require("history").createBrowserHistory()}>
+      <BrowserRouter>
         <Navigation />
         <Route path="/login" component={LoginPage}/>
         <LoginRequiredRoute path="/home"/>
-        <LoginRequiredRoute path="/messages" component={MessagesPage} />
         <LoginRequiredRoute path="/about" component={AboutPage}/>
+        <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
+        <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
+
       </BrowserRouter>   
     )
   }
@@ -59,7 +59,9 @@ class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    defaultLogin:(loginInfo) => dispatch(LogActions.login(loginInfo))
+    defaultLogin:(loginInfo) => {
+      dispatch(LogActions.login(loginInfo))
+    }
   }
 }
 

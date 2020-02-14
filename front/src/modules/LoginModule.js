@@ -1,6 +1,7 @@
 import {takeLatest, put, call, take, takeEvery, all, putResolve} from 'redux-saga/effects'
 import Axios from 'axios'
 import { useLayoutEffect } from 'react'
+import history from './HistoryModule'
 
 //actions
 const LogActionTypes = {
@@ -24,15 +25,17 @@ export const LogActions = {
         }
     },
     login: ({
-                session  ={name:"",password:""},
-                ifSuccess=()=>console.log("login success"),
-                ifFail   =()=>console.log("login failed")
+                session   = {name:"",password:""},
+                ifSuccess = () => console.log("login success"),
+                ifFail    = () => console.log("login failure"),
+                then      = () => console.log("login action finish"),
             }) => {
         return {
-            type:LogActionTypes.LOG_IN,
-            session:session,
+            type     :LogActionTypes.LOG_IN,
+            session  :session,
             ifSuccess:ifSuccess,
-            ifFail:ifFail
+            ifFail   :ifFail,
+            then     :then
         }
     },
     logout: () => {
@@ -45,10 +48,10 @@ export const LogActions = {
 const confirmLogin = (infoToLogin) => {
     return Axios.post('http://localhost:4000/login', infoToLogin)
                 .then(response => {
-                    return response.data
+                    return {result:"success",data: response.data}
                 })
                 .catch(error => {
-                    return error;
+                    return {result:"error", data:error};
                 })
 }
 
@@ -58,21 +61,27 @@ function* handleGetLoginStart() {
         const loginAction = yield take(LogActionTypes.LOG_IN)
         //初期処理
         const loginResult = yield call(confirmLogin, loginAction.session)
-        if(loginResult && loginResult.isLoggedIn){
-            loginAction.ifSuccess(loginResult)
-            yield put(LogActions.login({}))
+        if(loginResult.result === "error"){
+            alert(`エラーが発生しました ${loginResult.data}`)
+        }
+        else if(loginResult.data.isLoggedIn){
+            alert(`ようこそ${loginResult.data.name}さん!`)
+            yield put(loginAction)
+            loginAction.ifSuccess()
         }
         else {
-            loginAction.ifFail(loginResult)
+            alert("ログインに失敗しました")
             yield put(LogActions.logout())
+            loginAction.ifFail()
         }
+        loginAction.then();
     }
 }
 
 function* handleGetLogoutStart() {
     while(true) {
-        yield take(LogActionTypes.LOG_OUT)
-        yield put(LogActions.logout());
+        const logoutAction = yield take(LogActionTypes.LOG_OUT)
+        yield put(logoutAction);
     }
 }
 
@@ -83,8 +92,10 @@ export function* logSaga() {
     ])
 }
 
+//Reducers
 const initialState = {
-    isLoggedIn: false
+    //ログイン状態
+    isLoggedIn  : false,
 }
 
 export const logReducer = (state = initialState, action) => {
