@@ -5,7 +5,7 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 
 //saga
 import createSagaMiddleware from 'redux-saga'
-import { talkRoomReducer, talkRoomSaga } from './modules/TaklRoomModule'
+import { talkRoomReducer, talkRoomSaga } from './modules/TalkRoomModule'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()

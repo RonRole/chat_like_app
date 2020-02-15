@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-class LoginRequiredRoute extends React.Component {
+export class LoginRequiredRoute extends React.Component {
 
     render(){
         if(!this.props.isLoggedIn){

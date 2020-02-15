@@ -1,15 +1,22 @@
 import React from 'react'
-import { Container, Button, Col, Row } from 'react-bootstrap'
+import { Container, Button, Col, Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { TalkRoomActions } from '../modules/TaklRoomModule'
+import { TalkRoomActions } from '../modules/TalkRoomModule'
 import TalkRoomCard from '../components/TalkRoomCard'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import TalkRoomAddingForm from '../components/TalkRoomAddingForm'
 
-class TalkRoomPage extends React.Component {
+export class TalkRoomPage extends React.Component {
+    state = {
+        modalShow : false
+    }
+    componentDidMount() {
+        this.props.initialize()
+    }
     render() {
         return (
             <Container> 
-                <Button variant="primary" onClick={this.props.addTalkRoom}>トークルームを追加</Button>
+                <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
                 <TransitionGroup className="row">
                     {this.props.talkRooms.map((talkRoom,index) => {
                         return(
@@ -18,14 +25,25 @@ class TalkRoomPage extends React.Component {
                                     <TalkRoomCard   className  ="col-md-4"
                                                     title      ={talkRoom.title} 
                                                     description={talkRoom.description}
-                                                    id         ={1}
-                                                    key        ={index} />  
+                                                    id         ={talkRoom.id}
+                                                    key        ={index} 
+                                                    destroy    ={this.props.destroyTalkRoom}/>  
 
                                 </Col>
                             </CSSTransition>
                         )
                     })}
                 </TransitionGroup>
+
+                <TalkRoomAddingForm onSubmit={({title,description})=>{
+                        this.props.addTalkRoom({
+                            title:title, 
+                            description:description
+                        })
+                        this.setState({modalShow:false})
+                    }}
+                    closeModal = {() => this.setState({modalShow:false})}
+                    show = {this.state.modalShow} />
             </Container>
         )
 
@@ -40,7 +58,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addTalkRoom:({title,description}) =>  dispatch(TalkRoomActions.addTalkRoom({title:title, description:description}))
+        initialize:() => dispatch(TalkRoomActions.tryToInitializeTalkRooms()),
+        addTalkRoom:({title,description}) =>  
+            dispatch(TalkRoomActions.tryToAddTalkRoom({
+                title:title, 
+                description:description
+            })),
+        destroyTalkRoom:(talk_room_id) => dispatch(TalkRoomActions.tryToDeleteTalkRoom({
+            talk_room_id: talk_room_id
+        }))
     }
 }
 

@@ -1,5 +1,5 @@
 import React from "react"
-import { Card, Button } from "react-bootstrap"
+import { Card, Button, Row } from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 class TalkRoomCard extends React.Component {
@@ -9,7 +9,10 @@ class TalkRoomCard extends React.Component {
                 <Card.Body>
                     <Card.Title>{this.props.title}</Card.Title>
                     <Card.Text>{this.props.description}</Card.Text>
-                    <Link className="btn btn-primary" to={`/talk_rooms/${this.props.id}`}>このトークルームへ行く</Link>
+                    <Row className="d-md-flex">
+                        <Link className="btn btn-primary mr-2" to={`/talk_rooms/${this.props.id}`}>このトークルームへ行く</Link>
+                        <Button variant="danger" onClick={()=>window.confirm(`${this.props.title}を削除しますか?`) ? this.props.destroy(this.props.id) : {}}>消す</Button>
+                    </Row>
                 </Card.Body>
             </Card>
         )

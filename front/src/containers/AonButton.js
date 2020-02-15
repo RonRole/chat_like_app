@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Actions } from '../modules/MessageModule';
 import { connect } from 'react-redux';
 
-class AonButton extends React.Component {
+export class AonButton extends React.Component {
     
     render(){
         return (

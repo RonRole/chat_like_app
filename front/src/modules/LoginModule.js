@@ -5,6 +5,7 @@ import history from './HistoryModule'
 
 //actions
 const LogActionTypes = {
+    TRY_TO_LOG_IN:"TRY_TO_LOG_IN",
     DEF_LOG_IN:"DEF_LOG_IN",
     LOG_IN:"LOG_IN",
     LOG_OUT:"LOG_OUT"
@@ -12,30 +13,31 @@ const LogActionTypes = {
 
 //action creators
 export const LogActions = {
-    defLogin:({
-                session  ={name:"",password:""},
-                ifSuccess=()=>console.log("login success"),
-                ifFail   =()=>console.log("login failed")
-             }) => {
+    tryToLogin:({
+        session  ={name:"",password:""},
+        ifSuccess=()=>console.log("login success"),
+        ifFail   =()=>console.log("login failed"),
+        then     =()=>console.log("tryed to login")
+    }) => {
         return {
-            type:LogActionTypes.LOG_IN,
-            session:session,
-            ifSuccess:ifSuccess,
-            ifFail:ifFail
-        }
-    },
-    login: ({
-                session   = {name:"",password:""},
-                ifSuccess = () => console.log("login success"),
-                ifFail    = () => console.log("login failure"),
-                then      = () => console.log("login action finish"),
-            }) => {
-        return {
-            type     :LogActionTypes.LOG_IN,
+            type     :LogActionTypes.TRY_TO_LOG_IN,
             session  :session,
             ifSuccess:ifSuccess,
             ifFail   :ifFail,
             then     :then
+        }
+    },
+    defLogin:({
+        session  ={name:"",password:""},
+    }) => {
+        return {
+            type:LogActionTypes.LOG_IN,
+            session:session,
+        }
+    },
+    login: () => {
+        return {
+            type     :LogActionTypes.LOG_IN,
         }
     },
     logout: () => {
@@ -58,7 +60,7 @@ const confirmLogin = (infoToLogin) => {
 //saga
 function* handleGetLoginStart() {
     while(true) {
-        const loginAction = yield take(LogActionTypes.LOG_IN)
+        const loginAction = yield take(LogActionTypes.TRY_TO_LOG_IN)
         //初期処理
         const loginResult = yield call(confirmLogin, loginAction.session)
         if(loginResult.result === "error"){
@@ -67,6 +69,7 @@ function* handleGetLoginStart() {
         else if(loginResult.data.isLoggedIn){
             alert(`ようこそ${loginResult.data.name}さん!`)
             yield put(loginAction)
+            yield put(LogActions.login())
             loginAction.ifSuccess()
         }
         else {
@@ -74,6 +77,7 @@ function* handleGetLoginStart() {
             yield put(LogActions.logout())
             loginAction.ifFail()
         }
+        
         loginAction.then();
     }
 }
@@ -94,12 +98,20 @@ export function* logSaga() {
 
 //Reducers
 const initialState = {
+    //ログインを試みたかどうか
+    tryedToLogin: false,
     //ログイン状態
     isLoggedIn  : false,
 }
 
 export const logReducer = (state = initialState, action) => {
     switch(action.type){
+        case LogActionTypes.TRY_TO_LOG_IN: {
+            return {
+                ...state,
+                tryedToLogin:true
+            }
+        }
         case LogActionTypes.LOG_IN: {
             return {
                 ...state,
@@ -113,7 +125,6 @@ export const logReducer = (state = initialState, action) => {
                 isLoggedIn:false
             }
         }
-
         default: {
             return state;
         }

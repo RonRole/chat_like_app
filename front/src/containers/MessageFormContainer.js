@@ -6,7 +6,7 @@ import OonButton from './OonButton'
 import AonButton from './AonButton'
 import MessageSendButton from '../components/MessageSendButton'
 
-class MessageFormContainer extends React.Component {
+export class MessageFormContainer extends React.Component {
 
     render() {
         return (

@@ -3,10 +3,8 @@ import {connect} from 'react-redux'
 import { Container, Alert, Row, Col } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import "./MessageContainer.css"
-import { Actions } from '../modules/MessageModule'
-import io from 'socket.io-client'
 
-class MessagesContainer extends React.Component {
+export class MessagesContainer extends React.Component {
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
         messageArea.scrollTo(0, this.props.messageAreaBottom)

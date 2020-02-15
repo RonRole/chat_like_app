@@ -4,18 +4,7 @@ import './LoginPage.css'
 import {LogActions} from '../modules/LoginModule'
 import { Alert,Container, Form, FormGroup, Button } from 'react-bootstrap'
 
-class LoginPage extends React.Component {
-
-    state = {
-        loginFailed: false
-    }
-
-    loginSuccessed = () => {
-        this.setState({loginFailed:false})
-                this.props.history.push("/home")
-    }
-
-    loginFailed = () => this.setState({loginFailed:true})
+export class LoginPage extends React.Component {
 
     render(){
         return(
@@ -28,21 +17,20 @@ class LoginPage extends React.Component {
                                     const input = formEvent.currentTarget
                                     this.props.login({
                                         input     : input,
-                                        ifSuccess : this.loginSuccessed,   
-                                        ifFail    : this.loginFailed
+                                        ifSuccess : ()=>this.props.history.push("/home")  
                                     })
                                 }}>
                     <Form.Group controlId="nameForm">
                         <Form.Label>おなまえ</Form.Label>
                         {/* isInvalidがtrueだとis-invalidクラスになる これでスタイリングする */}
-                        <Form.Control isInvalid={this.state.loginFailed} type="text" name="name" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
+                        <Form.Control isInvalid={this.props.tryedToLogin && !this.props.isLoggedIn} type="text" name="name" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
                         <Form.Control.Feedback type="invalid">
                             おなまえが間違ってましてよ
                         </Form.Control.Feedback>
                     </Form.Group>
                     <Form.Group controlId="passWordForm">
                         <Form.Label>おぱすわーど</Form.Label>
-                        <Form.Control isInvalid={this.state.loginFailed} type="password" name="password" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
+                        <Form.Control isInvalid={this.props.tryedToLogin && !this.props.isLoggedIn} type="password" name="password" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
                         <Form.Control.Feedback type="invalid">
                             おぱすわーどが間違ってましてよ
                         </Form.Control.Feedback>
@@ -56,22 +44,21 @@ class LoginPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isLoggedIn: state.logReducer.isLoggedIn,
+        tryedToLogin : state.logReducer.tryedToLogin,
+        isLoggedIn   : state.logReducer.isLoggedIn,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login:({input, ifSuccess, ifFail}) => {
-            dispatch(LogActions.login(
+        login:({input, ifSuccess}) => {
+            dispatch(LogActions.tryToLogin(
                 {
                     session:{
                         name    : input.name.value,
                         password: input.password.value
                     },
-                    ifSuccess : ifSuccess,
-                    ifFail   : ifFail
-                    
+                    ifSuccess : ifSuccess,                    
                 }
             ))
         },
