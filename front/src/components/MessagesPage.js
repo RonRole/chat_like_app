@@ -7,8 +7,8 @@ class MessagePage extends React.Component {
     render(){
         return (
             <Container>
-                <MessagesContainer />
-                <MessageFormContainer/>
+                <MessagesContainer {...this.props}/>
+                <MessageFormContainer {...this.props}/>
             </Container>
         )
     }

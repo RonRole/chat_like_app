@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Container } from 'react-bootstrap'
-import {Variants} from '../modules/MessageModule'
+import {Variants} from '../modules/TalkRoomMessageModule'
 
 class AboutPage extends React.Component {
 

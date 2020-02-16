@@ -16,17 +16,19 @@ const ActionTypes = {
 
 //action creators
 export const Actions = {
-    addMessage:(className = "", text) => {
+    addMessage:({roomId, className = "", text}) => {
         return {
             type:ActionTypes.ADD_MESSAGE,
+            roomId:roomId,
             className:className,
             md:{span:6, offset:6},
             text:text
         }
     },
-    receiveMessage:(className = "secondary", text) => {
+    receiveMessage:({roomId, className = "secondary", text}) => {
         return {
             type:ActionTypes.RECEIVE_MESSAGE,
+            roomId: roomId,
             className:className,
             md:{span:6},
             text:text
@@ -38,7 +40,7 @@ export const Actions = {
 function* handleAddMessage() {
     while(true) {
         const action = yield take(ActionTypes.ADD_MESSAGE)
-        socket.emit('sendMessage', {className:action.className, text:action.text})
+        socket.emit('sendMessage', {roomId:action.roomId, className:action.className, text:action.text})
     }
 }
 
@@ -51,8 +53,10 @@ export function* messageSaga() {
 
 //reducer
 const initialState = {
-    messages: [],
-    messageAreaBottom: window.innerHeight,
+    0:{
+        messages: [],
+        messageAreaBottom:window.innerHeight
+    }
 }
 
 //reducer
@@ -60,18 +64,21 @@ export const messageReducer = (state = initialState, action) => {
     switch(action.type){
         case ActionTypes.ADD_MESSAGE:
         case ActionTypes.RECEIVE_MESSAGE: {
-            return {
-                ...state,
-                messages: [                    
-                    ...state.messages,
+            state[action.roomId] = {
+                messages: [
+                    ...state[action.roomId].messages,
                     {
                         className:action.className,
                         text:action.text,
                         md:action.md
-                    }                    
+                    }
                 ],
-                messageAreaBottom: state.messageAreaBottom+window.innerHeight,
+                messageAreaBottom:state[action.roomId].messageAreaBottom*2
             }
+            return {
+                ...state
+            }
+
         }
 
         default: {

@@ -7,14 +7,14 @@ import "./MessageContainer.css"
 export class MessagesContainer extends React.Component {
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
-        messageArea.scrollTo(0, this.props.messageAreaBottom)
+        messageArea.scrollTo(0, this.props.messageState[this.props.match.params.id].messageAreaBottom)
     }
 
     render() {
         return (
             <Container id = "messageArea">
                 <TransitionGroup>
-                    {this.props.messages.map((message,index) => {
+                    {this.props.messageState[this.props.match.params.id].messages   .map((message,index) => {
                         return (
                             <CSSTransition key={index} timeout= {100} classNames="fade">
                                 <Row>
@@ -33,8 +33,7 @@ export class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        messages: state.appReducer.messages,
-        messageAreaBottom: state.appReducer.messageAreaBottom
+        messageState : state.appReducer
     }
 }
 

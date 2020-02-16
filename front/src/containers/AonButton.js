@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import { Actions } from '../modules/MessageModule';
+import { Actions } from '../modules/TalkRoomMessageModule';
 import { connect } from 'react-redux';
 
 export class AonButton extends React.Component {

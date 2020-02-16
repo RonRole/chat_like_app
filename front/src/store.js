@@ -1,5 +1,5 @@
 import {logReducer, logSaga } from './modules/LoginModule'
-import {messageReducer, messageSaga, Actions} from './modules/MessageModule'
+import {messageReducer, messageSaga, Actions} from './modules/TalkRoomMessageModule'
 import socket from './socket/SocketSettings'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Button, Col, Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { TalkRoomActions } from '../modules/TalkRoomModule'
+import { TalkRoomActions, getTalkRoomIds } from '../modules/TalkRoomModule'
 import TalkRoomCard from '../components/TalkRoomCard'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import TalkRoomAddingForm from '../components/TalkRoomAddingForm'
@@ -14,18 +14,19 @@ export class TalkRoomPage extends React.Component {
         this.props.initialize()
     }
     render() {
+        console.log(this.props.talkRooms)
         return (
             <Container> 
                 <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
                 <TransitionGroup className="row">
-                    {this.props.talkRooms.map((talkRoom,index) => {
+                    {this.props.talkRoomIds().map((talkRoomId,index) => {
                         return(
                             <CSSTransition key = {index} timeout={100} classNames="fade">
                                 <Col key={index} md={{span:4}} className="mt-2">
                                     <TalkRoomCard   className  ="col-md-4"
-                                                    title      ={talkRoom.title} 
-                                                    description={talkRoom.description}
-                                                    id         ={talkRoom.id}
+                                                    title      ={this.props.getTalkRoomById(talkRoomId).title} 
+                                                    description={this.props.getTalkRoomById(talkRoomId).description}
+                                                    id         ={talkRoomId}
                                                     key        ={index} 
                                                     destroy    ={this.props.destroyTalkRoom}/>  
 
@@ -52,7 +53,9 @@ export class TalkRoomPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        talkRooms:state.talkRoomReducer.talkRooms
+        talkRooms: state.talkRoomReducer.talkRooms,
+        talkRoomIds:() => getTalkRoomIds(state.talkRoomReducer),
+        getTalkRoomById:(id) => state.talkRoomReducer.talkRooms[id]
     }
 }
 

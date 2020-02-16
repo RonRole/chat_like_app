@@ -11,7 +11,7 @@ export class LoginRequiredRoute extends React.Component {
                flash:"ログインしろよ",
            }}/>}/>
         }
-        return <Route exact={this.props.exact} path={this.props.path} component={this.props.component}/>
+        return <Route {...this.props}/>
     }
 }
 

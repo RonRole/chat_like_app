@@ -130,7 +130,7 @@ function* handleDeleteTalkRoom() {
             yield put({type:""})
         }
         else {
-            yield put(TalkRoomActions.deleteTalkRoom(action.talk_room_id))
+            yield put(TalkRoomActions.deleteTalkRoom({talk_room_id:action.talk_room_id}))
         }
     }
 }
@@ -145,34 +145,30 @@ export function* talkRoomSaga() {
 
 //reducer
 const initialState = {
-    talkRooms:[],
+    talkRooms:{},
 }
+export const getTalkRoomIds = (state) => Object.keys(state.talkRooms)
 
 export const talkRoomReducer = (state = initialState, action) => {
     switch(action.type) {
         case TalkRoomActionTypes.INITIALIZE_TALK_ROOMS: {
-           return {
-            ...state,
-            talkRooms: action.talkRooms
+            action.talkRooms.forEach(room => {
+                state.talkRooms[room.id] = room
+            });
+            return {
+                ...state,
            }
         }
         case TalkRoomActionTypes.ADD_TALK_ROOM: {
+            state.talkRooms[action.talkRoom.id] = action.talkRoom
             return {
-                ...state,
-                talkRooms: [
-                    ...state.talkRooms,
-                    action.talkRoom
-                ]
+                ...state
             }
         }
         case TalkRoomActionTypes.DELETE_TALK_ROOM: {
+            delete state.talkRooms[action.talk_room_id]
             return {
-                ...state,
-                talkRooms: [
-                    ...state.talkRooms.filter(talkRoom => 
-                        talkRoom.id === action.talk_room_id
-                    )
-                ]
+                ...state
             }
         }
         default: {
