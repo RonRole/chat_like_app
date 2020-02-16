@@ -8,11 +8,10 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import Navigation from '../components/Navigation'
 import AboutPage from '../components/AboutPage';
 import LoginRequiredRoute from './LoginRequiredRoute';
-import LoginPage from './LoginPage';
+import LoginPage from '../components/LoginPage';
 import TalkRoomPage from './TalkRoomPage'
 import { LogActions } from '../modules/LoginModule';
 import { connect } from 'react-redux';
-import { Spinner } from 'react-bootstrap';
 import Loading from '../components/Loading';
 
 
