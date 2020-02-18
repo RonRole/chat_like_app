@@ -7,7 +7,7 @@ export const LogActionTypes = {
     LOG_OUT:"LOG_OUT"
 }
 
-const LogActions = {
+export default {
     tryToLogin:({
         session  ={name:"",password:""},
         ifSuccess=()=>console.log("login success"),

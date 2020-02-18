@@ -21,7 +21,7 @@ const getMessageAreaBottomById = state => {
     }
 }
 
-const createMessageReducer = (state = initialState, action) => {
+const createReducer = (state = initialState, action) => {
     switch(action.type){
         case ActionTypes.ADD_MESSAGE:
         case ActionTypes.RECEIVE_MESSAGE: {
@@ -54,6 +54,6 @@ const createMessageReducer = (state = initialState, action) => {
 export default {
     getMessagesByRoomId,
     getMessageAreaBottomById,
-    createMessageReducer
+    createMessageReducer: createReducer
 }
 

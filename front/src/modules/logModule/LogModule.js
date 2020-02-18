@@ -1,6 +1,6 @@
-import { LogActions } from "../LoginModule";
 import LogReducer from "./LogReducer";
 import logSaga from "./LogSaga";
+import LogActions from "./LogActions";
 
 export default {
     actions: LogActions,

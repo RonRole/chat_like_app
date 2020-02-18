@@ -1,8 +1,9 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import './LoginPage.css'
-import {LogActions} from '../modules/LoginModule'
+
 import { Form, Button } from 'react-bootstrap'
+import LogModule from '../modules/logModule/LogModule'
 
 export class LoginForm　extends React.Component {
 
@@ -47,7 +48,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         login:({input, ifSuccess}) => {
-            dispatch(LogActions.tryToLogin(
+            dispatch(LogModule.actions.tryToLogin(
                 {
                     session:{
                         name    : input.name.value,
@@ -57,7 +58,7 @@ const mapDispatchToProps = (dispatch) => {
                 }
             ))
         },
-        logout:()=> dispatch(LogActions.logout())
+        logout:()=> dispatch(LogModule.actions.logout())
     }
 }
 

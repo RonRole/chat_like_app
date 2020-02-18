@@ -10,9 +10,9 @@ import AboutPage from '../components/AboutPage';
 import LoginRequiredRoute from './LoginRequiredRoute';
 import LoginPage from '../components/LoginPage';
 import TalkRoomPage from './TalkRoomPage'
-import { LogActions } from '../modules/LoginModule';
 import { connect } from 'react-redux';
 import Loading from '../components/Loading';
+import LogModule from '../modules/logModule/LogModule';
 
 
 export class App extends Component {
@@ -52,7 +52,7 @@ export class App extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     defaultLogin:(loginInfo) => {
-      dispatch(LogActions.tryToLogin(loginInfo))
+      dispatch(LogModule.actions.tryToLogin(loginInfo))
     }
   }
 }

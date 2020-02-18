@@ -1,10 +1,11 @@
-import { LogActionTypes } from "./LogActions"
-import { put, take, call } from "redux-saga/effects"
-import { LogActions } from "../LoginModule"
+import LogActions, { LogActionTypes } from "./LogActions"
+import { put, take, call, all } from "redux-saga/effects"
+
+import Axios from "axios"
 
 //saga
 const confirmLogin = (infoToLogin) => {
-    return Axios.post(`${process.env.REACT_BACKEND_ADDRESS}/login`, infoToLogin)
+    return Axios.post(`${process.env.REACT_APP_BACKEND_ADDRESS}/login`, infoToLogin)
                 .then(response => {
                     return {
                         result:"success",
@@ -36,8 +37,9 @@ function* handleGetLoginStart() {
         else {
             alert("ログインに失敗しました")
             yield put(LogActions.logout())
-
+            loginAction.ifFail()
         }
+        loginAction.then()
     }
 }
 

@@ -1,3 +1,5 @@
+import { LogActionTypes } from "./LogActions"
+
 //Reducers
 const initialState = {
     //ログインを試みたかどうか
@@ -6,7 +8,7 @@ const initialState = {
     isLoggedIn  : false,
 }
 
-export default (state = initialState, action) => {
+const creatReducer = (state = initialState, action) => {
     switch(action.type){
         case LogActionTypes.TRY_TO_LOG_IN: {
             return {
@@ -31,4 +33,8 @@ export default (state = initialState, action) => {
             return state;
         }
     }
+}
+
+export default {
+    creatReducer
 }
