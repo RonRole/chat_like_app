@@ -33,7 +33,6 @@ export class MessageFormContainer extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         sendMessage:(roomId, message) => {
-            console.log(`sawai${roomId}${message}`)
             dispatch(Actions.addMessage({
                 roomId   :roomId,
                 className:'warning', 

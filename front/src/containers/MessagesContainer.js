@@ -3,18 +3,23 @@ import {connect} from 'react-redux'
 import { Container, Alert, Row, Col } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import "./MessageContainer.css"
+import { getMessagesByRoomId, getMessageAreaBottom, Actions } from '../modules/TalkRoomMessageModule'
 
 export class MessagesContainer extends React.Component {
+    componentDidMount(){
+        this.props.joinRoom(this.props.match.params.id)
+    }
+
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
-        messageArea.scrollTo(0, this.props.messageState[this.props.match.params.id].messageAreaBottom)
+        messageArea.scrollTo(0, this.props.getMessageAreaBottom(this.props.match.params.id))
     }
 
     render() {
         return (
             <Container id = "messageArea">
                 <TransitionGroup>
-                    {this.props.messageState[this.props.match.params.id].messages   .map((message,index) => {
+                    {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
                         return (
                             <CSSTransition key={index} timeout= {100} classNames="fade">
                                 <Row>
@@ -33,9 +38,16 @@ export class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        messageState : state.appReducer
+        getMessagesByRoomId:(roomId) => getMessagesByRoomId(state)(roomId),
+        getMessageAreaBottom:(roomId) => getMessageAreaBottom(state)(roomId)
     }
 }
 
-export default connect(mapStateToProps)(MessagesContainer);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        joinRoom:(roomId) => dispatch(Actions.joinRoom({roomId:roomId}))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesContainer);
 

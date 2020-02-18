@@ -14,7 +14,6 @@ export class TalkRoomPage extends React.Component {
         this.props.initialize()
     }
     render() {
-        console.log(this.props.talkRooms)
         return (
             <Container> 
                 <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
@@ -44,7 +43,8 @@ export class TalkRoomPage extends React.Component {
                         this.setState({modalShow:false})
                     }}
                     closeModal = {() => this.setState({modalShow:false})}
-                    show = {this.state.modalShow} />
+                    show = {this.state.modalShow} 
+                />
             </Container>
         )
 

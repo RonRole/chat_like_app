@@ -12,11 +12,6 @@ const sagaMiddleware = createSagaMiddleware()
 //store setting
 const store = createStore(combineReducers({appReducer: messageReducer,logReducer, talkRoomReducer}), applyMiddleware(sagaMiddleware))
 
-//client-socket listening 
-socket.on('return', (response) => {
-    store.dispatch(Actions.receiveMessage(response.className, response.text))
-})
-
 sagaMiddleware.run(logSaga)
 sagaMiddleware.run(messageSaga)
 sagaMiddleware.run(talkRoomSaga)

@@ -8,14 +8,14 @@ server.listen(8000)
 io.sockets.on('connection', socket => {
 
     //トークルーム参加
-    socket.on('joinRoom', ({roomId,userName}) => {
-        console.log(`${roomId}に${userName}が現れた!!!`)
+    socket.on('joinRoom', ({roomId}) => {
+        console.log(`${roomId}に新参者が現れた!!!`)
         socket.join(roomId)
     })
     //メッセージ送信
     socket.on('sendMessage',({roomId, className="",text=""}) => {
         console.log(`roomId:${roomId} class:${className} text:${text}`)
-        socket.to(roomId).broadcast.emit('return', {className:"secondary", text:text})
+        socket.to(roomId).broadcast.emit('return', {roomId: roomId, className:"secondary", text:text})
     })
 })
 
