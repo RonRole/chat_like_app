@@ -51,7 +51,7 @@ const createMessageReducer = (state = initialState, action) => {
     }
 }
 
-export default TalkRoomMessageReducer = {
+export default {
     getMessagesByRoomId,
     getMessageAreaBottomById,
     createMessageReducer

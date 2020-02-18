@@ -40,7 +40,7 @@ export const LogActions = {
             type     :LogActionTypes.LOG_IN,
         }
     },
-    logout: () => {
+    logout: () => {z
         return {
             type:LogActionTypes.LOG_OUT
         }

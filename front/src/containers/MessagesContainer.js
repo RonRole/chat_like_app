@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { Container, Alert, Row, Col } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import "./MessageContainer.css"
-import { getMessagesByRoomId, getMessageAreaBottom, Actions } from '../modules/TalkRoomMessageModule'
+import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 
 export class MessagesContainer extends React.Component {
     componentDidMount(){
@@ -38,14 +38,14 @@ export class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        getMessagesByRoomId:(roomId) => getMessagesByRoomId(state)(roomId),
-        getMessageAreaBottom:(roomId) => getMessageAreaBottom(state)(roomId)
+        getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),
+        getMessageAreaBottom:(roomId) => TalkRoomMessageModule.reducer.getMessageAreaBottomById(state)(roomId)
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        joinRoom:(roomId) => dispatch(Actions.joinRoom({roomId:roomId}))
+        joinRoom:(roomId) => dispatch(TalkRoomMessageModule.actions.joinRoom({roomId:roomId}))
     }
 }
 

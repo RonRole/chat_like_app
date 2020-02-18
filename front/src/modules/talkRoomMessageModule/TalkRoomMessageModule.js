@@ -1,9 +1,10 @@
 import TalkRoomMessageActoins from "./TalkRoomMessageActoins";
 import TalkRoomMessageReducer from "./TalkRoomMessageReducer";
-import talkRoomMessageSaga from "./TalkRoomMessageSaga"
+import talkRoomMessageSaga from "./TalkRoomMessageSaga";
 
-export default TalkRoomMessageModule = {
+
+export default {
     actions:TalkRoomMessageActoins,
     reducer:TalkRoomMessageReducer,
-    saga   :talkRoomMessageSaga()
+    saga   :talkRoomMessageSaga
 }

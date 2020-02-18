@@ -1,19 +1,27 @@
 import {logReducer, logSaga } from './modules/LoginModule'
-import {messageReducer, messageSaga, Actions} from './modules/TalkRoomMessageModule'
-import socket from './socket/SocketSettings'
 import {createStore, combineReducers, applyMiddleware} from 'redux'
+
+import { talkRoomReducer, talkRoomSaga } from './modules/TalkRoomModule'
+import TalkRoomMessageModule from './modules/talkRoomMessageModule/TalkRoomMessageModule'
+
 
 //saga
 import createSagaMiddleware from 'redux-saga'
-import { talkRoomReducer, talkRoomSaga } from './modules/TalkRoomModule'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
 //store setting
-const store = createStore(combineReducers({appReducer: messageReducer,logReducer, talkRoomReducer}), applyMiddleware(sagaMiddleware))
+const store = createStore(
+    combineReducers({
+        appReducer : TalkRoomMessageModule.reducer.createMessageReducer,
+        logReducer, 
+        talkRoomReducer
+    }), 
+    applyMiddleware(sagaMiddleware)
+)
 
 sagaMiddleware.run(logSaga)
-sagaMiddleware.run(messageSaga)
+sagaMiddleware.run(TalkRoomMessageModule.saga)
 sagaMiddleware.run(talkRoomSaga)
 
 export default store;

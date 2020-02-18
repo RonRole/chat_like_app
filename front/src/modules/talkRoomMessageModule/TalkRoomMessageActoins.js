@@ -22,7 +22,7 @@ const addMessage = ({
         type     : ActionTypes.ADD_MESSAGE,
         roomId   : roomId,
         className: className,
-        md       : {span:6},
+        md       : {span:6, offset:6},
         text     : text
     }
 }
@@ -36,12 +36,12 @@ const receiveMessage = ({
         type     : ActionTypes.RECEIVE_MESSAGE,
         roomId   : roomId,
         className: className,
-        me       : {span:6},
+        md       : {span:6},
         text     : text
     }
 }
 
-export default TalkRoomMessageActions = {
+export default {
     joinRoom,
     addMessage,
     receiveMessage

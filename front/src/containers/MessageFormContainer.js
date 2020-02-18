@@ -1,5 +1,6 @@
 import React from 'react'
-import { Actions, Variants } from '../modules/TalkRoomMessageModule'
+//import { Actions, Variants } from '../modules/TalkRoomMessageModule'
+import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import { connect } from 'react-redux'
 import { Container, Button, ButtonGroup, Form, Col, Row } from 'react-bootstrap'
 import OonButton from './OonButton'
@@ -33,7 +34,7 @@ export class MessageFormContainer extends React.Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         sendMessage:(roomId, message) => {
-            dispatch(Actions.addMessage({
+            dispatch(TalkRoomMessageModule.actions.addMessage({
                 roomId   :roomId,
                 className:'warning', 
                 text     :message

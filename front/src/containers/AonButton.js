@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import { Actions } from '../modules/TalkRoomMessageModule';
 import { connect } from 'react-redux';
+import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule';
 
 export class AonButton extends React.Component {
     
@@ -14,7 +14,11 @@ export class AonButton extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        aon:() => dispatch(Actions.addMessage("danger","アォン!"))
+        aon:() => dispatch(TalkRoomMessageModule.actions.addMessage({
+            roomId:0,
+            className:"danger",
+            text:"アォン!"
+        }))
     }
 }
 
