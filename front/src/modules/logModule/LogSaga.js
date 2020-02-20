@@ -1,45 +1,31 @@
 import LogActions, { LogActionTypes } from "./LogActions"
-import { put, take, call, all } from "redux-saga/effects"
-
-import Axios from "axios"
+import { put, take, call, all, fork } from "redux-saga/effects"
+import DataAccessor from "../DataAccessor"
 
 //saga
-const confirmLogin = (infoToLogin) => {
-    return Axios.post(`${process.env.REACT_APP_BACKEND_ADDRESS}/login`, infoToLogin)
-                .then(response => {
-                    return {
-                        result:"success",
-                        data  :response.data  
-                    }
-                })
-                .catch(error => {
-                    return {
-                        result : "error",
-                        data   : error
-                    }
-                })
-} 
-
 function* handleGetLoginStart() {
     while(true) {
         const loginAction = yield take(LogActionTypes.TRY_TO_LOG_IN)
         //初期処理
-        const loginResult = yield call(confirmLogin, loginAction.session)
-        if(loginResult.result === 'error') {
-            alert(`エラーが発生しました ${loginResult.data}`)
-        }
-        else if(loginResult.data.isLoggedIn){
-            alert(`ようこそ${loginResult.data.name}さん!`)
-            yield put(loginAction)
+        const accessResult = yield call(DataAccessor.post,{
+            url      :`${process.env.REACT_APP_BACKEND_ADDRESS}/login`,
+            argument :loginAction.session,
+
+        })
+        if(accessResult.isSuccess){
+            alert(`ようこそ${accessResult.data.name}さん!`)
             yield put(LogActions.login())
             loginAction.ifSuccess()
         }
-        else {
+        if(accessResult.isFail){
             alert("ログインに失敗しました")
             yield put(LogActions.logout())
             loginAction.ifFail()
         }
-        loginAction.then()
+        if(accessResult.isError) {
+            alert(`エラーが発生しました ${accessResult.data}`)
+        }
+        loginAction.then();
     }
 }
 
