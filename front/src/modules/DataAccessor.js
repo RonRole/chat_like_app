@@ -1,48 +1,54 @@
 import Axios from "axios"
 
+const createNormalResponse = (response) => {
+    return {
+        isSuccess : response.data != undefined,
+        isFail    : response.data == undefined,
+        data      : response.data
+    }
+}
+
+const createErrorResponse = (error) => {
+    return {
+        isError : true,
+        data    : error
+    }
+}
+
 export default {
     get : ({
         url,
     }) => {
         return Axios.get(url)
             .then(response => {
-                    return {
-                        isSuccess : response.data != undefined, 
-                        isFail    : response.data === undefined,
-                        data      : response.data
-                    } 
+                return createNormalResponse(response)
             })
             .catch(error => {
-                return {
-                        isError   : true,
-                        data      : error
-                }
+                return createErrorResponse(error)
             })
     },
     post : ({
         url,
-        argument
+        parameter
     }) => {
-        return Axios.post(url, argument)
-            .then(response => {
-                if(response.data){
-                    return {
-                        isSuccess : true,
-                        data      : response.data
-                    } 
-                }
-                else {
-                    return {
-                        isFail    : true,
-                        data      : response.data
-                    }   
-                }
-            })
-            .catch(error => {
-                return {
-                        isError   : true,
-                        data      : error
-                }
-            })
+        return Axios.post(url, parameter)
+                    .then(response => {
+                        return createNormalResponse(response)
+                    })
+                    .catch(error => {
+                        return createErrorResponse(error)
+                    })
+    },
+
+    delete : ({
+        url
+    }) => {
+        return Axios.delete(url)
+                    .then(response => {
+                        return createNormalResponse(response)
+                    })
+                    .catch(error => {
+                        return createErrorResponse(error)
+                    })
     }
 }

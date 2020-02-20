@@ -8,8 +8,8 @@ function* handleGetLoginStart() {
         const loginAction = yield take(LogActionTypes.TRY_TO_LOG_IN)
         //初期処理
         const accessResult = yield call(DataAccessor.post,{
-            url      :`${process.env.REACT_APP_BACKEND_ADDRESS}/login`,
-            argument :loginAction.session,
+            url       :`${process.env.REACT_APP_BACKEND_ADDRESS}/login`,
+            parameter :loginAction.session,
 
         })
         if(accessResult.isSuccess){
