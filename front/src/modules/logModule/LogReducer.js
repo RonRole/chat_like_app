@@ -19,7 +19,7 @@ const creatReducer = (state = initialState, action) => {
         case LogActionTypes.LOG_IN: {
             return {
                 ...state,
-                isLoggedIn:true
+                isLoggedIn:action.loginUser
             }
         }
 

@@ -1,10 +1,11 @@
 import React from 'react'
 import { Container, Button, Col, Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { TalkRoomActions, getTalkRoomIds } from '../modules/TalkRoomModule'
 import TalkRoomCard from '../components/TalkRoomCard'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import TalkRoomAddingForm from '../components/TalkRoomAddingForm'
+import { getTalkRoomIds } from '../modules/talkRoomModule/TalkRoomReducer'
+import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 
 export class TalkRoomPage extends React.Component {
     state = {
@@ -37,11 +38,13 @@ export class TalkRoomPage extends React.Component {
 
                 <TalkRoomAddingForm onSubmit={({title,description})=>{
                         this.props.addTalkRoom({
-                            title:title, 
-                            description:description
+                            title      :title, 
+                            description:description,
+                            authorId   :this.props.loginUser.id
                         })
                         this.setState({modalShow:false})
                     }}
+                    loginUser = {this.props.loginUser}
                     closeModal = {() => this.setState({modalShow:false})}
                     show = {this.state.modalShow} 
                 />
@@ -53,6 +56,7 @@ export class TalkRoomPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        loginUser: state.logReducer.isLoggedIn,
         talkRooms: state.talkRoomReducer.talkRooms,
         talkRoomIds:() => getTalkRoomIds(state.talkRoomReducer),
         getTalkRoomById:(id) => state.talkRoomReducer.talkRooms[id]
@@ -61,14 +65,19 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        initialize:() => dispatch(TalkRoomActions.tryToInitializeTalkRooms()),
-        addTalkRoom:({title,description}) =>  
-            dispatch(TalkRoomActions.tryToAddTalkRoom({
+        initialize:() => dispatch(TalkRoomModule.actions.tryToInitializeTalkRooms()),
+        addTalkRoom:({
+            title,
+            description,
+            authorId
+        }) =>  {
+            dispatch(TalkRoomModule.actions.tryToAddTalkRoom({
                 title:title, 
-                description:description
-            })),
-        destroyTalkRoom:(talk_room_id) => dispatch(TalkRoomActions.tryToDeleteTalkRoom({
-            talk_room_id: talk_room_id
+                description:description,
+                authorId : authorId
+            }))},
+        destroyTalkRoom:(talkRoomId) => dispatch(TalkRoomModule.actions.tryToDeleteTalkRoom({
+            talkRoomId: talkRoomId
         }))
     }
 }

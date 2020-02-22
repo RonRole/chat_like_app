@@ -21,15 +21,20 @@ export class App extends Component {
   }
 
   componentDidMount(){
-    this.props.defaultLogin(
-      {
-        session:{name:"test",password:"test"},
-        then: ()=> {
-          this.setState({defLoginIsFinished:true})
-        },
-        history: this.props.history
+    this.props.defaultLogin({
+      session:{
+        name:"fail",
+        password:"fail"
+      },
+      ifSuccess:() => {
+        this.props.history.push("/")
+      },
+      then:() => {
+        this.setState({
+          defLoginIsFinished : true
+        })
       }
-    )
+    })
   }
 
   render() {
@@ -40,7 +45,7 @@ export class App extends Component {
       <BrowserRouter>
         <Navigation />
         <Route path="/login" component={LoginPage}/>
-        <LoginRequiredRoute path="/home"/>
+        <LoginRequiredRoute exact path="/home"/>
         <LoginRequiredRoute path="/about" component={AboutPage}/>
         <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
         <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>

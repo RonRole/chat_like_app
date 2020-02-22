@@ -1,17 +1,19 @@
 import DataAccessor from "../DataAccessor"
 import TalkRoomActions, { TalkRoomActionTypes } from "./TalkRoomActions"
-import { put, take } from "redux-saga/effects"
+import { put, take, call, all } from "redux-saga/effects"
 
 const createTalkRoom = ({
     title,
-    description
+    description,
+    authorId
 }) => {
     return DataAccessor.post({
         url       : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms`,
         parameter : {
             talkroom : {
                 title      :title,
-                description:description
+                description:description,
+                author_id   :authorId
             }
         } 
     })
@@ -32,7 +34,7 @@ const deleteTalkRoom = (talkRoomId) => {
 //saga
 function* handleGetTalkRooms() {
     while(true) {
-        yield take(TalkRoomActionTypes.TRY_TO_INITIALIZE_TALK_ROOMS)
+        const action = yield take(TalkRoomActionTypes.TRY_TO_INITIALIZE_TALK_ROOMS)
         const talkRoomResult = yield call(getTalkRooms)
         if(talkRoomResult.isSuccess) {
             yield put(TalkRoomActions.initializeTalkRooms(talkRoomResult.data))
@@ -51,16 +53,17 @@ function* handleAddTalkRoom() {
         const action = yield take(TalkRoomActionTypes.TRY_TO_ADD_TALK_ROOM)
         const addTalkRoomResult = yield call(createTalkRoom, {
             title       : action.title,
-            description : action.description
+            description : action.description,
+            authorId    : action.authorId
         })
         if(addTalkRoomResult.isSuccess) {
             yield put(TalkRoomActions.addTalkRoom(addTalkRoomResult.data))
         }
-        if(talkRoomResult.isFail) {
+        if(addTalkRoomResult.isFail) {
             alert('トークルームを追加できませんでした')
         }
-        if(talkRoomResult.isError) {
-            alert(`エラーが発生しました ${talkRoomResult.data}`)
+        if(addTalkRoomResult.isError) {
+            alert(`エラーが発生しました ${addTalkRoomResult.data}`)
         }
     }
 }
@@ -77,8 +80,8 @@ function* handleDeleteTalkRoom() {
         if(deleteTalkRoomResult.isFail) {
             alert(`トークルームを削除できませんでした`)
         }
-        if(talkRoomResult.isError) {
-            alert(`エラーが発生しました ${talkRoomResult.data}`)
+        if(deleteTalkRoomResult.isError) {
+            alert(`エラーが発生しました ${deleteTalkRoomResult.data}`)
         }
     }
 }

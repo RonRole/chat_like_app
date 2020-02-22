@@ -7,7 +7,7 @@ export const TalkRoomActionTypes = {
     DELETE_TALK_ROOM : "DELETE_TALK_ROOM"
 }
 
-export default TalkRoomActions = {
+export default {
     tryToInitializeTalkRooms:() => {
         return {
             type:TalkRoomActionTypes.TRY_TO_INITIALIZE_TALK_ROOMS
@@ -21,12 +21,14 @@ export default TalkRoomActions = {
     },
     tryToAddTalkRoom:({
         title="New Room",
-        description="This is a new talk room"
+        description="This is a new talk room",
+        authorId
     }) => {
         return {
-            type:TalkRoomActionTypes.TRY_TO_ADD_TALK_ROOM,
-            title:title,
-            description:description
+            type       :TalkRoomActionTypes.TRY_TO_ADD_TALK_ROOM,
+            title      :title,
+            description:description,
+            authorId   :authorId
         }
     },
     

@@ -1,10 +1,13 @@
+import { TalkRoomActionTypes } from "./TalkRoomActions";
+
 //reducer
 const initialState = {
     talkRooms:{},
 }
+
 export const getTalkRoomIds = (state) => Object.keys(state.talkRooms)
 
-export const talkRoomReducer = (state = initialState, action) => {
+const createReducer = (state = initialState, action) => {
     switch(action.type) {
         case TalkRoomActionTypes.INITIALIZE_TALK_ROOMS: {
             action.talkRooms.forEach(room => {
@@ -21,7 +24,7 @@ export const talkRoomReducer = (state = initialState, action) => {
             }
         }
         case TalkRoomActionTypes.DELETE_TALK_ROOM: {
-            delete state.talkRooms[action.talk_room_id]
+            delete state.talkRooms[action.talkRoomId]
             return {
                 ...state
             }
@@ -30,4 +33,8 @@ export const talkRoomReducer = (state = initialState, action) => {
             return state
         }
     }
+}
+
+export default {
+    createReducer
 }

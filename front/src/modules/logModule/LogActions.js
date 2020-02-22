@@ -30,9 +30,10 @@ export default {
             session:session,
         }
     },
-    login: () => {
+    login: (user) => {
         return {
             type     :LogActionTypes.LOG_IN,
+            loginUser:user
         }
     },
     logout: () => {

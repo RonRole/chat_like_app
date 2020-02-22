@@ -14,7 +14,7 @@ function* handleGetLoginStart() {
         })
         if(accessResult.isSuccess){
             alert(`ようこそ${accessResult.data.name}さん!`)
-            yield put(LogActions.login())
+            yield put(LogActions.login(accessResult.data))
             loginAction.ifSuccess()
         }
         if(accessResult.isFail){

@@ -8,7 +8,7 @@ class TalkRoomAddingForm extends React.Component {
                 <Form onSubmit={(formEvent) => {
                     formEvent.preventDefault()
                     this.props.onSubmit({
-                        title:formEvent.currentTarget.title.value,
+                        title      :formEvent.currentTarget.title.value,
                         description:formEvent.currentTarget.description.value
                     });
                 }}>
