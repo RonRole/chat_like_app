@@ -20,12 +20,30 @@ export class TalkRoomPage extends React.Component {
                 <h6 style={{borderBottom:"1px solid gray"}}>
                     <strong>{this.props.loginUser.name}</strong>さんが作成したトークルーム
                 </h6>
+                <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
+                <TransitionGroup className="row">
+                    {this.props.ownRooms.map((talkRoomId,index) => {
+                        return(
+                            <CSSTransition key = {index} timeout={100} classNames="fade">
+                                <Col key={index} md={{span:4}} className="mt-2">
+                                    <TalkRoomCard   className  ="col-md-4"
+                                                    title      ={this.props.getTalkRoomById(talkRoomId).title} 
+                                                    description={this.props.getTalkRoomById(talkRoomId).description}
+                                                    id         ={talkRoomId}
+                                                    key        ={index} 
+                                                    destroy    ={this.props.destroyTalkRoom}/>  
+
+                                </Col>
+                            </CSSTransition>
+                        )
+                    })}
+                </TransitionGroup>
+                
                 <h6 style={{borderBottom:"1px solid gray"}}>
                     <strong>{this.props.loginUser.name}</strong>さんが参加しているトークルーム
                 </h6>
-                <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
                 <TransitionGroup className="row">
-                    {this.props.talkRoomIds().map((talkRoomId,index) => {
+                    {this.props.talkRoomIds.map((talkRoomId,index) => {
                         return(
                             <CSSTransition key = {index} timeout={100} classNames="fade">
                                 <Col key={index} md={{span:4}} className="mt-2">
@@ -63,10 +81,11 @@ export class TalkRoomPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser: state.logReducer.isLoggedIn,
-        talkRooms: state.talkRoomReducer.talkRooms,
-        talkRoomIds:() => getTalkRoomIds(state.talkRoomReducer),
-        getTalkRoomById:(id) => state.talkRoomReducer.talkRooms[id]
+        loginUser       : state.logReducer.isLoggedIn,
+        talkRooms       : state.talkRoomReducer.talkRooms,
+        talkRoomIds     : getTalkRoomIds(state.talkRoomReducer).filter(id => state.talkRoomReducer.talkRooms[id].author_id !== state.logReducer.isLoggedIn.id),
+        getTalkRoomById : (id) => state.talkRoomReducer.talkRooms[id],
+        ownRooms        : getTalkRoomIds(state.talkRoomReducer).filter(id => state.talkRoomReducer.talkRooms[id].author_id === state.logReducer.isLoggedIn.id)
     }
 }
 
