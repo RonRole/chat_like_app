@@ -7,14 +7,18 @@ import LogModule from '../modules/logModule/LogModule'
 
 export class LoginForm　extends React.Component {
 
+    componentDidUpdate(){
+        console.log(this.props)
+    }
+
     render(){
         return(
             <Form onSubmit={(formEvent) => {
                                 formEvent.preventDefault()
                                 const input = formEvent.currentTarget
                                 this.props.login({
-                                    input     : input,
-                                    ifSuccess : ()=>this.props.history.push("/home")  
+                                    input   : input,
+                                    history : this.props.history
                                 })
                             }}>
                 <Form.Group controlId="nameForm">
@@ -47,14 +51,17 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        login:({input, ifSuccess}) => {
-            dispatch(LogModule.actions.tryToLogin(
+        login:({
+            input,
+            history
+        }) => {
+            dispatch(LogModule.actions.execLogin(
                 {
                     session:{
                         name    : input.name.value,
                         password: input.password.value
                     },
-                    ifSuccess : ifSuccess,                    
+                    history : history                
                 }
             ))
         },

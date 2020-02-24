@@ -4,5 +4,8 @@ Rails.application.routes.draw do
   get 'login', to: 'sessions#new'
   post 'login', to:'sessions#create'
   delete 'logout', to:'sessions#destroy'
+
+  # talk_room
   resources :talk_rooms
+  get 'own_talk_rooms', to:'talk_rooms#own_index'
 end

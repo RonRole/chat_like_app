@@ -9,7 +9,8 @@ export const getTalkRoomIds = (state) => Object.keys(state.talkRooms)
 
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
-        case TalkRoomActionTypes.INITIALIZE_TALK_ROOMS: {
+        case TalkRoomActionTypes.SET_JOINED_ROOMS: {
+            state.talkRooms = {}
             action.talkRooms.forEach(room => {
                 state.talkRooms[room.id] = room
             });

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_132427) do
+ActiveRecord::Schema.define(version: 2020_02_24_125512) do
 
   create_table "talk_rooms", force: :cascade do |t|
     t.string "title", null: false
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 2020_02_21_132427) do
     t.datetime "updated_at", null: false
     t.integer "author_id"
     t.index ["author_id"], name: "index_talk_rooms_on_author_id"
+  end
+
+  create_table "user_talk_room_refs", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "talk_room_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["talk_room_id"], name: "index_user_talk_room_refs_on_talk_room_id"
+    t.index ["user_id", "talk_room_id"], name: "index_user_talk_room_refs_on_user_id_and_talk_room_id"
+    t.index ["user_id"], name: "index_user_talk_room_refs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

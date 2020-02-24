@@ -12,11 +12,17 @@ export class TalkRoomPage extends React.Component {
         modalShow : false
     }
     componentDidMount() {
-        this.props.initialize()
+        this.props.getJoinedRooms(this.props.history)
     }
     render() {
         return (
             <Container> 
+                <h6 style={{borderBottom:"1px solid gray"}}>
+                    <strong>{this.props.loginUser.name}</strong>さんが作成したトークルーム
+                </h6>
+                <h6 style={{borderBottom:"1px solid gray"}}>
+                    <strong>{this.props.loginUser.name}</strong>さんが参加しているトークルーム
+                </h6>
                 <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
                 <TransitionGroup className="row">
                     {this.props.talkRoomIds().map((talkRoomId,index) => {
@@ -38,9 +44,10 @@ export class TalkRoomPage extends React.Component {
 
                 <TalkRoomAddingForm onSubmit={({title,description})=>{
                         this.props.addTalkRoom({
-                            title      :title, 
-                            description:description,
-                            authorId   :this.props.loginUser.id
+                            history     : this.props.history,
+                            title       : title, 
+                            description : description,
+                            authorId    : this.props.loginUser.id
                         })
                         this.setState({modalShow:false})
                     }}
@@ -65,18 +72,20 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        initialize:() => dispatch(TalkRoomModule.actions.tryToInitializeTalkRooms()),
+        getJoinedRooms:(history) => dispatch(TalkRoomModule.actions.execGetJoinedRooms(history)),
         addTalkRoom:({
+            history,
             title,
             description,
             authorId
         }) =>  {
-            dispatch(TalkRoomModule.actions.tryToAddTalkRoom({
-                title:title, 
-                description:description,
-                authorId : authorId
+            dispatch(TalkRoomModule.actions.execAddTalkRoom({
+                history    : history,
+                title      : title, 
+                description: description,
+                authorId   : authorId
             }))},
-        destroyTalkRoom:(talkRoomId) => dispatch(TalkRoomModule.actions.tryToDeleteTalkRoom({
+        destroyTalkRoom:(talkRoomId) => dispatch(TalkRoomModule.actions.execDeleteTalkRoom({
             talkRoomId: talkRoomId
         }))
     }

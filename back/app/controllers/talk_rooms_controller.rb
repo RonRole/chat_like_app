@@ -1,16 +1,20 @@
 class TalkRoomsController < ApplicationController
+    # 自身が管理者のトークルームを取得する
+    def own_index
+        @talk_rooms = TalkRoom.where(author_id: session[:user_id])
+        render :json => nil#@talk_rooms
+    end
+
+    # 自身がメンバーであるトークルームを取得する
     def index
-        @talk_rooms = TalkRoom.where(author_id: 2)
+        @talk_rooms = current_user.talk_rooms
         render :json => @talk_rooms
     end
 
     def create
-        @talk_room = TalkRoom.new(
-            title:       params[:talkroom][:title], 
-            description: params[:talkroom][:description], 
-            author_id:   params[:talkroom][:author_id]
-        )
-        if @talk_room&.save
+        @current_user = current_user
+        @talk_room = @current_user.talk_rooms.new(talkroom_params)
+        if(@current_user.save)
             render :json => @talk_room
         end 
     end

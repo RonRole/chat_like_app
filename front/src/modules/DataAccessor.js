@@ -1,5 +1,8 @@
 import Axios from "axios"
 
+//cookieを使用するための設定
+Axios.defaults.withCredentials = true
+
 const createNormalResponse = (response) => {
     return {
         isSuccess : response.data != undefined,

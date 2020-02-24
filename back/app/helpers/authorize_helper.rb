@@ -3,3 +3,4 @@ module AuthorizeHelper
         render json:{message:'anauthorize'},status: 401
     end
 end
+

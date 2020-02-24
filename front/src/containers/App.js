@@ -13,6 +13,7 @@ import TalkRoomPage from './TalkRoomPage'
 import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import LogModule from '../modules/logModule/LogModule';
+import HomePage from '../components/HomePage';
 
 
 export class App extends Component {
@@ -22,14 +23,8 @@ export class App extends Component {
 
   componentDidMount(){
     this.props.defaultLogin({
-      session:{
-        name:"fail",
-        password:"fail"
-      },
-      ifSuccess:() => {
-        this.props.history.push("/")
-      },
-      then:() => {
+      history : this.props.history,
+      then    : () => {
         this.setState({
           defLoginIsFinished : true
         })
@@ -45,7 +40,7 @@ export class App extends Component {
       <BrowserRouter>
         <Navigation />
         <Route path="/login" component={LoginPage}/>
-        <LoginRequiredRoute exact path="/home"/>
+        <LoginRequiredRoute exact path="/home" component={HomePage}/>
         <LoginRequiredRoute path="/about" component={AboutPage}/>
         <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
         <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
@@ -56,8 +51,14 @@ export class App extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    defaultLogin:(loginInfo) => {
-      dispatch(LogModule.actions.tryToLogin(loginInfo))
+    defaultLogin:({
+      history,
+      then
+    }) => {
+      dispatch(LogModule.actions.cookieLogin({
+        history:history,
+        then:then
+      }))
     }
   }
 }

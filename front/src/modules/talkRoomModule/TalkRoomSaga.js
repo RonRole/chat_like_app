@@ -1,6 +1,19 @@
 import DataAccessor from "../DataAccessor"
 import TalkRoomActions, { TalkRoomActionTypes } from "./TalkRoomActions"
-import { put, take, call, all } from "redux-saga/effects"
+import { put, take, call, all, takeLatest, takeEvery } from "redux-saga/effects"
+import ErrorHandler from "../ErrorHandler"
+
+const getOwnRooms = () => {
+    return DataAccessor.get({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/own_talk_rooms`
+    })
+}
+
+const getTalkRooms = () => {
+    return DataAccessor.get({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms` 
+    })
+}
 
 const createTalkRoom = ({
     title,
@@ -19,12 +32,6 @@ const createTalkRoom = ({
     })
 }
 
-const getTalkRooms = () => {
-    return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms` 
-    })
-}
-
 const deleteTalkRoom = (talkRoomId) => {
     return DataAccessor.delete({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}`
@@ -32,64 +39,77 @@ const deleteTalkRoom = (talkRoomId) => {
 }
 
 //saga
-function* handleGetTalkRooms() {
-    while(true) {
-        const action = yield take(TalkRoomActionTypes.TRY_TO_INITIALIZE_TALK_ROOMS)
-        const talkRoomResult = yield call(getTalkRooms)
-        if(talkRoomResult.isSuccess) {
-            yield put(TalkRoomActions.initializeTalkRooms(talkRoomResult.data))
-        }
-        if(talkRoomResult.isFail) {
-            alert('トークルームを取得できませんでした')
-        }
-        if(talkRoomResult.isError) {
-            alert(`エラーが発生しました ${talkRoomResult.data}`)
-        }
+function* handleGetOwnRooms(action) {
+    const result = yield call(getOwnRooms)
+    if(result.isSuccess) {
+        yield put(TalkRoomActions.setOwnRooms(result.data))
     }
-}
-
-function* handleAddTalkRoom() {
-    while(true) {
-        const action = yield take(TalkRoomActionTypes.TRY_TO_ADD_TALK_ROOM)
-        const addTalkRoomResult = yield call(createTalkRoom, {
-            title       : action.title,
-            description : action.description,
-            authorId    : action.authorId
+    if(result.isError) {
+        const errorObject = ErrorHandler({
+            error   : result.data,
+            history : action.history
         })
-        if(addTalkRoomResult.isSuccess) {
-            yield put(TalkRoomActions.addTalkRoom(addTalkRoomResult.data))
-        }
-        if(addTalkRoomResult.isFail) {
-            alert('トークルームを追加できませんでした')
-        }
-        if(addTalkRoomResult.isError) {
-            alert(`エラーが発生しました ${addTalkRoomResult.data}`)
-        }
+        alert(errorObject.message)
+    }
+}
+function* handleGetJoinedTalkRooms(action) {
+    const talkRoomResult = yield call(getTalkRooms)
+    if(talkRoomResult.isSuccess) {
+        yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
+    }
+    if(talkRoomResult.isFail) {
+        alert('トークルームを取得できませんでした')
+    }
+    if(talkRoomResult.isError) {
+        const errorObject = ErrorHandler({
+            error   : talkRoomResult.data,
+            history : action.history
+        })
+        alert(errorObject.message)
     }
 }
 
-function* handleDeleteTalkRoom() {
-    while(true) {
-        const action = yield take(TalkRoomActionTypes.TRY_TO_DELETE_TALK_ROOM)
-        const deleteTalkRoomResult = yield call(deleteTalkRoom, action.talkRoomId)
-        if(deleteTalkRoomResult.isSuccess) {
-            yield put(TalkRoomActions.deleteTalkRoom({
-                talkRoomId : action.talkRoomId
-            }))
-        }
-        if(deleteTalkRoomResult.isFail) {
-            alert(`トークルームを削除できませんでした`)
-        }
-        if(deleteTalkRoomResult.isError) {
-            alert(`エラーが発生しました ${deleteTalkRoomResult.data}`)
-        }
+function* handleAddTalkRoom(action) {
+    const addTalkRoomResult = yield call(createTalkRoom, {
+        title       : action.title,
+        description : action.description,
+        authorId    : action.authorId
+    })
+    if(addTalkRoomResult.isSuccess) {
+        yield put(TalkRoomActions.addTalkRoom(addTalkRoomResult.data))
+    }
+    if(addTalkRoomResult.isFail) {
+        alert('トークルームを追加できませんでした')
+    }
+    if(addTalkRoomResult.isError) {
+        const errorObject = ErrorHandler({
+            error   : addTalkRoomResult.data,
+            history : action.history
+        })
+        alert(errorObject.message)
+    }
+}
+
+function* handleDeleteTalkRoom(action) {
+    const deleteTalkRoomResult = yield call(deleteTalkRoom, action.talkRoomId)
+    if(deleteTalkRoomResult.isSuccess) {
+        yield put(TalkRoomActions.deleteTalkRoom({
+            talkRoomId : action.talkRoomId
+        }))
+    }
+    if(deleteTalkRoomResult.isFail) {
+        alert(`トークルームを削除できませんでした`)
+    }
+    if(deleteTalkRoomResult.isError) {
+        alert(`エラーが発生しました ${deleteTalkRoomResult.data}`)
     }
 }
 
 export default function* talkRoomSaga() {
     yield all([
-        handleAddTalkRoom(),
-        handleGetTalkRooms(),
-        handleDeleteTalkRoom()
+        takeEvery(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, handleGetOwnRooms),
+        takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, handleGetJoinedTalkRooms),
+        takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, handleAddTalkRoom),
+        takeEvery(TalkRoomActionTypes.EXEC_DELETE_ROOM, handleDeleteTalkRoom)
     ])
 }

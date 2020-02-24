@@ -10,7 +10,7 @@ const initialState = {
 
 const creatReducer = (state = initialState, action) => {
     switch(action.type){
-        case LogActionTypes.TRY_TO_LOG_IN: {
+        case LogActionTypes.TRY_LOG_IN: {
             return {
                 ...state,
                 tryedToLogin:true
