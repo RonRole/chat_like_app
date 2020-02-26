@@ -1,10 +1,10 @@
 import { shallow } from 'enzyme';
-import {App} from '../containers/App';
+import {App} from '../../containers/App';
 import { BrowserRouter, Route } from 'react-router-dom';
 import React from 'react'
-import Loading from '../components/Loading';
-import LoginRequiredRoute from '../containers/LoginRequiredRoute';
-import Navigation from '../components/Navigation';
+import Loading from '../../components/Loading';
+import LoginRequiredRoute from '../../containers/LoginRequiredRoute';
+import Navigation from '../../components/Navigation';
 
 const appWrapper = shallow(<App defaultLogin={()=>console.log("test")}/>)
 
