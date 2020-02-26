@@ -3,7 +3,7 @@ import { Container, Button, Col, Form } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import TalkRoomCard from '../components/TalkRoomCard'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import TalkRoomAddingForm from '../components/TalkRoomAddingForm'
+import TalkRoomModalForm from '../components/TalkRoomModalForm'
 import { getTalkRoomIds } from '../modules/talkRoomModule/TalkRoomReducer'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 
@@ -60,7 +60,7 @@ export class TalkRoomPage extends React.Component {
                 <TalkRoomAreaLabel loginUser={this.props.loginUser} about="さんが参加しているトークルーム" />
                 <TalkRoomsArea {...this.props} talkRoomIds={this.props.joinedRoomIds} readOnly/>
 
-                <TalkRoomAddingForm onSubmit={({title,description})=>{
+                <TalkRoomModalForm onSubmit={({title,description})=>{
                         this.props.addTalkRoom({
                             history     : this.props.history,
                             title       : title, 
