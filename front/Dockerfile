@@ -1,8 +1,8 @@
-FROM node
+FROM node:8.16.0-alpine
 
-ENV HOME=/home/app
+WORKDIR /usr/chat_like_app/front
 
-COPY ./* $HOME/
-WORKDIR $HOME
+COPY . /usr/chat_like_app/front
 
-CMD ["node","app.js"]
+RUN npm ci
+RUN npm run start
