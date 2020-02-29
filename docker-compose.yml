@@ -1,0 +1,14 @@
+version: '3'
+services:
+  front:
+    build: ./front
+    volumes: 
+      - ./front:/app
+    ports:
+      - "3000:3000"
+  socket:
+    build: ./socket
+    volumes:
+      - ./socket:/app
+    ports:
+      - "8000:8000"
