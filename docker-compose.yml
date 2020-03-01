@@ -6,9 +6,30 @@ services:
       - ./front:/app
     ports:
       - "3000:3000"
+    command: sh -c "yarn install && yarn start" 
+  back:
+    build: ./back
+    volumes:
+      - ./back:/app
+    ports:
+      - "4000:4000"
+    command: rails s -p 4000 -b '0.0.0.0'
+    depends_on: 
+      - db
+  db:
+    build: ./mysql
+    image: mysql:latest
+    volumes:
+      - ./mysql/mysql-confd:/etc/mysql/conf.d
+    environment:
+      MYSQL_DATABASE: chat_like_app
+      MYSQL_USER: sawai
+      MYSQL_PASSWORD: sawai
+      MYSQL_ROOT_PASSWORD: sawai
   socket:
     build: ./socket
     volumes:
       - ./socket:/app
     ports:
       - "8000:8000"
+    command: sh -c "yarn install && node ./socket_server.js"

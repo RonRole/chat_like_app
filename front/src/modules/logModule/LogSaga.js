@@ -31,10 +31,12 @@ function* handleGetExecLoginStart(loginAction) {
         alert(`ようこそ${accessResult.data.name}さん!`)
         yield put(LogActions.login(accessResult.data))
         loginAction.history.push('/home')
+        yield put(LogActions.setLoginTried())
     }
     if(accessResult.isFail){
         alert("ログインに失敗しました")
         yield put(LogActions.logout())
+        yield put(LogActions.setLoginTried())
     }
     if(accessResult.isError) {
         const errorObject = ErrorHandler({
@@ -43,7 +45,6 @@ function* handleGetExecLoginStart(loginAction) {
         })
         alert(errorObject.message)
     }
-    yield put(LogActions.setLoginTried())
     loginAction.then();
 
 }

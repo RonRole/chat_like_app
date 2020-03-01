@@ -21,6 +21,7 @@ const store = createStore(
     applyMiddleware(sagaMiddleware)
 )
 
+//run sagas
 sagaMiddleware.run(LogModule.saga)
 sagaMiddleware.run(TalkRoomMessageModule.saga)
 sagaMiddleware.run(TalkRoomModule.saga)

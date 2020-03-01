@@ -12,18 +12,18 @@
 
 ActiveRecord::Schema.define(version: 2020_02_24_125512) do
 
-  create_table "talk_rooms", force: :cascade do |t|
+  create_table "talk_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "author_id"
+    t.bigint "author_id"
     t.index ["author_id"], name: "index_talk_rooms_on_author_id"
   end
 
-  create_table "user_talk_room_refs", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "talk_room_id"
+  create_table "user_talk_room_refs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "talk_room_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["talk_room_id"], name: "index_user_talk_room_refs_on_talk_room_id"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 2020_02_24_125512) do
     t.index ["user_id"], name: "index_user_talk_room_refs_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
     t.string "remember_digest"
@@ -39,4 +39,6 @@ ActiveRecord::Schema.define(version: 2020_02_24_125512) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "user_talk_room_refs", "talk_rooms"
+  add_foreign_key "user_talk_room_refs", "users"
 end
