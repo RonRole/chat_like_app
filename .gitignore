@@ -5,6 +5,8 @@ front/node_modules
 front/.pnp
 .pnp.js
 
+socket/node_modules
+
 # testing
 front/coverage
 
