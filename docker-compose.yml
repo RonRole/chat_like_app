@@ -6,7 +6,15 @@ services:
       - ./front:/app
     ports:
       - "3000:3000"
-    command: sh -c "yarn install && yarn start" 
+    command: sh -c "yarn install && yarn build && yarn start"
+  front-build:
+    build: ./nginx
+    volumes:
+      - ./front/build:/usr/share/nginx/html
+    ports:
+      - "3001:80"
+    depends_on: 
+      - front
   back:
     build: ./back
     volumes:
