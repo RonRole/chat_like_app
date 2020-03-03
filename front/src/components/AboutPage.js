@@ -1,12 +1,12 @@
 import React from 'react'
-import { Button, Container } from 'react-bootstrap'
+import { Button, Container, Alert } from 'react-bootstrap'
 
 class AboutPage extends React.Component {
 
     OonButton = <Button variant="primary">オォン!</Button>
-    OonMessage= <span className={`alert alert-primary`}>オォン!</span>
+    OonMessage= <Alert variant="primary">オォン!</Alert>
     AonButton = <Button variant="danger">アォン!</Button>
-    AonMessage= <span className={`alert alert-danger`}>アォン!</span>
+    AonMessage= <Alert variant="danger">アォン!</Alert>
 
 
     render(){

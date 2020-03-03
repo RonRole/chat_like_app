@@ -6,7 +6,7 @@ class Loading extends React.Component {
         return (
             <div style={{height:"100vh"}} id="loading" className="d-flex flex-column justify-content-center align-items-center">
                 <Spinner variant="primary" animation="border"/> 
-                休憩中よ    
+                今日もいい天気  
             </div>
         )
     }
