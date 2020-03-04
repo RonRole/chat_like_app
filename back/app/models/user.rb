@@ -2,6 +2,8 @@ class User < ApplicationRecord
     has_secure_password
     has_many :user_talk_room_refs
     has_many :talk_rooms, through: :user_talk_room_refs
+    #イメージ画像
+    mount_uploader :image, ImageUploader
 
     #受け取った文字列をハッシュにして返す
     class << self

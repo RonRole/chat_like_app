@@ -31,6 +31,13 @@ module Back
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = false
+
+    #rmagick用
+    module AwesomeEvents
+      class Application < Rails::Application
+        config.autoload_paths += Dir[Rails.root.join('app', 'uploaders')]
+      end
+    end
   end
 
   

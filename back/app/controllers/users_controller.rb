@@ -4,12 +4,12 @@ class UsersController < ApplicationController
     end
 
     def create
-        @user = User.new(params[:user])
+        @user = User.new(user_params)
         if(@user.save)
             render :json => @user
+        else
+            render :json => {isFail:true}
         end
-        
-        render :json => {}
     end
 
     def show
@@ -25,5 +25,6 @@ class UsersController < ApplicationController
 
     private
         def user_params
+            params.require(:user).permit(:name, :password, :password_confirmation, :image)
         end
 end

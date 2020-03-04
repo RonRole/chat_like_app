@@ -2,11 +2,12 @@ import Axios from "axios"
 
 //cookieを使用するための設定
 Axios.defaults.withCredentials = true
+//Axios.defaults.headers.post['Content-Type'] = 'multipart/form-data'
 
 const createNormalResponse = (response) => {
     return {
-        isSuccess : response.data != undefined,
-        isFail    : response.data == undefined,
+        isSuccess : !response.data.isFail,
+        isFail    : response.data.isFail,
         data      : response.data
     }
 }
@@ -32,9 +33,10 @@ export default {
     },
     post : ({
         url,
-        parameter
+        parameter,
+        headers={}
     }) => {
-        return Axios.post(url, parameter)
+        return Axios.post(url, parameter, headers)
                     .then(response => {
                         return createNormalResponse(response)
                     })

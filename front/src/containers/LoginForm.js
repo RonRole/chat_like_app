@@ -7,8 +7,8 @@ import LogModule from '../modules/logModule/LogModule'
 
 export class LoginForm　extends React.Component {
 
-    componentDidUpdate(){
-        console.log(this.props)
+    componentDidMount(){
+        console.log(this.props.loginError)
     }
 
     render(){
@@ -24,14 +24,14 @@ export class LoginForm　extends React.Component {
                 <Form.Group controlId="nameForm">
                     <Form.Label>おなまえ</Form.Label>
                     {/* isInvalidがtrueだとis-invalidクラスになる これでスタイリングする */}
-                    <Form.Control isInvalid={this.props.tryedToLogin && !this.props.isLoggedIn} type="text" name="name" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
+                    <Form.Control isInvalid={this.props.loginError} type="text" name="name" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
                     <Form.Control.Feedback type="invalid">
                         おなまえが間違ってましてよ
                     </Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="passWordForm">
                     <Form.Label>おぱすわーど</Form.Label>
-                    <Form.Control isInvalid={this.props.tryedToLogin && !this.props.isLoggedIn} type="password" name="password" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
+                    <Form.Control isInvalid={this.props.loginError} type="password" name="password" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
                     <Form.Control.Feedback type="invalid">
                         おぱすわーどが間違ってましてよ
                     </Form.Control.Feedback>
@@ -44,7 +44,7 @@ export class LoginForm　extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        tryedToLogin : state.logReducer.tryedToLogin,
+        loginError : state.logReducer.loginError,
         isLoggedIn   : state.logReducer.isLoggedIn
     }
 }

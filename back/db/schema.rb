@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_24_125512) do
+ActiveRecord::Schema.define(version: 2020_03_03_113516) do
 
   create_table "talk_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "title", null: false
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_02_24_125512) do
     t.string "remember_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
   end
 
   add_foreign_key "user_talk_room_refs", "talk_rooms"

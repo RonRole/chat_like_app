@@ -8,6 +8,7 @@ import TalkRoomMessageModule from './modules/talkRoomMessageModule/TalkRoomMessa
 import createSagaMiddleware from 'redux-saga'
 import LogModule from './modules/logModule/LogModule'
 import TalkRoomModule from './modules/talkRoomModule/TalkRoomModule'
+import UserModule from './modules/userModule/UserModule'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -25,5 +26,6 @@ const store = createStore(
 sagaMiddleware.run(LogModule.saga)
 sagaMiddleware.run(TalkRoomMessageModule.saga)
 sagaMiddleware.run(TalkRoomModule.saga)
+sagaMiddleware.run(UserModule.saga)
 
 export default store;

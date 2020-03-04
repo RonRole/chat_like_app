@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import LogModule from '../modules/logModule/LogModule';
 import HomePage from '../components/HomePage';
+import SignUpPage from '../components/SignUpPage';
 
 
 export class App extends Component {
@@ -40,6 +41,7 @@ export class App extends Component {
       <BrowserRouter>
         <Navigation />
         <Route path="/login" component={LoginPage}/>
+        <Route path="/signup" component={SignUpPage} />
         <LoginRequiredRoute exact path="/home" component={HomePage}/>
         <LoginRequiredRoute path="/about" component={AboutPage}/>
         <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />

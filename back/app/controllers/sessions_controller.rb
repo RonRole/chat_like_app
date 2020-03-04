@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
             session[:user_id] = @current_user.id
             render :json => @current_user#{name: @current_user.name, isLoggedIn:true}
         else
-            render :json => nil
+            render :json => {isFail: true}
         end
     end
 

@@ -3,7 +3,7 @@ import Axios from "axios"
 export const LogActionTypes = {
     EXEC_LOG_IN:"EXEC_LOG_IN",
     DEF_LOG_IN:"DEF_LOG_IN",
-    TRY_LOG_IN:"TRY_LOG_IN",
+    FAIL_LOG_IN:"FAIL_LOG_IN",
     LOG_IN:"LOG_IN",
     LOG_OUT:"LOG_OUT"
 }
@@ -31,9 +31,10 @@ export default {
             then    : then
         }
     },
-    setLoginTried:() => {
+    loginFailed:(failedData) => {
         return {
-            type : LogActionTypes.TRY_LOG_IN
+            type : LogActionTypes.FAIL_LOG_IN,
+            data : failedData
         }
     },
     login: (user) => {
