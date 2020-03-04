@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+
     def index
         render :json => User.all
     end
@@ -22,6 +23,11 @@ class UsersController < ApplicationController
 
     def destroy
     end
+
+    def self
+        render :json => current_user
+    end
+
 
     private
         def user_params

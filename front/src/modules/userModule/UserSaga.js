@@ -4,6 +4,12 @@ import { call, put, all, takeEvery } from "redux-saga/effects"
 import ErrorHandler from "../ErrorHandler"
 import { UserActionTypes } from "./UserActions"
 
+const getSelf = () => {
+    return DataAccessor.get(({
+        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/users/self`
+    }))
+}
+
 /**
  * Tips
  * FormDataで入れ子のデータ構造を送る場合,
@@ -27,6 +33,14 @@ const createUser = (
 }
 
 //saga
+function* handleGetSelf(action) {
+    const result = yield call(getSelf)
+    if(result.isSuccess) {
+        yield put
+    }
+}
+
+
 function* handleCreateUser(action) {
     const result = yield call(createUser, action.userParams)
     if(result.isSuccess) {
