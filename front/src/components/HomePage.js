@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 class HomePage extends React.Component {
     render() {
-        console.log(this.props.loginUser)
         return (
             <div>
                 <h1>Here is Home Page!!!</h1>

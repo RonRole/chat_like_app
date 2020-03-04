@@ -1,0 +1,10 @@
+img {
+    opacity: 1;
+    transition: all 0.2s ease-out;
+}
+
+img:hover {
+    background-color: whitesmoke;
+    opacity: 0.3;
+    transition: all 0.2s ease-in;
+}

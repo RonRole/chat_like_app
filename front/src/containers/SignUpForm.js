@@ -1,7 +1,8 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Container } from 'react-bootstrap'
 import UserModule from '../modules/userModule/UserModule'
 import { connect } from 'react-redux'
+import "./SignUpForm.css"
 
 class SignUpForm extends React.Component {
 
@@ -39,17 +40,29 @@ class SignUpForm extends React.Component {
                     <Form.Control type="password" name="password_confirmation" placeholder="おぱすわーど"/>
                 </Form.Group>
                 <Form.Group controlId="signUpImageForm">
-                    <img className="mb-2" src={this.state.uploadFile} width="100" height="100"/>
-                    <Form.Control type="file" name="image" onChange={(e) => {
+                    <Form.Control style={{display:'none'}} type="file" name="image" onChange={(e) => {
                         const fileReader = new FileReader()
+                        const input = e.currentTarget.files[0]
                         fileReader.onload = e => {
                             this.setState({
                                 uploadFile: e.target.result
                             })
 
                         }
-                        fileReader.readAsDataURL(e.currentTarget.files[0])
+                        input ? fileReader.readAsDataURL(e.currentTarget.files[0]) : this.setState({uploadFile:null})
+
                     }}/>
+                    <div className="d-flex align-items-center" style={{position:"relative",width:"200px", height:"200px"}}>
+                        <img style={{position:"absolute"}}　 
+                            onClick={()=>document.getElementsByName("image")[0].click()} 
+                            className="mb-2" src={this.state.uploadFile} 
+                            width="100%" 
+                            height="100%"
+                        />
+                        <div style={{textAlign:"center", width:"100%", fontWeight:"bold"}}>
+                            クリックで画像追加
+                        </div>
+                    </div>
                 </Form.Group>
                 <Button variant="primary" type="submit">送りますわ</Button>
             </Form>
