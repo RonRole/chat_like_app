@@ -60,7 +60,7 @@ class SignUpForm extends React.Component {
                             height="100%"
                         />
                         <div style={{textAlign:"center", width:"100%", fontWeight:"bold"}}>
-                            クリックで画像追加
+                            クリックで画像変更
                         </div>
                     </div>
                 </Form.Group>
