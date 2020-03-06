@@ -5,6 +5,16 @@ class User < ApplicationRecord
     #イメージ画像
     mount_uploader :image, ImageUploader
 
+    #画面に渡す自身のパラメータ(JSON)
+    def hash_for_front
+        {
+            id:self.id,
+            name:self.name,
+            profile:self.image.thumb,
+            thumb:self.image.thumb
+        }
+    end
+
     #受け取った文字列をハッシュにして返す
     class << self
         def digest(string)

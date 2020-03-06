@@ -1,5 +1,3 @@
-import Axios from "axios"
-
 export const LogActionTypes = {
     EXEC_LOG_IN:"EXEC_LOG_IN",
     DEF_LOG_IN:"DEF_LOG_IN",

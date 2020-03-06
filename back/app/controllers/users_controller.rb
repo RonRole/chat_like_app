@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+    skip_before_action :is_user_logged_in?, only:[:create]
+
     def index
         render :json => User.all
     end
@@ -7,14 +9,14 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if(@user.save)
-            render :json => @user
+            render :json => @user#.hash_for_front
         else
             render :json => {isFail:true}
         end
     end
 
     def show
-        render :json => User.find(params[:id])
+        render :json => User.find(params[:id])#.hash_for_front
     end
 
     def update
@@ -25,7 +27,7 @@ class UsersController < ApplicationController
     end
 
     def self
-        render :json => current_user
+        render :json => current_user#.hash_for_front
     end
 
 

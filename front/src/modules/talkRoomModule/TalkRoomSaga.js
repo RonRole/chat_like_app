@@ -1,7 +1,7 @@
 import DataAccessor from "../DataAccessor"
 import TalkRoomActions, { TalkRoomActionTypes } from "./TalkRoomActions"
 import { put, take, call, all, takeLatest, takeEvery } from "redux-saga/effects"
-import ErrorHandler from "../ErrorHandler"
+import handleError from "../ErrorHandler"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
@@ -45,7 +45,7 @@ function* handleGetOwnRooms(action) {
         yield put(TalkRoomActions.setOwnRooms(result.data))
     }
     if(result.isError) {
-        const errorObject = ErrorHandler({
+        const errorObject = handleError({
             error   : result.data,
             history : action.history
         })
@@ -61,7 +61,7 @@ function* handleGetJoinedTalkRooms(action) {
         alert('トークルームを取得できませんでした')
     }
     if(talkRoomResult.isError) {
-        const errorObject = ErrorHandler({
+        const errorObject = handleError({
             error   : talkRoomResult.data,
             history : action.history
         })
@@ -82,7 +82,7 @@ function* handleAddTalkRoom(action) {
         alert('トークルームを追加できませんでした')
     }
     if(addTalkRoomResult.isError) {
-        const errorObject = ErrorHandler({
+        const errorObject = handleError({
             error   : addTalkRoomResult.data,
             history : action.history
         })

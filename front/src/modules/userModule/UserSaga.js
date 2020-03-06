@@ -1,8 +1,9 @@
 import LogActions from "../logModule/LogActions"
 import DataAccessor from "../DataAccessor"
 import { call, put, all, takeEvery } from "redux-saga/effects"
-import ErrorHandler from "../ErrorHandler"
+import handleError from "../ErrorHandler"
 import { UserActionTypes } from "./UserActions"
+import LoadingActions from "../loadingModule/LoadingActions"
 
 const getSelf = () => {
     return DataAccessor.get(({
@@ -42,6 +43,7 @@ function* handleGetSelf(action) {
 
 
 function* handleCreateUser(action) {
+    yield put(LoadingActions.startLoading())
     const result = yield call(createUser, action.userParams)
     if(result.isSuccess) {
         yield put(LogActions.execLogin({
@@ -56,12 +58,13 @@ function* handleCreateUser(action) {
         alert("ユーザーを作成できませんでした")
     }
     if(result.isError) {
-        const errorObject = ErrorHandler({
+        const errorObject = handleError({
             error : result.data,
             history : action.history
         })
         alert(errorObject.message)
     }
+    yield put(LoadingActions.finishLoading())
 }
 
 export default function* UserSaga() {

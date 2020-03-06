@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, createContext } from 'react';
 //redux
 import MessagesPage from '../components/MessagesPage'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Router } from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
 import AboutPage from '../components/AboutPage';
@@ -18,27 +18,19 @@ import SignUpPage from '../components/SignUpPage';
 
 
 export class App extends Component {
-  state = {
-    defLoginIsFinished:false
-  }
 
   componentDidMount(){
     this.props.defaultLogin({
-      history : this.props.history,
-      then    : () => {
-        this.setState({
-          defLoginIsFinished : true
-        })
-      }
+      history : this.props.history
     })
   }
 
   render() {
-    if(!this.state.defLoginIsFinished){
-      return <Loading />
-    }
-    return (
+    return (   
       <BrowserRouter>
+        {[this.props.loading].filter(e=>e).map((e,index) => {
+          return <Loading key={index}/>
+        })}
         <Navigation />
         <Route path="/login" component={LoginPage}/>
         <Route path="/signup" component={SignUpPage} />
@@ -46,23 +38,27 @@ export class App extends Component {
         <LoginRequiredRoute path="/about" component={AboutPage}/>
         <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
         <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
-      </BrowserRouter>   
+      </BrowserRouter>  
     )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    loading : state.loadingReducer.loading
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
     defaultLogin:({
-      history,
-      then
+      history
     }) => {
       dispatch(LogModule.actions.cookieLogin({
-        history:history,
-        then:then
+        history:history
       }))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

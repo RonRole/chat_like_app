@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
     def new
         @current_user = current_user
         if(@current_user) 
-            render :json => @current_user
+            render :json => @current_user#.hash_for_front
             return
         end
         render_authorize_error
@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
         @current_user = User.find_by(name:session_params[:name])
         if(@current_user && @current_user.authenticate(session_params[:password]))
             session[:user_id] = @current_user.id
-            render :json => @current_user#{name: @current_user.name, isLoggedIn:true}
+            render :json => @current_user#.hash_for_front
         else
             render :json => {isFail: true}
         end

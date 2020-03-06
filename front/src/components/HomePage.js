@@ -7,7 +7,7 @@ class HomePage extends React.Component {
         return (
             <div>
                 <h1>Here is Home Page!!!</h1>
-                <img src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.loginUser.image.url}`} />
+                <img src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.loginUser.image.profile.url}`} />
                 <div>
                     <strong>ID : {this.props.loginUser.id}</strong>
                 </div>

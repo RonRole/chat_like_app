@@ -2,7 +2,7 @@
  * APIアクセス時のエラーを処理する
  */
 
-const ErrorHandler = ({
+const handleError = ({
     error,
     history
 }) => {
@@ -16,6 +16,8 @@ const ErrorHandler = ({
         }
     }
     //anauthorizeの時、リダイレクト
+    //今のままだとurlが変わるだけでレンダリングされない
+    //historyモジュールを追加し、BrowserRouterから普通のRouterに修正してみる
     if(error.response.status === 401) {
         history.push('/login')
         return {
@@ -27,5 +29,5 @@ const ErrorHandler = ({
     }
 }
 
-export default ErrorHandler
+export default handleError
 
