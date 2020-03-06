@@ -7,6 +7,9 @@ front/.pnp
 
 socket/node_modules
 
+#tmp
+back/public/uploads
+
 # testing
 front/coverage
 
