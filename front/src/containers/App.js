@@ -11,7 +11,7 @@ import LoginRequiredRoute from './LoginRequiredRoute';
 import LoginPage from '../components/LoginPage';
 import TalkRoomPage from './TalkRoomPage'
 import { connect } from 'react-redux';
-import Loading from '../components/Loading';
+import Loading from './Loading';
 import LogModule from '../modules/logModule/LogModule';
 import HomePage from '../components/HomePage';
 import SignUpPage from '../components/SignUpPage';
@@ -27,10 +27,9 @@ export class App extends Component {
 
   render() {
     return (   
+
       <BrowserRouter>
-        {[this.props.loading].filter(e=>e).map((e,index) => {
-          return <Loading key={index}/>
-        })}
+        <Loading />
         <Navigation />
         <Route path="/login" component={LoginPage}/>
         <Route path="/signup" component={SignUpPage} />
@@ -43,11 +42,7 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    loading : state.loadingReducer.loading
-  }
-}
+
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -61,4 +56,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(null, mapDispatchToProps)(App);

@@ -1,8 +1,12 @@
 import React from 'react'
 import { Spinner } from 'react-bootstrap';
+import { connect } from 'react-redux';
 
 class Loading extends React.Component {
     render() {
+        if(!this.props.loading) {
+            return <div></div>
+        }
         return (
             <div style={{zIndex:99, height:"100vh", width:"100vw", position:"absolute"}} id="loading" className="d-flex justify-content-center align-items-center">
                 <div style={{position:"absolute", height:"100%", width:"100%", backgroundColor:"gray", opacity:"0.5"}}></div>
@@ -15,4 +19,10 @@ class Loading extends React.Component {
     }
 }
 
-export default Loading;
+const mapStateToProps = (state) => {
+    return {
+        loading : state.loadingReducer.loading
+    }
+}
+
+export default connect(mapStateToProps)(Loading);

@@ -6,11 +6,15 @@ const io = require('socket.io').listen(server)
 server.listen(8000)
 
 io.sockets.on('connection', socket => {
-
     //トークルーム参加
-    socket.on('joinRoom', ({roomId}) => {
+    socket.on('joinRoom', ({name="新参者", roomId}) => {
         console.log(`${roomId}に新参者が現れた!!!`)
         socket.join(roomId)
+        socket.to(roomId).emit('return', {
+            roomId : roomId,
+            className : 'primary',
+            text : `${name}が現れた!`
+        })
     })
     //メッセージ送信
     socket.on('sendMessage',({roomId, className="",text=""}) => {

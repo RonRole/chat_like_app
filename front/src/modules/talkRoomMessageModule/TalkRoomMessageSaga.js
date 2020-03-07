@@ -1,7 +1,7 @@
 import {ActionTypes} from "./TalkRoomMessageActoins"
 import Actions from "./TalkRoomMessageActoins"
 import { eventChannel } from "redux-saga"
-import { call, take, put, all, takeEvery } from "redux-saga/effects"
+import { call, take, put, all } from "redux-saga/effects"
 import socketClient from "../socketClient"
 
 
@@ -34,21 +34,24 @@ function* handleReceiveMessage() {
 }
 
 function* handleJoinRoom() {
-    //JOIN_ROOMが発行される毎に起動
-    const action = yield take(ActionTypes.JOIN_ROOM)
-    socketClient.emit('joinRoom',{roomId:action.roomId})
+    while(true) {
+        //JOIN_ROOMが発行される毎に起動
+        const action = yield take(ActionTypes.JOIN_ROOM)
+        socketClient.emit('joinRoom',{roomId:action.roomId})
+    }
 }
 
 function* handleAddMessage() {
-    const action = yield take(ActionTypes.ADD_MESSAGE)
-    socketClient.emit('sendMessage', {roomId:action.roomId, className:action.className, text:action.text})
+    while(true) {
+        const action = yield take(ActionTypes.ADD_MESSAGE)
+        socketClient.emit('sendMessage', {roomId:action.roomId, className:action.className, text:action.text})
+    }
 }
 
 export default function* talkRoomMessageSaga() {
     yield all([
-        takeEvery(ActionTypes.JOIN_ROOM, handleJoinRoom),
+        handleJoinRoom(),
         handleReceiveMessage(),
-        takeEvery(ActionTypes.ADD_MESSAGE, handleAddMessage),
+        handleAddMessage(),
     ])
 }
-
