@@ -6,9 +6,10 @@ export const ActionTypes = {
 }
 
 //actionCreators
-const joinRoom = ({roomId}) => {
+const joinRoom = ({user, roomId}) => {
     return {
         type   : ActionTypes.JOIN_ROOM,
+        user: user,
         roomId : roomId
     }
 }
@@ -16,28 +17,32 @@ const joinRoom = ({roomId}) => {
 const addMessage = ({
     roomId,
     className,
-    text
+    text,
+    thumb
 }) => {
     return {
         type     : ActionTypes.ADD_MESSAGE,
         roomId   : roomId,
         className: className,
         md       : {span:6, offset:6},
-        text     : text
+        text     : text,
+        thumb    : thumb
     }
 }
 
 const receiveMessage = ({
     roomId,
     className,
-    text
+    text,
+    thumb
 }) => {
     return {
         type     : ActionTypes.RECEIVE_MESSAGE,
         roomId   : roomId,
         className: className,
         md       : {span:6},
-        text     : text
+        text     : text,
+        thumb    : thumb
     }
 }
 

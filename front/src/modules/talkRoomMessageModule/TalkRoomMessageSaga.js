@@ -28,7 +28,8 @@ function* handleReceiveMessage() {
         yield put(Actions.receiveMessage({
             roomId:response.roomId,
             className:response.className,
-            text:response.text
+            text:response.text,
+            thumb : response.thumb
         }))
     }
 }
@@ -37,14 +38,19 @@ function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(ActionTypes.JOIN_ROOM)
-        socketClient.emit('joinRoom',{roomId:action.roomId})
+        socketClient.emit('joinRoom',{user: action.user, roomId:action.roomId})
     }
 }
 
 function* handleAddMessage() {
     while(true) {
         const action = yield take(ActionTypes.ADD_MESSAGE)
-        socketClient.emit('sendMessage', {roomId:action.roomId, className:action.className, text:action.text})
+        socketClient.emit('sendMessage', {
+            roomId:action.roomId, 
+            className:action.className, 
+            text:action.text,
+            thumb : action.thumb
+        })
     }
 }
 
