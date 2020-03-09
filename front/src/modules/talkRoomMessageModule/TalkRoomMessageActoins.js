@@ -1,6 +1,7 @@
 //actionTypes
 export const ActionTypes = {
     JOIN_ROOM       : "JOIN_ROOM",
+    LEAVE_ROOM      : "LEAVE_ROOM",
     ADD_MESSAGE     : "ADD_MESSAGE",
     RECEIVE_MESSAGE : "RECEIVE_MESSAGE"
 }
@@ -14,40 +15,47 @@ const joinRoom = ({user, roomId}) => {
     }
 }
 
+const leaveRoom = ({user, roomId}) => {
+    return {
+        type : ActionTypes.LEAVE_ROOM,
+        user : user,
+        roomId : roomId
+    }
+}
+
 const addMessage = ({
     roomId,
     className,
+    user,
     text,
-    thumb
 }) => {
     return {
         type     : ActionTypes.ADD_MESSAGE,
         roomId   : roomId,
         className: className,
-        md       : {span:6, offset:6},
+        user     : user,
         text     : text,
-        thumb    : thumb
     }
 }
 
 const receiveMessage = ({
     roomId,
     className,
-    text,
-    thumb
+    user,
+    text
 }) => {
     return {
         type     : ActionTypes.RECEIVE_MESSAGE,
         roomId   : roomId,
         className: className,
-        md       : {span:6},
-        text     : text,
-        thumb    : thumb
+        user     : user,
+        text     : text
     }
 }
 
 export default {
     joinRoom,
+    leaveRoom,
     addMessage,
     receiveMessage
 }

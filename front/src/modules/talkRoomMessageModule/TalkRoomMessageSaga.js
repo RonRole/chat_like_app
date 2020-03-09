@@ -11,7 +11,7 @@ import socketClient from "../socketClient"
 function* createMessegeReceiveChannel() {
     //イベントチャンネル：socketClientが受け取ったresponseをemitし、イベント発行
     return eventChannel(emit => {
-        socketClient.on('return', response => {
+        socketClient.on('receiveMessage', response => {
             emit(response)
         })
         return () => {
@@ -26,10 +26,10 @@ function* handleReceiveMessage() {
     while(true) {
         const response = yield take(channel)
         yield put(Actions.receiveMessage({
-            roomId:response.roomId,
-            className:response.className,
-            text:response.text,
-            thumb : response.thumb
+            roomId    : response.roomId,
+            className : response.className,
+            text      : response.text,
+            user      : response.user
         }))
     }
 }
@@ -38,7 +38,16 @@ function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(ActionTypes.JOIN_ROOM)
+        socketClient.connect()
         socketClient.emit('joinRoom',{user: action.user, roomId:action.roomId})
+    }
+}
+
+function* handleLeaveRoom() {
+    while(true) {
+        const action = yield take(ActionTypes.LEAVE_ROOM)
+        socketClient.emit('leaveRoom',{user:action.user, roomId:action.roomId})
+        socketClient.disconnect()
     }
 }
 
@@ -46,10 +55,9 @@ function* handleAddMessage() {
     while(true) {
         const action = yield take(ActionTypes.ADD_MESSAGE)
         socketClient.emit('sendMessage', {
-            roomId:action.roomId, 
-            className:action.className, 
-            text:action.text,
-            thumb : action.thumb
+            roomId    : action.roomId, 
+            text      : action.text,
+            user      : action.user
         })
     }
 }
@@ -57,6 +65,7 @@ function* handleAddMessage() {
 export default function* talkRoomMessageSaga() {
     yield all([
         handleJoinRoom(),
+        handleLeaveRoom(),
         handleReceiveMessage(),
         handleAddMessage(),
     ])

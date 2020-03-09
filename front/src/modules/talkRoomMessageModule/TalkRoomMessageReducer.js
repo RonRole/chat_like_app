@@ -32,10 +32,9 @@ const createReducer = (state = initialState, action) => {
                 messages: [
                     ...state[action.roomId].messages,
                     {
-                        className:action.className,
-                        text:action.text,
-                        md:action.md,
-                        thumb:action.thumb
+                        className : action.className,
+                        user      : action.user,
+                        text      : action.text
                     }
                 ],
                 messageAreaBottom:state[action.roomId].messageAreaBottom*2
