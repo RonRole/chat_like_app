@@ -44,9 +44,12 @@ function* handleJoinRoom() {
 }
 
 function* handleLeaveRoom() {
+    //退出メッセージを受け取るためにイベントチャンネルを設定する
+    const channel = yield call(createMessegeReceiveChannel,socketClient)
     while(true) {
         const action = yield take(ActionTypes.LEAVE_ROOM)
         socketClient.emit('leaveRoom',{user:action.user, roomId:action.roomId})
+        yield take(channel)
         socketClient.disconnect()
     }
 }

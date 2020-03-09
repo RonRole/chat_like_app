@@ -34,7 +34,6 @@ export class App extends Component {
         <Route path="/login" component={LoginPage}/>
         <Route path="/signup" component={SignUpPage} />
         <LoginRequiredRoute exact path="/home" component={HomePage}/>
-        <LoginRequiredRoute path="/about" component={AboutPage}/>
         <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
         <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
       </BrowserRouter>  

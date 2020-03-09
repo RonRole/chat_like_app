@@ -7,19 +7,34 @@ server.listen(8000)
 
 io.sockets.on('connection', socket => {
     //トークルーム参加
-    socket.on('joinRoom', ({name="新参者", roomId}) => {
+    socket.on('joinRoom', ({user = {},　roomId}) => {
         console.log(`${roomId}に新参者が現れた!!!`)
         socket.join(roomId)
-        socket.to(roomId).emit('return', {
+        io.sockets.in(roomId).emit('receiveMessage', {
             roomId : roomId,
-            className : 'primary',
-            text : `${name}が現れた!`
+            className : "joinRoom",
+            user : user,
+            text : `${user.name}が参加しました`,
+        })
+    })
+    socket.on('leaveRoom', ({user = {}, roomId}) => {
+        console.log(`${roomId}から人が離れました`)
+        io.sockets.in(roomId).emit('receiveMessage', {
+            roomId : roomId,
+            className : "leaveRoom",
+            user : user,
+            text : `${user.name}が退出しました`
         })
     })
     //メッセージ送信
-    socket.on('sendMessage',({roomId, className="",text=""}) => {
-        console.log(`roomId:${roomId} class:${className} text:${text}`)
-        socket.to(roomId).broadcast.emit('return', {roomId: roomId, className:"secondary", text:text})
+    socket.on('sendMessage',({roomId, user, text}) => {
+        console.log(`${roomId},${user},${text}`)
+        socket.to(roomId).broadcast.emit('receiveMessage', {
+            roomId: roomId, 
+            className:"receiveMessage", 
+            user : user,
+            text : text
+         })
     })
 })
 

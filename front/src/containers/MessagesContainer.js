@@ -6,9 +6,27 @@ import "./MessageContainer.css"
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 
 export class MessagesContainer extends React.Component {
-    componentDidMount(){
-        this.props.joinRoom(this.props.match.params.id)
+
+    classNameToVariant = {
+        "joinRoom" : "primary",
+        "leaveRoom" : "danger",
+        "myMessage" : "success",
+        "receiveMessage" : "secondary"
     }
+
+    componentDidMount(){
+        this.props.joinRoom({
+            user : this.props.loginUser,
+            roomId: this.props.match.params.id
+        })
+    }
+
+    componentWillUnmount() {
+        this.props.leaveRoom({
+            user : this.props.loginUser,
+            roomId : this.props.match.params.id
+        })
+    }   
 
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
@@ -20,11 +38,15 @@ export class MessagesContainer extends React.Component {
             <Container id = "messageArea">
                 <TransitionGroup>
                     {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
+                        console.log(message)
                         return (
                             <CSSTransition key={index} timeout= {100} classNames="fade">
                                 <Row>
-                                    <Col md={message.md}>
-                                        <Alert variant={message.className} key={index}>{message.text}</Alert>
+                                    <Col className md={message.md}>
+                                        <img src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${message.user.image.thumb.url}`}/>
+                                        <Alert variant={this.classNameToVariant[message.className]} key={index}>
+                                            {message.text}
+                                        </Alert>
                                     </Col>
                                 </Row>
                             </CSSTransition>
@@ -36,8 +58,10 @@ export class MessagesContainer extends React.Component {
     }
 }
 
+
 const mapStateToProps = (state) => {
     return {
+        loginUser : state.logReducer.isLoggedIn,
         getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),
         getMessageAreaBottom:(roomId) => TalkRoomMessageModule.reducer.getMessageAreaBottomById(state)(roomId)
     }
@@ -45,7 +69,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        joinRoom:(roomId) => dispatch(TalkRoomMessageModule.actions.joinRoom({roomId:roomId}))
+        joinRoom:({
+            user, 
+            roomId
+        }) => dispatch(TalkRoomMessageModule.actions.joinRoom({user: user, roomId:roomId})),
+        leaveRoom:({
+            user,
+            roomId
+        }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user: user, roomId:roomId}))
     }
 }
 
