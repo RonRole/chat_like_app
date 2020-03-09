@@ -2,7 +2,7 @@ import React from 'react'
 import { Spinner } from 'react-bootstrap';
 import { connect } from 'react-redux';
 
-class Loading extends React.Component {
+export class Loading extends React.Component {
     render() {
         if(!this.props.loading) {
             return <div></div>

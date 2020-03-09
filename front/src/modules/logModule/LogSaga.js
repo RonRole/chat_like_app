@@ -19,6 +19,7 @@ function* handleGetDefLoginStart(action) {
             history : action.history
         })   
     }
+    action.then()
     yield put(LoadingActions.finishLoading())
 }
 

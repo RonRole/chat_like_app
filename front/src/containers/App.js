@@ -6,28 +6,39 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Router } from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
-import AboutPage from '../components/AboutPage';
 import LoginRequiredRoute from './LoginRequiredRoute';
 import LoginPage from '../components/LoginPage';
 import TalkRoomPage from './TalkRoomPage'
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import LogModule from '../modules/logModule/LogModule';
-import HomePage from '../components/HomePage';
+import HomePage from './HomePage';
 import SignUpPage from '../components/SignUpPage';
 
 
 export class App extends Component {
 
+  state = {
+    initialized : false
+  }
+
   componentDidMount(){
     this.props.defaultLogin({
-      history : this.props.history
+      history : this.props.history,
+      then : () => this.setState({
+        initialized : true
+      })
     })
   }
 
-  render() {
-    return (   
 
+  render() {
+    if(!this.state.initialized) {
+        return (
+          <Loading />
+        )
+    }   
+    return (
       <BrowserRouter>
         <Loading />
         <Navigation />
@@ -41,15 +52,15 @@ export class App extends Component {
   }
 }
 
-
-
 const mapDispatchToProps = (dispatch) => {
   return {
     defaultLogin:({
-      history
+      history,
+      then
     }) => {
       dispatch(LogModule.actions.cookieLogin({
-        history:history
+        history:history,
+        then : then
       }))
     }
   }

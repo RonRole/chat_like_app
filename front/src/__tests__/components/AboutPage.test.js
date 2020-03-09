@@ -13,7 +13,3 @@ test("h1属性でAbout Pageと記載されている", () => {
 test("ボタンが子コンポーネントである", () => {
     expect(wrapper.find(Button).length).toBeGreaterThan(0)
 })
-
-test("アラートが子コンポーネントである", () => {
-    expect(wrapper.find(Alert).length).toBeGreaterThan(0)
-})
