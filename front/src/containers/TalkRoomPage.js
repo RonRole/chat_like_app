@@ -21,7 +21,6 @@ class TalkRoomsArea extends React.Component {
                                                 description={this.props.getTalkRoomById(talkRoomId).description}
                                                 id         ={talkRoomId}
                                                 key        ={index} 
-                                                destroy    ={this.props.destroyTalkRoom}
                                                 readOnly   ={this.props.readOnly}/>  
 
                             </Col>
@@ -104,9 +103,6 @@ const mapDispatchToProps = (dispatch) => {
                 description: description,
                 authorId   : authorId
             }))},
-        destroyTalkRoom:(talkRoomId) => dispatch(TalkRoomModule.actions.execDeleteTalkRoom({
-            talkRoomId: talkRoomId
-        }))
     }
 }
 

@@ -23,10 +23,6 @@ const wrapper = shallow(<HomePage loginUser={testUser}/>)
 
 
 describe('HomePage', () => {
-    test('h1要素にHome Pageを含んでいる', () => {
-        expect(wrapper.find('h1').text()).toMatch(/.*Home ?Page.*/)
-    })
-
     test('ログインしているユーザーの情報が表示される', () => {
         expect(wrapper.find('#loginUserID').text()).toContain(testUser.id)
         expect(wrapper.find('#loginUserName').text()).toContain(testUser.name)

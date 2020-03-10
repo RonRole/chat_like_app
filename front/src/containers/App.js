@@ -19,21 +19,21 @@ import SignUpPage from '../components/SignUpPage';
 export class App extends Component {
 
   state = {
-    initialized : false
+    defaultLoaded : false
   }
 
   componentDidMount(){
     this.props.defaultLogin({
       history : this.props.history,
       then : () => this.setState({
-        initialized : true
+        defaultLoaded : true
       })
     })
   }
 
 
   render() {
-    if(!this.state.initialized) {
+    if(!this.state.defaultLoaded) {
         return (
           <Loading />
         )

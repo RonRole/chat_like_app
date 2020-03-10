@@ -6,22 +6,38 @@ import LoginRequiredRoute from '../../containers/LoginRequiredRoute';
 import Navigation from '../../components/Navigation';
 import Loading from '../../containers/Loading';
 
-const appWrapper = shallow(<App />)
+const appWrapper = shallow(<App defaultLogin={()=>console.log("defaultLogin")}/>, {lifecycleExperimental : true})
 
-test("App has a Loading",()=>{
-  expect(appWrapper.find(Loading).length).toBe(1)
-})
+describe("App", () => {
+  test("最初のdefaultLoadedステートがfalseである", () => {
+    expect(shallow(<App defaultLogin={()=>""}/>).state('defaultLoaded')).toBeFalsy()
+  })
 
-test("App has a BrowserRouter", () => {
-  expect(appWrapper.find(BrowserRouter).length).toBe(1)
-})
+  test("componentDidMountでdefaultLoginが1回呼ばれる", () => {
+    
+  })
 
-test("App has a Navigation", () => {
-  expect(appWrapper.find(Navigation).length).toBe(1)
-})
 
-//LoginRequiredRouteはconnect済なのでconnectされた方をimportしないといけない
-test("App has all routings", () => {
-  expect(appWrapper.find(Route).length).toBe(2)
-  expect(appWrapper.find(LoginRequiredRoute).length).toBe(3)
+  describe("defaultLoadedステートがtrueのとき", () => {
+    appWrapper.setState({
+      defaultLoaded : true
+    })
+    test("Loadingコンポーネントを1つ含んでいる",()=>{
+      expect(appWrapper.find(Loading).length).toBe(1)
+    })
+  
+    test("BrowserRouterを1つ含んでいる", () => {
+      expect(appWrapper.find(BrowserRouter).length).toBe(1)
+    })
+  
+    test("Navigationを1つ含んでいる", () => {
+      expect(appWrapper.find(Navigation).length).toBe(1)
+    })
+  
+    //LoginRequiredRouteはconnect済なのでconnectされた方をimportしないといけない
+    test("Routeを2つ, LoginRequiredRouteを3つ含んでいる", () => {
+      expect(appWrapper.find(Route).length).toBe(2)
+      expect(appWrapper.find(LoginRequiredRoute).length).toBe(3)
+    })
+  })
 })
