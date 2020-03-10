@@ -5,15 +5,22 @@ import handleError from "../ErrorHandler"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/own_talk_rooms`
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/own`
     })
 }
 
-const getTalkRooms = () => {
+const getJoinRooms = () => {
+    return DataAccessor.get({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/join`
+    })
+}
+
+const getAllRooms = () => {
     return DataAccessor.get({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms` 
     })
 }
+
 
 const createTalkRoom = ({
     title,
@@ -42,6 +49,7 @@ const deleteTalkRoom = (talkRoomId) => {
 function* handleGetOwnRooms(action) {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
+        console.log(result.data)
         yield put(TalkRoomActions.setOwnRooms(result.data))
     }
     if(result.isError) {
@@ -52,8 +60,9 @@ function* handleGetOwnRooms(action) {
         alert(errorObject.message)
     }
 }
+
 function* handleGetJoinedTalkRooms(action) {
-    const talkRoomResult = yield call(getTalkRooms)
+    const talkRoomResult = yield call(getJoinRooms)
     if(talkRoomResult.isSuccess) {
         yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
     }

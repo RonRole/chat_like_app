@@ -37,13 +37,11 @@ export default {
             authorId   :authorId
         }
     },
-    execDeleteTalkRoom:({
-        history,
+    execDeleteTalkRoom:(
         talkRoomId
-    }) => {
+    ) => {
         return {
             type      : TalkRoomActionTypes.EXEC_DELETE_ROOM,
-            history   : history,
             talkRoomId: talkRoomId
         }
     },

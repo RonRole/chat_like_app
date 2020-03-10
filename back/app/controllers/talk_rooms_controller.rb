@@ -1,11 +1,17 @@
 class TalkRoomsController < ApplicationController
     # 自身が管理者のトークルームを取得する
-    def own_index
-        @talk_rooms = TalkRoom.where(author_id: session[:user_id])
-        render :json => nil#@talk_rooms
+    def own
+        @talk_rooms = current_user.own_rooms
+        render :json => @talk_rooms
     end
 
     # 自身がメンバーであるトークルームを取得する
+    def join
+        @talk_rooms = TalkRoom.where.not(author_id: current_user.id)
+        render :json => @talk_rooms
+    end
+
+    # 自身が管理者・メンバーであるトークルームを取得する
     def index
         @talk_rooms = current_user.talk_rooms
         render :json => @talk_rooms

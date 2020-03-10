@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
+    has_many :own_rooms, foreign_key: :author_id, class_name: 'TalkRoom'
     has_many :user_talk_room_refs
     has_many :talk_rooms, through: :user_talk_room_refs
     #イメージ画像

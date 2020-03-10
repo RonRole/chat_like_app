@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import TalkRoomCard from '../components/TalkRoomCard'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import TalkRoomModalForm from '../components/TalkRoomModalForm'
-import { getTalkRoomIds } from '../modules/talkRoomModule/TalkRoomReducer'
+import { getJoinRoomIds, getOwnRoomIds } from '../modules/talkRoomModule/TalkRoomReducer'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 
 class TalkRoomsArea extends React.Component {
@@ -47,6 +47,7 @@ export class TalkRoomPage extends React.Component {
         modalShow : false
     }
     componentDidMount() {
+        this.props.getOwnRooms(this.props.history)
         this.props.getJoinedRooms(this.props.history)
     }
     render() {
@@ -80,17 +81,18 @@ export class TalkRoomPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser       : state.logReducer.isLoggedIn,
-        talkRooms       : state.talkRoomReducer.talkRooms,
-        joinedRoomIds     : getTalkRoomIds(state.talkRoomReducer).filter(id => state.talkRoomReducer.talkRooms[id].author_id !== state.logReducer.isLoggedIn.id),
-        getTalkRoomById : (id) => state.talkRoomReducer.talkRooms[id],
-        ownRoomIds        : getTalkRoomIds(state.talkRoomReducer).filter(id => state.talkRoomReducer.talkRooms[id].author_id === state.logReducer.isLoggedIn.id)
+        loginUser         : state.logReducer.isLoggedIn,
+        talkRooms         : state.talkRoomReducer.talkRooms,
+        joinedRoomIds     : getJoinRoomIds(state.talkRoomReducer),
+        getTalkRoomById   : (id) => state.talkRoomReducer.ownRooms[id] || state.talkRoomReducer.joinRooms[id],
+        ownRoomIds        : getOwnRoomIds(state.talkRoomReducer)
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getJoinedRooms:(history) => dispatch(TalkRoomModule.actions.execGetJoinedRooms(history)),
+        getOwnRooms   : (history) => dispatch(TalkRoomModule.actions.execGetOwnRooms(history)), 
+        getJoinedRooms: (history) => dispatch(TalkRoomModule.actions.execGetJoinedRooms(history)),
         addTalkRoom:({
             history,
             title,

@@ -30,6 +30,8 @@ class UsersController < ApplicationController
         render :json => current_user#.hash_for_front
     end
 
+    def
+
 
     private
         def user_params
