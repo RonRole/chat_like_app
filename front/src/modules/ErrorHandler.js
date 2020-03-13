@@ -11,6 +11,7 @@ const handleError = ({
     }
     //ネットワークエラー
     if(!error.response) {
+        alert("ネットワークエラーです")
         return {
             message : 'ネットワークエラーです'
         }
@@ -24,6 +25,7 @@ const handleError = ({
             message : 'ログインしろよ'
         }
     }
+    alert("エラーが発生しました")
     return {
         message : 'エラーが発生しました'
     }

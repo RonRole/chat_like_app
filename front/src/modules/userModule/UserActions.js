@@ -1,6 +1,7 @@
 export const UserActionTypes = {
     EXEC_GET_SELF : "EXEC_GET_SELF",
     EXEC_CREATE_USER : "EXEC_CREATE_USER",
+    ADD_USER : "ADD_USER"
 }
 
 export default {
@@ -20,4 +21,10 @@ export default {
         }
     },
 
+    addUser : (...users) => {
+        return {
+            type : UserActionTypes.ADD_USER,
+            users : users
+        }
+    }
 }

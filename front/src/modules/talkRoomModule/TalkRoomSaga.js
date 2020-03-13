@@ -2,6 +2,7 @@ import DataAccessor from "../DataAccessor"
 import TalkRoomActions, { TalkRoomActionTypes } from "./TalkRoomActions"
 import { put, take, call, all, takeLatest, takeEvery } from "redux-saga/effects"
 import handleError from "../ErrorHandler"
+import UserActions from "../userModule/UserActions"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
@@ -45,23 +46,41 @@ const deleteTalkRoom = (talkRoomId) => {
     })
 }
 
+//トークルームのメンバー取得
+const getTalkRoomMembers = (
+    talkRoomId,
+) => {
+    return DataAccessor.get({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users`
+    })
+}
+
+//メンバー追加
+const addMemberToTalkRoom = ({
+    talkRoomId,
+    userId
+}) => {
+    return DataAccessor.post({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users`,
+        parameter:userId
+    })
+}
+
 //saga
-function* handleGetOwnRooms(action) {
+export function* handleGetOwnRooms(action) {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
-        console.log(result.data)
         yield put(TalkRoomActions.setOwnRooms(result.data))
     }
     if(result.isError) {
-        const errorObject = handleError({
+        handleError({
             error   : result.data,
             history : action.history
         })
-        alert(errorObject.message)
     }
 }
 
-function* handleGetJoinedTalkRooms(action) {
+export function* handleGetJoinedTalkRooms(action) {
     const talkRoomResult = yield call(getJoinRooms)
     if(talkRoomResult.isSuccess) {
         yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
@@ -70,15 +89,14 @@ function* handleGetJoinedTalkRooms(action) {
         alert('トークルームを取得できませんでした')
     }
     if(talkRoomResult.isError) {
-        const errorObject = handleError({
+        handleError({
             error   : talkRoomResult.data,
             history : action.history
         })
-        alert(errorObject.message)
     }
 }
 
-function* handleAddTalkRoom(action) {
+export function* handleAddTalkRoom(action) {
     const addTalkRoomResult = yield call(createTalkRoom, {
         title       : action.title,
         description : action.description,
@@ -91,15 +109,14 @@ function* handleAddTalkRoom(action) {
         alert('トークルームを追加できませんでした')
     }
     if(addTalkRoomResult.isError) {
-        const errorObject = handleError({
+        handleError({
             error   : addTalkRoomResult.data,
             history : action.history
         })
-        alert(errorObject.message)
     }
 }
 
-function* handleDeleteTalkRoom(action) {
+export function* handleDeleteTalkRoom(action) {
     const deleteTalkRoomResult = yield call(deleteTalkRoom, action.talkRoomId)
     if(deleteTalkRoomResult.isSuccess) {
         yield put(TalkRoomActions.deleteTalkRoom({
@@ -110,15 +127,40 @@ function* handleDeleteTalkRoom(action) {
         alert(`トークルームを削除できませんでした`)
     }
     if(deleteTalkRoomResult.isError) {
-        alert(`エラーが発生しました ${deleteTalkRoomResult.data}`)
+        handleError({
+            error : deleteTalkRoomResult.error,
+            history : action.history
+        })
     }
 }
 
-export default function* talkRoomSaga() {
-    yield all([
-        takeEvery(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, handleGetOwnRooms),
-        takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, handleGetJoinedTalkRooms),
-        takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, handleAddTalkRoom),
-        takeEvery(TalkRoomActionTypes.EXEC_DELETE_ROOM, handleDeleteTalkRoom)
-    ])
+export function* handleGetTalkRoomMembers(action) {
+    const result = yield call(getTalkRoomMembers, action.talkRoomId)
+    if(result.isSuccess) {
+        yield put(TalkRoomActions.addUsersToTalkRoom({
+            talkRoomId : action.talkRoomId,
+            userIds : [...result.data].map(user => user.id)
+        }))
+        yield put(UserActions.addUser(result.data))
+    }
+    if(result.isError) {
+        handleError({
+            error : result.error,
+            history : action.history
+        })
+    }
+}
+
+export function* handleAddTalkRoomMember(action) {
+    const result = yield call(addMemberToTalkRoom, {talkRoomId:action.talkRomId, userId : action.userId})
+    if(result.isSuccess) {
+        alert(`${result.data}を追加しました`)
+        yield put(UserActions.addUser(result.data))
+    }
+    if(result.isError) {
+        handleError({
+            error : result.error,
+            history : action.history
+        })
+    }
 }

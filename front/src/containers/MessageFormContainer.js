@@ -20,6 +20,7 @@ export class MessageFormContainer extends React.Component {
                             text      : formEvent.currentTarget.inputMessage.value,
                             user      : this.props.loginUser
                         })
+                        formEvent.currentTarget.inputMessage.value = ""
                     }}>
                     <Form.Control className="mt-2 mb-2" name="inputMessage" type="text" placeholder="こ↑こ↓に書いて、どうぞ"/>    
                     <ButtonGroup aria-label="Basic example">

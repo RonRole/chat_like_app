@@ -14,5 +14,6 @@ Rails.application.routes.draw do
       get 'own'
       get 'join'
     end
+    get 'users'
   end
 end

@@ -1,7 +1,7 @@
 import UserActions from "./UserActions";
-import UserSaga from "./UserSaga";
+import UserReducer from "./UserReducer";
 
 export default {
     actions : UserActions,
-    saga    : UserSaga
+    reducer : UserReducer
 }

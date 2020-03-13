@@ -1,14 +1,24 @@
 import LoadingActions from "./LoadingActions";
-import { takeEvery, all, put } from "redux-saga/effects";
-import { LogActionTypes } from "../logModule/LogActions";
+import { put, join, fork } from "redux-saga/effects";
 
 //saga
-export function viewLock(func){
+export function* lockView(){
+    yield put(LoadingActions.startLoading());
 }
 
+export function* unlockView() {
+    yield put(LoadingActions.finishLoading())
+}
 
-export default function* LoadingSaga() {
-    yield all([
-        //takeEvery("*",handleExecAction)
-    ])
+/**
+ * 引数のsagaの実行が完了するまで、stateのloadingをtrueにします。
+ * @param {*} saga 
+ */
+export function wrapSagaWithLoading(saga){
+    return function*(action) {
+        yield put(LoadingActions.startLoading());
+        const argSaga = yield fork(saga, action)
+        yield join(argSaga)
+        yield put(LoadingActions.finishLoading())
+    }
 }

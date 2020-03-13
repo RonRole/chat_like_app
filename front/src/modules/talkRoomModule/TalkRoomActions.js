@@ -3,11 +3,14 @@ export const TalkRoomActionTypes = {
     EXEC_GET_JOINED_ROOMS : "GET_JOINED_ROOMS",
     EXEC_ADD_ROOM         : "EXEC_ADD_ROOM",
     EXEC_DELETE_ROOM      : "EXEC_DELETE_ROOM",
+    EXEC_ADD_USER_TO_TALKROOM : "EXEC_ADD_USER_TO_TALKROOM",
+    EXEC_GET_TALKROOM_MEMBERS: "EXEC_GET_TALKROOM_MEMBER",
 
     SET_OWN_ROOMS         : "SET_OWN_ROOMS",
     SET_JOINED_ROOMS      : "SET_JOINED_ROOMS",
     ADD_TALK_ROOM         : "ADD_TALK_ROOM",
-    DELETE_TALK_ROOM      : "DELETE_TALK_ROOM"
+    DELETE_TALK_ROOM      : "DELETE_TALK_ROOM",
+    ADD_USERS_TO_TALK_ROOM : "ADD_USERS_TO_TALK_ROOM"
 }
 
 export default {
@@ -46,6 +49,26 @@ export default {
         }
     },
 
+    execAddUserToTalkRoom:({
+        userId,
+        talkRoomId
+    }) => {
+        return {
+            type : TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM,
+            userId : userId,
+            talkRoomId : talkRoomId
+        }
+    },
+
+    execGetTalkRoomUser:(
+        talkRoomId
+    ) => {
+        return {
+            type : TalkRoomActionTypes.EXEC_GET_TALKROOM_MEMBERS,
+            talkRoomId : talkRoomId
+        }
+    },
+
     setOwnRooms   :(talkRooms) => {
         return {
             type:TalkRoomActionTypes.SET_OWN_ROOMS,
@@ -70,6 +93,17 @@ export default {
         return {
             type:TalkRoomActionTypes.DELETE_TALK_ROOM,
             talkRoomId:talkRoomId
+        }
+    },
+
+    addUsersToTalkRoom : ({
+        talkRoomId,
+        userIds
+    }) => {
+        return {
+            type : TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM,
+            talkRoomId : talkRoomId,
+            userIds : userIds
         }
     }
 }

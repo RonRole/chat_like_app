@@ -33,17 +33,16 @@ const createUser = (
     })
 }
 
+
 //saga
-function* handleGetSelf(action) {
+export function* handleGetSelf(action) {
     const result = yield call(getSelf)
     if(result.isSuccess) {
-        yield put
     }
 }
 
 
-function* handleCreateUser(action) {
-    yield put(LoadingActions.startLoading())
+export function* handleCreateUser(action) {
     const result = yield call(createUser, action.userParams)
     if(result.isSuccess) {
         yield put(LogActions.execLogin({
@@ -58,18 +57,9 @@ function* handleCreateUser(action) {
         alert("ユーザーを作成できませんでした")
     }
     if(result.isError) {
-        const errorObject = handleError({
+        handleError({
             error : result.data,
             history : action.history
         })
-        alert(errorObject.message)
     }
-    yield put(LoadingActions.finishLoading())
 }
-
-export default function* UserSaga() {
-    yield all([
-        takeEvery(UserActionTypes.EXEC_CREATE_USER, handleCreateUser)
-    ])
-}
-

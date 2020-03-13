@@ -6,9 +6,6 @@ const initialState = {
     joinRooms: {},
 }
 
-export const getOwnRoomIds = (state) => Object.keys(state.ownRooms)
-export const getJoinRoomIds = (state) => Object.keys(state.joinRooms)
-
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
         case TalkRoomActionTypes.SET_OWN_ROOMS: {
@@ -41,6 +38,14 @@ const createReducer = (state = initialState, action) => {
                 ...state
             }
         }
+        case TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM: {
+            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId]
+            room['userIds'] = [...action.userIds]
+            console.log(state)
+            return {
+                ...state
+            }
+        }
         default: {
             return state
         }
@@ -48,7 +53,7 @@ const createReducer = (state = initialState, action) => {
 }
 
 export default {
-    getOwnRoomIds : (state) => Object.keys(state.ownRooms),
-    getJoinRoomIds : (state) => Object.keys(state.joinRooms),
+    getOwnRoomIds : (state) => Object.keys(state.talkRoomReducer.ownRooms),
+    getJoinRoomIds : (state) => Object.keys(state.talkRoomReducer.joinRooms),
     createReducer
 }

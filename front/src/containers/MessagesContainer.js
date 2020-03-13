@@ -19,6 +19,12 @@ export class MessagesContainer extends React.Component {
             user : this.props.loginUser,
             roomId: this.props.match.params.id
         })
+        window.onunload = () => {
+            this.props.leaveRoom({
+                user : this.props.loginUser,
+                roomId : this.props.match.params.id
+            })
+        }
     }
 
     componentWillUnmount() {
@@ -30,7 +36,7 @@ export class MessagesContainer extends React.Component {
 
     componentDidUpdate(){
         const messageArea = document.getElementById("messageArea")
-        messageArea.scrollTo(0, this.props.getMessageAreaBottom(this.props.match.params.id))
+        messageArea.scrollTo(0, document.getElementById("messageArea").scrollHeight)
     }
 
     render() {
@@ -38,7 +44,6 @@ export class MessagesContainer extends React.Component {
             <Container id = "messageArea">
                 <TransitionGroup>
                     {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
-                        console.log(message)
                         return (
                             <CSSTransition key={index} timeout= {100} classNames="fade">
                                 <Row>
@@ -63,7 +68,6 @@ const mapStateToProps = (state) => {
     return {
         loginUser : state.logReducer.isLoggedIn,
         getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),
-        getMessageAreaBottom:(roomId) => TalkRoomMessageModule.reducer.getMessageAreaBottomById(state)(roomId)
     }
 }
 

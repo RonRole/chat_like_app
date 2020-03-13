@@ -7,19 +7,25 @@ import { connect } from "react-redux"
 
 class TalkRoomCard extends React.Component {
 
+    talkRoom = this.props.getTalkRoomById(this.props.id)
+
     onDestroyButtonClicked = () => {
-        if(!window.confirm(`${this.props.title}を削除しますか?`)){
+        if(!window.confirm(`${this.talkRoom.title}を削除しますか?`)){
             return
         }
         this.props.destroyTalkRoom(this.props.id)
+    }
+
+    componentDidMount() {
+        this.props.getMembers(this.props.id)
     }
 
     render() {
         return (
             <Card>
                 <Card.Body>
-                    <Card.Title>{this.props.title}</Card.Title>
-                    <Card.Text>{this.props.description}</Card.Text>
+                    <Card.Title>{this.talkRoom.title}</Card.Title>
+                    <Card.Text>{this.talkRoom.description}</Card.Text>
                     <Row className="d-md-flex justify-content-end">
                         <Link className="btn btn-primary mr-2" to={`/talk_rooms/${this.props.id}`}>入る</Link>
                         {[this.props.readOnly].filter(readOnly => !readOnly).map((readOnly,index) => {
@@ -38,12 +44,21 @@ class TalkRoomCard extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        getTalkRoomById : (id) => state.talkRoomReducer.ownRooms[id] || state.talkRoomReducer.joinRooms[id]
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
+        getMembers : (talkRoomId) => {
+            dispatch(TalkRoomModule.actions.execGetTalkRoomUser(talkRoomId))
+        },
         destroyTalkRoom : (talkRoomId) => {
             dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(TalkRoomCard)
+export default connect(mapStateToProps, mapDispatchToProps)(TalkRoomCard)

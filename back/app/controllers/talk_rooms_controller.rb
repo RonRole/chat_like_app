@@ -7,7 +7,7 @@ class TalkRoomsController < ApplicationController
 
     # 自身がメンバーであるトークルームを取得する
     def join
-        @talk_rooms = TalkRoom.where.not(author_id: current_user.id)
+        @talk_rooms = current_user.talk_rooms - current_user.own_rooms
         render :json => @talk_rooms
     end
 
@@ -15,6 +15,11 @@ class TalkRoomsController < ApplicationController
     def index
         @talk_rooms = current_user.talk_rooms
         render :json => @talk_rooms
+    end
+
+    def users
+        @talkroom_users = TalkRoom.find(params[:talk_room_id]).users
+        render :json => @talkroom_users
     end
 
     def create
@@ -34,6 +39,7 @@ class TalkRoomsController < ApplicationController
     def destroy
         TalkRoom.find(params[:id]).destroy
     end
+
 
     private 
         def talkroom_params

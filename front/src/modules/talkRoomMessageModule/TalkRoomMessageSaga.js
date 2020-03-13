@@ -8,7 +8,7 @@ import socketClient from "../socketClient"
 
 //saga
 //メッセージ受信用のイベントチャンネル
-function* createMessegeReceiveChannel() {
+export function* createMessegeReceiveChannel() {
     //イベントチャンネル：socketClientが受け取ったresponseをemitし、イベント発行
     return eventChannel(emit => {
         socketClient.on('receiveMessage', response => {
@@ -20,7 +20,7 @@ function* createMessegeReceiveChannel() {
     })
 }
 
-function* handleReceiveMessage() {
+export function* handleReceiveMessage() {
     const channel = yield call(createMessegeReceiveChannel,socketClient)
     //channelがemitするたびに起動
     while(true) {
@@ -34,7 +34,7 @@ function* handleReceiveMessage() {
     }
 }
 
-function* handleJoinRoom() {
+export function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(ActionTypes.JOIN_ROOM)
@@ -43,7 +43,7 @@ function* handleJoinRoom() {
     }
 }
 
-function* handleLeaveRoom() {
+export function* handleLeaveRoom() {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
     const channel = yield call(createMessegeReceiveChannel,socketClient)
     while(true) {
@@ -54,7 +54,7 @@ function* handleLeaveRoom() {
     }
 }
 
-function* handleAddMessage() {
+export function* handleAddMessage() {
     while(true) {
         const action = yield take(ActionTypes.ADD_MESSAGE)
         socketClient.emit('sendMessage', {
@@ -63,13 +63,4 @@ function* handleAddMessage() {
             user      : action.user
         })
     }
-}
-
-export default function* talkRoomMessageSaga() {
-    yield all([
-        handleJoinRoom(),
-        handleLeaveRoom(),
-        handleReceiveMessage(),
-        handleAddMessage(),
-    ])
 }
