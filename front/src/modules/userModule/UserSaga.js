@@ -1,9 +1,11 @@
 import LogActions from "../logModule/LogActions"
 import DataAccessor from "../DataAccessor"
-import { call, put, all, takeEvery } from "redux-saga/effects"
+import { call, put, all, takeEvery, take } from "redux-saga/effects"
 import handleError from "../ErrorHandler"
-import { UserActionTypes } from "./UserActions"
+import UserActions, { UserActionTypes } from "./UserActions"
 import LoadingActions from "../loadingModule/LoadingActions"
+import { eventChannel } from "redux-saga"
+import socketClient from "../socketClient"
 
 const getSelf = () => {
     return DataAccessor.get(({
@@ -61,5 +63,24 @@ export function* handleCreateUser(action) {
             error : result.data,
             history : action.history
         })
+    }
+}
+
+function* createCurrentUserReceiveChannel() {
+    return eventChannel(emit => {
+        socketClient.on('currentUsers', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
+export function* handleGetCurrentRoomUsers() {
+    const channel = yield call(createCurrentUserReceiveChannel)
+    while(true) {
+        const response = yield take(channel)
+        yield put(UserActions.addUser(...Object.keys(response).map(key => response[key])))
     }
 }

@@ -53,7 +53,8 @@ const createReducer = (state = initialState, action) => {
 }
 
 export default {
-    getOwnRoomIds : (state) => Object.keys(state.talkRoomReducer.ownRooms),
-    getJoinRoomIds : (state) => Object.keys(state.talkRoomReducer.joinRooms),
+    getOwnRoomIds : (state) => Object.keys(state.talkRooms.ownRooms),
+    getJoinRoomIds : (state) => Object.keys(state.talkRooms.joinRooms),
+    getTalkRoomById : (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || {},
     createReducer
 }

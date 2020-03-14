@@ -8,7 +8,7 @@ import socketClient from "../socketClient"
 
 //saga
 //メッセージ受信用のイベントチャンネル
-export function* createMessegeReceiveChannel() {
+function* createMessegeReceiveChannel() {
     //イベントチャンネル：socketClientが受け取ったresponseをemitし、イベント発行
     return eventChannel(emit => {
         socketClient.on('receiveMessage', response => {
@@ -21,7 +21,7 @@ export function* createMessegeReceiveChannel() {
 }
 
 export function* handleReceiveMessage() {
-    const channel = yield call(createMessegeReceiveChannel,socketClient)
+    const channel = yield call(createMessegeReceiveChannel)
     //channelがemitするたびに起動
     while(true) {
         const response = yield take(channel)
@@ -34,22 +34,44 @@ export function* handleReceiveMessage() {
     }
 }
 
+//現在ユーザー取得用のイベントチャンネル
+function* createCurrentUsersRecieveChannel() {
+    return eventChannel(emit => {
+        socketClient.on("currentUsers", response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
+export function* handleGetCurrentUsers() {
+    const channel = yield call(createCurrentUsersRecieveChannel)
+    while(true) {
+        const response = yield take(channel)
+        yield put(Actions.setCurrentUserIds(Object.keys(response)))
+    }
+}
+
+
 export function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(ActionTypes.JOIN_ROOM)
         socketClient.connect()
         socketClient.emit('joinRoom',{user: action.user, roomId:action.roomId})
+        socketClient.emit('currentUsers', action.roomId)
     }
 }
 
 export function* handleLeaveRoom() {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
-    const channel = yield call(createMessegeReceiveChannel,socketClient)
     while(true) {
         const action = yield take(ActionTypes.LEAVE_ROOM)
         socketClient.emit('leaveRoom',{user:action.user, roomId:action.roomId})
-        yield take(channel)
+        //トークルームの内容をクリアする
+        yield put(Actions.clearMessage(action.roomId))
         socketClient.disconnect()
     }
 }
@@ -64,3 +86,4 @@ export function* handleAddMessage() {
         })
     }
 }
+

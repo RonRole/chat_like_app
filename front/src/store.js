@@ -17,11 +17,11 @@ const sagaMiddleware = createSagaMiddleware()
 //store setting
 const store = createStore(
     combineReducers({
-        appReducer      : TalkRoomMessageModule.reducer.createMessageReducer, 
-        logReducer      : LogModule.reducer.creatReducer,
-        talkRoomReducer : TalkRoomModule.reducer.createReducer,
-        loadingReducer  : LoadingModule.reducer.createReducer,
-        userReducer     : UserModule.reducer.createReducer
+        messages  : TalkRoomMessageModule.reducer.createMessageReducer, 
+        logStatus : LogModule.reducer.creatReducer,
+        talkRooms : TalkRoomModule.reducer.createReducer,
+        loading   : LoadingModule.reducer.createReducer,
+        users     : UserModule.reducer.createReducer
     }), 
     applyMiddleware(sagaMiddleware)
 )

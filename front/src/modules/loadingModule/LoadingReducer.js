@@ -1,27 +1,17 @@
 import { LoadingActionTypes } from "./LoadingActions"
 
-const initialState = {
-    loading : false
-}
+const initialState = false
 
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
         case LoadingActionTypes.START_LOADING : {
-            return {
-                ...state,
-                loading : true
-            }
+            return true
         }
         case LoadingActionTypes.FINISH_LOADING : {
-            return {
-                ...state,
-                loading : false
-            }
+            return false
         }
         default : {
-            return {
-                ...state
-            }
+            return state
         }
     }
 }

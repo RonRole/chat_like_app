@@ -1,5 +1,5 @@
 import React from 'react'
-import ModalForm from './ModalForm'
+import ModalForm from '../components/ModalForm'
 import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { Row, Col, Form, Button } from "react-bootstrap"
@@ -43,6 +43,7 @@ class TalkRoomModalForm extends React.Component {
             description : e.currentTarget.description.value,
             authorId : this.props.loginUser.id
         })
+        this.props.cancel()
     }
 
     render() {
@@ -59,7 +60,7 @@ class TalkRoomModalForm extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser : state.logReducer.isLoggedIn
+        loginUser : state.logStatus.isLoggedIn
     }
 }
 

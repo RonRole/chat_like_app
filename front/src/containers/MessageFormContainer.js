@@ -3,8 +3,6 @@ import React from 'react'
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import { connect } from 'react-redux'
 import { Container, ButtonGroup, Form } from 'react-bootstrap'
-import OonButton from './OonButton'
-import AonButton from './AonButton'
 import MessageSendButton from '../components/MessageSendButton'
 
 export class MessageFormContainer extends React.Component {
@@ -34,7 +32,7 @@ export class MessageFormContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser : state.logReducer.isLoggedIn
+        loginUser : state.logStatus.isLoggedIn
     }
 }
 

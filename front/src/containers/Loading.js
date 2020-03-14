@@ -21,7 +21,7 @@ export class Loading extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loading : state.loadingReducer.loading
+        loading : state.loading
     }
 }
 

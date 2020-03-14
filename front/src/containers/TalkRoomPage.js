@@ -3,7 +3,7 @@ import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 import TalkRoomsArea from '../components/TalkRoomsArea'
-import TalkRoomModalForm from '../components/TalkRoomModalForm'
+import TalkRoomModalForm from './TalkRoomModalForm'
 
 
 
@@ -47,7 +47,7 @@ class TalkRoomPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser : state.logReducer.isLoggedIn,
+        loginUser : state.logStatus.isLoggedIn,
         ownRoomIds : TalkRoomModule.reducer.getOwnRoomIds(state),
         joinRoomIds : TalkRoomModule.reducer.getJoinRoomIds(state)
     }

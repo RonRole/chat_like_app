@@ -1,9 +1,25 @@
 import React from "react"
-import { Card, Button, Row } from "react-bootstrap"
+import { Card, Button, Row, Dropdown, Image } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
+import UserModule from "../modules/userModule/UserModule"
 
+
+const OwnerMenu = ({onDestroyButtonClicked}) => {
+    return (
+        <Dropdown>
+            <Dropdown.Toggle variant="success">
+                管理者の特権
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item style={{color:"blue"}}>誘う</Dropdown.Item>
+                <Dropdown.Item style={{color:"orange"}}>作り直す</Dropdown.Item>
+                <Dropdown.Item style={{color:"red"}} onClick={onDestroyButtonClicked}>消す</Dropdown.Item>
+            </Dropdown.Menu>
+        </Dropdown>
+    )
+}
 
 class TalkRoomCard extends React.Component {
 
@@ -24,19 +40,27 @@ class TalkRoomCard extends React.Component {
         return (
             <Card>
                 <Card.Body>
-                    <Card.Title>{this.talkRoom.title}</Card.Title>
-                    <Card.Text>{this.talkRoom.description}</Card.Text>
-                    <Row className="d-md-flex justify-content-end">
-                        <Link className="btn btn-primary mr-2" to={`/talk_rooms/${this.props.id}`}>入る</Link>
+                    <div className="d-flex" style={{width:"100%"}}>
+                        <div className="mr-2" style={{width:"50%", overflow:"auto"}}>
+                            <Card.Title>{this.talkRoom.title}</Card.Title>
+                            <Card.Text>{this.talkRoom.description}</Card.Text>
+                        </div>
+                        <div className="d-flex" style={{width:"50%", overflow:"auto"}}>
+                            <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.getUserById(1).image.thumb.url}`} style={{objectFit:"contain"}} rounded/>
+                        </div>
+                        
+
+                    </div>
+                    <div className="d-flex justify-content-end mb-2">
+                        <Link className="btn btn-primary" to={`/talk_rooms/${this.props.id}`}>入る</Link>
+                    </div>
+                    <div className="d-flex justify-content-end">
                         {[this.props.readOnly].filter(readOnly => !readOnly).map((readOnly,index) => {
                             return (
-                                <div key={index}>
-                                    <Button className="mr-2" variant="success">誘う</Button>
-                                    <Button variant="danger" onClick={this.onDestroyButtonClicked}>消す</Button> 
-                                </div>
+                                <OwnerMenu key={index} onDestroyButtonClicked={this.onDestroyButtonClicked} />
                             )    
                         })}
-                    </Row>
+                    </div>
                 </Card.Body>
             </Card>
         )
@@ -46,7 +70,8 @@ class TalkRoomCard extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        getTalkRoomById : (id) => state.talkRoomReducer.ownRooms[id] || state.talkRoomReducer.joinRooms[id]
+        getTalkRoomById : (id) => TalkRoomModule.reducer.getTalkRoomById(state)(id),
+        getUserById : (id) => UserModule.reducer.getUserById(state)(id)
     }
 }
 

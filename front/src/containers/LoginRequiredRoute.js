@@ -17,7 +17,7 @@ export class LoginRequiredRoute extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn:state.logReducer.isLoggedIn
+        isLoggedIn:state.logStatus.isLoggedIn
     }
 }
 

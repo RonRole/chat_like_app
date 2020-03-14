@@ -1,23 +1,21 @@
 import {ActionTypes} from "./TalkRoomMessageActoins"
 
-const defaultRoom = {
-    messages:[],
-    messageAreaBottom : window.innerHeight
-}
 
+/**
+ * トークルームのid : メッセージ一覧
+ */
 const initialState = {
-    0:defaultRoom
+    0:[{
+        "roomID" : 0,
+        "className" : "",
+        "text" : "",
+        "user" : "",
+    }]
 }
 
 const getMessagesByRoomId = state => {
     return (roomId) => {
-        return state.appReducer[roomId] ? state.appReducer[roomId].messages : []
-    }
-}
-
-const getMessageAreaBottomById = state => {
-    return (roomId) => {
-        return state.appReducer[roomId] ? state.appReducer[roomId].messageAreaBottom : 0
+        return state.messages[roomId] || initialState[0]
     }
 }
 
@@ -25,24 +23,24 @@ const createReducer = (state = initialState, action) => {
     switch(action.type){
         case ActionTypes.ADD_MESSAGE:
         case ActionTypes.RECEIVE_MESSAGE: {
-            if(!state[action.roomId]){
-                state[action.roomId] = defaultRoom
-            }
-            state[action.roomId] = {
-                messages: [
-                    ...state[action.roomId].messages,
-                    {
-                        className : action.className,
-                        user      : action.user,
-                        text      : action.text
-                    }
-                ],
-                messageAreaBottom:state[action.roomId].messageAreaBottom*2
-            }
+            state[action.roomId] = state[action.roomId] || [] 
+            state[action.roomId] = [
+                ...state[action.roomId],
+                {
+                    className : action.className,
+                    user      : action.user.id,
+                    text      : action.text
+                }
+            ]
             return {
                 ...state
             }
-
+        }
+        case ActionTypes.CLEAR_MESSAGE : {
+            state[action.roomId] = []
+            return {
+                ...state
+            }
         }
 
         default: {
@@ -53,7 +51,6 @@ const createReducer = (state = initialState, action) => {
 
 export default {
     getMessagesByRoomId,
-    getMessageAreaBottomById,
     createMessageReducer: createReducer
 }
 

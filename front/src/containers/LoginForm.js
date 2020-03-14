@@ -44,8 +44,8 @@ export class LoginForm　extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginError : state.logReducer.loginError,
-        isLoggedIn   : state.logReducer.isLoggedIn
+        loginError : state.logStatus.loginError,
+        isLoggedIn   : state.logStatus.isLoggedIn
     }
 }
 

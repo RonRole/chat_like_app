@@ -1,9 +1,10 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Container, Alert, Row, Col } from 'react-bootstrap'
+import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import "./MessageContainer.css"
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
+import UserModule from '../modules/userModule/UserModule'
 
 export class MessagesContainer extends React.Component {
 
@@ -32,6 +33,7 @@ export class MessagesContainer extends React.Component {
             user : this.props.loginUser,
             roomId : this.props.match.params.id
         })
+
     }   
 
     componentDidUpdate(){
@@ -48,7 +50,7 @@ export class MessagesContainer extends React.Component {
                             <CSSTransition key={index} timeout= {100} classNames="fade">
                                 <Row>
                                     <Col className md={message.md}>
-                                        <img src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${message.user.image.thumb.url}`}/>
+                                        <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.getUserById(message.user).image.thumb.url}`}/>
                                         <Alert variant={this.classNameToVariant[message.className]} key={index}>
                                             {message.text}
                                         </Alert>
@@ -66,8 +68,10 @@ export class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser : state.logReducer.isLoggedIn,
+        allState : state,
+        loginUser : state.logStatus.isLoggedIn,
         getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),
+        getUserById : (id) => UserModule.reducer.getUserById(state)(id)
     }
 }
 
@@ -80,7 +84,7 @@ const mapDispatchToProps = (dispatch) => {
         leaveRoom:({
             user,
             roomId
-        }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user: user, roomId:roomId}))
+        }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user: user, roomId:roomId})),
     }
 }
 

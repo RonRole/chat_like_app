@@ -1,6 +1,6 @@
 import React from 'react'
-import MessagesContainer from '../containers/MessagesContainer'
-import MessageFormContainer from '../containers/MessageFormContainer'
+import MessagesContainer from './MessagesContainer'
+import MessageFormContainer from './MessageFormContainer'
 import { Container } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
@@ -19,7 +19,7 @@ class MessagePage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        getTalkRoomById : (id) => state.talkRoomReducer.ownRooms[id] || state.talkRoomReducer.joinRooms[id]
+        getTalkRoomById : (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id]
     }
 }
 

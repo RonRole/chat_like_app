@@ -35,18 +35,20 @@ const talkRoomSagas = [
     takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, talkRoomSaga.handleGetJoinedTalkRooms),
     takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, talkRoomSaga.handleAddTalkRoom),
     takeEvery(TalkRoomActionTypes.EXEC_DELETE_ROOM, talkRoomSaga.handleDeleteTalkRoom),
-    takeEvery(TalkRoomActionTypes.EXEC_GET_TALKROOM_MEMBERS, talkRoomSaga.handleGetTalkRoomMembers)
+    takeEvery(TalkRoomActionTypes.EXEC_GET_TALKROOM_MEMBERS, talkRoomSaga.handleGetTalkRoomMembers),
 ]
 
 const talkRoomMessageSagas = [
     talkRoomMessageSaga.handleJoinRoom(),
     talkRoomMessageSaga.handleLeaveRoom(),
     talkRoomMessageSaga.handleReceiveMessage(),
-    talkRoomMessageSaga.handleAddMessage()
+    talkRoomMessageSaga.handleAddMessage(),
+    talkRoomMessageSaga.handleGetCurrentUsers()
 ]
 
 const userSagas = [
-    takeEvery(UserActionTypes.EXEC_CREATE_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleCreateUser))
+    takeEvery(UserActionTypes.EXEC_CREATE_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleCreateUser)),
+    userSaga.handleGetCurrentRoomUsers()
 ]
 
 //rootSaga

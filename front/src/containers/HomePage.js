@@ -29,7 +29,7 @@ export class HomePage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginUser : state.logReducer.isLoggedIn
+        loginUser : state.logStatus.isLoggedIn
     }
 }
 

@@ -1,9 +1,9 @@
 import React, { Component, createContext } from 'react';
 //redux
-import MessagesPage from '../components/MessagesPage'
+import MessagesPage from './MessagesPage'
 //bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Router } from 'react-router-dom';
+import { BrowserRouter, Route, Router, Switch, Redirect } from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
 import LoginRequiredRoute from './LoginRequiredRoute';
@@ -42,11 +42,15 @@ export class App extends Component {
       <BrowserRouter>
         <Loading />
         <Navigation />
-        <Route path="/login" component={LoginPage}/>
-        <Route path="/signup" component={SignUpPage} />
-        <LoginRequiredRoute exact path="/home" component={HomePage}/>
-        <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
-        <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
+        <Switch>
+          <Route path="/login" component={LoginPage}/>
+          <Route path="/signup" component={SignUpPage} />
+          <LoginRequiredRoute exact path="/home" component={HomePage}/>
+          <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
+          <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
+          <Redirect to="/home" />
+        </Switch>
+
       </BrowserRouter>  
     )
   }

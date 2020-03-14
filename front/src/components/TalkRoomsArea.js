@@ -11,7 +11,7 @@ class TalkRoomsArea extends React.Component {
                 {this.props.talkRoomIds.map((talkRoomId,index) => {
                     return(
                         <CSSTransition key = {index} timeout={100} classNames="fade">
-                            <Col key={index} md={{span:4}} className="mt-2">
+                            <Col key={index} md={{span:4}} className="mt-2 inline-block">
                                 <TalkRoomCard   className  ="col-md-4"
                                                 id         ={talkRoomId}
                                                 key        ={index} 
