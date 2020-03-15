@@ -43,7 +43,7 @@ export class MessagesContainer extends React.Component {
 
     render() {
         return (
-            <Container id = "messageArea" className={this.props.className} style={{height:"70vh", overflow:"scroll", border:"1px solid gray"}}>
+            <Container id = "messageArea" className={this.props.className} style={this.props.style}>
                 <TransitionGroup>
                     {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
                         return (
@@ -51,7 +51,7 @@ export class MessagesContainer extends React.Component {
                                 <Row>
                                     <Col className md={message.md}>
                                         <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.getUserById(message.user).image.thumb.url}`}/>
-                                        <Alert variant={this.classNameToVariant[message.className]} key={index}>
+                                        <Alert variant={this.classNameToVariant[message.className]} key={index} style={{overflow:"auto"}}>
                                             {message.text}
                                         </Alert>
                                     </Col>

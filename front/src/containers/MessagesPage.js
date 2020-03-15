@@ -16,18 +16,18 @@ class MessagePage extends React.Component {
             <Container>
                 <h3>{this.props.getTalkRoomById(this.props.match.params.id).title}</h3>
                 <Container className="d-flex">
-                    <MessagesContainer {...this.props} className="mr-2"/>
-                    <Container style={{border:"1px solid gray"}}>
+                    <MessagesContainer {...this.props} className="mr-2" style={{height:"70vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
+                    <Container style={{width:"40%", border:"1px solid gray", overflow:"scroll"}}>
                         <h6><strong>今いる人たち</strong></h6>
                         <TransitionGroup>
                             {this.getCurrentUserIds().map(id => this.props.getUserById(id)).map((user,index) => {
                                 return (
-                                        <CSSTransition key={index} timeout={100} classNames="fade">
-                                            <div className="d-flex">
-                                                <Image className="mr-2 mb-2" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${user.image.thumb.url}`}/>
-                                                <h6>{user.name}</h6>
-                                            </div>
-                                        </CSSTransition>
+                                    <CSSTransition key={index} timeout={100} classNames="fade">
+                                        <div className="d-flex">
+                                            <Image className="mr-2 mb-2" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${user.image.thumb.url}`}/>
+                                            <h6>{user.name}</h6>
+                                        </div>
+                                    </CSSTransition>
                                 )
                             })}
                         </TransitionGroup>
