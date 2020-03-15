@@ -45,9 +45,6 @@ class TalkRoomCard extends React.Component {
                             <Card.Title>{this.talkRoom.title}</Card.Title>
                             <Card.Text>{this.talkRoom.description}</Card.Text>
                         </div>
-                        <div className="d-flex" style={{width:"50%", overflow:"auto"}}>
-                            <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.getUserById(1).image.thumb.url}`} style={{objectFit:"contain"}} rounded/>
-                        </div>
                         
 
                     </div>
