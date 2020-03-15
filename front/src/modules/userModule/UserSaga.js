@@ -81,6 +81,6 @@ export function* handleGetCurrentRoomUsers() {
     const channel = yield call(createCurrentUserReceiveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(UserActions.addUser(...Object.keys(response).map(key => response[key])))
+        yield put(UserActions.addUser(...Object.keys(response.users).map(key => response.users[key])))
     }
 }

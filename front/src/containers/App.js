@@ -14,6 +14,7 @@ import Loading from './Loading';
 import LogModule from '../modules/logModule/LogModule';
 import HomePage from './HomePage';
 import SignUpPage from '../components/SignUpPage';
+import "./CSSTransitionGroup.css"
 
 
 export class App extends Component {

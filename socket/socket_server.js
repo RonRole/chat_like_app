@@ -58,7 +58,10 @@ io.sockets.on('connection', socket => {
     socket.on('currentUsers', (roomId) => {
         console.log("get current users")
         console.log(currentRoomMembers)
-        io.sockets.in(roomId).emit('currentUsers', currentRoomMembers[roomId])
+        io.sockets.in(roomId).emit('currentUsers', {
+            roomId : roomId,
+            users : currentRoomMembers[roomId]
+        })
     })
 })
 

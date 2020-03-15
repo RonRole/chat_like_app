@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import "./MessageContainer.css"
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import UserModule from '../modules/userModule/UserModule'
 
@@ -37,13 +36,14 @@ export class MessagesContainer extends React.Component {
     }   
 
     componentDidUpdate(){
+        console.log(this.props.allState)
         const messageArea = document.getElementById("messageArea")
         messageArea.scrollTo(0, document.getElementById("messageArea").scrollHeight)
     }
 
     render() {
         return (
-            <Container id = "messageArea">
+            <Container id = "messageArea" className={this.props.className} style={{height:"70vh", overflow:"scroll", border:"1px solid gray"}}>
                 <TransitionGroup>
                     {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
                         return (

@@ -39,9 +39,9 @@ const createReducer = (state = initialState, action) => {
             }
         }
         case TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM: {
-            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId]
-            room['userIds'] = [...action.userIds]
-            console.log(state)
+            console.log(action.talkRoomId)
+            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {}
+            room['userIds'] = action.userIds
             return {
                 ...state
             }
@@ -55,6 +55,6 @@ const createReducer = (state = initialState, action) => {
 export default {
     getOwnRoomIds : (state) => Object.keys(state.talkRooms.ownRooms),
     getJoinRoomIds : (state) => Object.keys(state.talkRooms.joinRooms),
-    getTalkRoomById : (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || {},
+    getTalkRoomById : (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id],
     createReducer
 }

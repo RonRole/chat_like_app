@@ -3,6 +3,7 @@ import Actions from "./TalkRoomMessageActoins"
 import { eventChannel } from "redux-saga"
 import { call, take, put, all } from "redux-saga/effects"
 import socketClient from "../socketClient"
+import TalkRoomActions from "../talkRoomModule/TalkRoomActions"
 
 
 
@@ -50,7 +51,12 @@ export function* handleGetCurrentUsers() {
     const channel = yield call(createCurrentUsersRecieveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(Actions.setCurrentUserIds(Object.keys(response)))
+        // yield put(Actions.setCurrentUserIds(Object.keys(response)))
+        console.log(response.users)
+        yield put(TalkRoomActions.addUsersToTalkRoom({
+            talkRoomId : response.roomId,
+            userIds : Object.keys(response.users)
+        }))
     }
 }
 
@@ -70,6 +76,7 @@ export function* handleLeaveRoom() {
     while(true) {
         const action = yield take(ActionTypes.LEAVE_ROOM)
         socketClient.emit('leaveRoom',{user:action.user, roomId:action.roomId})
+        socketClient.emit('currentUsers', action.roomId)
         //トークルームの内容をクリアする
         yield put(Actions.clearMessage(action.roomId))
         socketClient.disconnect()
