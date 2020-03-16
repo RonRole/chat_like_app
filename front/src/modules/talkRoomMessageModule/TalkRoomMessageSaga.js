@@ -55,7 +55,7 @@ export function* handleGetCurrentUsers() {
         console.log(response.users)
         yield put(TalkRoomActions.addUsersToTalkRoom({
             talkRoomId : response.roomId,
-            userIds : Object.keys(response.users)
+            userIds : Object.keys(response.users).map(key => response.users[key]["id"])
         }))
     }
 }

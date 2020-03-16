@@ -33,7 +33,6 @@ export class MessagesContainer extends React.Component {
             user : this.props.loginUser,
             roomId : this.props.match.params.id
         })
-         this.props.callRefreshUsers(this.props.match.params.id)
 
     }   
 
@@ -87,7 +86,6 @@ const mapDispatchToProps = (dispatch) => {
             user,
             roomId
         }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user: user, roomId:roomId})),
-        callRefreshUsers : (roomId) => dispatch(TalkRoomMessageModule.actions.refreshUsers(roomId))
     }
 }
 

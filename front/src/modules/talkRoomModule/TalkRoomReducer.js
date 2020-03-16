@@ -39,9 +39,8 @@ const createReducer = (state = initialState, action) => {
             }
         }
         case TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM: {
-            console.log(action.talkRoomId)
             const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {}
-            room['userIds'] = action.userIds
+            room['userIds'] = [...action.userIds]
             return {
                 ...state
             }
