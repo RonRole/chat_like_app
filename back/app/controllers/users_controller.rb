@@ -11,6 +11,7 @@ class UsersController < ApplicationController
         if(@user.save)
             render :json => @user#.hash_for_front
         else
+            puts @user.errors.full_messages
             render :json => {isFail:true}
         end
     end

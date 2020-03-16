@@ -4,7 +4,6 @@ import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import UserModule from '../modules/userModule/UserModule'
-import socketClient from '../modules/socketClient'
 
 export class MessagesContainer extends React.Component {
 

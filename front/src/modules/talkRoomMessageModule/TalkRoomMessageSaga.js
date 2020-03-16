@@ -4,6 +4,7 @@ import { eventChannel } from "redux-saga"
 import { call, take, put, all } from "redux-saga/effects"
 import socketClient from "../socketClient"
 import TalkRoomActions from "../talkRoomModule/TalkRoomActions"
+import UserActions from "../userModule/UserActions"
 
 
 
@@ -21,11 +22,16 @@ function* createMessegeReceiveChannel() {
     })
 }
 
+/**
+ * socketサーバーからメッセージの追加を通知された時、
+ * stateに通知されたメッセージを追加する
+ */
 export function* handleReceiveMessage() {
     const channel = yield call(createMessegeReceiveChannel)
     //channelがemitするたびに起動
     while(true) {
         const response = yield take(channel)
+        yield put(UserActions.addUser(response.user))
         yield put(Actions.receiveMessage({
             roomId    : response.roomId,
             className : response.className,
@@ -47,12 +53,14 @@ function* createCurrentUsersRecieveChannel() {
     })
 }
 
+/**
+ * socketサーバーから現在ユーザーの更新通知を受け取り、
+ * TalkRoomのuserIdsを更新する
+ */
 export function* handleGetCurrentUsers() {
     const channel = yield call(createCurrentUsersRecieveChannel)
     while(true) {
         const response = yield take(channel)
-        // yield put(Actions.setCurrentUserIds(Object.keys(response)))
-        console.log(response.users)
         yield put(TalkRoomActions.addUsersToTalkRoom({
             talkRoomId : response.roomId,
             userIds : Object.keys(response.users).map(key => response.users[key]["id"])
@@ -60,7 +68,11 @@ export function* handleGetCurrentUsers() {
     }
 }
 
-
+/**
+ * socketの接続を行い、
+ * socketサーバーにトークルームへの参加を通知し、
+ * 現在ユーザーの更新を依頼する。
+ */
 export function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
@@ -71,6 +83,11 @@ export function* handleJoinRoom() {
     }
 }
 
+/**
+ * socketサーバーにトークルームからの退出を通知し、
+ * 現在ユーザーの更新を依頼する。
+ * その後、socketの接続を解除する
+ */
 export function* handleLeaveRoom() {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
     while(true) {
@@ -83,6 +100,9 @@ export function* handleLeaveRoom() {
     }
 }
 
+/**
+ * socketサーバーにトークルームへのメッセージ追加を通知する
+ */
 export function* handleAddMessage() {
     while(true) {
         const action = yield take(ActionTypes.ADD_MESSAGE)

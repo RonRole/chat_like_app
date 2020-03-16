@@ -139,7 +139,7 @@ export function* handleGetTalkRoomMembers(action) {
     if(result.isSuccess) {
         yield put(TalkRoomActions.addUsersToTalkRoom({
             talkRoomId : action.talkRoomId,
-            userIds : Object.keys(result.data)
+            userIds : [...Object.keys(result.data).map(key => result.data[key]["id"])]
         }))
         yield put(UserActions.addUser(...Object.keys(result.data).map(key => result.data[key])))
     }

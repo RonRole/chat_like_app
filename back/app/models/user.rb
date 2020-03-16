@@ -1,8 +1,13 @@
 class User < ApplicationRecord
+    # バリデーション
+    validates :name, presence: true, uniqueness: true
     has_secure_password
+
+    # リレーション
     has_many :own_rooms, foreign_key: :author_id, class_name: 'TalkRoom'
     has_many :user_talk_room_refs
     has_many :talk_rooms, through: :user_talk_room_refs
+
     #イメージ画像
     mount_uploader :image, ImageUploader
 
