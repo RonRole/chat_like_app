@@ -4,6 +4,7 @@ import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import UserModule from '../modules/userModule/UserModule'
+import socketClient from '../modules/socketClient'
 
 export class MessagesContainer extends React.Component {
 
@@ -19,7 +20,7 @@ export class MessagesContainer extends React.Component {
             user : this.props.loginUser,
             roomId: this.props.match.params.id
         })
-        window.onunload = () => {
+        window.onbeforeunload = () => {
             this.props.leaveRoom({
                 user : this.props.loginUser,
                 roomId : this.props.match.params.id
@@ -32,6 +33,7 @@ export class MessagesContainer extends React.Component {
             user : this.props.loginUser,
             roomId : this.props.match.params.id
         })
+         this.props.callRefreshUsers(this.props.match.params.id)
 
     }   
 
@@ -85,6 +87,7 @@ const mapDispatchToProps = (dispatch) => {
             user,
             roomId
         }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user: user, roomId:roomId})),
+        callRefreshUsers : (roomId) => dispatch(TalkRoomMessageModule.actions.refreshUsers(roomId))
     }
 }
 

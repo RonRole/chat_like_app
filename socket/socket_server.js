@@ -20,9 +20,9 @@ io.sockets.on('connection', socket => {
         if(!currentRoomMembers[roomId]) {
             currentRoomMembers[roomId] = {}
         }
-        currentRoomMembers[roomId][user.id] = user
+        currentRoomMembers[roomId][socket.id] = user
         console.log(`${roomId}に${user.name}が現れた!!!`)
-        console.log(currentRoomMembers[roomId])
+        console.log(currentRoomMembers[socket.id])
         socket.join(roomId)
         io.sockets.in(roomId).emit('receiveMessage', {
             roomId : roomId,
@@ -32,8 +32,9 @@ io.sockets.on('connection', socket => {
         })
     })
     socket.on('leaveRoom', ({user = {}, roomId}) => {
-        if(currentRoomMembers[roomId] && currentRoomMembers[roomId][user.id]){
-            delete currentRoomMembers[roomId][user.id]
+        console.log(socket.id)
+        if(currentRoomMembers[roomId] && currentRoomMembers[roomId][socket.id]){
+            delete currentRoomMembers[roomId][socket.id]
         }
         console.log(`${roomId}から${user.name}が離れました`)
         console.log(currentRoomMembers[roomId])
@@ -60,7 +61,7 @@ io.sockets.on('connection', socket => {
         console.log(currentRoomMembers)
         io.sockets.in(roomId).emit('currentUsers', {
             roomId : roomId,
-            users : currentRoomMembers[roomId]
+            users : {...currentRoomMembers[roomId]}
         })
     })
 })
