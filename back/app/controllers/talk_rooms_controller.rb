@@ -25,7 +25,7 @@ class TalkRoomsController < ApplicationController
     def create
         @current_user = current_user
         @talk_room = @current_user.talk_rooms.new(talkroom_params)
-        if(@current_user.save)
+        if(@talk_room.save)
             render :json => @talk_room
         end 
     end

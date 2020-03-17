@@ -42,7 +42,7 @@ class TalkRoomCard extends React.Component {
                 <Card.Body>
                     <div className="d-flex" style={{width:"100%"}}>
                         <div className="mr-2" style={{width:"50%", overflow:"auto"}}>
-                            <Card.Title>{this.talkRoom.title}</Card.Title>
+                            <Card.Title><strong>{this.talkRoom.title}</strong></Card.Title>
                             <Card.Text>{this.talkRoom.description}</Card.Text>
                         </div>
                         
