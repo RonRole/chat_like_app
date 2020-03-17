@@ -14,7 +14,7 @@ class TalkRoomsArea extends React.Component {
                             <Col key={index} md={{span:4}} className="mt-2 inline-block">
                                 <TalkRoomCard   className  ="col-md-4"
                                                 id         ={talkRoomId}
-                                                key        ={index} 
+                                                key        ={talkRoomId} 
                                                 readOnly   ={this.props.readOnly}/>  
 
                             </Col>

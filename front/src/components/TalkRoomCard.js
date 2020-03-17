@@ -32,6 +32,10 @@ class TalkRoomCard extends React.Component {
         this.props.destroyTalkRoom(this.props.id)
     }
 
+    componentDidUpdate() {
+        console.log(this.props.state)
+    }
+
     componentDidMount() {
         this.props.getMembers(this.props.id)
     }
@@ -41,7 +45,7 @@ class TalkRoomCard extends React.Component {
             <Card>
                 <Card.Body>
                     <div className="d-flex" style={{width:"100%"}}>
-                        <div className="mr-2" style={{width:"50%", overflow:"auto"}}>
+                        <div className="mr-2" style={{width:"100%", overflow:"auto"}}>
                             <Card.Title><strong>{this.talkRoom.title}</strong></Card.Title>
                             <Card.Text>{this.talkRoom.description}</Card.Text>
                         </div>
@@ -67,6 +71,7 @@ class TalkRoomCard extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        state : state,
         getTalkRoomById : (id) => TalkRoomModule.reducer.getTalkRoomById(state)(id),
         getUserById : (id) => UserModule.reducer.getUserById(state)(id)
     }

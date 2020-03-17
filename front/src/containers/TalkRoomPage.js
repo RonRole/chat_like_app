@@ -31,6 +31,7 @@ class TalkRoomPage extends React.Component {
         this.props.getJoinRooms()
     }
 
+
     render() {
         return (
             <Container>
