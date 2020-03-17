@@ -1,6 +1,11 @@
 class User < ApplicationRecord
     # バリデーション
     validates :name, presence: true, uniqueness: true
+    validates :password, presence: true
+    validates :password, confirmation: true
+    validates :password_confirmation, presence: true
+    validates :image, presence: true
+
     has_secure_password
 
     # リレーション
@@ -11,14 +16,13 @@ class User < ApplicationRecord
     #イメージ画像
     mount_uploader :image, ImageUploader
 
-    #画面に渡す自身のパラメータ(JSON)
-    def hash_for_front
-        {
-            id:self.id,
-            name:self.name,
-            profile:self.image.thumb,
-            thumb:self.image.thumb
-        }
+    #登録失敗時のパラメータ(JSON)
+    def fail_result
+        fail_result = {isFail:true}
+        self.errors.each do |name|
+            fail_result[name] = self.errors.full_messages_for(name)
+        end
+        fail_result
     end
 
     #受け取った文字列をハッシュにして返す

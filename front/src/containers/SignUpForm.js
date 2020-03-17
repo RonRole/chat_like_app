@@ -3,9 +3,13 @@ import { Form, Button, Container } from 'react-bootstrap'
 import UserModule from '../modules/userModule/UserModule'
 import { connect } from 'react-redux'
 import "./SignUpForm.css"
-import { NameFormGroup, PasswordFormGroup, PasswordConfirmFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
+import { NameFormGroup, PasswordFormGroup, PasswordConfirmationFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
 
 class SignUpForm extends React.Component {
+
+    componentWillUnmount(){
+        this.props.clearErrorMessages()
+    }
 
     render() {
         return (
@@ -17,13 +21,20 @@ class SignUpForm extends React.Component {
                     history : this.props.history
                 })
             }}>
-                <NameFormGroup />
-                <PasswordFormGroup />
-                <PasswordConfirmFormGroup/>
-                <ProfileImageFormGroup />
+                <NameFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("name")}/>
+                <PasswordFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password")} />
+                <PasswordConfirmationFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password_confirmation")} />
+                <ProfileImageFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("image")}/>
                 <Button variant="primary" type="submit">送りますわ</Button>
             </Form>
         )
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        state : state,
+        getErrorMessagesFromFormName : (name) => UserModule.reducer.getErrorsFromStateByFormName(state)(name)
     }
 }
 
@@ -42,8 +53,11 @@ const mapDispatchToProps = (dispatch) => {
                 },
                 history:history
             }))
+        },
+        clearErrorMessages : () => {
+            dispatch(UserModule.actions.clearCreateFormErrors())
         }
     }
 }
 
-export default connect(null, mapDispatchToProps)(SignUpForm)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)

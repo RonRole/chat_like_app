@@ -3,9 +3,9 @@ import DataAccessor from "../DataAccessor"
 import { call, put, all, takeEvery, take } from "redux-saga/effects"
 import handleError from "../ErrorHandler"
 import UserActions, { UserActionTypes } from "./UserActions"
-import LoadingActions from "../loadingModule/LoadingActions"
 import { eventChannel } from "redux-saga"
 import socketClient from "../socketClient"
+import { handleGetExecLoginStart } from "../logModule/LogSaga"
 
 const getSelf = () => {
     return DataAccessor.get(({
@@ -47,7 +47,7 @@ export function* handleGetSelf(action) {
 export function* handleCreateUser(action) {
     const result = yield call(createUser, action.userParams)
     if(result.isSuccess) {
-        yield put(LogActions.execLogin({
+        yield call(handleGetExecLoginStart, LogActions.execLogin({
             session: {
                 name : action.userParams.name,
                 password : action.userParams.password
@@ -57,6 +57,7 @@ export function* handleCreateUser(action) {
     }
     if(result.isFail) {
         alert("ユーザーを作成できませんでした")
+        yield put(UserActions.setCreateFormErrors(result.data))
     }
     if(result.isError) {
         handleError({

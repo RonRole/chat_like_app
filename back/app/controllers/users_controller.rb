@@ -10,9 +10,9 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
         if(@user.save)
             render :json => @user#.hash_for_front
+            return
         else
-            puts @user.errors.full_messages
-            render :json => {isFail:true}
+            render :json => @user.fail_result
         end
     end
 

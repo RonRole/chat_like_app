@@ -1,38 +1,54 @@
 import React from 'react'
 import { Form, NavItem } from 'react-bootstrap'
 
-export class NameFormGroup extends React.Component {
-    render() {
-        return (
-            <Form.Group controlId="nameForm" {...this.props}>
-                <Form.Label>おなまえ</Form.Label>
-                <Form.Control type="text" name="name" placeholder="おなまえ" />
-            </Form.Group>
-        )
-    }
+export const NameFormGroup = ({
+    className = "",
+    style = "",
+    errorMessages = []
+}) => {
+    return (
+        <Form.Group controlId="nameForm" className={className} style={{...style}}>
+            <Form.Label>おなまえ</Form.Label>
+            <Form.Control type="text" name="name" placeholder="おなまえ" isInvalid={errorMessages.length > 0}/>
+            <Form.Control.Feedback type="invalid">
+                {errorMessages.find(e=>e)}
+            </Form.Control.Feedback>
+        </Form.Group>
+    )
 }
 
-export class PasswordFormGroup extends React.Component {
-    render () {
-        return (
-            <Form.Group controlId="passwordForm" {...this.props}>
-                <Form.Label>おぱすわーど</Form.Label>
-                <Form.Control type="password" name="password" placeholder="おぱすわーど"/>
-            </Form.Group>
-        )
-    }
+export const PasswordFormGroup = ({
+    className = "",
+    style = "",
+    errorMessages = []
+}) => {
+    return (
+        <Form.Group controlId="passwordForm" className={className} style={{...style}}>
+            <Form.Label>おぱすわーど</Form.Label>
+            <Form.Control type="password" name="password" placeholder="おぱすわーど" isInvalid={errorMessages.length > 0}/>
+            <Form.Control.Feedback type="invalid">
+                {errorMessages.find(e=>e)}
+            </Form.Control.Feedback>
+        </Form.Group>
+    )
 }
 
-export class PasswordConfirmFormGroup extends React.Component {
-    render() {
-        return (
-            <Form.Group controlId="passwordConfirmForm" {...this.props}>
-                <Form.Label>もう一度入力なさい</Form.Label>
-                <Form.Control type="password" name="password_confirmation" placeholder="おぱすわーど"/>
-            </Form.Group>
-        )
-    }
+export const PasswordConfirmationFormGroup = ({
+    className = "",
+    style = "",
+    errorMessages = []
+}) => {
+    return (
+        <Form.Group controlId="passwordConfirmationForm" className={className} style={{...style}}>
+            <Form.Label>嗚呼パスワードよもう一度</Form.Label>
+            <Form.Control type="password" name="password_confirmation" placeholder="おぱすわーど" isInvalid={errorMessages.length > 0}/>
+            <Form.Control.Feedback type="invalid">
+                {errorMessages.find(e=>e)}
+            </Form.Control.Feedback>
+        </Form.Group>
+    )
 }
+
 
 export class ProfileImageFormGroup extends React.Component {
     
@@ -42,8 +58,8 @@ export class ProfileImageFormGroup extends React.Component {
     
     render() {
         return(
-            <Form.Group controlId="signUpImageForm" {...this.props}>
-                <Form.Control style={{display:'none'}} type="file" name="image" onChange={(e) => {
+            <Form.Group controlId="signUpImageForm">
+                <Form.Control style={{display:'none'}} type="file" name="image"   isInvalid={this.props.errorMessages.length > 0} onChange={(e) => {
                     const fileReader = new FileReader()
                     const input = e.currentTarget.files[0]
                     fileReader.onload = e => {
@@ -71,6 +87,9 @@ export class ProfileImageFormGroup extends React.Component {
                         プロフィール画像変更
                     </div>
                 </div>
+                <Form.Control.Feedback type="invalid">
+                    {this.props.errorMessages.find(e=>e)}
+                </Form.Control.Feedback>
             </Form.Group>
         )
     }
