@@ -2,8 +2,6 @@ import { LogActionTypes } from "./LogActions"
 
 //Reducers
 const initialState = {
-    //ログインエラー
-    loginError : null,
     //ログイン状態
     isLoggedIn  : false,
 }
@@ -19,20 +17,14 @@ const creatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLoggedIn:action.loginUser,
-                loginError : null
-            }
-        }
-        case LogActionTypes.FAIL_LOG_IN : {
-            return {
-                ...state,
-                loginError:action.data
+                loginErrorMessages : []
             }
         }
         case LogActionTypes.LOG_OUT: {
             return {
                 ...state,
                 isLoggedIn:false,
-                loginError : null
+                loginErrorMessages : []
             }
         }
         default: {

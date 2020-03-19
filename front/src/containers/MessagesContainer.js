@@ -80,11 +80,11 @@ const mapDispatchToProps = (dispatch) => {
         joinRoom:({
             user, 
             roomId
-        }) => dispatch(TalkRoomMessageModule.actions.joinRoom({user: user, roomId:roomId})),
+        }) => dispatch(TalkRoomMessageModule.actions.joinRoom({user, roomId})),
         leaveRoom:({
             user,
             roomId
-        }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user: user, roomId:roomId})),
+        }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user, roomId})),
     }
 }
 

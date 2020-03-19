@@ -21,9 +21,7 @@ export class MessageFormContainer extends React.Component {
                         formEvent.currentTarget.inputMessage.value = ""
                     }}>
                     <Form.Control className="mt-2 mb-2" name="inputMessage" type="text" placeholder="こ↑こ↓に書いて、どうぞ"/>    
-                    <ButtonGroup aria-label="Basic example">
-                        <MessageSendButton />
-                    </ButtonGroup>
+                    <MessageSendButton />
                 </Form>
             </Container>
         )
@@ -45,10 +43,10 @@ const mapDispatchToProps = (dispatch) => {
             user
         }) => {
             dispatch(TalkRoomMessageModule.actions.addMessage({
-                roomId    : roomId,
-                className : className,
-                text      : text,
-                user      : user
+                roomId,
+                className,
+                text,
+                user
             }))
         }
     }

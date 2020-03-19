@@ -34,10 +34,10 @@ export default {
     }) => {
         return {
             type       :TalkRoomActionTypes.EXEC_ADD_ROOM,
-            history    :history,
-            title      :title,
-            description:description,
-            authorId   :authorId
+            history,
+            title,
+            description,
+            authorId,
         }
     },
     execDeleteTalkRoom:(
@@ -45,7 +45,7 @@ export default {
     ) => {
         return {
             type      : TalkRoomActionTypes.EXEC_DELETE_ROOM,
-            talkRoomId: talkRoomId
+            talkRoomId,
         }
     },
 
@@ -55,8 +55,8 @@ export default {
     }) => {
         return {
             type : TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM,
-            userId : userId,
-            talkRoomId : talkRoomId
+            userId,
+            talkRoomId,
         }
     },
 
@@ -65,26 +65,26 @@ export default {
     ) => {
         return {
             type : TalkRoomActionTypes.EXEC_GET_TALKROOM_MEMBERS,
-            talkRoomId : talkRoomId
+            talkRoomId,
         }
     },
 
     setOwnRooms   :(talkRooms) => {
         return {
             type:TalkRoomActionTypes.SET_OWN_ROOMS,
-            talkRooms:talkRooms
+            talkRooms,
         }
     },
     setJoinedRooms:(talkRooms) => {
         return {
             type:TalkRoomActionTypes.SET_JOINED_ROOMS,
-            talkRooms: talkRooms
+            talkRooms,
         }
     },
     addTalkRoom:(talkRoom) => {
         return {
             type:TalkRoomActionTypes.ADD_TALK_ROOM,
-            talkRoom:talkRoom
+            talkRoom,
         }
     },
     deleteTalkRoom:({
@@ -92,7 +92,7 @@ export default {
     }) => {
         return {
             type:TalkRoomActionTypes.DELETE_TALK_ROOM,
-            talkRoomId:talkRoomId
+            talkRoomId,
         }
     },
 
@@ -102,8 +102,8 @@ export default {
     }) => {
         return {
             type : TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM,
-            talkRoomId : talkRoomId,
-            userIds : userIds
+            talkRoomId,
+            userIds,
         }
     }
 }

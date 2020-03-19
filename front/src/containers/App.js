@@ -64,8 +64,8 @@ const mapDispatchToProps = (dispatch) => {
       then
     }) => {
       dispatch(LogModule.actions.cookieLogin({
-        history:history,
-        then : then
+        history,
+        then
       }))
     }
   }

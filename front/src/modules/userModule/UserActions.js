@@ -18,15 +18,15 @@ export default {
     }) => {
         return {
             type : UserActionTypes.EXEC_CREATE_USER,
-            history: history,
-            userParams: userParams
+            history,
+            userParams,
         }
     },
-
-    setCreateFormErrors : (failResultJson) => {
+    //errorsはJSON
+    setCreateFormErrors : (errors) => {
         return {
             type : UserActionTypes.SET_CREATE_FORM_ERRORS,
-            errors : failResultJson
+            errors
         }
     },
 
@@ -40,7 +40,7 @@ export default {
     addUser : (...users) => {
         return {
             type : UserActionTypes.ADD_USER,
-            users : users
+            users
         }
     }
 }

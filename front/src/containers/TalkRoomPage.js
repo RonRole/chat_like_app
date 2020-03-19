@@ -3,7 +3,8 @@ import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 import TalkRoomsArea from '../components/TalkRoomsArea'
-import TalkRoomModalForm from './TalkRoomModalForm'
+import { CreateTalkRoomForm, UpdateTalkRoomForm } from './TalkRoomModalForms'
+import ModalModule from '../modules/ModalModule/ModalModule'
 
 
 
@@ -22,9 +23,6 @@ const TalkRoomAreaLabel = ({
 }
 
 class TalkRoomPage extends React.Component {
-    state = {
-        modalShow : false
-    }
 
     componentDidMount() {
         this.props.getOwnRooms()
@@ -36,11 +34,12 @@ class TalkRoomPage extends React.Component {
         return (
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
-                <Button variant="primary" onClick={() => this.setState({modalShow:true})}>トークルームを追加</Button>
+                <Button variant="primary" onClick={() => this.props.showModalOf("createTalkRoomModalForm")}>トークルームを追加</Button>
                 <TalkRoomsArea talkRoomIds={this.props.ownRoomIds} />
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
                 <TalkRoomsArea talkRoomIds={this.props.joinRoomIds} readOnly/>
-                <TalkRoomModalForm show = {this.state.modalShow} cancel={() => this.setState({modalShow:false})} />
+                <CreateTalkRoomForm />
+                <UpdateTalkRoomForm />   
             </Container>
         )
     }
@@ -50,14 +49,15 @@ const mapStateToProps = (state) => {
     return {
         loginUser : state.logStatus.isLoggedIn,
         ownRoomIds : TalkRoomModule.reducer.getOwnRoomIds(state),
-        joinRoomIds : TalkRoomModule.reducer.getJoinRoomIds(state)
+        joinRoomIds : TalkRoomModule.reducer.getJoinRoomIds(state),
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getOwnRooms : () => dispatch(TalkRoomModule.actions.execGetOwnRooms()),
-        getJoinRooms : () => dispatch(TalkRoomModule.actions.execGetJoinedRooms())
+        getJoinRooms : () => dispatch(TalkRoomModule.actions.execGetJoinedRooms()),
+        showModalOf : (modalName) => dispatch(ModalModule.actions.showModalOf(modalName))
     }
 }
 

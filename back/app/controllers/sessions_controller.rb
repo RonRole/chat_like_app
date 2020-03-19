@@ -15,6 +15,7 @@ class SessionsController < ApplicationController
         if(@current_user && @current_user.authenticate(session_params[:password]))
             session[:user_id] = @current_user.id
             render :json => @current_user#.hash_for_front
+            return
         else
             render :json => {isFail: true}
         end

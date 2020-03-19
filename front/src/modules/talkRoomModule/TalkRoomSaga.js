@@ -32,8 +32,8 @@ const createTalkRoom = ({
         url       : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms`,
         parameter : {
             talkroom : {
-                title      :title,
-                description:description,
+                title,
+                description,
                 author_id   :authorId
             }
         } 

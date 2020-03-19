@@ -12,16 +12,16 @@ export const ActionTypes = {
 const joinRoom = ({user, roomId}) => {
     return {
         type   : ActionTypes.JOIN_ROOM,
-        user: user,
-        roomId : roomId
+        user,
+        roomId
     }
 }
 
 const leaveRoom = ({user, roomId}) => {
     return {
         type : ActionTypes.LEAVE_ROOM,
-        user : user,
-        roomId : roomId
+        user,
+        roomId,
     }
 }
 
@@ -33,10 +33,10 @@ const addMessage = ({
 }) => {
     return {
         type     : ActionTypes.ADD_MESSAGE,
-        roomId   : roomId,
-        className: className,
-        user     : user,
-        text     : text,
+        roomId,
+        className,
+        user,
+        text
     }
 }
 
@@ -48,10 +48,10 @@ const receiveMessage = ({
 }) => {
     return {
         type     : ActionTypes.RECEIVE_MESSAGE,
-        roomId   : roomId,
-        className: className,
-        user     : user,
-        text     : text
+        roomId,
+        className,
+        user,
+        text
     }
 }
 

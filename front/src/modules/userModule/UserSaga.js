@@ -1,11 +1,12 @@
 import LogActions from "../logModule/LogActions"
 import DataAccessor from "../DataAccessor"
-import { call, put, all, takeEvery, take } from "redux-saga/effects"
+import { call, put, take } from "redux-saga/effects"
 import handleError from "../ErrorHandler"
-import UserActions, { UserActionTypes } from "./UserActions"
+import UserActions from "./UserActions"
 import { eventChannel } from "redux-saga"
 import socketClient from "../socketClient"
 import { handleGetExecLoginStart } from "../logModule/LogSaga"
+import FormErrorActions from "../FormErrorModule/FormErrorActions"
 
 const getSelf = () => {
     return DataAccessor.get(({
@@ -57,7 +58,10 @@ export function* handleCreateUser(action) {
     }
     if(result.isFail) {
         alert("ユーザーを作成できませんでした")
-        yield put(UserActions.setCreateFormErrors(result.data))
+        yield put(FormErrorActions.setError({
+            formName : "signUpForm",
+            errorJson : result.data
+        }))
     }
     if(result.isError) {
         handleError({

@@ -4,11 +4,13 @@ import './LoginPage.css'
 
 import { Form, Button } from 'react-bootstrap'
 import LogModule from '../modules/logModule/LogModule'
+import { NameFormGroup, PasswordFormGroup } from '../components/UserFormGroups'
+import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
 export class LoginForm　extends React.Component {
 
-    componentDidMount(){
-        console.log(this.props.loginError)
+    componentWillUnmount() {
+        this.props.clearLoginError()
     }
 
     render(){
@@ -21,21 +23,8 @@ export class LoginForm　extends React.Component {
                                     history : this.props.history
                                 })
                             }}>
-                <Form.Group controlId="nameForm">
-                    <Form.Label>おなまえ</Form.Label>
-                    {/* isInvalidがtrueだとis-invalidクラスになる これでスタイリングする */}
-                    <Form.Control isInvalid={this.props.loginError} type="text" name="name" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
-                    <Form.Control.Feedback type="invalid">
-                        おなまえが間違ってましてよ
-                    </Form.Control.Feedback>
-                </Form.Group>
-                <Form.Group controlId="passWordForm">
-                    <Form.Label>おぱすわーど</Form.Label>
-                    <Form.Control isInvalid={this.props.loginError} type="password" name="password" placeholder="ぷももえんぐえげぎおんもえちょっちょっちゃっさ"/>
-                    <Form.Control.Feedback type="invalid">
-                        おぱすわーどが間違ってましてよ
-                    </Form.Control.Feedback>
-                </Form.Group>
+                <NameFormGroup errorMessages={this.props.loginErrorMessages} />
+                <PasswordFormGroup errorMessages={this.props.loginErrorMessages} />
                 <Button variant="primary" type="submit">送りますわ</Button>
             </Form>
         )
@@ -44,8 +33,8 @@ export class LoginForm　extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        loginError : state.logStatus.loginError,
-        isLoggedIn   : state.logStatus.isLoggedIn
+        state,
+        loginErrorMessages : FormErrorModule.reducer.getErrorsOf(state)("loginForm")("messages")
     }
 }
 
@@ -61,11 +50,14 @@ const mapDispatchToProps = (dispatch) => {
                         name    : input.name.value,
                         password: input.password.value
                     },
-                    history : history                
+                    history               
                 }
             ))
         },
-        logout:()=> dispatch(LogModule.actions.logout())
+        logout:()=> dispatch(LogModule.actions.logout()),
+        clearLoginError : () => {
+            dispatch(FormErrorModule.actions.clearErrorByName("loginForm"))
+        }
     }
 }
 

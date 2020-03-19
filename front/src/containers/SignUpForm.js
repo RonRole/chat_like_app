@@ -4,6 +4,7 @@ import UserModule from '../modules/userModule/UserModule'
 import { connect } from 'react-redux'
 import "./SignUpForm.css"
 import { NameFormGroup, PasswordFormGroup, PasswordConfirmationFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
+import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
 class SignUpForm extends React.Component {
 
@@ -34,7 +35,7 @@ class SignUpForm extends React.Component {
 const mapStateToProps = (state) => {
     return {
         state : state,
-        getErrorMessagesFromFormName : (name) => UserModule.reducer.getErrorsFromStateByFormName(state)(name)
+        getErrorMessagesFromFormName : (name) => FormErrorModule.reducer.getErrorsOf(state)("signUpForm")(name)
     }
 }
 
@@ -51,11 +52,11 @@ const mapDispatchToProps = (dispatch) => {
                     password_confirmation:　input.password_confirmation.value,
                     image: input.image.files[0]
                 },
-                history:history
+                history
             }))
         },
         clearErrorMessages : () => {
-            dispatch(UserModule.actions.clearCreateFormErrors())
+            dispatch(FormErrorModule.actions.clearErrorByName("signUpForm"))
         }
     }
 }

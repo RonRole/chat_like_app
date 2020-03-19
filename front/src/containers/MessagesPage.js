@@ -13,8 +13,8 @@ class MessagePage extends React.Component {
 
     render(){
         return (
-            <Container>
-                <h3>{this.props.getTalkRoomById(this.props.match.params.id).title}</h3>
+            <Container className="justify-content-center">
+                <strong>{this.props.getTalkRoomById(this.props.match.params.id).title}</strong>
                 <Container className="d-flex">
                     <MessagesContainer {...this.props} className="mr-2" style={{height:"70vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
                     <Container style={{width:"40%", border:"1px solid gray", overflow:"scroll"}}>

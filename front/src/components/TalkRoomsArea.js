@@ -1,7 +1,7 @@
 import React from "react"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import { Col } from "react-bootstrap"
-import TalkRoomCard from "./TalkRoomCard"
+import TalkRoomCard from "../containers/TalkRoomCard"
 
 class TalkRoomsArea extends React.Component {
 

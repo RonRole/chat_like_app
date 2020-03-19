@@ -1,7 +1,8 @@
 import LogActions, { LogActionTypes } from "./LogActions"
-import { put, take, call, all, fork, takeEvery, takeLatest } from "redux-saga/effects"
+import { put, call} from "redux-saga/effects"
 import DataAccessor from "../DataAccessor"
 import handleError from "../ErrorHandler"
+import FormErrorActions from "../FormErrorModule/FormErrorActions"
 
 //saga
 export function* handleGetDefLoginStart(action) {
@@ -33,8 +34,12 @@ export function* handleGetExecLoginStart(loginAction) {
     }
     if(accessResult.isFail){
         alert("ログインに失敗しました")
-        //yield put(LogActions.logout())
-        //yield put(LogActions.loginFailed(accessResult.data))
+        yield put(FormErrorActions.setError({
+            formName:"loginForm",
+            errorJson: {
+                messages:["お名前かおパスワードが間違ってましてよ"]
+            }
+        }))
     }
     if(accessResult.isError) {
         handleError({

@@ -4,18 +4,23 @@ import { Link } from "react-router-dom"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
 import UserModule from "../modules/userModule/UserModule"
+import ModalModule from "../modules/ModalModule/ModalModule"
 
 
-const OwnerMenu = ({onDestroyButtonClicked}) => {
+const OwnerMenu = ({
+    onInviteButtonClick,
+    onUpdateButtonClick,
+    onDestroyButtonClick
+}) => {
     return (
         <Dropdown>
             <Dropdown.Toggle variant="success">
                 管理者の特権
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item style={{color:"blue"}}>誘う</Dropdown.Item>
-                <Dropdown.Item style={{color:"orange"}}>作り直す</Dropdown.Item>
-                <Dropdown.Item style={{color:"red"}} onClick={onDestroyButtonClicked}>消す</Dropdown.Item>
+                <Dropdown.Item style={{color:"blue"}} onClick={onInviteButtonClick}>誘う</Dropdown.Item>
+                <Dropdown.Item style={{color:"orange"}} onClick={onUpdateButtonClick}>作り直す</Dropdown.Item>
+                <Dropdown.Item style={{color:"red"}} onClick={onDestroyButtonClick}>消す</Dropdown.Item>
             </Dropdown.Menu>
         </Dropdown>
     )
@@ -25,7 +30,7 @@ class TalkRoomCard extends React.Component {
 
     talkRoom = this.props.getTalkRoomById(this.props.id)
 
-    onDestroyButtonClicked = () => {
+    onDestroyButtonClick = () => {
         if(!window.confirm(`${this.talkRoom.title}を削除しますか?`)){
             return
         }
@@ -49,8 +54,6 @@ class TalkRoomCard extends React.Component {
                             <Card.Title><strong>{this.talkRoom.title}</strong></Card.Title>
                             <Card.Text>{this.talkRoom.description}</Card.Text>
                         </div>
-                        
-
                     </div>
                     <div className="d-flex justify-content-end mb-2">
                         <Link className="btn btn-primary" to={`/talk_rooms/${this.props.id}`}>入る</Link>
@@ -58,7 +61,12 @@ class TalkRoomCard extends React.Component {
                     <div className="d-flex justify-content-end">
                         {[this.props.readOnly].filter(readOnly => !readOnly).map((readOnly,index) => {
                             return (
-                                <OwnerMenu key={index} onDestroyButtonClicked={this.onDestroyButtonClicked} />
+                                <OwnerMenu 
+                                    key={index} 
+                                    onInviteButtonClick={() => alert("SAWAI")}
+                                    onUpdateButtonClick={this.props.showUpdateTalkRoomModalForm}
+                                    onDestroyButtonClick={this.onDestroyButtonClick}
+                                />
                             )    
                         })}
                     </div>
@@ -84,6 +92,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         destroyTalkRoom : (talkRoomId) => {
             dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
+        },
+        showUpdateTalkRoomModalForm : () => {
+            dispatch(ModalModule.actions.showModalOf("updateTalkRoomModalForm"))
         }
     }
 }

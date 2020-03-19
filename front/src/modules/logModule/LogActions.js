@@ -1,9 +1,8 @@
 export const LogActionTypes = {
     EXEC_LOG_IN:"EXEC_LOG_IN",
     DEF_LOG_IN:"DEF_LOG_IN",
-    FAIL_LOG_IN:"FAIL_LOG_IN",
     LOG_IN:"LOG_IN",
-    LOG_OUT:"LOG_OUT"
+    LOG_OUT:"LOG_OUT",
 }
 
 export default {
@@ -14,9 +13,9 @@ export default {
     }) => {
         return {
             type     :LogActionTypes.EXEC_LOG_IN,
-            session  :session,
-            history  :history,
-            then     :then
+            session,
+            history,
+            then
         }
     },
     cookieLogin:({
@@ -25,25 +24,19 @@ export default {
     }) => {
         return {
             type    : LogActionTypes.DEF_LOG_IN,
-            history : history,
-            then    : then
+            history,
+            then
         }
     },
-    loginFailed:(failedData) => {
-        return {
-            type : LogActionTypes.FAIL_LOG_IN,
-            data : failedData
-        }
-    },
-    login: (user) => {
+    login: (loginUser) => {
         return {
             type     :LogActionTypes.LOG_IN,
-            loginUser:user
+            loginUser
         }
     },
     logout: () => {
         return {
             type:LogActionTypes.LOG_OUT
         }
-    }    
+    },
 }

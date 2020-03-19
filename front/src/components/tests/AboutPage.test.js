@@ -1,7 +1,6 @@
 import {shallow, mount, render} from 'enzyme'
 import AboutPage from '../../components/AboutPage'
 import React from 'react'
-import { OonButton } from '../../containers/OonButton'
 import { Button, Container, Alert } from 'react-bootstrap'
 
 const wrapper = shallow(<AboutPage />)
