@@ -3,7 +3,7 @@ import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 import TalkRoomsArea from '../components/TalkRoomsArea'
-import { CreateTalkRoomForm, UpdateTalkRoomForm } from './TalkRoomModalForms'
+import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
 
 
@@ -24,6 +24,10 @@ const TalkRoomAreaLabel = ({
 
 class TalkRoomPage extends React.Component {
 
+    state = {
+        createModalShow : false
+    }
+
     componentDidMount() {
         this.props.getOwnRooms()
         this.props.getJoinRooms()
@@ -33,11 +37,15 @@ class TalkRoomPage extends React.Component {
         return (
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
-                <Button variant="primary" onClick={() => this.props.showModalOf("createTalkRoomModalForm")}>トークルームを追加</Button>
+                <Button variant="primary" onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
                 <TalkRoomsArea talkRoomIds={this.props.ownRoomIds} />
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
                 <TalkRoomsArea talkRoomIds={this.props.joinRoomIds} readOnly/>
-                <CreateTalkRoomForm />
+                <CreateTalkRoomForm show={this.state.createModalShow} onCancel={()=> {
+                    this.setState({
+                        createModalShow : false
+                    })
+                }}/>
             </Container>
         )
     }

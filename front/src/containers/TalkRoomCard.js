@@ -6,6 +6,7 @@ import { connect } from "react-redux"
 import UserModule from "../modules/userModule/UserModule"
 import ModalModule from "../modules/ModalModule/ModalModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
+import OwnerDropdown from "./OwnerDropdown"
 
 
 const OwnerMenu = ({
@@ -29,24 +30,11 @@ const OwnerMenu = ({
 
 class TalkRoomCard extends React.Component {
 
-    state = {
-        updateModalShow : false
-    }
-
     getTalkRoom = (id) => this.props.getTalkRoomById(id)
-
-    onDestroyButtonClick = () => {
-        if(!window.confirm(`${this.talkRoom.title}を削除しますか?`)){
-            return
-        }
-        this.props.destroyTalkRoom(this.props.id)
-    }
-
 
     componentDidMount() {
         this.props.getMembers(this.props.id)
     }
-
 
     render() {
         return (
@@ -64,24 +52,13 @@ class TalkRoomCard extends React.Component {
                     <div className="d-flex justify-content-end">
                         {[this.props.readOnly].filter(readOnly => !readOnly).map((readOnly,index) => {
                             return (
-                                <OwnerMenu 
-                                    key={index} 
-                                    onInviteButtonClick={() => alert("SAWAI")}
-                                    onUpdateButtonClick={() => this.setState({updateModalShow:true})}
-                                    onDestroyButtonClick={this.onDestroyButtonClick}
-                                />
+                               <OwnerDropdown key={index} talkRoomId={this.props.id}/>
                             )    
                         })}
                     </div>
-                    <UpdateTalkRoomForm talkRoomId = {this.props.id} 
-                                        show={this.state.updateModalShow} 
-                                        onCancel = {()=> {
-                                            this.setState({updateModalShow: false})
-                                        }}/>   
                 </Card.Body>
             </Card>
         )
-
     }
 }
 
@@ -98,12 +75,6 @@ const mapDispatchToProps = (dispatch) => {
         getMembers : (talkRoomId) => {
             dispatch(TalkRoomModule.actions.execGetTalkRoomUser(talkRoomId))
         },
-        destroyTalkRoom : (talkRoomId) => {
-            dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
-        },
-        showUpdateTalkRoomModalForm : () => {
-            dispatch(ModalModule.actions.showModalOf("updateTalkRoomModalForm"))
-        }
     }
 }
 

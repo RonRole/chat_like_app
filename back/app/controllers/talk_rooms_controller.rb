@@ -36,7 +36,7 @@ class TalkRoomsController < ApplicationController
     end
 
     def update
-        @talk_room = TalkRoom.find(talkroom_params[:id])
+        @talk_room = TalkRoom.find(params[:id])
         if(@talk_room.update_attributes(talkroom_params))
             render :json => @talk_room
             return
