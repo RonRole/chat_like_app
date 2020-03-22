@@ -45,6 +45,18 @@ export default {
                     })
     },
 
+    put : ({
+        url,
+        parameter,
+    }) => {
+        return Axios.put(url, parameter)
+                    .then(response => {
+                        return createNormalResponse(response)
+                    })
+                    .catch(error => {
+                        return createErrorResponse(error)
+                    })
+    },
     delete : ({
         url
     }) => {

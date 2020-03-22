@@ -19,22 +19,16 @@ import "./CSSTransitionGroup.css"
 
 export class App extends Component {
 
-  state = {
-    defaultLoaded : false
-  }
 
   componentDidMount(){
     this.props.defaultLogin({
       history : this.props.history,
-      then : () => this.setState({
-        defaultLoaded : true
-      })
     })
   }
 
 
   render() {
-    if(!this.state.defaultLoaded) {
+    if(this.props.loading) {
         return (
           <Loading />
         )
@@ -57,18 +51,22 @@ export class App extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    loading : state.loading
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return {
     defaultLogin:({
       history,
-      then
     }) => {
       dispatch(LogModule.actions.cookieLogin({
         history,
-        then
       }))
     }
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

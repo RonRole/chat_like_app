@@ -15,8 +15,8 @@ class TalkRoomsArea extends React.Component {
                                 <TalkRoomCard   className  ="col-md-4"
                                                 id         ={talkRoomId}
                                                 key        ={talkRoomId} 
-                                                readOnly   ={this.props.readOnly}/>  
-
+                                                readOnly   ={this.props.readOnly}
+                                />  
                             </Col>
                         </CSSTransition>
                     )

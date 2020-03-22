@@ -4,6 +4,7 @@ import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import UserModule from '../modules/userModule/UserModule'
+import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 
 export class MessagesContainer extends React.Component {
 
@@ -70,6 +71,7 @@ const mapStateToProps = (state) => {
     return {
         allState : state,
         loginUser : state.logStatus.isLoggedIn,
+        getTalkRoomById : (roomId) => TalkRoomModule.reducer.getTalkRoomById(state)(roomId),
         getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),
         getUserById : (id) => UserModule.reducer.getUserById(state)(id)
     }

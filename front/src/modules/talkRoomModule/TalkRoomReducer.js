@@ -51,6 +51,13 @@ const createReducer = (state = initialState, action) => {
                 ...state
             }
         }
+
+        case TalkRoomActionTypes.UPDATE_TALK_ROOM : {
+            state.ownRooms[action.talkRoomId]　= action.talkRoom
+            return {
+                ...state,
+            }
+        }
         default: {
             return state
         }

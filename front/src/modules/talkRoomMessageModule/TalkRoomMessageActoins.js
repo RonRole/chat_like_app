@@ -5,7 +5,7 @@ export const ActionTypes = {
     ADD_MESSAGE     : "ADD_MESSAGE",
     RECEIVE_MESSAGE : "RECEIVE_MESSAGE",
     SET_CURRENT_USER_IDS : "SET_CURRENT_USER_IDS",
-    CLEAR_MESSAGE : "CLEAR_MESSAGE"
+    CLEAR_MESSAGE : "CLEAR_MESSAGE",
 }
 
 //actionCreators

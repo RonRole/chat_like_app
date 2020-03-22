@@ -1,16 +1,18 @@
 export const TalkRoomActionTypes = {
-    EXEC_GET_OWN_ROOMS    : "GET_OWN_ROOMS",
-    EXEC_GET_JOINED_ROOMS : "GET_JOINED_ROOMS",
-    EXEC_ADD_ROOM         : "EXEC_ADD_ROOM",
-    EXEC_DELETE_ROOM      : "EXEC_DELETE_ROOM",
+    EXEC_GET_OWN_ROOMS        : "GET_OWN_ROOMS",
+    EXEC_GET_JOINED_ROOMS     : "GET_JOINED_ROOMS",
+    EXEC_ADD_ROOM             : "EXEC_ADD_ROOM",
+    EXEC_DELETE_ROOM          : "EXEC_DELETE_ROOM",
+    EXEC_UPDATE_ROOM          : "EXEC_UPDATE_ROOM",
     EXEC_ADD_USER_TO_TALKROOM : "EXEC_ADD_USER_TO_TALKROOM",
-    EXEC_GET_TALKROOM_MEMBERS: "EXEC_GET_TALKROOM_MEMBER",
+    EXEC_GET_TALKROOM_MEMBERS : "EXEC_GET_TALKROOM_MEMBER",
 
-    SET_OWN_ROOMS         : "SET_OWN_ROOMS",
-    SET_JOINED_ROOMS      : "SET_JOINED_ROOMS",
-    ADD_TALK_ROOM         : "ADD_TALK_ROOM",
-    DELETE_TALK_ROOM      : "DELETE_TALK_ROOM",
-    ADD_USERS_TO_TALK_ROOM : "ADD_USERS_TO_TALK_ROOM"
+    SET_OWN_ROOMS          : "SET_OWN_ROOMS",
+    SET_JOINED_ROOMS       : "SET_JOINED_ROOMS",
+    ADD_TALK_ROOM          : "ADD_TALK_ROOM",
+    DELETE_TALK_ROOM       : "DELETE_TALK_ROOM",
+    UPDATE_TALK_ROOM       : "UPDATE_TALK_ROOM",
+    ADD_USERS_TO_TALK_ROOM : "ADD_USERS_TO_TALK_ROOM",
 }
 
 export default {
@@ -38,6 +40,18 @@ export default {
             title,
             description,
             authorId,
+        }
+    },
+    execUpdateTalkRoom:({
+        talkRoomId,
+        title,
+        description
+    }) => {
+        return {
+            type : TalkRoomActionTypes.EXEC_UPDATE_ROOM,
+            talkRoomId,
+            title,
+            description,
         }
     },
     execDeleteTalkRoom:(
@@ -85,6 +99,16 @@ export default {
         return {
             type:TalkRoomActionTypes.ADD_TALK_ROOM,
             talkRoom,
+        }
+    },
+    updateTalkRoom:({
+        talkRoomId,
+        talkRoom
+    })  => {
+        return {
+            type : TalkRoomActionTypes.UPDATE_TALK_ROOM,
+            talkRoomId,
+            talkRoom
         }
     },
     deleteTalkRoom:({

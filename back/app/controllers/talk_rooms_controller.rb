@@ -31,9 +31,18 @@ class TalkRoomsController < ApplicationController
     end
 
     def show
+        @talk_room = TalkRoom.find(params[:id])
+        render :json => @talk_room
     end
 
     def update
+        @talk_room = TalkRoom.find(talkroom_params[:id])
+        if(@talk_room.update_attributes(talkroom_params))
+            render :json => @talk_room
+            return
+        else
+            render :json => {isFail: true}
+        end
     end
 
     def destroy

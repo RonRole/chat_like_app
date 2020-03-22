@@ -5,6 +5,7 @@ import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
 import UserModule from "../modules/userModule/UserModule"
 import ModalModule from "../modules/ModalModule/ModalModule"
+import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 
 
 const OwnerMenu = ({
@@ -28,7 +29,11 @@ const OwnerMenu = ({
 
 class TalkRoomCard extends React.Component {
 
-    talkRoom = this.props.getTalkRoomById(this.props.id)
+    state = {
+        updateModalShow : false
+    }
+
+    getTalkRoom = (id) => this.props.getTalkRoomById(id)
 
     onDestroyButtonClick = () => {
         if(!window.confirm(`${this.talkRoom.title}を削除しますか?`)){
@@ -37,13 +42,11 @@ class TalkRoomCard extends React.Component {
         this.props.destroyTalkRoom(this.props.id)
     }
 
-    componentDidUpdate() {
-        console.log(this.props.state)
-    }
 
     componentDidMount() {
         this.props.getMembers(this.props.id)
     }
+
 
     render() {
         return (
@@ -51,8 +54,8 @@ class TalkRoomCard extends React.Component {
                 <Card.Body>
                     <div className="d-flex" style={{width:"100%"}}>
                         <div className="mr-2" style={{width:"100%", overflow:"auto"}}>
-                            <Card.Title><strong>{this.talkRoom.title}</strong></Card.Title>
-                            <Card.Text>{this.talkRoom.description}</Card.Text>
+                            <Card.Title><strong>{this.getTalkRoom(this.props.id).title}</strong></Card.Title>
+                            <Card.Text>{this.getTalkRoom(this.props.id).description}</Card.Text>
                         </div>
                     </div>
                     <div className="d-flex justify-content-end mb-2">
@@ -64,12 +67,17 @@ class TalkRoomCard extends React.Component {
                                 <OwnerMenu 
                                     key={index} 
                                     onInviteButtonClick={() => alert("SAWAI")}
-                                    onUpdateButtonClick={this.props.showUpdateTalkRoomModalForm}
+                                    onUpdateButtonClick={() => this.setState({updateModalShow:true})}
                                     onDestroyButtonClick={this.onDestroyButtonClick}
                                 />
                             )    
                         })}
                     </div>
+                    <UpdateTalkRoomForm talkRoomId = {this.props.id} 
+                                        show={this.state.updateModalShow} 
+                                        onCancel = {()=> {
+                                            this.setState({updateModalShow: false})
+                                        }}/>   
                 </Card.Body>
             </Card>
         )

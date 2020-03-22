@@ -40,6 +40,16 @@ const createTalkRoom = ({
     })
 }
 
+const updateTalkRoom = talkRoom => {
+    console.log(talkRoom)
+    return DataAccessor.put({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoom.id}`,
+        parameter : {
+            talkroom : talkRoom
+        }
+    })
+}
+
 const deleteTalkRoom = (talkRoomId) => {
     return DataAccessor.delete({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}`
@@ -112,6 +122,28 @@ export function* handleAddTalkRoom(action) {
         handleError({
             error   : addTalkRoomResult.data,
             history : action.history
+        })
+    }
+}
+
+export function* handleUpdateTalkRoom(action) {
+    const updateTalkRoomResult = yield call(updateTalkRoom, {
+        id : action.talkRoomId,
+        title : action.title,
+        description : action.description,
+    })
+    if(updateTalkRoomResult.isSuccess) {
+        yield put(TalkRoomActions.updateTalkRoom({
+            talkRoomId : action.talkRoomId,
+            talkRoom : updateTalkRoomResult.data
+        }))
+    }
+    if(updateTalkRoomResult.isFail) {
+        alert(`${action.talkRoom.title}の更新ができませんでした`)
+    }
+    if(updateTalkRoomResult.isError) {
+        handleError({
+            error : updateTalkRoomResult.error,
         })
     }
 }

@@ -60,7 +60,6 @@ class UpdateTalkRoomFormComp extends React.Component {
         return (
             <ModalForm
                 {...this.props}
-                show = {this.props.modalStateOf("updateTalkRoomModalForm")}
                 header = {<strong>トークルームをかえる</strong>}
                 body = {<InputForm />}
                 footer = {
@@ -71,10 +70,10 @@ class UpdateTalkRoomFormComp extends React.Component {
                 }
                 onSubmit = {(e) => {
                     e.preventDefault()
-                    this.props.addTalkRoom({
+                    this.props.updateTalkRoom({
+                        talkRoomId : this.props.talkRoomId,
                         title : e.currentTarget.title.value,
                         description : e.currentTarget.description.value,
-                        authorId : this.props.loginUser.id
                     })
                     this.cancel()
                 }}
@@ -107,6 +106,17 @@ const mapDispatchToProps = (dispatch) => {
                 title,
                 description,
                 authorId
+            }))
+        },
+        updateTalkRoom : ({
+            talkRoomId,
+            title,
+            description
+        }) => {
+            dispatch(TalkRoomModule.actions.execUpdateTalkRoom({
+                talkRoomId,
+                title,
+                description
             }))
         }
     }

@@ -29,7 +29,6 @@ class TalkRoomPage extends React.Component {
         this.props.getJoinRooms()
     }
 
-
     render() {
         return (
             <Container>
@@ -39,7 +38,6 @@ class TalkRoomPage extends React.Component {
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
                 <TalkRoomsArea talkRoomIds={this.props.joinRoomIds} readOnly/>
                 <CreateTalkRoomForm />
-                <UpdateTalkRoomForm />   
             </Container>
         )
     }
