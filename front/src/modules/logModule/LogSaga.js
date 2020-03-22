@@ -19,6 +19,7 @@ export function* handleGetDefLoginStart(action) {
             history : action.history
         })   
     }
+    action.then()
 }
 
 export function* handleGetExecLoginStart(loginAction) {
