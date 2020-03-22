@@ -1,6 +1,22 @@
 import React from 'react'
 import { Form, NavItem } from 'react-bootstrap'
 
+export const IdFormGroup = ({
+    className = "",
+    style = "",
+    errorMessages = []
+}) => {
+    return (
+        <Form.Group controlId="idForm" className={className} stayle = {{...style}}>
+            <Form.Label>ユーザーID</Form.Label>
+            <Form.Control type="text" name="id" placeholder="おID" isInvalid={errorMessages.length > 0}/>
+            <Form.Control.Feedback type="invalid">
+                {errorMessages.find(e=>e)}
+            </Form.Control.Feedback>
+        </Form.Group>
+    )
+}
+
 export const NameFormGroup = ({
     className = "",
     style = "",

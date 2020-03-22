@@ -2,9 +2,8 @@ import React from 'react'
 import ModalForm from '../components/ModalForm'
 import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
-import { Row, Col, Form, Button } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { TitleFormGroup, DescriptionFormGroup } from '../components/TalkRoomFormGroups'
-import ModalModule from '../modules/ModalModule/ModalModule'
 
 
 /**

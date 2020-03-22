@@ -3,6 +3,7 @@ import { Dropdown } from "react-bootstrap"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import { connect } from "react-redux"
+import UserInviteForm from "./UserInviteForm"
 
 /**
  * オーナー専用のドロップダウンメニューでやんす
@@ -11,6 +12,7 @@ import { connect } from "react-redux"
 class OwnerDropdown extends React.Component {
 
     state = {
+        userInvideModalShow : false,
         updateModalShow : false
     }
 
@@ -23,7 +25,7 @@ class OwnerDropdown extends React.Component {
                     管理者の特権
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                    <Dropdown.Item style={{color:"blue"}} onClick={() => alert("SAWAI")}>誘う</Dropdown.Item>
+                    <Dropdown.Item style={{color:"blue"}} onClick={() => this.setState({userInvideModalShow : true})}>誘う</Dropdown.Item>
                     <Dropdown.Item style={{color:"orange"}} onClick={()=>this.setState({updateModalShow : true})}>作り直す</Dropdown.Item>
                     <Dropdown.Item style={{color:"red"}} onClick={()=> {
                         if(!window.confirm(`${this.getTalkRoom(this.props.talkRoomId).title}を削除しますか?`)){
@@ -32,6 +34,10 @@ class OwnerDropdown extends React.Component {
                         this.props.destroyTalkRoom(this.props.talkRoomId)
                     }}>消す</Dropdown.Item>
                 </Dropdown.Menu>
+                <UserInviteForm show = {this.state.userInvideModalShow} 
+                                onCancel = {() => {
+                                    this.setState({userInvideModalShow:false})
+                                }}/>
                 <UpdateTalkRoomForm talkRoomId={this.props.talkRoomId}
                                     show = {this.state.updateModalShow}
                                     onCancel = {() => {
