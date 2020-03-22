@@ -28,11 +28,7 @@ export class App extends Component {
 
 
   render() {
-    if(this.props.loading) {
-        return (
-          <Loading />
-        )
-    }   
+
     return (
       <BrowserRouter>
         <Loading />
