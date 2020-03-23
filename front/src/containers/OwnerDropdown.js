@@ -34,7 +34,8 @@ class OwnerDropdown extends React.Component {
                         this.props.destroyTalkRoom(this.props.talkRoomId)
                     }}>消す</Dropdown.Item>
                 </Dropdown.Menu>
-                <UserInviteForm show = {this.state.userInvideModalShow} 
+                <UserInviteForm talkRoomId={this.props.talkRoomId}
+                                show = {this.state.userInvideModalShow} 
                                 onCancel = {() => {
                                     this.setState({userInvideModalShow:false})
                                 }}/>

@@ -1,4 +1,5 @@
 class TalkRoomsController < ApplicationController
+    include TalkRoomHelper
     # 自身が管理者のトークルームを取得する
     def own
         @talk_rooms = current_user.own_rooms
@@ -15,11 +16,6 @@ class TalkRoomsController < ApplicationController
     def index
         @talk_rooms = current_user.talk_rooms
         render :json => @talk_rooms
-    end
-
-    def users
-        @talkroom_users = TalkRoom.find(params[:talk_room_id]).users
-        render :json => @talkroom_users
     end
 
     def create
@@ -48,11 +44,4 @@ class TalkRoomsController < ApplicationController
     def destroy
         TalkRoom.find(params[:id]).destroy
     end
-
-
-    private 
-        def talkroom_params
-            params.require(:talkroom).permit(:id, :title, :description, :author_id)
-        end
-
 end

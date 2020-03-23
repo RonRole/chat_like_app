@@ -9,25 +9,6 @@ import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import OwnerDropdown from "./OwnerDropdown"
 
 
-const OwnerMenu = ({
-    onInviteButtonClick,
-    onUpdateButtonClick,
-    onDestroyButtonClick
-}) => {
-    return (
-        <Dropdown>
-            <Dropdown.Toggle variant="success">
-                管理者の特権
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-                <Dropdown.Item style={{color:"blue"}} onClick={onInviteButtonClick}>誘う</Dropdown.Item>
-                <Dropdown.Item style={{color:"orange"}} onClick={onUpdateButtonClick}>作り直す</Dropdown.Item>
-                <Dropdown.Item style={{color:"red"}} onClick={onDestroyButtonClick}>消す</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-    )
-}
-
 class TalkRoomCard extends React.Component {
 
     getTalkRoom = (id) => this.props.getTalkRoomById(id)

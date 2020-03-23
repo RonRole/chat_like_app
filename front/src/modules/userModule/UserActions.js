@@ -1,6 +1,7 @@
 export const UserActionTypes = {
     EXEC_GET_SELF : "EXEC_GET_SELF",
     EXEC_CREATE_USER : "EXEC_CREATE_USER",
+    EXEC_SEARCH_USER : "EXEC_SEARCH_USER",
     SET_CREATE_FORM_ERRORS : "SET_CREATE_FORM_ERRORS",
     CLEAR_CREATE_FORM_ERRORS : "CLEAR_CREATE_FORM_ERRORS",
     ADD_USER : "ADD_USER"
@@ -20,6 +21,16 @@ export default {
             type : UserActionTypes.EXEC_CREATE_USER,
             history,
             userParams,
+        }
+    },
+    execSearchUser : ({
+        userId,
+        userName
+    }) => {
+        return {
+            type : UserActionTypes.EXEC_SEARCH_USER,
+            userId,
+            userName
         }
     },
     //errorsはJSON

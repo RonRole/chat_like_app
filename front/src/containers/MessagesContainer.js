@@ -52,6 +52,7 @@ export class MessagesContainer extends React.Component {
                                 <Row>
                                     <Col className md={message.md}>
                                         <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.getUserById(message.user).image.thumb.url}`}/>
+                                        <strong className="ml-2">{this.props.getUserById(message.user).name}</strong>
                                         <Alert variant={this.classNameToVariant[message.className]} key={index} style={{overflow:"auto"}}>
                                             {message.text}
                                         </Alert>

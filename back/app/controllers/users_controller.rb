@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    include UserHelper
 
     skip_before_action :is_user_logged_in?, only:[:create]
 
@@ -30,10 +31,4 @@ class UsersController < ApplicationController
     def self
         render :json => current_user#.hash_for_front
     end
-
-
-    private
-        def user_params
-            params.require(:user).permit(:name, :password, :password_confirmation, :image)
-        end
 end

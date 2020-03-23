@@ -1,0 +1,2 @@
+module TalkroomUsers::UsersHelper
+end

@@ -70,9 +70,8 @@ const addMemberToTalkRoom = ({
     talkRoomId,
     userId
 }) => {
-    return DataAccessor.post({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users`,
-        parameter:userId
+    return DataAccessor.put({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/${userId}`
     })
 }
 
@@ -184,9 +183,9 @@ export function* handleGetTalkRoomMembers(action) {
 }
 
 export function* handleAddTalkRoomMember(action) {
-    const result = yield call(addMemberToTalkRoom, {talkRoomId:action.talkRomId, userId : action.userId})
+    const result = yield call(addMemberToTalkRoom, {talkRoomId:action.talkRoomId, userId:action.userId})
     if(result.isSuccess) {
-        alert(`${result.data}を追加しました`)
+        alert(`${result.data.name}を追加しました`)
         yield put(UserActions.addUser(result.data))
     }
     if(result.isError) {

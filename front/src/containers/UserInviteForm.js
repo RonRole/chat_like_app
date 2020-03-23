@@ -3,6 +3,7 @@ import ModalForm from "../components/ModalForm"
 import { IdFormGroup, NameFormGroup } from "../components/UserFormGroups"
 import { Button, Image } from "react-bootstrap"
 import { connect } from "react-redux"
+import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 
 class UserInviteForm extends React.Component {
 
@@ -28,6 +29,14 @@ class UserInviteForm extends React.Component {
                         <Button variant="secondary" onClick={this.props.onCancel}>やめる</Button>
                     </div>
                 }
+                onSubmit = {(e) => {
+                    e.preventDefault()
+                    console.log(this.props.talkRoomId)
+                    this.props.addUserToTalkRoom({
+                        userId : e.currentTarget.id.value,
+                        talkRoomId : this.props.talkRoomId
+                    })
+                }}
             />
         )
     }
@@ -39,4 +48,18 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(UserInviteForm)
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addUserToTalkRoom : ({
+            userId,
+            talkRoomId
+        }) => {
+            dispatch(TalkRoomModule.actions.execAddUserToTalkRoom({
+                userId,
+                talkRoomId
+            }))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInviteForm)

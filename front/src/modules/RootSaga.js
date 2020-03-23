@@ -19,12 +19,23 @@ function* initialize(action) {
     const joinRooms = yield fork(talkRoomSaga.handleGetJoinedTalkRooms, action)
     yield join(ownRooms)
     yield join(joinRooms)
+    action.then()
+}
+
+function* login(action) {
+    const login = yield fork(logSaga.handleGetExecLoginStart, action)
+    yield join(login)
+    const ownRooms = yield fork(talkRoomSaga.handleGetOwnRooms, action)
+    const joinRooms = yield fork(talkRoomSaga.handleGetJoinedTalkRooms, action)
+    yield join(ownRooms)
+    yield join(joinRooms)
+    action.then()
 }
 
 
 const logSagas = [
     takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(initialize)),
-    takeEvery(LogActionTypes.EXEC_LOG_IN, logSaga.handleGetExecLoginStart),
+    takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(login)),
     takeEvery(LogActionTypes.LOG_OUT, logSaga.handleGetLogoutStart),
 ]
 
@@ -36,6 +47,7 @@ const talkRoomSagas = [
     takeEvery(TalkRoomActionTypes.EXEC_UPDATE_ROOM, talkRoomSaga.handleUpdateTalkRoom),
     takeEvery(TalkRoomActionTypes.EXEC_DELETE_ROOM, talkRoomSaga.handleDeleteTalkRoom),
     takeEvery(TalkRoomActionTypes.EXEC_GET_TALKROOM_MEMBERS, talkRoomSaga.handleGetTalkRoomMembers),
+    takeEvery(TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM, talkRoomSaga.handleAddTalkRoomMember)
 ]
 
 const talkRoomMessageSagas = [
