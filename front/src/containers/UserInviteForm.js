@@ -4,11 +4,19 @@ import { IdFormGroup, NameFormGroup } from "../components/UserFormGroups"
 import { Button, Image } from "react-bootstrap"
 import { connect } from "react-redux"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
+import FormErrorModule from "../modules/FormErrorModule/FormErrorModule"
+import UserModule from "../modules/userModule/UserModule"
 
 class UserInviteForm extends React.Component {
 
-    componentDidMount() {
-        console.log(this.props.loginUser)
+    state = {
+        userSearched : 0
+    }
+
+    componentDidUpdate() {
+        this.setState({
+            userSearched : 0
+        })
     }
 
     render() {
@@ -18,20 +26,39 @@ class UserInviteForm extends React.Component {
                 header = {<strong>ユーザーを誘う</strong>}
                 body = {
                     <div>
-                        <IdFormGroup />
-                        <NameFormGroup/>
-                        <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.loginUser.image.profile.url}`}/>
+                        <IdFormGroup　errorMessages={this.props.userInviteErrorMessages}/>
+                        <NameFormGroup errorMessages={this.props.userInviteErrorMessages}/>
+                        {[this.state.userSearched].map(id => this.props.getUserById(id)).map((user,index) => {
+                            return (
+                                <div key={index}>
+                                    <h6><strong>この人を追加しますか?</strong></h6>
+                                    <div className="d-flex justify-content-center">
+                                        <Image className="mr-2" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${user.image.profile.url}`}/>
+                                        <h6><strong>{user.name}</strong></h6>
+                                    </div>
+                                </div>
+                            )
+                        })}
                     </div>
                 }
                 footer = {
                     <div>
-                        <Button className="mr-2" type="submit">さがす</Button>
-                        <Button variant="secondary" onClick={this.props.onCancel}>やめる</Button>
+                        <Button className="mr-2" onClick ={()=>{
+                            this.props.clearErrorMessages()
+                            this.props.searchUser({
+                                userId : document.forms[0].id.value,
+                                userName : document.forms[0].name.value
+                            })
+                            this.setState({userSearched:document.forms[0].id.value})
+                        }}>さがす</Button>
+                        <Button variant="secondary" onClick={()=>{
+                            this.props.onCancel()
+                            this.props.clearErrorMessages()
+                        }}>やめる</Button>
                     </div>
                 }
                 onSubmit = {(e) => {
                     e.preventDefault()
-                    console.log(this.props.talkRoomId)
                     this.props.addUserToTalkRoom({
                         userId : e.currentTarget.id.value,
                         talkRoomId : this.props.talkRoomId
@@ -45,11 +72,22 @@ class UserInviteForm extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loginUser : state.logStatus.isLoggedIn,
+        getUserById : userId => UserModule.reducer.getUserById(state)(userId),
+        userInviteErrorMessages : FormErrorModule.reducer.getErrorsOf(state)("userInviteForm")("messages")
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        searchUser : ({
+            userId,
+            userName
+        }) => {
+            dispatch(UserModule.actions.execSearchUser({
+                userId,
+                userName
+            }))
+        },
         addUserToTalkRoom : ({
             userId,
             talkRoomId
@@ -58,6 +96,9 @@ const mapDispatchToProps = (dispatch) => {
                 userId,
                 talkRoomId
             }))
+        },
+        clearErrorMessages : () => {
+            dispatch(FormErrorModule.actions.clearErrorByName("userInviteForm"))
         }
     }
 }

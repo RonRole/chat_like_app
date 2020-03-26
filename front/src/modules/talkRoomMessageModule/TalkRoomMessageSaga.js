@@ -31,7 +31,7 @@ export function* handleReceiveMessage() {
     //channelがemitするたびに起動
     while(true) {
         const response = yield take(channel)
-        yield put(UserActions.addUser(response.user))
+        yield put(UserActions.setUser(response.user))
         yield put(Actions.receiveMessage({
             roomId    : response.roomId,
             className : response.className,

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #user
-  resources :users
+  resources :users, except:[:index]
 
   #session
   get 'login', to: 'sessions#new'
@@ -14,6 +14,6 @@ Rails.application.routes.draw do
       get 'own'
       get 'join'
     end
-    resources :users, module:"talkroom_users", only: [:index, :update, :destroy]
+    resources :users, module:"talkroom_users", only: [:index, :create, :destroy]
   end
 end

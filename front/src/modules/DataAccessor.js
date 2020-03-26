@@ -21,7 +21,7 @@ const createErrorResponse = (error) => {
 
 export default {
     get : ({
-        url,
+        url
     }) => {
         return Axios.get(url)
             .then(response => {

@@ -48,7 +48,7 @@ export default {
         }
     },
 
-    addUser : (...users) => {
+    setUser : (...users) => {
         return {
             type : UserActionTypes.ADD_USER,
             users

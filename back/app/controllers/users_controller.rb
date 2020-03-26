@@ -18,7 +18,14 @@ class UsersController < ApplicationController
     end
 
     def show
-        render :json => User.find(params[:id])#.hash_for_front
+        @user = User.find_by(id:params[:id], name:params[:name])
+        if(@user) 
+            render :json => @user#.hash_for_front
+        else
+            render :json => {
+                isFail: true, 
+                messages: ['このID、名前の組み合わせのユーザーがいません']}
+        end
     end
 
     def update

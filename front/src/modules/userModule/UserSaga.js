@@ -36,6 +36,16 @@ const createUser = (
     })
 }
 
+const searchUser = ({
+    userId,
+    userName
+}) => {
+
+    return DataAccessor.get({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}?name=${userName}`,
+    })
+}
+
 
 //saga
 export function* handleGetSelf(action) {
@@ -86,6 +96,29 @@ export function* handleGetCurrentRoomUsers() {
     const channel = yield call(createCurrentUserReceiveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(UserActions.addUser(...Object.keys(response.users).map(key => response.users[key])))
+        yield put(UserActions.setUser(...Object.keys(response.users).map(key => response.users[key])))
+    }
+}
+
+export function* handleExecSearchUser(action) {
+    const searchResult = yield call(searchUser, {
+        userId : action.userId,
+        userName : action.userName
+    })
+    console.log(searchResult)
+    if(searchResult.isSuccess) {
+        yield put(UserActions.setUser(searchResult.data))
+    }
+    if(searchResult.isFail) {
+        alert("ユーザーが見つかりませんでした")
+        yield put(FormErrorActions.setError({
+            formName : "userInviteForm",
+            errorJson : searchResult.data
+        }))
+    }
+    if(searchResult.isError) {
+        handleError({
+            error : searchResult.data
+        })
     }
 }

@@ -1,8 +1,9 @@
 import DataAccessor from "../DataAccessor"
-import TalkRoomActions, { TalkRoomActionTypes } from "./TalkRoomActions"
-import { put, take, call, all, takeLatest, takeEvery } from "redux-saga/effects"
+import TalkRoomActions from "./TalkRoomActions"
+import { put, call} from "redux-saga/effects"
 import handleError from "../ErrorHandler"
 import UserActions from "../userModule/UserActions"
+import FormErrorActions from "../FormErrorModule/FormErrorActions"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
@@ -70,8 +71,13 @@ const addMemberToTalkRoom = ({
     talkRoomId,
     userId
 }) => {
-    return DataAccessor.put({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/${userId}`
+    return DataAccessor.post({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users`,
+        parameter : {
+            user : {
+                id : userId
+            }
+        }
     })
 }
 
@@ -172,7 +178,7 @@ export function* handleGetTalkRoomMembers(action) {
             talkRoomId : action.talkRoomId,
             userIds : [...Object.keys(result.data).map(key => result.data[key]["id"])]
         }))
-        yield put(UserActions.addUser(...Object.keys(result.data).map(key => result.data[key])))
+        yield put(UserActions.setUser(...Object.keys(result.data).map(key => result.data[key])))
     }
     if(result.isError) {
         handleError({
@@ -186,7 +192,16 @@ export function* handleAddTalkRoomMember(action) {
     const result = yield call(addMemberToTalkRoom, {talkRoomId:action.talkRoomId, userId:action.userId})
     if(result.isSuccess) {
         alert(`${result.data.name}を追加しました`)
-        yield put(UserActions.addUser(result.data))
+        yield put(UserActions.setUser(result.data))
+    }
+    if(result.isFail) {
+        alert("そんなユーザーいません")
+        yield put(FormErrorActions.setError({
+            formName : "userInviteForm",
+            errorJson : {
+                messages : ["このID,名前の組合わせが存在しません"]
+            }
+        }))
     }
     if(result.isError) {
         handleError({
