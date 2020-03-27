@@ -10,6 +10,10 @@ import UserProfile from "../components/UserProfile"
 
 class UserInviteForm extends React.Component {
 
+    componentDidUpdate() {
+        console.log(this.props.state)
+    }
+
     render() {
         return (
             <ModalForm

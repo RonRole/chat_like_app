@@ -49,10 +49,10 @@ export default {
         }
     },
 
-    setSearchedUserIds : (...userIds) => {
+    setSearchedUsers : (...users) => {
         return {
             type : UserActionTypes.SET_SEARCHED_USER_IDS,
-            userIds
+            users
         }
     },
 

@@ -40,9 +40,8 @@ const searchUser = ({
     userId,
     userName
 }) => {
-
     return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}?name=${userName}`,
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}?name=${userName}`
     })
 }
 
@@ -106,11 +105,11 @@ export function* handleExecSearchUser(action) {
         userName : action.userName
     })
     if(searchResult.isSuccess) {
-        yield put(UserActions.setSearchedUserIds(...[searchResult.data].map(user => user.id)))
+        yield put(UserActions.setSearchedUsers(searchResult.data))
     }
     if(searchResult.isFail) {
         alert("ユーザーが見つかりませんでした")
-        yield put(UserActions.setSearchedUserIds())
+        yield put(UserActions.setSearchedUsers())
         yield put(FormErrorActions.setError({
             formName : "userInviteForm",
             errorJson : searchResult.data

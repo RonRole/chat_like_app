@@ -55,10 +55,10 @@ const receiveMessage = ({
     }
 }
 
-const setCurrentUserIds = (...userIds) => {
+const setCurrentUsers = (...users) => {
     return {
         type : ActionTypes.SET_CURRENT_USER_IDS,
-        userIds : userIds
+        users
     }
 } 
 
@@ -74,6 +74,6 @@ export default {
     leaveRoom,
     addMessage,
     receiveMessage,
-    setCurrentUserIds,
+    setCurrentUserIds: setCurrentUsers,
     clearMessage
 }

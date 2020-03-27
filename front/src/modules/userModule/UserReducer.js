@@ -40,9 +40,12 @@ const createReducer = (state = initialState, action) => {
             }
         }
         case UserActionTypes.SET_SEARCHED_USER_IDS : {
+            action.users.forEach(user => {
+                state[user.id] = user
+            })
             return {
                 ...state,
-                searchedUserIds : action.userIds
+                searchedUserIds : action.users.map(user => user.id),
             }
         }
         default : {
