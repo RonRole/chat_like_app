@@ -105,12 +105,12 @@ export function* handleExecSearchUser(action) {
         userId : action.userId,
         userName : action.userName
     })
-    console.log(searchResult)
     if(searchResult.isSuccess) {
-        yield put(UserActions.setUser(searchResult.data))
+        yield put(UserActions.setSearchedUserIds(...[searchResult.data].map(user => user.id)))
     }
     if(searchResult.isFail) {
         alert("ユーザーが見つかりませんでした")
+        yield put(UserActions.setSearchedUserIds())
         yield put(FormErrorActions.setError({
             formName : "userInviteForm",
             errorJson : searchResult.data

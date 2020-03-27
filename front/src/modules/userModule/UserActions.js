@@ -4,6 +4,7 @@ export const UserActionTypes = {
     EXEC_SEARCH_USER : "EXEC_SEARCH_USER",
     SET_CREATE_FORM_ERRORS : "SET_CREATE_FORM_ERRORS",
     CLEAR_CREATE_FORM_ERRORS : "CLEAR_CREATE_FORM_ERRORS",
+    SET_SEARCHED_USER_IDS : "SET_SEARCHED_USER",
     ADD_USER : "ADD_USER"
 }
 
@@ -45,6 +46,20 @@ export default {
         return {
             type : UserActionTypes.CLEAR_CREATE_FORM_ERRORS,
             errors : {}
+        }
+    },
+
+    setSearchedUserIds : (...userIds) => {
+        return {
+            type : UserActionTypes.SET_SEARCHED_USER_IDS,
+            userIds
+        }
+    },
+
+    clearSearchedUserIds : () => {
+        return {
+            type : UserActionTypes.SET_SEARCHED_USER_IDS,
+            userIds : []
         }
     },
 

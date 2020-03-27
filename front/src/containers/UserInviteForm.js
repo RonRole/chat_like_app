@@ -6,18 +6,9 @@ import { connect } from "react-redux"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import FormErrorModule from "../modules/FormErrorModule/FormErrorModule"
 import UserModule from "../modules/userModule/UserModule"
+import UserProfile from "../components/UserProfile"
 
 class UserInviteForm extends React.Component {
-
-    state = {
-        userSearched : 0
-    }
-
-    componentDidUpdate() {
-        this.setState({
-            userSearched : 0
-        })
-    }
 
     render() {
         return (
@@ -28,14 +19,11 @@ class UserInviteForm extends React.Component {
                     <div>
                         <IdFormGroup　errorMessages={this.props.userInviteErrorMessages}/>
                         <NameFormGroup errorMessages={this.props.userInviteErrorMessages}/>
-                        {[this.state.userSearched].map(id => this.props.getUserById(id)).map((user,index) => {
+                        {[...this.props.searchedUserIds].map(id => this.props.getUserById(id)).filter(e=>e).map((user,index) => {
                             return (
                                 <div key={index}>
-                                    <h6><strong>この人を追加しますか?</strong></h6>
-                                    <div className="d-flex justify-content-center">
-                                        <Image className="mr-2" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${user.image.profile.url}`}/>
-                                        <h6><strong>{user.name}</strong></h6>
-                                    </div>
+                                    <h6 style={{textAlign:"center"}}><strong>この人を誘いますか?</strong></h6>
+                                    <UserProfile user={user} />
                                 </div>
                             )
                         })}
@@ -49,10 +37,10 @@ class UserInviteForm extends React.Component {
                                 userId : document.forms[0].id.value,
                                 userName : document.forms[0].name.value
                             })
-                            this.setState({userSearched:document.forms[0].id.value})
                         }}>さがす</Button>
                         <Button variant="secondary" onClick={()=>{
                             this.props.onCancel()
+                            this.props.clearSearchedUserIds()
                             this.props.clearErrorMessages()
                         }}>やめる</Button>
                     </div>
@@ -71,8 +59,10 @@ class UserInviteForm extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        state,
         loginUser : state.logStatus.isLoggedIn,
         getUserById : userId => UserModule.reducer.getUserById(state)(userId),
+        searchedUserIds : state.users.searchedUserIds,
         userInviteErrorMessages : FormErrorModule.reducer.getErrorsOf(state)("userInviteForm")("messages")
     }
 }
@@ -87,6 +77,9 @@ const mapDispatchToProps = (dispatch) => {
                 userId,
                 userName
             }))
+        },
+        clearSearchedUserIds : () => {
+            dispatch(UserModule.actions.clearSearchedUserIds())
         },
         addUserToTalkRoom : ({
             userId,

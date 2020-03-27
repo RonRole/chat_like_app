@@ -1,4 +1,5 @@
 import {ActionTypes} from "./TalkRoomMessageActoins"
+import { LogActionTypes } from "../logModule/LogActions"
 
 
 /**
@@ -21,6 +22,9 @@ const getMessagesByRoomId = state => {
 
 const createReducer = (state = initialState, action) => {
     switch(action.type){
+        case LogActionTypes.LOG_IN : {
+            return initialState
+        }
         case ActionTypes.ADD_MESSAGE:
         case ActionTypes.RECEIVE_MESSAGE: {
             state[action.roomId] = state[action.roomId] || [] 

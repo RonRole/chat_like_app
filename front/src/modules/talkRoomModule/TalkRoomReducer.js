@@ -1,4 +1,5 @@
 import { TalkRoomActionTypes } from "./TalkRoomActions";
+import { LogActionTypes } from "../logModule/LogActions";
 
 //reducer
 const initialState = {
@@ -14,6 +15,9 @@ const getTalkRoomById = (state) => (id) => state.talkRooms.ownRooms[id] || state
 
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
+        case LogActionTypes.LOG_IN : {
+            return initialState
+        }
         case TalkRoomActionTypes.SET_OWN_ROOMS: {
             state.ownRooms = {}
             action.talkRooms.forEach(room => {
