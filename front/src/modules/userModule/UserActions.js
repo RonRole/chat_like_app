@@ -56,10 +56,10 @@ export default {
         }
     },
 
-    clearSearchedUserIds : () => {
+    clearSearchedUsers : () => {
         return {
             type : UserActionTypes.SET_SEARCHED_USER_IDS,
-            userIds : []
+            users : []
         }
     },
 

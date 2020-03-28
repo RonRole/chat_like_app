@@ -7,6 +7,7 @@ import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import FormErrorModule from "../modules/FormErrorModule/FormErrorModule"
 import UserModule from "../modules/userModule/UserModule"
 import UserProfile from "../components/UserProfile"
+import { TransitionGroup, CSSTransition } from "react-transition-group"
 
 class UserInviteForm extends React.Component {
 
@@ -23,14 +24,18 @@ class UserInviteForm extends React.Component {
                     <div>
                         <IdFormGroup　errorMessages={this.props.userInviteErrorMessages}/>
                         <NameFormGroup errorMessages={this.props.userInviteErrorMessages}/>
+                        <TransitionGroup>
                         {[...this.props.searchedUserIds].map(id => this.props.getUserById(id)).filter(e=>e).map((user,index) => {
                             return (
-                                <div key={index}>
-                                    <h6 style={{textAlign:"center"}}><strong>この人を誘いますか?</strong></h6>
-                                    <UserProfile user={user} />
-                                </div>
+                                <CSSTransition key={index} classNames="fade" timeout={100}>
+                                    <div>
+                                        <h6 style={{textAlign:"center"}}><strong>この人を誘いますか?</strong></h6>
+                                        <UserProfile user={user} />
+                                    </div>
+                                </CSSTransition>
                             )
                         })}
+                        </TransitionGroup>
                     </div>
                 }
                 footer = {
@@ -83,7 +88,7 @@ const mapDispatchToProps = (dispatch) => {
             }))
         },
         clearSearchedUserIds : () => {
-            dispatch(UserModule.actions.clearSearchedUserIds())
+            dispatch(UserModule.actions.clearSearchedUsers())
         },
         addUserToTalkRoom : ({
             userId,
