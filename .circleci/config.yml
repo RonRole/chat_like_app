@@ -4,11 +4,11 @@ jobs:
     machine: true
     steps:
       - checkout
+      # - run:
+      #     name: Build Docker Image
+      #     command: docker-compose build
       - run:
-          name: Build Docker Image
-          command: docker-compose build
-      - run:
-          name: docker-compose -f up 
+          name: Up Docker Image
           command: |
                 docker-compose -f up 
       # - run:
