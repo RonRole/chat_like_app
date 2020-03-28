@@ -9,7 +9,7 @@ jobs:
           command: docker-compose up -d
       - run:
           name: コンテナに入ってみる
-          command: docker exec -it chat_like_app_front_1 bash
+          command: docker exec -it project_front_1 bash
       # - run:
       #     name: Run tests
       #     command:
