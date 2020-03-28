@@ -8,13 +8,13 @@ jobs:
           name: Build Docker Image
           command: docker-compose build
       - run:
-            name: docker-compose up
-            command: |
-                 docker-compose up
+          name: docker-compose up
+          command: |
+                docker-compose up
       # - run:
       #     name: Run tests
       #     command:
       - run:
-      name: docker-compose down
-      command: |
-            docker-compose down
+          name: docker-compose down
+          command: |
+                    docker-compose down
