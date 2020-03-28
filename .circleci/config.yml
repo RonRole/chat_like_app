@@ -8,16 +8,15 @@ jobs:
           name: Build Docker Image
           command: docker-compose build
       - run:
-          name: Up Docker Image
-          command: |
-                docker-compose up 
+          name: コンテナに入ってみる
+          command: docker exec -it chat_like_app_front_1 bash
       # - run:
       #     name: Run tests
       #     command:
       - run:
-          name: docker-compose -f down 
+          name: docker-compose down 
           command: |
-                docker-compose -f down 
+                docker-compose down 
       # herokuに乗っける
       # - run:
       #     name: deploy on heroku
