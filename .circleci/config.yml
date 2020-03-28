@@ -8,16 +8,16 @@ jobs:
           name: Build Docker Image
           command: docker-compose build
       - run:
-          name: docker-compose -f up -d
+          name: docker-compose -f up 
           command: |
-                docker-compose -f up -d
+                docker-compose -f up 
       # - run:
       #     name: Run tests
       #     command:
       - run:
-          name: docker-compose -f down -d
+          name: docker-compose -f down 
           command: |
-                docker-compose -f down -d
+                docker-compose -f down 
       # herokuに乗っける
       # - run:
       #     name: deploy on heroku
