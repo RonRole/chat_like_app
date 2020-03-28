@@ -10,7 +10,11 @@ jobs:
       - run:
             name: docker-compose up
             command: |
-                 docker-compose ./docker-compose.yml up -d
+                 docker-compose up
       # - run:
       #     name: Run tests
-      #     command: 
+      #     command:
+      - run:
+      name: docker-compose down
+      command: |
+            docker-compose down
