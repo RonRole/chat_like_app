@@ -5,11 +5,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Build Docker Image
+          name: Up Docker Image
           command: docker-compose up -d
-      - run:
-          name: コンテナに入ってみる
-          command: docker exec -it project_front_1 bash
+      # - run:
+      #     name: コンテナに入ってみる
+      #     command: docker exec -it project_front_1 sh
       # - run:
       #     name: Run tests
       #     command:
