@@ -21,3 +21,10 @@ jobs:
       # - run:
       #     name: deploy on heroku
       #     command: |
+  deploy:
+      machine: true
+      steps:
+        - checkout
+        - run:
+            name: deploy on heroku
+            command: git push https://git.heroku.com/chat-like-app.git master

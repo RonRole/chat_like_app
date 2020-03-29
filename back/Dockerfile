@@ -14,7 +14,4 @@ RUN bundle install
 RUN bundle update
 
 RUN rails db:create
-RUN rails db:migrate RAILS_ENV=development
-RUN rails db:migrate
-
-CMD ["sh"]
+RUN bin/rails db:migrate RAILS_ENV=development

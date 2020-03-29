@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2020_03_03_113516) do
 
-  create_table "talk_rooms", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "talk_rooms", force: :cascade do |t|
     t.string "title", null: false
     t.string "description"
     t.datetime "created_at", null: false
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 2020_03_03_113516) do
     t.index ["author_id"], name: "index_talk_rooms_on_author_id"
   end
 
-  create_table "user_talk_room_refs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "user_talk_room_refs", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "talk_room_id"
     t.datetime "created_at", null: false
@@ -31,7 +34,7 @@ ActiveRecord::Schema.define(version: 2020_03_03_113516) do
     t.index ["user_id"], name: "index_user_talk_room_refs_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "password_digest", null: false
     t.string "remember_digest"

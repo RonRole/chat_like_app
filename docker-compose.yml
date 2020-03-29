@@ -25,15 +25,16 @@ services:
     depends_on: 
       - db
   db:
-    build: ./mysql
-    image: mysql:latest
+    build: ./postgres
+    image: postgres:latest
     volumes:
-      - ./mysql/mysql-confd:/etc/mysql/conf.d
+      - db_data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
     environment:
-      MYSQL_DATABASE: chat_like_app
-      MYSQL_USER: sawai
-      MYSQL_PASSWORD: sawai
-      MYSQL_ROOT_PASSWORD: sawai
+      POSTGRES_DB: chat_like_app
+      POSTGRES_USER: sawai
+      POSTGRES_PASSWORD: sawai
+      POSTGRES_ROOT_PASSWORD: sawai
   socket:
     build: ./socket
     volumes:
@@ -41,3 +42,5 @@ services:
     ports:
       - "8000:8000"
     command: sh -c "yarn install && node ./socket_server.js"
+volumes:
+  db_data: {}
