@@ -14,4 +14,5 @@ RUN bundle install
 RUN bundle update
 
 RUN rails db:create
+RUN rails db:migrate
 RUN bin/rails db:migrate RAILS_ENV=development
