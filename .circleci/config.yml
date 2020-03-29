@@ -16,8 +16,8 @@ jobs:
       - run:
           name: setup db
           command: |
-            docker-compose run --rm web rails db:create
-            docker-compose run --rm rails db:migrate RAILS_ENV=development
+            docker-compose run --rm back rails db:create
+            docker-compose run --rm back rails db:migrate RAILS_ENV=development
 
       - run:
           name: docker-compose down 
