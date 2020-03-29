@@ -12,6 +12,3 @@ RUN gem install bundler:1.17.2
 
 RUN bundle install
 RUN bundle update
-
-RUN rails db:create
-RUN rails db:migrate RAILS_ENV=development

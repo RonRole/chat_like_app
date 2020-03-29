@@ -14,9 +14,15 @@ jobs:
       #     name: Run tests
       #     command:
       - run:
+          name: setup db
+          command: |
+            docker-compose run --rm web rails db:create
+            docker-compose run --rm rails db:migrate RAILS_ENV=development
+
+      - run:
           name: docker-compose down 
           command: |
-                docker-compose down 
+            docker-compose down 
       # herokuに乗っける
       # - run:
       #     name: deploy on heroku
