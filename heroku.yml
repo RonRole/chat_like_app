@@ -1,0 +1,5 @@
+build:
+  docker:
+    web: ./back/Dockerfile
+run:
+  web: rails s
