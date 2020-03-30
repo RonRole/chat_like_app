@@ -2,8 +2,6 @@ FROM node:10.13-alpine
 
 WORKDIR /app
 
-COPY ./package.json /app
-COPY ./public /app
-COPY ./src /app
+COPY . /app
 
-CMD ["sh", "npm", "install"]
+CMD ["sh", "yarn", "install"]
