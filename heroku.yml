@@ -1,5 +1,5 @@
 build:
   docker:
-    web: ./back/Dockerfile
+    web: ./front/Dockerfile
 run:
-  web: rails s
+  web: yarn start
