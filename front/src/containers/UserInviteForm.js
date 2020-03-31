@@ -8,8 +8,15 @@ import FormErrorModule from "../modules/FormErrorModule/FormErrorModule"
 import UserModule from "../modules/userModule/UserModule"
 import UserProfile from "../components/UserProfile"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
+import UserInviteButton from "./UserInviteButton"
+
 
 class UserInviteForm extends React.Component {
+
+    checkAlreadyJoined(user) {
+        const alreadyInvited = [this.props.getTalkRoomById(this.props.talkRoomId)].flatMap(room => room.userIds).some(userId => userId === user.id)
+        return alreadyInvited
+    }
 
     componentDidUpdate() {
         console.log(this.props.state)
@@ -27,10 +34,13 @@ class UserInviteForm extends React.Component {
                         <TransitionGroup>
                         {[...this.props.searchedUserIds].map(id => this.props.getUserById(id)).filter(e=>e).map((user,index) => {
                             return (
-                                <CSSTransition key={index} classNames="fade" timeout={100}>
+                                <CSSTransition key={user.id} classNames="fade" timeout={100}>
                                     <div>
                                         <h6 style={{textAlign:"center"}}><strong>この人を誘いますか?</strong></h6>
-                                        <UserProfile user={user} />
+                                        <UserProfile className="mb-2" user={user} />
+                                        <div className="d-flex justify-content-end">
+                                            <UserInviteButton userId={user.id} talkRoomId={this.props.talkRoomId}/>
+                                        </div>                                    
                                     </div>
                                 </CSSTransition>
                             )
@@ -40,13 +50,7 @@ class UserInviteForm extends React.Component {
                 }
                 footer = {
                     <div>
-                        <Button className="mr-2" onClick ={()=>{
-                            this.props.clearErrorMessages()
-                            this.props.searchUser({
-                                userId : document.forms[0].id.value,
-                                userName : document.forms[0].name.value
-                            })
-                        }}>さがす</Button>
+                        <Button className="mr-2" type="submit">さがす</Button>
                         <Button variant="secondary" onClick={()=>{
                             this.props.onCancel()
                             this.props.clearSearchedUserIds()
@@ -56,9 +60,10 @@ class UserInviteForm extends React.Component {
                 }
                 onSubmit = {(e) => {
                     e.preventDefault()
-                    this.props.addUserToTalkRoom({
+                    this.props.clearErrorMessages()
+                    this.props.searchUser({
                         userId : e.currentTarget.id.value,
-                        talkRoomId : this.props.talkRoomId
+                        userName:e.currentTarget.name.value
                     })
                 }}
             />
@@ -89,15 +94,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         clearSearchedUserIds : () => {
             dispatch(UserModule.actions.clearSearchedUsers())
-        },
-        addUserToTalkRoom : ({
-            userId,
-            talkRoomId
-        }) => {
-            dispatch(TalkRoomModule.actions.execAddUserToTalkRoom({
-                userId,
-                talkRoomId
-            }))
         },
         clearErrorMessages : () => {
             dispatch(FormErrorModule.actions.clearErrorByName("userInviteForm"))

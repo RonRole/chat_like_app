@@ -193,6 +193,10 @@ export function* handleAddTalkRoomMember(action) {
     if(result.isSuccess) {
         alert(`${result.data.name}を追加しました`)
         yield put(UserActions.setUser(result.data))
+        yield put(TalkRoomActions.addUsersToTalkRoom({
+            talkRoomId : action.talkRoomId,
+            userIds : [action.userId]
+        }))
     }
     if(result.isFail) {
         alert("そんなユーザーいません")

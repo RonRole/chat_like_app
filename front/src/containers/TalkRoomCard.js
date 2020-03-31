@@ -8,7 +8,6 @@ import ModalModule from "../modules/ModalModule/ModalModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import OwnerDropdown from "./OwnerDropdown"
 
-
 class TalkRoomCard extends React.Component {
 
     getTalkRoom = (id) => this.props.getTalkRoomById(id)

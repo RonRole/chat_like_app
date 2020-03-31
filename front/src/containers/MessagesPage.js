@@ -9,7 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 class MessagePage extends React.Component {
 
-    getCurrentUserIds = () => this.props.getTalkRoomById(this.props.match.params.id)["userIds"] || []
+    getCurrentUserIds = () => this.props.getTalkRoomById(this.props.match.params.id)["currentUserIds"] || []
 
     render(){
         return (

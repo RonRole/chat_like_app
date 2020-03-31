@@ -2,6 +2,8 @@ import React from "react"
 import { Image, Container } from "react-bootstrap"
 
 const UserProfile = ({
+    className = "",
+    style = {},
     user = {
         id:0,
         name:"",
@@ -13,7 +15,7 @@ const UserProfile = ({
     }
 }) => {
     return (
-        <Container　className="d-flex justify-content-center">
+        <Container　className={`${className} d-flex justify-content-center`}>
             <section id="info">
                 <div id="loginUserID">
                     <strong style={{borderBottom:"1px solid gray"}}>ユーザーID</strong>

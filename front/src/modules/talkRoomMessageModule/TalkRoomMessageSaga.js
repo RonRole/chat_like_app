@@ -55,13 +55,13 @@ function* createCurrentUsersRecieveChannel() {
 
 /**
  * socketサーバーから現在ユーザーの更新通知を受け取り、
- * TalkRoomのuserIdsを更新する
+ * TalkRoomのcurrentUserIdsを更新する
  */
 export function* handleGetCurrentUsers() {
     const channel = yield call(createCurrentUsersRecieveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(TalkRoomActions.addUsersToTalkRoom({
+        yield put(TalkRoomActions.refreshCurrentRoomUsers({
             talkRoomId : response.roomId,
             userIds : Object.keys(response.users).map(key => response.users[key]["id"])
         }))

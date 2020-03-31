@@ -57,7 +57,7 @@ export function* handleGetSelf(action) {
 export function* handleCreateUser(action) {
     const result = yield call(createUser, action.userParams)
     if(result.isSuccess) {
-        yield call(handleGetExecLoginStart, LogActions.execLogin({
+        yield put(LogActions.execLogin({
             session: {
                 name : action.userParams.name,
                 password : action.userParams.password

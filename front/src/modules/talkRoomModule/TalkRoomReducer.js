@@ -11,7 +11,7 @@ const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
 
 const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
-const getTalkRoomById = (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id]
+const getTalkRoomById = (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || {}
 
 const createReducer = (state = initialState, action) => {
     switch(action.type) {
@@ -49,8 +49,17 @@ const createReducer = (state = initialState, action) => {
             }
         }
         case TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM: {
-            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {}
-            room['userIds'] = [...action.userIds]
+            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {userIds:[]}
+            const beforeUserIds = (room['userIds'] || [])
+            room['userIds'] = [...beforeUserIds,...action.userIds]
+            return {
+                ...state
+            }
+        }
+
+        case TalkRoomActionTypes.REFRESH_CURRENT_ROOM_USERS : {
+            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {userIds:[]}
+            room['currentUserIds'] = [...action.userIds]
             return {
                 ...state
             }
