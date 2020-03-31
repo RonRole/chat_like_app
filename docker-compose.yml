@@ -6,7 +6,7 @@ services:
       - ./front:/app
     ports:
       - "3000:3000"
-    command: sh -c "yarn install && yarn build && yarn start"
+    command: sh -c "yarn build && yarn start"
   front-build:
     build: ./nginx
     volumes:
@@ -17,6 +17,7 @@ services:
       - front
   back:
     build: ./back
+    env_file: docker-compose.env
     volumes:
       - ./back:/app
     ports:
@@ -27,14 +28,10 @@ services:
   db:
     build: ./postgres
     image: postgres:latest
+    env_file: docker-compose.env
     volumes:
       - db_data:/var/lib/postgresql/data
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
-    environment:
-      POSTGRES_DB: chat_like_app
-      POSTGRES_USER: sawai
-      POSTGRES_PASSWORD: sawai
-      POSTGRES_ROOT_PASSWORD: sawai
   socket:
     build: ./socket
     volumes:
