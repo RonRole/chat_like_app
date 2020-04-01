@@ -1,8 +1,7 @@
 
 # rails
-FROM ruby:latest-alpine
+FROM ruby:2.6.0-alpine
 RUN mkdir /app
-
 
 COPY ../back /app/back
 RUN cd /app/back
