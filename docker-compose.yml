@@ -2,6 +2,7 @@ version: '3'
 services:
   front:
     build: ./front
+    env_file: docker-compose.env
     volumes: 
       - ./front:/app
     ports:
