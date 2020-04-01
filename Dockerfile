@@ -1,6 +1,6 @@
 
 # rails
-FROM ruby:2.6.0-alpine
+FROM ruby:2.6.3-alpine
 RUN mkdir /app
 WORKDIR /app/back
 ADD ./back /app/back
