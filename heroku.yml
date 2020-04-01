@@ -1,5 +1,6 @@
 build:
   docker:
-    web: ./front/Dockerfile
+    web: ./heroku/Dockerfile
 run:
-  web: yarn start
+  web: cd /app/back
+  web: rails s -p 4000
