@@ -12,10 +12,6 @@ class TalkRoomCard extends React.Component {
 
     getTalkRoom = (id) => this.props.getTalkRoomById(id)
 
-    componentDidMount() {
-        this.props.getMembers(this.props.id)
-    }
-
     render() {
         return (
             <Card>

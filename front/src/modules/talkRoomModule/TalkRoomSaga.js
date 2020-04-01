@@ -1,6 +1,6 @@
 import DataAccessor from "../DataAccessor"
 import TalkRoomActions from "./TalkRoomActions"
-import { put, call} from "redux-saga/effects"
+import { put, call, fork} from "redux-saga/effects"
 import handleError from "../ErrorHandler"
 import UserActions from "../userModule/UserActions"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
@@ -86,6 +86,10 @@ export function* handleGetOwnRooms(action) {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
         yield put(TalkRoomActions.setOwnRooms(result.data))
+        //取得したトークルームのユーザーを設定する
+        for(let room of result.data) {
+            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomUser(room.id))
+        }
     }
     if(result.isError) {
         handleError({
@@ -99,6 +103,10 @@ export function* handleGetJoinedTalkRooms(action) {
     const talkRoomResult = yield call(getJoinRooms)
     if(talkRoomResult.isSuccess) {
         yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
+        //取得したトークルームのユーザーを設定する
+        for(let room of talkRoomResult.data) {
+            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomUser(room.id))
+        }
     }
     if(talkRoomResult.isFail) {
         alert('トークルームを取得できませんでした')
