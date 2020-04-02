@@ -3,7 +3,7 @@ FROM ruby:2.6.3-alpine
 # /usr/src/front : react
 # /usr/src/socket : socket
 ENV REACT_APP_FRONTEND_ADDRESS https://localhost:3000
-ENV REACT_APP_BACKEND_ADDRESS https://localhost:4000
+ENV REACT_APP_BACKEND_ADDRESS "https://chat-like-app.herokuapp.com/"
 ENV REACT_APP_SOCKET_ADDRESS https://localhost:8000
 
 
