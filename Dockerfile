@@ -14,7 +14,7 @@ COPY ./socket ./socket
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
-    bundle install && \
+    bundle install --with-pg-config=/path/to/pg_config && \
     rails s -p 4000
 
 WORKDIR /usr/src/front
