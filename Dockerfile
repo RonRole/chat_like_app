@@ -13,7 +13,8 @@ COPY ./front ./front
 COPY ./socket ./socket
 
 WORKDIR /usr/src/app
-RUN bundle install && \
+RUN gem update bundler && \
+    bundle install && \
     rails s -p 4000
 
 WORKDIR /usr/src/front
