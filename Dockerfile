@@ -15,7 +15,7 @@ COPY ./socket ./socket
 WORKDIR /usr/src/app
 RUN gem update bundler && \
     bundle install && \
-    bundle exec rails s -p -d 4000 
+    bundle exec rails s -p 4000 -d
 
 WORKDIR /usr/src/front
 RUN yarn install && \
