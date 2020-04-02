@@ -7,7 +7,7 @@ import FormErrorActions from "../FormErrorModule/FormErrorActions"
 //saga
 export function* handleGetDefLoginStart(action) {
     const accessResult = yield call(DataAccessor.get, {
-        url : `${HEROKU_PRIVATE_IP}:4000/login`
+        url : `${process.env.HEROKU_PRIVATE_IP}:4000/login`
     })
 
     if(accessResult.isSuccess) {
