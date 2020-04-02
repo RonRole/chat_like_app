@@ -2,9 +2,9 @@ FROM ruby:2.6.3-alpine
 # /usr/src/app : rails
 # /usr/src/front : react
 # /usr/src/socket : socket
-ENV REACT_APP_FRONTEND_ADDRESS https://localhost:3000
-ENV REACT_APP_BACKEND_ADDRESS https://localhost:4000
-ENV REACT_APP_SOCKET_ADDRESS https://localhost:8000
+# ENV REACT_APP_FRONTEND_ADDRESS https://localhost:3000
+# ENV REACT_APP_BACKEND_ADDRESS https://localhost:4000
+# ENV REACT_APP_SOCKET_ADDRESS https://localhost:8000
 
 
 RUN mkdir /usr/src/front && \
@@ -13,7 +13,7 @@ RUN mkdir /usr/src/front && \
     apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev && \
     export REACT_APP_FRONTEND_ADDRES="https://localhost:3000" && \
     export REACT_APP_BACKEND_ADDRES="https://localhost:4000" && \
-    export REACT_APP_SOCKET_ADDRES="https://localhost:8000" && \
+    export REACT_APP_SOCKET_ADDRES="https://localhost:8000"
 
 WORKDIR /usr/src
 COPY ./back ./app
