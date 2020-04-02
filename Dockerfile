@@ -28,5 +28,3 @@ RUN yarn install && \
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
     apk del libxml2-dev curl-dev make gcc libc-dev g++
-
-hero
