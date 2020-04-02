@@ -18,7 +18,8 @@ RUN gem update bundler && \
 
 WORKDIR /usr/src/front
 RUN yarn install && \
-    yarn start
+    yarn build && \
+    serve -s build
 
 WORKDIR /usr/src/socket
 RUN yarn install && \
