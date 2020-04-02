@@ -1,4 +1,4 @@
-FROM ruby:2.6.1-alpine 
+FROM ruby:2.6.3-alpine 
 # /usr/src/app : rails
 # /usr/src/front : react
 # /usr/src/socket : socket
