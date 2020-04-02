@@ -7,7 +7,7 @@ import FormErrorActions from "../FormErrorModule/FormErrorActions"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/own`
+        url : `https://localhost:4000/talk_rooms/own`
     })
 }
 
