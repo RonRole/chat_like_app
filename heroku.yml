@@ -1,6 +1,4 @@
 build:
   docker:
     web: ./Dockerfile
-run:
-  web: cd /app/back
-  web: rails s -p 4000
+

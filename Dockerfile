@@ -1,23 +1,39 @@
+FROM ruby:2.6.3-alpine 
+# /usr/src/app : rails
+# /usr/src/front : react
+# /usr/src/socket : socket
+# ENV REACT_APP_FRONTEND_ADDRESS https://localhost:3000
+# ENV REACT_APP_BACKEND_ADDRESS https://localhost:4000
+# ENV REACT_APP_SOCKET_ADDRESS https://localhost:8000
+# heroku環境変数を設定しておくこと
 
-# rails
-FROM ruby:2.6.3-alpine
-RUN mkdir /app
-WORKDIR /app/back
-ADD ./back /app/back
-RUN gem install bundler:2.1.2
-RUN bundle install
-RUN bundle update
 
-# front
-FROM node:latest-alpine
-RUN mkdir /app/front
-WORKDIR /app/front
-ADD ./front /app/front
-RUN yarn install
+RUN mkdir /usr/src/front && \
+    mkdir /usr/src/socket && \
+    apk update && \
+    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev && \
+    env
 
-# socket
-FROM node:latest-alpine
-RUN mkdir /app/socket
-WORKDIR /app/socket
-ADD ./socket /app/socket
-RUN yarn install
+WORKDIR /usr/src
+COPY ./back ./app
+COPY ./front ./front
+COPY ./socket ./socket
+
+WORKDIR /usr/src/app
+RUN gem update bundler && \
+    bundle install && \
+    bundle exec rails s -p 4000 -b 0.0.0.0 -d
+
+WORKDIR /usr/src/front
+RUN yarn install && \
+    yarn build && \
+    yarn global add serve && \
+    serve -s build -l 3000
+
+WORKDIR /usr/src/socket
+RUN yarn install && \
+    node ./socket_server.js
+
+WORKDIR /usr/src/app
+RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
+    apk del libxml2-dev curl-dev make gcc libc-dev g++
