@@ -19,7 +19,7 @@ RUN gem update bundler && \
 WORKDIR /usr/src/front
 RUN yarn install && \
     yarn build && \
-    yarn add -g serve && \
+    yarn global add serve && \
     serve -s build
 
 WORKDIR /usr/src/socket
