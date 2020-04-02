@@ -23,6 +23,7 @@ WORKDIR /usr/src/app
 RUN gem update bundler && \
     bundle install && \
     bundle exec rails s -p 4000 -d
+EXPOSE 4000
 
 WORKDIR /usr/src/front
 RUN yarn install && \
