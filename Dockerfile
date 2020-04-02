@@ -20,7 +20,7 @@ WORKDIR /usr/src/front
 RUN yarn install && \
     yarn build && \
     yarn global add serve && \
-    serve -s build
+    serve -s build -l 3000 -h
 
 WORKDIR /usr/src/socket
 RUN yarn install && \
