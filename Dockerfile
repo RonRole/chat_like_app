@@ -11,9 +11,9 @@ RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     apk update && \
     apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev && \
-    export REACT_APP_FRONTEND_ADDRESS=https://localhost:3000/ && \
-    export REACT_APP_BACKEND_ADDRESS=https://localhost:4000/ && \
-    export REACT_APP_SOCKET_ADDRESS=https://localhost:8000/ && \
+    export REACT_APP_FRONTEND_ADDRESS=https://localhost:3000 && \
+    export REACT_APP_BACKEND_ADDRESS=https://sawaikei && \
+    export REACT_APP_SOCKET_ADDRESS=https://localhost:8000 && \
     env
 
 WORKDIR /usr/src
