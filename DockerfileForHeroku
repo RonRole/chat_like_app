@@ -21,8 +21,7 @@ ADD ./socket ./socket
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
-    bundle install && \
-    bundle exec rails credentials:edit
+    bundle install
 
 # WORKDIR /usr/src/front
 # RUN yarn install && \

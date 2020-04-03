@@ -3,4 +3,6 @@ build:
     web: ./DockerfileForHeroku
 
 run:
-  web: bundle exec puma -C config/puma.rb
+  web: | 
+    bundle exec rails credentials:edit && \
+    bundle exec puma -C config/puma.rb
