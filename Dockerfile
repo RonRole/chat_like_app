@@ -22,8 +22,7 @@ RUN ls
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
-    bundle install && \
-    bundle exec rails s
+    bundle install
 
 # WORKDIR /usr/src/front
 # RUN yarn install && \
@@ -38,3 +37,5 @@ RUN gem update bundler && \
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
     apk del libxml2-dev curl-dev make gcc libc-dev g++
+
+CMD ["bundle", "exec", "rails", "s"]
