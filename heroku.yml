@@ -2,5 +2,6 @@ build:
   docker:
     web: ./Dockerfile
   run:
-    cd /usr/src/app && \
-    bundle exec rails s -p 3000
+    web:
+        cd /usr/src/app && \
+        bundle exec rails s -p 3000
