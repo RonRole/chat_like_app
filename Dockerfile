@@ -24,15 +24,15 @@ RUN gem update bundler && \
     bundle install && \
     bundle exec rails s -p 4000 -b 0.0.0.0 -d
 
-WORKDIR /usr/src/front
-RUN yarn install && \
-    yarn build && \
-    yarn global add serve && \
-    serve -s build -l 3000
+# WORKDIR /usr/src/front
+# RUN yarn install && \
+#     yarn build && \
+#     yarn global add serve && \
+#     serve -s build -l 3000
 
-WORKDIR /usr/src/socket
-RUN yarn install && \
-    node ./socket_server.js
+# WORKDIR /usr/src/socket
+# RUN yarn install && \
+#     node ./socket_server.js
 
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
