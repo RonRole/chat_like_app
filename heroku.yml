@@ -5,4 +5,4 @@ run:
   web: | 
     cd /usr/src/app && \
     ls && \
-    bundle exec puma -C config/puma.rb
+    bundle exec puma -C ./config/puma.rb
