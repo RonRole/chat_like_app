@@ -22,8 +22,6 @@ RUN ls
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
-    mkdir tmp && \
-    mkdir tmp/pids &&\
     bundle install
 
 # WORKDIR /usr/src/front
