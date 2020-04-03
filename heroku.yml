@@ -1,11 +1,9 @@
 build:
   docker:
-    web: ./Dockerfile
+    web: .back//Dockerfile
   config:
     RAILS_ENV: production
 
 run:
-  web: |
-    cd /usr/src/app && \
-    bundle exec pumactl start
+  web: rails s
 
