@@ -5,4 +5,4 @@ run:
   web: | 
     cd /usr/src/app && \
     ls && \
-    bin/rails s
+    bundle exec rails s
