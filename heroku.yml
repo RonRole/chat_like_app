@@ -5,4 +5,4 @@ build:
     RAILS_ENV: production
 
 run:
-  web: bundle exec puma -C /usr/src/app/config/puma.rb
+  web: bundle exec puma -C config/puma.rb
