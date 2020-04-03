@@ -4,9 +4,5 @@ build:
   config:
     RAILS_ENV: production
 
-release:
-  command:
-    - bundle exec rake db:migrate
-
 run:
   web: bundle exec rails s
