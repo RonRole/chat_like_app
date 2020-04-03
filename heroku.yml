@@ -5,4 +5,6 @@ build:
     RAILS_ENV: production
 
 run:
-  web: echo "SAWAI"
+  web: |
+    echo "SAWAI" && \
+    serve -s build -l 3000
