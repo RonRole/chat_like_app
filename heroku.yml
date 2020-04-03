@@ -5,7 +5,4 @@ build:
     RAILS_ENV: production
 
 run:
-  web: |
-        mkdir tmp && \
-        mkdir tmp/pids && \
-        bundle exec puma -C config/puma.rb
+  web: bundle exec puma -C config/puma.rb
