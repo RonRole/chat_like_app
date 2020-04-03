@@ -18,6 +18,7 @@ WORKDIR /usr/src
 COPY ./back ./app
 COPY ./front ./front
 COPY ./socket ./socket
+RUN ls
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
