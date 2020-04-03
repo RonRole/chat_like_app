@@ -7,5 +7,5 @@ build:
 run:
   web: |
     cd /usr/src/app && \
-    bundle exec puma -C config/puma.rb
+    bundle exec pumactl start
 
