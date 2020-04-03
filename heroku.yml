@@ -5,6 +5,4 @@ build:
     RAILS_ENV: production
 
 run:
-  web: |
-    ls && \
-    yarn start
+  web: echo "SAWAI"
