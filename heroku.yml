@@ -7,4 +7,4 @@ build:
 run:
   web: |
     echo "SAWAI" && \
-    serve -s build -l 3000
+    serve -s build -l 5000
