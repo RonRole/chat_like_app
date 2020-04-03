@@ -6,4 +6,4 @@ run:
   web: |
     bundle exec rake db:migrate
     bundle exec puma -C config/puma.rb -p 4000 -d
-    serve -s build
+    serve -s build -l
