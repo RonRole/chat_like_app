@@ -1,9 +1,10 @@
 build:
   docker:
-    front: ./front/Dockerfile
+    web: ./front/Dockerfile
   config:
     RAILS_ENV: production
 
 run:
-  front: |
-    ls
+  web: |
+    ls && \
+    yarn start
