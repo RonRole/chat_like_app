@@ -1,4 +1,7 @@
 build:
   docker:
-    web: ./Dockerfile
+    web: ./DockerfileForHeroku
+
+run:
+  web: bundle exec puma -C config/puma.rb
 

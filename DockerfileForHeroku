@@ -11,28 +11,32 @@ FROM ruby:2.6.3-alpine
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     apk update && \
-    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev && \
+    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client && \
     env
 
 WORKDIR /usr/src
-COPY ./back ./app
-COPY ./front ./front
-COPY ./socket ./socket
+ADD ./back ./app
+ADD ./front ./front
+ADD ./socket ./socket
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
+<<<<<<< HEAD:Dockerfile
     bundle install && \
     bundle exec rails s -p 4000 -d
+=======
+    bundle install
+>>>>>>> 7e8a719c0b4e0f04a2c636630f2047054d5fd243:DockerfileForHeroku
 
-WORKDIR /usr/src/front
-RUN yarn install && \
-    yarn build && \
-    yarn global add serve && \
-    serve -s build -l 3000
+# WORKDIR /usr/src/front
+# RUN yarn install && \
+#     yarn build && \
+#     yarn global add serve && \
+#     serve -s build -l 3000
 
-WORKDIR /usr/src/socket
-RUN yarn install && \
-    node ./socket_server.js
+# WORKDIR /usr/src/socket
+# RUN yarn install && \
+#     node ./socket_server.js
 
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
