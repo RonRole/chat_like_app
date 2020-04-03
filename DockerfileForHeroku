@@ -15,9 +15,9 @@ RUN mkdir /usr/src/front && \
     env
 
 WORKDIR /usr/src
-COPY ./back ./app
-COPY ./front ./front
-COPY ./socket ./socket
+ADD ./back ./app
+ADD ./front ./front
+ADD ./socket ./socket
 RUN ls
 
 WORKDIR /usr/src/app
