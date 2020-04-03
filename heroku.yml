@@ -4,4 +4,4 @@ build:
 run:
   web: | 
     cd /usr/src/app && \
-    bundle exec rails s -p 3000
+    bundle exec rails s
