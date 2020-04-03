@@ -4,6 +4,5 @@ build:
 
 run:
   web: |
-    EDITOR="vi" bundle exec rails credentials:edit && \
     bundle exec puma -C config/puma.rb
 
