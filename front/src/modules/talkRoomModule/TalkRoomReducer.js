@@ -20,6 +20,7 @@ const createReducer = (state = initialState, action) => {
         }
         case TalkRoomActionTypes.SET_OWN_ROOMS: {
             state.ownRooms = {}
+            action.talkRooms = action.talkRooms || []
             action.talkRooms.forEach(room => {
                 state.ownRooms[room.id] = room
             })
@@ -29,6 +30,7 @@ const createReducer = (state = initialState, action) => {
         }
         case TalkRoomActionTypes.SET_JOINED_ROOMS: {
             state.joinRooms = {}
+            action.talkRooms = action.talkRooms || []
             action.talkRooms.forEach(room => {
                 state.joinRooms[room.id] = room
             });
