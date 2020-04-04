@@ -3,9 +3,4 @@ build:
     web: ./Heroku.Dockerfile
 
 run:
-  web: |
-    bundle exec rake db:migrate
-    bundle exec puma -C config/puma.rb -p 4000 -d
-    export REACT_APP_FRONTEND_ADDRES=http://$HEROKU_PRIVATE_IP:$PORT
-    cd /usr/src/front
-    serve -s build
+  web: bundle exec rake db:migrate & bundle exec puma -C config/puma.rb -p 4000 & cd /usr/src/front & serve -s build
