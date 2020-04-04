@@ -1,13 +1,13 @@
 build:
   docker:
-    web: ./Heroku.Dockerfile
+    web: ./front
+    worker: ./back
+    # worker: ./socket
 
 run:
   web: |
-    cd /usr/src/front
     serve -s build
   
   worker: |
-    cd /usr/src/back
     bundle exec rake db:migrate
-    bundle exec puma -C config/puma.rb -p 4000 -d
+    bundle exec puma -C config/puma.rb -p 4000

@@ -7,6 +7,7 @@ WORKDIR $APP_ROOT
 
 ADD ./Gemfile $APP_ROOT/Gemfile
 ADD ./Gemfile.lock $APP_ROOT/Gemfile.lock
+ADD . $APP_ROOT
 
 RUN gem install bundler:1.17.2
 
