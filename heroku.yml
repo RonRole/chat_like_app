@@ -6,6 +6,5 @@ run:
   web: |
     bundle exec rake db:migrate
     bundle exec puma -C config/puma.rb -p 4000 -d
-    curl http://localhost:4000
     cd /usr/src/front
     serve -s build
