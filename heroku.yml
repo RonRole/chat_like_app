@@ -1,7 +1,7 @@
 build:
   docker:
-    web: ./front
-    worker: ./back
+    web: ./front/Dockerfile
+    worker: ./back/Dockerfile
     # worker: ./socket
 
 run:
