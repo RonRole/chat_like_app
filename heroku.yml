@@ -9,4 +9,4 @@ run:
     serve -s build
   worker: |
     bundle exec rake db:migrate
-    bundle exec puma -C config/puma.rb -b "localhost" -p 4000 
+    bundle exec puma -C config/puma.rb -p 4000 
