@@ -6,7 +6,7 @@ build:
 run:
   web: |
     cd /usr/src/front
-    serve -s build
+    serve -s build -l 3000
   worker: |
     bundle exec rake db:migrate
     bundle exec puma -C config/puma.rb -p 4000 
