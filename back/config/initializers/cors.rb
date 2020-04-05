@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'chat-like-app.herokuapp.com'#ENV.fetch("REACT_APP_FRONTEND_ADDRESS"){'localhost:3000'}
+    origins ENV.fetch('HOST'){'localhost'} + ':' + ENV.fetch('PORT'){'3000'}
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
