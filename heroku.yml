@@ -1,6 +1,7 @@
 build:
   docker:
     web: ./Heroku.Dockerfile
+    worker: ./Heroku.Dockerfile
 
 run:
   web: |
