@@ -6,7 +6,9 @@ build:
 run:
   web: |
     cd /usr/src/front
+    echo "SAWAI!!!! $PORT"
     serve -s build -l $PORT
   worker: |
     bundle exec rake db:migrate
+    export REACT_APP_FRONTEND_ADDRESS=http://localhost:$PORT
     bundle exec puma -C config/puma.rb -p 4000 
