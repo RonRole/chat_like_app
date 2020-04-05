@@ -23,10 +23,10 @@ WORKDIR /usr/src/app
 RUN gem update bundler && \
     bundle install
 
-WORKDIR /usr/src/front
-RUN yarn install && \
-    yarn build && \
-    yarn global add serve 
+# WORKDIR /usr/src/front
+# RUN yarn install && \
+#     yarn build && \
+#     yarn global add serve 
 
 # WORKDIR /usr/src/socket
 # RUN yarn install && \
