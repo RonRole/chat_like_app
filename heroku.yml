@@ -7,4 +7,4 @@ run:
     bundle exec rake db:migrate
     sh -c "bundle exec puma -C config/puma.rb -p 4000"
     cd /usr/src/front
-    sh - c "serve -s build"
+    sh -c "serve -s build"
