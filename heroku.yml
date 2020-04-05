@@ -5,6 +5,6 @@ build:
 run:
   web: |
     bundle exec rake db:migrate
-    bundle exec pumactl start -p 4000
+    bundle exec pumactl start -p $PORT -d
     cd /usr/src/front
-    serve -s build
+    # serve -s build
