@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://localhost:#{ENV['PORT'] || 3000}"#ENV.fetch("REACT_APP_FRONTEND_ADDRESS") { 'sawai' }
+    origins 'https://localhost:*'#ENV.fetch("REACT_APP_FRONTEND_ADDRESS") { 'sawai' }
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],
