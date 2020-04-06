@@ -4,7 +4,7 @@ build:
 
 run:
   web: |
-    mkdir /var/tmp/nginx/client_body
+    mkdir /var/tmp/nginx
     nginx
     # cd /usr/src/app
     # bundle exec rake db:migrate
