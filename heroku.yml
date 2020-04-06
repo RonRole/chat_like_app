@@ -4,7 +4,8 @@ build:
 
 run:
   web: |
-    nginx start
+    cd /etc/nginx
+    nginx
     # cd /usr/src/app
     # bundle exec rake db:migrate
     # echo "FRONT!!!! $REACT_APP_FRONTEND_ADDRESS"
