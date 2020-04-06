@@ -22,7 +22,7 @@ ADD ./socket ./socket
 WORKDIR /etc/nginx
 ADD ./nginx.heroku.conf .
 RUN envsubst '$$PORT' < nginx.heroku.conf > nginx.conf
-
+RUN cat nginx.conf
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
