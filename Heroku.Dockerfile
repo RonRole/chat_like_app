@@ -19,7 +19,7 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /etc/nginx/nginx.conf
+WORKDIR /etc/nginx
 RUN cat nginx.conf
 
 
