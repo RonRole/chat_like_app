@@ -4,6 +4,9 @@ build:
 
 run:
   web: |
+    cd /etc/nginx
+    envsubst '$$PORT' < nginx.heroku.conf > nginx.conf
+    cat nginx.conf
     mkdir /var/tmp/nginx
     nginx
     # cd /usr/src/app
