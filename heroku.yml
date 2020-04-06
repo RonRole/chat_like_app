@@ -3,4 +3,4 @@ build:
     web: ./Heroku.Dockerfile
 
 run:
-  web: cd /usr/src/front & serve -s build -l $PORT & bundle exec rake db:migrate & bundle exec puma -C config/puma.rb -p 4000 
+  web: cd /usr/src/front & serve -s build -l $PORT & cd /usr/src/app & bundle exec rake db:migrate & bundle exec puma -C config/puma.rb -p 4000 
