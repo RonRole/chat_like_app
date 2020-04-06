@@ -19,9 +19,9 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /usr/src/app
-RUN gem update bundler && \
-    bundle install
+# WORKDIR /usr/src/app
+# RUN gem update bundler && \
+#     bundle install
 
 WORKDIR /usr/src/front
 RUN yarn add express && \
