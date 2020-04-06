@@ -11,7 +11,7 @@ FROM ruby:2.6.3-alpine
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     apk update && \
-    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client nginx gettext
+    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client
 
 
 WORKDIR /usr/src
@@ -31,6 +31,11 @@ RUN yarn install && \
 # WORKDIR /usr/src/socket
 # RUN yarn install && \
 #     node ./socket_server.js
+
+WORKDIR /usr/src
+RUN yarn init && \
+    yarn add express ejs express-http-proxy
+ADD ./heroku-express.js .
 
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
