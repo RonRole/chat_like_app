@@ -5,4 +5,5 @@ build:
 run:
   web: |
     cd /usr/src/front
+    sh
     # serve -s build -l $PORT
