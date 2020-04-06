@@ -21,7 +21,7 @@ ADD ./socket ./socket
 
 WORKDIR /etc/nginx/conf.d
 ADD ./nginx.heroku.conf .
-RUN ls
+RUN cat ./default.conf
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
