@@ -4,8 +4,8 @@ build:
 
 run:
   web: |
-    cd /etc/nginx
-    envsubst '$$PORT' < nginx.heroku.conf > nginx.conf
+    cd /etc/nginx/conf.d
+    envsubst '$$PORT' < nginx.heroku.conf > default.conf
     cat nginx.conf
     mkdir /var/tmp/nginx
     nginx
