@@ -19,12 +19,9 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /etc/nginx/conf.d
-ADD ./default.conf .
-
-# WORKDIR /usr/src/app
-# RUN gem update bundler && \
-#     bundle install
+WORKDIR /usr/src/app
+RUN gem update bundler && \
+    bundle install
 
 WORKDIR /usr/src/front
 RUN yarn install && \
