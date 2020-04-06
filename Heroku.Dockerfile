@@ -19,8 +19,9 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /etc/nginx
+WORKDIR /etc/nginx/conf.d
 ADD ./nginx.heroku.conf .
+RUN default.conf
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
