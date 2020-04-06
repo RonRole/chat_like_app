@@ -4,7 +4,8 @@ build:
 
 run:
   web: |
-    cd /usr/src/app
-    bundle exec rake db:migrate
-    echo "FRONT!!!! $REACT_APP_FRONTEND_ADDRESS"
-    bundle exec puma -C config/puma.rb -p 4000 
+    nginx
+    # cd /usr/src/app
+    # bundle exec rake db:migrate
+    # echo "FRONT!!!! $REACT_APP_FRONTEND_ADDRESS"
+    # bundle exec puma -C config/puma.rb -p 4000 
