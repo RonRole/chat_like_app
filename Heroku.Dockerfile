@@ -20,8 +20,7 @@ ADD ./front ./front
 ADD ./socket ./socket
 
 WORKDIR /etc/nginx/conf.d
-ADD ./nginx.heroku.conf .
-RUN cat ./default.conf
+ADD ./default.conf .
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
