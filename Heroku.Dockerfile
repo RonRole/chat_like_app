@@ -19,8 +19,6 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /var/tmp
-RUN ls -l
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
