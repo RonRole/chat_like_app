@@ -34,7 +34,10 @@ RUN yarn install && \
 
 WORKDIR /usr/src
 RUN yarn init && \
-    yarn add express ejs express-http-proxy
+    yarn add express && \
+    yarn add ejs && \ 
+    yarn add express-http-proxy && \
+    yarn install
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/app
