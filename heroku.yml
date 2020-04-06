@@ -1,9 +1,13 @@
 build:
   docker:
     web: ./Heroku.Dockerfile
+    worker: ./Heroku.Dockerfile
 
 run:
   web: |
-    cd /usr/src/app
-    bundle exec puma -C config/puma.rb -p $PORT -d
-    # serve -s build -l $PORT
+    cd /usr/src/front
+    echo "SAWAI!!!! $PORT"
+    serve -s build -l $PORT
+  worker: |
+    bundle exec rake db:migrate
+    bundle exec puma -C config/puma.rb -p 4000 
