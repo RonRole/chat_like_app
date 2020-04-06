@@ -21,6 +21,7 @@ ADD ./socket ./socket
 
 WORKDIR /etc/nginx
 ADD ./nginx.conf .
+RUN envsubst '$$ROOT' < nginx.conf > nginx.conf
 
 
 # WORKDIR /usr/src/app
