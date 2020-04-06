@@ -4,7 +4,6 @@ build:
 
 run:
   web: |
-    cd /etc/nginx
     nginx
     # cd /usr/src/app
     # bundle exec rake db:migrate
