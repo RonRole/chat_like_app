@@ -7,7 +7,9 @@ run:
   web: |
     cd /usr/src/front
     echo "SAWAI!!!! $PORT"
+    echo "KANDA!!!! $REACT_APP_BACKEND_ADDRESS"
     serve -s build -l $PORT
   worker: |
     bundle exec rake db:migrate
+    echo "FRONT!!!! $REACT_APP_FRONTEND_ADDRESS"
     bundle exec puma -C config/puma.rb -p 4000 
