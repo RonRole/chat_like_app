@@ -19,6 +19,9 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
+WORKDIR /etc/nginx/nginx.conf
+RUN cat nginx.conf
+
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
