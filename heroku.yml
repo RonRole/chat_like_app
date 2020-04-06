@@ -8,6 +8,8 @@ run:
     envsubst '$$PORT' < default.conf > default.conf
     cat default.conf
     mkdir /var/tmp/nginx
+    mkdir /run/nginx
+    touch /run/nginx/nginx.pid
     nginx
     # cd /usr/src/app
     # bundle exec rake db:migrate
