@@ -13,8 +13,9 @@ RUN mkdir /usr/src/front && \
     apk update && \
     apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client nginx
 
-WORKDIR /var/tmp/nginx
-RUN ls
+WORKDIR /var
+RUN echo "SAWAI!!!!!!!!!!!!!!!!!!" && \
+    ls
     
 
 WORKDIR /usr/src
