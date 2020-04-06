@@ -24,21 +24,17 @@ RUN gem update bundler && \
     bundle install
 
 WORKDIR /usr/src/front
-RUN yarn install && \
+RUN yarn add express && \
+    yarn add ejs && \ 
+    yarn add express-http-proxy && \
+    yarn install && \
     yarn build && \
-    yarn global add serve 
+ADD ./heroku-express.js .
 
 # WORKDIR /usr/src/socket
 # RUN yarn install && \
 #     node ./socket_server.js
 
-WORKDIR /usr/src
-RUN yarn init && \
-    yarn add express && \
-    yarn add ejs && \ 
-    yarn add express-http-proxy && \
-    yarn install
-ADD ./heroku-express.js .
 
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
