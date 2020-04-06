@@ -6,7 +6,7 @@ run:
   web: |
     cd /etc/nginx/conf.d
     envsubst '$$PORT' < nginx.heroku.conf > default.conf
-    cat nginx.conf
+    cat default.conf
     mkdir /var/tmp/nginx
     nginx
     # cd /usr/src/app
