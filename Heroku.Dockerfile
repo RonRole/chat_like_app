@@ -13,18 +13,18 @@ RUN mkdir /usr/src/front && \
     apk update && \
     apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client nginx
 
-WORKDIR /var/tmp
-RUN ls -l
-
 
 WORKDIR /usr/src
 ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /usr/src/app
-RUN gem update bundler && \
-    bundle install
+WORKDIR /var/tmp
+RUN ls -l
+
+# WORKDIR /usr/src/app
+# RUN gem update bundler && \
+#     bundle install
 
 # WORKDIR /usr/src/front
 # RUN yarn install && \
