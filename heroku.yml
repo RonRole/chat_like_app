@@ -4,6 +4,6 @@ build:
 
 run:
   web: |
-    cd /usr/src/front
-    sh
+    cd /usr/src/app
+    bundle exec rake puma -C config/puma -p $PORT -d
     # serve -s build -l $PORT
