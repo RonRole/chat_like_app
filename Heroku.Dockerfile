@@ -12,7 +12,7 @@ RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     apk update && \
     apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client nginx && \
-    cd / && \
+    cd /etc/nginx && \
     ls
 
 WORKDIR /usr/src
