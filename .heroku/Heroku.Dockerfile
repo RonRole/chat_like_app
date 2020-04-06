@@ -15,9 +15,9 @@ RUN mkdir /usr/src/front && \
 
 
 WORKDIR /usr/src
-ADD ./back ./app
-ADD ./front ./front
-ADD ./socket ./socket
+ADD ../back ./app
+ADD ../front ./front
+ADD ../socket ./socket
 
 # WORKDIR /usr/src/app
 # RUN gem update bundler && \
