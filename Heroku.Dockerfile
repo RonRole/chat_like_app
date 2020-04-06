@@ -28,8 +28,7 @@ RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
     yarn install && \
-    yarn build && \
-    ls
+    yarn build
     
 ADD ./heroku-express.js .
 
