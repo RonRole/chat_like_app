@@ -3,17 +3,13 @@ build:
     web: ./Heroku.Dockerfile
 
 run:
-  web: | 
-    export REACT_APP_FRONTEND_ADDRESS=https://chat-like-app.herokuapp.com:$PORT
-    export REACT_APP_BACKEND_ADDRESS=https://chat-like-app.herokuapp.com/api
-    export REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket
-    
+  web: |    
     cd /usr/src/front
-    node ./heroku-express.js
-    
-    # cd /usr/src/socket
-    # node ./socket_server.js & \
+    node ./heroku-express.js & \
 
-    # cd /usr/src/app 
-    # bundle exec rake db:migrate 
-    # bundle exec puma -C config/puma.rb -p 4000
+    cd /usr/src/socket
+    node ./socket_server.js & \
+
+    cd /usr/src/app 
+    bundle exec rake db:migrate 
+    bundle exec puma -C config/puma.rb -p 4000
