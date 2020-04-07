@@ -2,16 +2,6 @@ build:
   docker:
     web: ./Heroku.Dockerfile
 
-release:
-  image: web
-  command: |
-    - export REACT_APP_FRONTEND_ADDRESS=https://chat-like-app.herokuapp.com:$PORT
-    - export REACT_APP_BACKEND_ADDRESS=https://0.0.0.0:4000
-    - export REACT_APP_SOCKET_ADDRESS=https://0.0.0.0:8000
-    - cd /usr/src/front
-    - yarn build
-
-
 run:
   web: | 
     # cd /usr/src/front
@@ -23,6 +13,7 @@ run:
     export REACT_APP_BACKEND_ADDRESS=https://0.0.0.0:4000
     export REACT_APP_SOCKET_ADDRESS=https://0.0.0.0:8000
     cd /usr/src/front
+    yarn build
     serve -s ./build & \
     cd /usr/src/app
     bundle exec rake db:migrate
