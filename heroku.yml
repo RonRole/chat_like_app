@@ -14,7 +14,8 @@ run:
     export REACT_APP_SOCKET_ADDRESS=https://0.0.0.0:8000
     cd /usr/src/front
     yarn build
-    serve -s build & \
+    ls
+    serve -s ./build & \
     cd /usr/src/app
     bundle exec rake db:migrate
     bundle exec puma -C config/puma.rb -p 4000 & \
