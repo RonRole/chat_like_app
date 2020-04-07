@@ -4,18 +4,11 @@ build:
 
 run:
   web: | 
-    # cd /usr/src/front
-    # node heroku-express.js & \
-    # cd /usr/src/app 
-    # bundle exec rake db:migrate 
-    # bundle exec puma -C config/puma.rb -p 4000 
     export REACT_APP_FRONTEND_ADDRESS=https://chat-like-app.herokuapp.com:$PORT
-    export REACT_APP_BACKEND_ADDRESS=https://0.0.0.0:4000
-    export REACT_APP_SOCKET_ADDRESS=https://0.0.0.0:8000
+    export REACT_APP_BACKEND_ADDRESS=https://chat-like-app.herokuapp.com/api
+    export REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket
     cd /usr/src/front
-    yarn build
-    serve -s ./build & \
-    cd /usr/src/app
-    bundle exec rake db:migrate
-    bundle exec puma -C config/puma.rb -p 4000 & \
-    env
+    node heroku-express.js & \
+    cd /usr/src/app 
+    bundle exec rake db:migrate 
+    bundle exec puma -C config/puma.rb -p 4000 
