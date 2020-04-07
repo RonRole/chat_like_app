@@ -20,11 +20,14 @@ ADD ./back ./app
 ADD ./front/public ./front
 ADD ./front/src ./front
 ADD ./front/package.json ./front
+ADD ./front/package-lock.json ./front
 ADD ./front/yarn.lock ./front
 
 RUN cd front && ls
 
 ADD ./socket/package.json ./socket
+ADD ./front/package-lock.json ./socket
+ADD ./socket/yarn.lock ./socket
 ADD ./socket/socket_server.js ./socket
 
 WORKDIR /usr/src/front
