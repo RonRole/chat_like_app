@@ -27,8 +27,8 @@ WORKDIR /usr/src/front
 RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
-    yarn install && \
-    yarn build
+    yarn add -g serve && \
+    yarn install
     
 ADD ./heroku-express.js .
 
