@@ -6,14 +6,11 @@ run:
   web: |    
     cd /usr/src/front
     node ./heroku-express.js & \
-
+    cd /usr/src/app 
+    bundle exec rake db:migrate 
+    bundle exec puma -C config/puma.rb -p 4000 & \
     cd /usr/src/socket
     export SOCKET_PORT=8000
     export SOCKET_HOST=0.0.0.0
     node ./socket_server.js & \
-
-    cd /usr/src/app 
-    bundle exec rake db:migrate 
-    bundle exec puma -C config/puma.rb -p 4000 & \
-
     echo "Yeah!!! SAWAI KEI!!!"
