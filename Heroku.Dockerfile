@@ -19,20 +19,19 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./socket ./socket
 
-WORKDIR /usr/src/app
-RUN gem update bundler && \
-    bundle install
+# WORKDIR /usr/src/app
+# RUN gem update bundler && \
+#     bundle install
 
 WORKDIR /usr/src/front
 RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
     yarn install
-    
 ADD ./heroku-express.js .
 
-WORKDIR /usr/src/socket
-RUN yarn install
+# WORKDIR /usr/src/socket
+# RUN yarn install
 
 
 WORKDIR /usr/src/app
