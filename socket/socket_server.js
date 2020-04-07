@@ -3,7 +3,7 @@ console.log("server started")
 const http = require('http')
 const server = http.createServer();
 const io = require('socket.io').listen(server)
-server.listen(8000)
+server.listen((process.env.SOCKET_PORT || 8000), (process.env.SOCKET_HOST || 'localhost'))
 
 //talkRoomID : joinRoomしたメンバーたち
 const currentRoomMembers = {
