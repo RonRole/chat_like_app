@@ -21,7 +21,6 @@ ADD ./front/public ./front
 ADD ./front/src ./front
 ADD ./front/package-lock.json ./front
 ADD ./front/package.json ./front
-ADD ./front/yarn-error.log ./front
 ADD ./front/yarn.lock ./front
 
 ADD ./socket/index.html ./socket
