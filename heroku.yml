@@ -12,5 +12,4 @@ run:
     cd /usr/src/socket
     export SOCKET_PORT='8000'
     export SOCKET_HOST='0.0.0.0'
-    node ./socket_server.js & \
-    echo "Yeah!!! SAWAI KEI!!!"
+    node ./socket_server.js 

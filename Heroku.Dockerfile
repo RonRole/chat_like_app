@@ -16,8 +16,13 @@ RUN mkdir /usr/src/front && \
 
 WORKDIR /usr/src
 ADD ./back ./app
-ADD ./front ./front
-ADD ./socket ./socket
+
+ADD ./front/public ./front
+ADD ./front/src ./front
+ADD ./front/package.json ./front
+
+ADD ./socket/package.json ./socket
+ADD ./socket/socket_server.js ./socket
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
@@ -34,7 +39,6 @@ RUN yarn add express && \
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
-ADD ./socket .
 RUN yarn install
 
 WORKDIR /usr/src/app
