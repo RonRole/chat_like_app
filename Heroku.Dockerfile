@@ -20,6 +20,7 @@ ADD ./back ./app
 ADD ./front/public ./front
 ADD ./front/src ./front
 ADD ./front/package.json ./front
+ADD ./front/yarn.lock ./front
 
 RUN cd front && ls
 
