@@ -21,10 +21,20 @@ ADD ./front/public ./front
 ADD ./front/src ./front
 ADD ./front/package.json ./front
 
-RUN ls
+RUN cd front && ls
 
 ADD ./socket/package.json ./socket
 ADD ./socket/socket_server.js ./socket
+
+WORKDIR /usr/src/front
+RUN yarn add express && \
+    yarn add ejs && \ 
+    yarn add express-http-proxy && \
+    yarn install && \
+    echo "REACT_APP_BACKEND_ADDRESS=https://chat-like-app.herokuapp.com/api" > .env && \
+    echo "REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket" >> .env && \
+    yarn build
+ADD ./heroku-express.js .
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
