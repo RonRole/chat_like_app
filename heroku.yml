@@ -8,8 +8,8 @@ run:
     node ./heroku-express.js & \
         
     cd /usr/src/socket
-    export SOCKET_PORT='8000'
-    export SOCKET_HOST='0.0.0.0'
+    export SOCKET_PORT=8000
+    export SOCKET_HOST=0.0.0.0
     node ./socket_server.js  & \
     
     cd /usr/src/app 
