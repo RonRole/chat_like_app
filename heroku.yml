@@ -9,8 +9,7 @@ run:
     export REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket
     
     cd /usr/src/front
-    ls
-    node heroku-express.js & \
+    node ./heroku-express.js & \
 
     # cd /usr/src/socket
     # node ./socket_server.js & \
@@ -19,4 +18,4 @@ run:
     # bundle exec rake db:migrate 
     # bundle exec puma -C config/puma.rb -p 4000 & \
 
-    env
+    echo "START!!!!"
