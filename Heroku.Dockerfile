@@ -31,9 +31,8 @@ RUN yarn add express && \
     
 ADD ./heroku-express.js .
 
-# WORKDIR /usr/src/socket
-# RUN yarn install && \
-#     node ./socket_server.js
+WORKDIR /usr/src/socket
+RUN yarn install
 
 
 WORKDIR /usr/src/app
