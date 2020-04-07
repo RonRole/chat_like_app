@@ -9,6 +9,7 @@ run:
     export REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket
     
     cd /usr/src/front
+    ls
     node heroku-express.js & \
 
     # cd /usr/src/socket
