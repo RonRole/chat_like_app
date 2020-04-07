@@ -21,6 +21,8 @@ ADD ./front/public ./front
 ADD ./front/src ./front
 ADD ./front/package.json ./front
 
+RUN ls
+
 ADD ./socket/package.json ./socket
 ADD ./socket/socket_server.js ./socket
 
