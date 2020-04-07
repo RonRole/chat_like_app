@@ -1,4 +1,4 @@
-console.log("server started")
+console.log("socket server started")
 
 const http = require('http')
 const server = http.createServer();
