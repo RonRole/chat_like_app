@@ -16,18 +16,8 @@ RUN mkdir /usr/src/front && \
 
 WORKDIR /usr/src
 ADD ./back ./app
-
-ADD ./front/public ./front
-ADD ./front/src ./front
-ADD ./front/package-lock.json ./front
-ADD ./front/package.json ./front
-ADD ./front/yarn.lock ./front
-
-ADD ./socket/index.html ./socket
-ADD ./socket/package-lock.json ./socket
-ADD ./socket/package.json ./socket
-ADD ./socket/socket_server.js ./socket
-ADD ./socket/yarn.lock ./socket
+ADD ./front ./front
+ADD ./socket ./socket
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
