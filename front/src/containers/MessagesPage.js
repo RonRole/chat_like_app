@@ -17,7 +17,7 @@ class MessagePage extends React.Component {
                 <strong>{this.props.getTalkRoomById(this.props.match.params.id).title}</strong>
                 <Container className="d-flex">
                     <MessagesContainer {...this.props} className="mr-2" style={{height:"70vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
-                    <Container style={{width:"40%", border:"1px solid gray", overflow:"scroll"}}>
+                    <Container style={{width:"40%", border:"1px solid gray", overflow:"auto"}}>
                         <h6><strong>今いる人たち</strong></h6>
                         <TransitionGroup>
                             {this.getCurrentUserIds().map(id => this.props.getUserById(id)).map((user,index) => {
