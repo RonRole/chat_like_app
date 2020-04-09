@@ -10,6 +10,7 @@ const server = http.createServer((req,res) => {
         res.write('socket server is running')
     }
 });
+
 server.listen(process.env.SOCKET_PORT || 8000, process.env.SOCKET_HOST || 'localhost')
 
 const io = require('socket.io').listen(server)
