@@ -4,7 +4,8 @@ build:
 
 release:
   command:
-    - cd /usr/src/front & yarn build
+    - cd /usr/src/front
+    - yarn build
   image: web
 run:
   web: |    
