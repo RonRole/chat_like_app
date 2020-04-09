@@ -14,7 +14,6 @@ const server = http.createServer((req,res) => {
 server.listen(process.env.SOCKET_PORT || 8000, process.env.SOCKET_HOST || 'localhost')
 
 const io = require('socket.io').listen(server)
-io.path(process.env.SOCKET_PATH || '/socket.io')
 console.log(`io:${io}`)
 
 //talkRoomID : joinRoomしたメンバーたち
@@ -27,6 +26,7 @@ const currentRoomMembers = {
 }
 
 io.sockets.on('connection', socket => {
+    console.log('socket : connected')
     //トークルーム参加
     socket.on('joinRoom', ({user = {},　roomId}) => {
         if(!currentRoomMembers[roomId]) {
