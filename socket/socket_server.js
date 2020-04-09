@@ -4,11 +4,17 @@ console.log(`HOST:${process.env.SOCKET_HOST || 'localhost'}`)
 
 const http = require('http')
 
-const server = http.createServer();
+const server = http.createServer((req, res) => {
+    if(req.url==='/' && req.method==='GET') {
+        console.log('Hello!!!')
+    }
+});
 server.listen(process.env.SOCKET_PORT || 8000, process.env.SOCKET_HOST || 'localhost')
 
 const io = require('socket.io').listen(server)
 io.path(process.env.SOCKET_PATH || '/socket.io')
+
+
 
 console.log(server.address)
 //talkRoomID : joinRoomしたメンバーたち
