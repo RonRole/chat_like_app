@@ -1,7 +1,7 @@
 
 //トークルームのメッセージ用のSocketIO
 module.exports = () => {
-    const io = require('socket.io')
+    const io = require('./node_modules/socket.io')
     //talkRoomID : joinRoomしたメンバーたち
     const currentRoomMembers = {
         0:{
