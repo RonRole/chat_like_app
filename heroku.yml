@@ -5,7 +5,7 @@ build:
 release:
   command:
     - cd /usr/src/front & yarn build
-  image: docker
+  image: web
 run:
   web: |    
     cd /usr/src/front
