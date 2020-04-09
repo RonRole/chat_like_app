@@ -14,6 +14,7 @@ const server = http.createServer((req,res) => {
 server.listen(process.env.SOCKET_PORT || 8000, process.env.SOCKET_HOST || 'localhost')
 
 const io = require('socket.io').listen(server)
+io.path(process.env.SOCKET_PATH || '/socket.io')
 
 //talkRoomID : joinRoomしたメンバーたち
 const currentRoomMembers = {
