@@ -9,7 +9,7 @@ run:
 
     cd /usr/src/app 
     bundle exec rake db:migrate 
-    bundle exec puma -C config/puma.rb -p $API_PORT -b $API_HOST & \
+    bundle exec puma -C config/puma.rb -p $API_PORT　-e production & \
         
     cd /usr/src/socket
     node ./socket_server.js  
