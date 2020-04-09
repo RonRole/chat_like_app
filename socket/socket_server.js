@@ -5,6 +5,7 @@ console.log(`HOST:${process.env.SOCKET_HOST || 'localhost'}`)
 const http = require('http')
 
 const server = http.createServer((req,res) => {
+    console.log("socket server got request")
     if(req.url==='/' && req.method==='GET') {
         res.write('socket server is running')
     }
