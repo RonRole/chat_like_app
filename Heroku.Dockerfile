@@ -29,7 +29,7 @@ RUN yarn add express && \
     yarn add express-http-proxy && \
     yarn install && \
     echo "REACT_APP_BACKEND_ADDRESS=https://chat-like-app.herokuapp.com/api" > .env && \
-    echo "REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket" >> .env && \
+    echo "REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket/socket.io" >> .env && \
     cat .env && \
     yarn build
 ADD ./heroku-express.js .

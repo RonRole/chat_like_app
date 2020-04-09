@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
 import * as serviceWorker from './serviceWorker';
-import store, { sawaiTest } from './store'
+import store from './store'
 //redux
 import {Provider} from 'react-redux'
 import history from './modules/HistoryModule';
