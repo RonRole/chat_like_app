@@ -11,5 +11,5 @@ const server = express()
                   .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`))
                   .listen(PORT, () => console.log(`Front Listening on ${ PORT }`))
 
-require('/usr/src/socket/talkRoomMessagesIO')().listen(server)
+require('/usr/src/socket/talkRoomMessagesIO')(server)
 
