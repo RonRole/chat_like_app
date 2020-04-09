@@ -27,7 +27,11 @@ WORKDIR /usr/src/front
 RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
-    yarn install
+    yarn install && \
+    echo "REACT_APP_BACKEND_ADDRESS=https://chat-like-app.herokuapp.com/api" > .env && \
+    echo "REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com/socket" >> .env && \
+    cat .env && \
+    yarn build
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
