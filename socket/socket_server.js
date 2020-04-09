@@ -3,9 +3,12 @@ console.log(`PORT:${process.env.SOCKET_PORT || 8000}`)
 console.log(`HOST:${process.env.SOCKET_HOST || 'localhost'}`)
 
 const http = require('http')
+
 const server = http.createServer();
+server.listen(process.env.SOCKET_PORT || 8000, process.env.SOCKET_HOST || 'localhost')
+
 const io = require('socket.io').listen(server)
-server.listen(process.env.SOCKET_PORT || 8000)
+io.path(process.env.SOCKET_PATH || '/socket.io')
 
 //talkRoomID : joinRoomしたメンバーたち
 const currentRoomMembers = {
