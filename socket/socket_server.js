@@ -15,7 +15,6 @@ const io = require('socket.io').listen(server)
 io.path(process.env.SOCKET_PATH || '/socket.io')
 console.log(`io:${io}`)
 
-console.log(server.address())
 //talkRoomID : joinRoomしたメンバーたち
 const currentRoomMembers = {
     0:{
