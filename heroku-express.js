@@ -10,6 +10,7 @@ express()
   .get('/', (req, res) => res.sendFile('/usr/src/front/build/index.html'))
   .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`))
   .use('/socket.io', proxy(`${process.env.SOCKET_HOST}:${process.env.SOCKET_PORT}`, {
+    target: `${process.env.SOCKET_HOST}:${process.env.SOCKET_PORT}`,
     ws : true
   }))
   .listen(PORT, () => console.log(`Front Listening on ${ PORT }`))
