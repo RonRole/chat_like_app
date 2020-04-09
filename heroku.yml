@@ -2,9 +2,10 @@ build:
   docker:
     web: ./Heroku.Dockerfile
 
-releace:
+release:
   command:
     - cd /usr/src/front & yarn build
+  image: docker
 run:
   web: |    
     cd /usr/src/front
