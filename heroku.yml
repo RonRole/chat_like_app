@@ -1,10 +1,13 @@
 build:
   docker:
     web: ./Heroku.Dockerfile
+
+releace:
+  command:
+    - cd /usr/src/front & yarn build
 run:
   web: |    
     cd /usr/src/front
-    yarn build
     node ./heroku-express.js & \
 
     cd /usr/src/app 
