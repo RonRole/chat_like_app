@@ -7,10 +7,9 @@ const http = require('http')
 const server = http.createServer();
 server.listen(process.env.SOCKET_PORT || 8000, process.env.SOCKET_HOST || 'localhost')
 
-const io = require('socket.io')(server)
+console.log(`io:${io}`)
+const io = require('socket.io').listen(server)
 io.path(process.env.SOCKET_PATH || '/socket.io')
-
-
 
 console.log(server.address)
 //talkRoomID : joinRoomしたメンバーたち
