@@ -29,6 +29,7 @@ RUN yarn add express && \
     yarn add express-http-proxy && \
     yarn install
 ADD ./heroku-express.js .
+ADD ./heroku_release.sh .
 
 WORKDIR /usr/src/socket
 RUN yarn install

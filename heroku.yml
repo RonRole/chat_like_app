@@ -4,8 +4,7 @@ build:
 
 release:
   command:
-    - cd /usr/src/front
-    - yarn build
+    - sh /usr/src/front/heroku_release.sh
   image: web
 run:
   web: |    
