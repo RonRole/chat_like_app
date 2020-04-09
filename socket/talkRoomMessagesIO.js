@@ -62,7 +62,4 @@ io.sockets.on('connection', socket => {
     })
 })
 
-export default io
-
-
-
+exports = io
