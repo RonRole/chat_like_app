@@ -9,4 +9,7 @@ run:
 
     cd /usr/src/app 
     bundle exec rake db:migrate 
-    bundle exec puma -C config/puma.rb -p 4000
+    bundle exec puma -C config/puma.rb -p 4000 & \
+        
+    cd /usr/src/socket
+    node ./socket_server.js  
