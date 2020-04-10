@@ -20,7 +20,7 @@ export class MessageFormContainer extends React.Component {
                         })
                         formEvent.currentTarget.inputMessage.value = ""
                     }}>
-                    <Form.Control className="mt-2 mb-2" name="inputMessage" type="text" placeholder="こ↑こ↓に書いて、どうぞ"/>    
+                    <Form.Control className="mt-2 mb-2" name="inputMessage" type="text" placeholder="メッセージを入力してね"/>    
                     <MessageSendButton />
                 </Form>
             </Container>

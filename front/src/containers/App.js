@@ -2,7 +2,6 @@ import React, { Component, createContext } from 'react';
 //redux
 import MessagesPage from './MessagesPage'
 //bootstrap
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Router, Switch, Redirect } from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
@@ -14,7 +13,6 @@ import Loading from './Loading';
 import LogModule from '../modules/logModule/LogModule';
 import HomePage from './HomePage';
 import SignUpPage from '../components/SignUpPage';
-import "./CSSTransitionGroup.css"
 
 
 export class App extends Component {

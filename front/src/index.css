@@ -16,3 +16,57 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/*CSSTransitionGroup*/
+.fade-enter {
+  opacity:0;
+}
+
+.fade-enter-active {
+  opacity:.5;
+  transition: all 100ms ease-in;
+}
+
+.fade-enter-done {
+  opacity:1;
+  transition: all 100ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity:.5;
+  transition: all 100ms ease-out;
+}
+
+.fade-exit-done {
+  opacity: 0;
+  transition: all 100ms ease-out;
+}
+
+/*Login Page*/
+#login_form {
+  display: grid;
+  justify-content: center;
+}
+
+input {
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+/*Signup Form*/
+img#set_image {
+  opacity: 1;
+  transition: all 0.2s ease-out;
+  object-fit: contain;
+}
+
+img#set_image:hover {
+  opacity: 0.1;
+  transition: all 0.2s ease-in;
+  object-fit: contain;
+}

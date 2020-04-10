@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import './LoginPage.css'
 
 import { Form, Button } from 'react-bootstrap'
 import LogModule from '../modules/logModule/LogModule'

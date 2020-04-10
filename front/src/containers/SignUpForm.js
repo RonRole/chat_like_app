@@ -2,7 +2,6 @@ import React from 'react'
 import { Form, Button, Container } from 'react-bootstrap'
 import UserModule from '../modules/userModule/UserModule'
 import { connect } from 'react-redux'
-import "./SignUpForm.css"
 import { NameFormGroup, PasswordFormGroup, PasswordConfirmationFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
