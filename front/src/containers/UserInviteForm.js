@@ -18,10 +18,6 @@ class UserInviteForm extends React.Component {
         return alreadyInvited
     }
 
-    componentDidUpdate() {
-        console.log(this.props.state)
-    }
-
     render() {
         return (
             <ModalForm

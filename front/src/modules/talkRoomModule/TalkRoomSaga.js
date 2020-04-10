@@ -42,7 +42,6 @@ const createTalkRoom = ({
 }
 
 const updateTalkRoom = talkRoom => {
-    console.log(talkRoom)
     return DataAccessor.put({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoom.id}`,
         parameter : {

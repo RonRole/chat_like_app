@@ -37,7 +37,6 @@ export class MessagesContainer extends React.Component {
     }   
 
     componentDidUpdate(){
-        console.log(this.props.allState)
         const messageArea = document.getElementById("messageArea")
         messageArea.scrollTo(0, document.getElementById("messageArea").scrollHeight)
     }
