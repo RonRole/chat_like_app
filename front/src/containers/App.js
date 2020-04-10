@@ -40,7 +40,7 @@ export class App extends Component {
     return (
       <BrowserRouter>
         <Loading />
-        <Navigation />
+        <Navigation style={{position:"absolute"}}/>
         <Switch>
           <Route path="/login" component={LoginPage}/>
           <Route path="/signup" component={SignUpPage} />
