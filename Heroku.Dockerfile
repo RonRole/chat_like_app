@@ -9,14 +9,15 @@ RUN mkdir /usr/src/front && \
 WORKDIR /usr/src
 ADD ./back ./app
 ADD ./front ./front
+ADD ./front_heroku.env ./front
 ADD ./socket ./socket
+
 
 WORKDIR /usr/src/app
 RUN gem update bundler && \
     bundle install
 
 WORKDIR /usr/src/front
-ADD ./front_heroku.env .
 RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
