@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 class Navigation extends React.Component {
     render() {
         return (
-            <Navbar bg="dark" variant="dark" style={...this.props.style}>
+            <Navbar bg="dark" variant="dark" style={{position:"fixed"}}>
                 <Navbar.Brand>CHAT LIKE APP</Navbar.Brand>
                 <Nav className="mr-auto">
                     <Link className = "nav-link" to="/home">Home</Link>
