@@ -1,12 +1,4 @@
 FROM ruby:2.6.3-alpine 
-# /usr/src/app : rails
-# /usr/src/front : react
-# /usr/src/socket : socket
-# ENV REACT_APP_FRONTEND_ADDRESS https://localhost:3000
-# ENV REACT_APP_BACKEND_ADDRESS https://localhost:4000
-# ENV REACT_APP_SOCKET_ADDRESS https://localhost:8000
-# heroku環境変数を設定しておくこと
-
 
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
@@ -24,14 +16,12 @@ RUN gem update bundler && \
     bundle install
 
 WORKDIR /usr/src/front
+ADD ./front_heroku.env .
 RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
     yarn install && \
-    echo "REACT_APP_BACKEND_ADDRESS=https://chat-like-app.herokuapp.com/api" > .env && \
-    echo "REACT_APP_SOCKET_ADDRESS=https://chat-like-app.herokuapp.com" >> .env && \
-    echo "REACT_APP_SOCKET_PATH=/socket.io" >> .env && \
-    cat .env && \
+    mv front_heroku.env .env && \
     yarn build
 ADD ./heroku-express.js .
 
