@@ -35,6 +35,7 @@ services:
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
   socket:
     build: ./socket
+    env_file: docker-compose.env
     volumes:
       - ./socket:/app
     ports:
