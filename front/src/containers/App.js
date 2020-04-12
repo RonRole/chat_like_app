@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 //redux
 import MessagesPage from './MessagesPage'
 //bootstrap
-import { HashRouter as Router, Route, Router, Switch, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
 import LoginRequiredRoute from './LoginRequiredRoute';
@@ -38,7 +38,7 @@ export class App extends Component {
         )
     }   
     return (
-      <Router>
+      <HashRouter>
         <Loading />
         <Navigation/>
         <Switch>
@@ -49,7 +49,7 @@ export class App extends Component {
           <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
           <Redirect to="/home" />
         </Switch>
-      </Router>  
+      </HashRouter>  
     )
   }
 }
