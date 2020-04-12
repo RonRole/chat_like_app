@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 //redux
 import MessagesPage from './MessagesPage'
 //bootstrap
-import { Route, Switch, Redirect, HashRouter as Router} from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
 import LoginRequiredRoute from './LoginRequiredRoute';
