@@ -9,8 +9,8 @@ console.log(`socket is served on ${process.env.SOCKET_HOST}:${process.env.SOCKET
 const server = express()
                   .use(express.static('/usr/src/front/build'))
                   .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`))
-                  .get('/talk_rooms/\d', (req, res) => res.redirect('/talk_rooms'))
                   .get('/socket.io', proxy(`${process.env.SOCKET_HOST}:${process.env.SOCKET_PORT}`))
+                  .get('/talk_rooms/*', (req, res) => res.redirect('/talk_rooms'))
                   .get('/*', (req, res) => res.sendFile('/usr/src/front/build/index.html'))
                   .listen(PORT, () => console.log(`Front Listening on ${ PORT }`))
 
