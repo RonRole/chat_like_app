@@ -24,7 +24,7 @@ class MessagePage extends React.Component {
                                 return (
                                     <CSSTransition key={index} timeout={100} classNames="fade">
                                         <div className="d-flex">
-                                            <Image className="mr-2 mb-2" src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${user.image.thumb.url}`}/>
+                                            <Image className="mr-2 mb-2" src={user.image.thumb.url}/>
                                             <h6>{user.name}</h6>
                                         </div>
                                     </CSSTransition>

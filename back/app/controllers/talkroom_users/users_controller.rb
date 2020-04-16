@@ -2,7 +2,8 @@ class TalkroomUsers::UsersController < ApplicationController
     include TalkRoomHelper
     include UserHelper
     def index
-        @talkroom_users = TalkRoom.find(params[:talk_room_id]).users
+        @talk_room = TalkRoom.find(params[:talk_room_id])
+        @talkroom_users = @talk_room.users.push(@talk_room.author)
         render :json => @talkroom_users
     end
 

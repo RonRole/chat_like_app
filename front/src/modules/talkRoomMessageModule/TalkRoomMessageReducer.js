@@ -23,7 +23,9 @@ const getMessagesByRoomId = state => {
 const createReducer = (state = initialState, action) => {
     switch(action.type){
         case LogActionTypes.LOG_IN : {
-            return initialState
+            return {
+                ...initialState
+            }
         }
         case ActionTypes.ADD_MESSAGE:
         case ActionTypes.RECEIVE_MESSAGE: {

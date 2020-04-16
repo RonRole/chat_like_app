@@ -19,7 +19,6 @@ function* initialize(action) {
     const joinRooms = yield fork(talkRoomSaga.handleGetJoinedTalkRooms, action)
     yield join(ownRooms)
     yield join(joinRooms)
-
     action.then()
 }
 

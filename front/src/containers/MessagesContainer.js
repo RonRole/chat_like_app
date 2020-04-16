@@ -50,7 +50,7 @@ export class MessagesContainer extends React.Component {
                             <CSSTransition key={index} timeout= {100} classNames="fade">
                                 <Row>
                                     <Col className md={message.md}>
-                                        <Image src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${this.props.getUserById(message.user).image.thumb.url}`}/>
+                                        <Image src={this.props.getUserById(message.user).image.thumb.url}/>
                                         <strong className="ml-2">{this.props.getUserById(message.user).name}</strong>
                                         <Alert variant={this.classNameToVariant[message.className]} key={index} style={{overflow:"auto"}}>
                                             {message.text}
@@ -69,7 +69,7 @@ export class MessagesContainer extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        allState : state,
+        state,
         loginUser : state.logStatus.isLoggedIn,
         getTalkRoomById : (roomId) => TalkRoomModule.reducer.getTalkRoomById(state)(roomId),
         getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),

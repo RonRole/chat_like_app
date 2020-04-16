@@ -30,7 +30,7 @@ const UserProfile = ({
                     <div>函館のソクラテス</div>
                 </div>
             </section>
-            <Image style={{objectFit:'contain'}} src={`${process.env.REACT_APP_BACKEND_ADDRESS}/${user.image.profile.url}`} />
+            <Image style={{objectFit:'contain'}} src={user.image.profile.url} />
         </Container>
     )
 }
