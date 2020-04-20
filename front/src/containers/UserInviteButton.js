@@ -10,7 +10,8 @@ const UserInviteButton = ({
     getTalkRoomById,
     addUserToTalkRoom
 }) => {
-    if([getTalkRoomById(talkRoomId)].flatMap(room => room.userIds).some(e => e === userId) || getTalkRoomById(talkRoomId).author_id === userId) {
+    const userIsAlreadyExist = [...getTalkRoomById(talkRoomId).userIds].some(id => id===userId)
+    if(userIsAlreadyExist) {
         return <Button variant="success" disabled>すでに参加しています</Button>
     }
     return <Button variant="success" onClick={() => {
