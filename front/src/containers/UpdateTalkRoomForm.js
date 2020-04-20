@@ -7,11 +7,12 @@ import { Button } from "react-bootstrap"
 
 class UpdateTalkRoomForm extends React.Component {
     render() {
+        const talkRoom = this.props.getTalkRoomById(this.props.talkRoomId)
         return (
             <ModalForm 
                 {...this.props}
                 header = {<strong>トークルームをかえる</strong>}
-                body = {<div><TitleFormGroup/><DescriptionFormGroup/></div>}
+                body = {<div><TitleFormGroup defaultValue={talkRoom.title}/><DescriptionFormGroup defaultValue={talkRoom.description}/></div>}
                 footer = {
                     <div>
                         <Button className="mr-2" type="submit">かえる</Button>
@@ -32,6 +33,12 @@ class UpdateTalkRoomForm extends React.Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        getTalkRoomById : (talkRoomId) => TalkRoomModule.reducer.getTalkRoomById(state)(talkRoomId)
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         updateTalkRoom : ({
@@ -48,4 +55,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(UpdateTalkRoomForm)
+export default connect(mapStateToProps, mapDispatchToProps)(UpdateTalkRoomForm)
