@@ -22,7 +22,7 @@ class TalkRoomCard extends React.Component {
                             <Card.Title><strong>{this.getTalkRoom(this.props.id).title}</strong></Card.Title>
                             <Card.Text>{this.getTalkRoom(this.props.id).description}</Card.Text>
                         </div>
-                        <Image src={this.getUser(this.getTalkRoom(this.props.id).author_id).image.thumb.url} />
+                        <Image style={{width:'50px', height:'50px'}} src={this.getUser(this.getTalkRoom(this.props.id).author_id).image.thumb.url}  roundedCircle/>
                     </div>
                     <div className="d-flex justify-content-end mb-2">
                         <Link className="btn btn-primary" to={`/talk_rooms/${this.props.id}`}>入る</Link>
