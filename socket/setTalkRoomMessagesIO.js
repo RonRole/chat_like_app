@@ -10,14 +10,12 @@ module.exports = (server) => {
             }
         }
     }
-
+    
     io.sockets.on('connection', socket => {
         console.log('socket : connected')
         //トークルーム参加
         socket.on('joinRoom', ({user = {},　roomId}) => {
-            if(!currentRoomMembers[roomId]) {
-                currentRoomMembers[roomId] = {}
-            }
+            currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
             console.log(`${roomId}に${user.name}が現れた!!!`)
             console.log(currentRoomMembers[socket.id])
@@ -29,11 +27,22 @@ module.exports = (server) => {
                 text : `${user.name}が参加しました`,
             })
         })
+        socket.on('rejoinRoom', ({user = {}, roomId}) => {
+            currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
+            currentRoomMembers[roomId][socket.id] = user
+            console.log(`${roomId}に${user.name}が再び現れた!!!`)
+            console.log(currentRoomMembers[socket.id])
+            socket.join(roomId)
+            io.sockets.in(roomId).emit('receiveMessage', {
+                roomId : roomId,
+                className : "joinRoom",
+                user : user,
+                text : `${user.name}が復帰しました`,
+            })
+        })
         socket.on('leaveRoom', ({user = {}, roomId}) => {
             console.log(socket.id)
-            if(currentRoomMembers[roomId] && currentRoomMembers[roomId][socket.id]){
-                delete currentRoomMembers[roomId][socket.id]
-            }
+            delete (currentRoomMembers[roomId] || {})[socket.id]
             console.log(`${roomId}から${user.name}が離れました`)
             console.log(currentRoomMembers[roomId])
             io.sockets.in(roomId).emit('receiveMessage', {
@@ -62,5 +71,27 @@ module.exports = (server) => {
                 users : {...currentRoomMembers[roomId]}
             })
         })
+        //切断された時
+        socket.on('disconnect', () => {
+            //切断されたユーザーのいるトークルームのIDを取得
+            const disconnectedRooms = Object.keys(currentRoomMembers)
+                                .filter(roomId => 
+                                    Object.keys(currentRoomMembers[roomId])
+                                            .some(memberId => memberId === socket.id)
+                                )
+            //切断されたユーザーをトークルームから削除し、そのメンバーに対象のユーザーが切断されたことを通知する
+            for(let roomId of disconnectedRooms) {
+                const user = currentRoomMembers[roomId][socket.id]
+                console.log(`${user.name}が切断されました`)
+                io.sockets.in(roomId).emit('receiveMessage', {
+                    roomId : roomId,
+                    className : "leaveRoom",
+                    user : user,
+                    text : `${user.name}が切断されました`
+                })
+                delete currentRoomMembers[roomId][socket.id]
+            }
+        })
     })
 }
+

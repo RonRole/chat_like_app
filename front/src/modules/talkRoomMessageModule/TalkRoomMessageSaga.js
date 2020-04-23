@@ -77,6 +77,11 @@ export function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(ActionTypes.JOIN_ROOM)
+        //reconnectイベントに備えることで、サーバーからの切断=>再接続に対応
+        socketClient.on('reconnect', () => {
+            socketClient.emit('rejoinRoom',{user: action.user, roomId:action.roomId})
+            socketClient.emit('currentUsers', action.roomId)
+        })
         socketClient.connect()
         socketClient.emit('joinRoom',{user: action.user, roomId:action.roomId})
         socketClient.emit('currentUsers', action.roomId)
@@ -97,6 +102,17 @@ export function* handleLeaveRoom() {
         //トークルームの内容をクリアする
         yield put(Actions.clearMessage(action.roomId))
         socketClient.disconnect()
+    }
+}
+
+/**
+ * サーバーから接続を切断された時、トークルーム一覧画面に移る
+ */
+export function* handleDisconnectedFromServer() {
+    while(true) {
+        const action = yield take(ActionTypes.DISCONNECTED_FROM_SERVER)
+        alert('サーバーから切断されました')
+        action.history.push('/talk_rooms')
     }
 }
 
