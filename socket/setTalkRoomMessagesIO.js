@@ -90,6 +90,10 @@ module.exports = (server) => {
                     text : `${user.name}が切断されました`
                 })
                 delete currentRoomMembers[roomId][socket.id]
+                io.sockets.in(roomId).emit('currentUsers', {
+                    roomId : roomId,
+                    users : {...currentRoomMembers[roomId]}
+                })
             }
         })
     })
