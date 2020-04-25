@@ -36,9 +36,7 @@ export function* handleGetExecLoginStart(loginAction) {
         alert("ログインに失敗しました")
         yield put(FormErrorActions.setError({
             formName:"loginForm",
-            errorJson: {
-                messages:["お名前かおパスワードが間違ってましてよ"]
-            }
+            errorJson: accessResult.data
         }))
     }
     if(accessResult.isError) {

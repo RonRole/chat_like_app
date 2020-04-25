@@ -17,7 +17,10 @@ class SessionsController < ApplicationController
             render :json => @current_user#.hash_for_front
             return
         else
-            render :json => {isFail: true}
+            render :json => {
+                isFail: true, 
+                messages: ["#{User.human_attribute_name(:name)}か#{User.human_attribute_name(:password)}が間違っています"]
+            }
         end
     end
 

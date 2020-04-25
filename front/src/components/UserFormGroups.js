@@ -24,8 +24,8 @@ export const NameFormGroup = ({
 }) => {
     return (
         <Form.Group controlId="nameForm" className={className} style={{...style}}>
-            <Form.Label>おなまえ</Form.Label>
-            <Form.Control type="text" name="name" placeholder="おなまえ" isInvalid={errorMessages.length > 0}/>
+            <Form.Label>名前</Form.Label>
+            <Form.Control type="text" name="name" placeholder="名前" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>
@@ -40,8 +40,8 @@ export const PasswordFormGroup = ({
 }) => {
     return (
         <Form.Group controlId="passwordForm" className={className} style={{...style}}>
-            <Form.Label>おぱすわーど</Form.Label>
-            <Form.Control type="password" name="password" placeholder="おぱすわーど" isInvalid={errorMessages.length > 0}/>
+            <Form.Label>パスワード</Form.Label>
+            <Form.Control type="password" name="password" placeholder="パスワード" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>
@@ -56,8 +56,8 @@ export const PasswordConfirmationFormGroup = ({
 }) => {
     return (
         <Form.Group controlId="passwordConfirmationForm" className={className} style={{...style}}>
-            <Form.Label>嗚呼パスワードよもう一度</Form.Label>
-            <Form.Control type="password" name="password_confirmation" placeholder="おぱすわーど" isInvalid={errorMessages.length > 0}/>
+            <Form.Label>パスワード確認</Form.Label>
+            <Form.Control type="password" name="password_confirmation" placeholder="もう一度パスワードを入力してください" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>

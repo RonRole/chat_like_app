@@ -6,34 +6,16 @@ import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import UserModule from '../modules/userModule/UserModule'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import CurrentUsersContainer from './CurrentUsersContainer'
 
 class MessagePage extends React.Component {
-
-    getCurrentUserIds = () => this.props.getTalkRoomById(this.props.match.params.id)["currentUserIds"] || []
-
     render(){
         return (
             <Container className="justify-content-center">
                 <strong>{this.props.getTalkRoomById(this.props.match.params.id).title}</strong>
-                <Container className="d-flex">
-                    <MessagesContainer {...this.props} className="mr-2" style={{height:"70vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
-                    <Container style={{width:"40%", border:"1px solid gray", overflow:"auto"}}>
-                        <h6><strong>今いる人たち</strong></h6>
-                        <TransitionGroup>
-                            {this.getCurrentUserIds().map(id => this.props.getUserById(id)).map((user,index) => {
-                                return (
-                                    <CSSTransition key={index} timeout={100} classNames="fade">
-                                        <div className="d-flex">
-                                            <Image className="mr-2 mb-2" src={user.image.thumb.url}/>
-                                            <h6>{user.name}</h6>
-                                        </div>
-                                    </CSSTransition>
-                                )
-                            })}
-                        </TransitionGroup>
-                    </Container>
-                </Container>        
-                <MessageFormContainer {...this.props}/>
+                <CurrentUsersContainer {...this.props} className='mb-2 d-flex' style={{width:'100%', border:"1px solid gray"}}/>
+                <MessagesContainer {...this.props} className="mb-2" style={{height:"70vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
+                <MessageFormContainer {...this.props} />
             </Container>
         )
     }
