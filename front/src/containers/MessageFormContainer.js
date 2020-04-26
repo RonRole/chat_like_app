@@ -22,10 +22,10 @@ export class MessageFormContainer extends React.Component {
                         formEvent.currentTarget.inputMessage.value = ""
                     }}>
                     <Row>
-                        <Col sm={9} md={10}>
+                        <Col xs={8} sm={9} md={10}>
                             <Form.Control name="inputMessage" type="text" placeholder="メッセージを入力してね" /> 
                         </Col>
-                        <Col sm={3} md={2}>
+                        <Col xs={4} sm={3} md={2}>
                             <MessageSendButton />
                         </Col>
                     </Row>
