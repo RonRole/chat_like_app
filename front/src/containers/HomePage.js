@@ -4,10 +4,6 @@ import UserProfile from '../components/UserProfile'
 
 export class HomePage extends React.Component {
 
-    componentDidMount() {
-        console.log(this.props.state)
-    }
-
     render() {
         return (
            <UserProfile user={this.props.loginUser} />
