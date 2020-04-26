@@ -2,7 +2,7 @@ import React from 'react'
 //import { Actions, Variants } from '../modules/TalkRoomMessageModule'
 import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
 import { connect } from 'react-redux'
-import { Container, ButtonGroup, Form } from 'react-bootstrap'
+import { Container, ButtonGroup, Form, Row, Col } from 'react-bootstrap'
 import MessageSendButton from '../components/MessageSendButton'
 
 export class MessageFormContainer extends React.Component {
@@ -21,8 +21,14 @@ export class MessageFormContainer extends React.Component {
                         })
                         formEvent.currentTarget.inputMessage.value = ""
                     }}>
-                    <Form.Control className="mt-2 mb-2" name="inputMessage" type="text" placeholder="メッセージを入力してね"/>    
-                    <MessageSendButton />
+                    <Row>
+                        <Col sm={9} md={10}>
+                            <Form.Control name="inputMessage" type="text" placeholder="メッセージを入力してね" /> 
+                        </Col>
+                        <Col sm={3} md={2}>
+                            <MessageSendButton />
+                        </Col>
+                    </Row>
                 </Form>
             </Container>
         )

@@ -25,7 +25,7 @@ class SignUpForm extends React.Component {
                 <PasswordFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password")} />
                 <PasswordConfirmationFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password_confirmation")} />
                 <ProfileImageFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("image")}/>
-                <Button variant="primary" type="submit">送りますわ</Button>
+                <Button variant="primary" type="submit">送信</Button>
             </Form>
         )
     }
