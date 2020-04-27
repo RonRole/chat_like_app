@@ -58,17 +58,6 @@ input {
   grid-template-rows: 1fr 1fr 1fr;
 }
 
-/*Signup Form*/
-img#set_image {
-  opacity: 1;
-  transition: all 0.2s ease-out;
-}
-
-img#set_image:hover {
-  opacity: 0.1;
-  transition: all 0.2s ease-in;
-}
-
 /*ホバー時に透過*/
 .transparent_when_hovered {
   opacity: 1;
