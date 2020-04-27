@@ -69,6 +69,17 @@ img#set_image:hover {
   transition: all 0.2s ease-in;
 }
 
+/*ホバー時に透過*/
+.transparent_when_hovered {
+  opacity: 1;
+  transition: all 0.2s ease-out;
+}
+
+.transparent_when_hovered:hover {
+  opacity: 0.1;
+  transition: all 0.2s ease-in;
+}
+
 /*img*/
 img {
   object-fit: contain;

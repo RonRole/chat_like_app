@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import UserModule from '../modules/userModule/UserModule'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import TransparentWhenHovered from '../components/TransparentWhenHovered'
 
 class CurrentUsersContainer extends React.Component {
 
@@ -19,10 +20,10 @@ class CurrentUsersContainer extends React.Component {
                     {this.getCurrentUserIds().map(id => this.props.getUserById(id)).map((user,index) => {
                         return (
                             <CSSTransition key={index} timeout={100} classNames="fade">
-                                <div className="d-flex">
-                                    <Image className="mr-2 mb-2" src={user.image.thumb.url} style={{width:'50px', height:'50px'}} fluid/>
-                                    <h6>{user.name}</h6>
-                                </div>
+                                <TransparentWhenHovered 
+                                    frontComponent={<Image className="mr-2 mb-2" id='set_image' src={user.image.thumb.url} style={{width:'50px', height:'50px', zIndex:'1'}} fluid/>}
+                                    backComponent={<strong style={{color:'gray'}}>{user.name}</strong>}
+                                />                    
                             </CSSTransition>
                         )
                     })}

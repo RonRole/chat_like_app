@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, NavItem } from 'react-bootstrap'
+import TransparentWhenHovered from './TransparentWhenHovered'
 
 export const IdFormGroup = ({
     className = "",
@@ -9,7 +10,7 @@ export const IdFormGroup = ({
     return (
         <Form.Group controlId="idForm" className={className} stayle = {{...style}}>
             <Form.Label>ユーザーID</Form.Label>
-            <Form.Control type="text" name="id" placeholder="おID" isInvalid={errorMessages.length > 0}/>
+            <Form.Control type="text" name="id" placeholder="ID" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>
@@ -86,23 +87,29 @@ export class ProfileImageFormGroup extends React.Component {
                     }
                     input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
                 }}/>
-                <div className="d-flex align-items-center" style={{position:"relative",width:"200px", height:"200px"}}>
-                    <img
-                        id="set_image" 
-                        style={{
-                            backgroundColor:this.state.uploadFileImage ? "white" : "",
-                            position:"absolute"
-                        }}　 
-                        onClick={()=>document.getElementById("signUpImageForm").click()} 
-                        className="mb-2" 
-                        src={this.state.uploadFileImage} 
-                        width="100%" 
-                        height="100%"
-                    />
-                    <div style={{ textAlign:"center", width:"100%", fontWeight:"bold", color:"gray" }}>
-                        プロフィール画像変更
-                    </div>
-                </div>
+                <TransparentWhenHovered
+                    frontComponent = {
+                        <img
+                            style={{
+                                backgroundColor:this.state.uploadFileImage ? "white" : "",
+                            }}　 
+                            onClick={()=>document.getElementById("signUpImageForm").click()} 
+                            className="mb-2" 
+                            src={this.state.uploadFileImage} 
+                            width="200px" 
+                            height="200px"
+                        />
+                    }
+                    backComponent = {
+                        <div style={{
+                                fontWeight:"bold", 
+                                color:"gray",
+                                width:'200px'
+                        }}>
+                            プロフィール画像変更
+                        </div>
+                    }
+                />
                 <Form.Control.Feedback type="invalid">
                     {this.props.errorMessages.find(e=>e)}
                 </Form.Control.Feedback>
