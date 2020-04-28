@@ -22,27 +22,18 @@ describe('ナビゲーションバーの要素チェック', () => {
     test('Navが一つ表示される', () => {
         expect(wrapper.find(Nav).length).toBe(1)
     })
-    test('Linkが四つ表示される', () => {
-        expect(wrapper.find(Link).length).toBe(4)
-    })
 })
 
 describe('ナビゲーションバーの動作チェック', () => {
-    test('Homeリンクが/homeに繋がっている', () => {
-        expect(wrapper.find({to:'/home'}).text()).toBe('Home')
+    test('Navbarのexpandがsmである', () => {
+        expect(wrapper.find(Navbar).props().expand).toBe('sm')
     })
-    test('Sign Upリンクが/signupに繋がっている', () => {
-        expect(wrapper.find({to:'/signup'}).text()).toBe('Sign Up')
+    test('Navbarのstickyがtopである', () => {
+        expect(wrapper.find(Navbar).props().sticky).toBe('top')
     })
-    test('Sign Inリンクが/signinに繋がっている', () => {
-        expect(wrapper.find({to:'/signin'}).text()).toBe('Sign In')
-    })
-    test('TalkRoomsリンクが/talk_roomsに繋がっている', () => {
-        expect(wrapper.find({to:'/talk_rooms'}).text()).toBe('Talk Rooms')
-    })
-
-    describe('ウィンドウサイズがxsの時', () => {
-        global.width = 767
-        
+    test('Navigationの子要素がNavの子要素になっている', () => {
+        wrapper.setProps({children:['test code','test code 2', 'test code 3']})
+        expect(wrapper.find(Nav).children().length).toBe(3)
+        expect(wrapper.find(Nav).children().first().text()).toBe('test code')
     })
 })

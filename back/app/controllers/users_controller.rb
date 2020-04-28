@@ -24,7 +24,8 @@ class UsersController < ApplicationController
         else
             render :json => {
                 isFail: true, 
-                messages: ["この#{User.human_attribute_name(:id)}、#{User.human_attribute_name(:name)}の組み合わせのユーザーがいません"]}
+                messages: ["この#{User.human_attribute_name(:id)}、#{User.human_attribute_name(:name)}の組み合わせのユーザーがいません"]
+            }
         end
     end
 

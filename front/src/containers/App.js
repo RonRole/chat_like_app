@@ -2,7 +2,7 @@ import React, { Component, createContext } from 'react';
 //redux
 import MessagesPage from './MessagesPage'
 //bootstrap
-import { Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
+import { Route, Switch, Redirect, BrowserRouter as Router, Link} from 'react-router-dom';
 
 import Navigation from '../components/Navigation'
 import LoginRequiredRoute from './LoginRequiredRoute';
@@ -30,7 +30,6 @@ export class App extends Component {
     })
   }
 
-
   render() {
     if(!this.state.defaultLoaded) {
         return (
@@ -40,7 +39,12 @@ export class App extends Component {
     return (
       <Router>
         <Loading />
-        <Navigation/>
+        <Navigation>
+          <Link className = "nav-link" to="/home">Home</Link>
+          <Link className = "nav-link" to="/signup">Sign Up</Link>
+          <Link className = "nav-link" to="/signin">Sign In</Link>
+          <Link className = "nav-link" to="/talk_rooms">Talk Rooms</Link>
+        </Navigation>
         <Switch>
           <Route path="/signin" component={LoginPage}/>
           <Route path="/signup" component={SignUpPage} />
