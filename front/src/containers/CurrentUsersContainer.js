@@ -20,10 +20,7 @@ class CurrentUsersContainer extends React.Component {
                     {this.getCurrentUserIds().map(id => this.props.getUserById(id)).map((user,index) => {
                         return (
                             <CSSTransition key={index} timeout={100} classNames="fade">
-                                <TransparentWhenHovered 
-                                    frontComponent={<Image className="mr-2 mb-2" id='set_image' src={user.image.thumb.url} style={{width:'50px', height:'50px', zIndex:'1'}} fluid/>}
-                                    backComponent={<strong style={{color:'gray'}}>{user.name}</strong>}
-                                />                    
+                                <Image className="mr-2 mb-2" id='set_image' src={user.image.thumb.url} style={{width:'50px', height:'50px', zIndex:'1'}} fluid/>                   
                             </CSSTransition>
                         )
                     })}
