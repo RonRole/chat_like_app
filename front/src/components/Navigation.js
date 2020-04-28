@@ -12,8 +12,8 @@ class Navigation extends React.Component {
                     <Nav className="mr-auto">
                         <Link className = "nav-link" to="/home">Home</Link>
                         <Link className = "nav-link" to="/signup">Sign Up</Link>
-                        <Link className = "nav-link" to="/login">Sign in</Link>
-                        <Link className = "nav-link" to="/talk_rooms">TalkRoom</Link>
+                        <Link className = "nav-link" to="/signin">Sign In</Link>
+                        <Link className = "nav-link" to="/talk_rooms">Talk Rooms</Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

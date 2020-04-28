@@ -8,7 +8,6 @@ import MessageSendButton from '../components/MessageSendButton'
 export class MessageFormContainer extends React.Component {
 
     render() {
-        console.log(this.props)
         return (
             <Container {...this.props}>
                 <Form onSubmit={(formEvent) => {

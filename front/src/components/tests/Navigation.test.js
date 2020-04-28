@@ -40,4 +40,9 @@ describe('ナビゲーションバーの動作チェック', () => {
     test('TalkRoomsリンクが/talk_roomsに繋がっている', () => {
         expect(wrapper.find({to:'/talk_rooms'}).text()).toBe('Talk Rooms')
     })
+
+    describe('ウィンドウサイズがxsの時', () => {
+        global.width = 767
+        
+    })
 })

@@ -7,7 +7,7 @@ export class LoginRequiredRoute extends React.Component {
     render(){
         if(!this.props.isLoggedIn){
             return  <Route exact={this.props.exact} path={this.props.path} render={()=><Redirect to={{
-                pathname:"/login",
+                pathname:"/signin",
                 flash:"ログインしろよ",
             }}/>}/>
         }

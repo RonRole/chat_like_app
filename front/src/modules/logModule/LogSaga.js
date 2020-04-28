@@ -3,6 +3,7 @@ import { put, call} from "redux-saga/effects"
 import DataAccessor from "../DataAccessor"
 import handleError from "../ErrorHandler"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
+import UserActions from "../userModule/UserActions"
 
 //saga
 export function* handleGetDefLoginStart(action) {
@@ -11,6 +12,7 @@ export function* handleGetDefLoginStart(action) {
     })
 
     if(accessResult.isSuccess) {
+        yield put(UserActions.setUser(accessResult.data))
         yield put(LogActions.login(accessResult.data))
     }
     else {

@@ -2,7 +2,7 @@ import { shallow } from 'enzyme';
 import {App} from '../../containers/App';
 import { BrowserRouter, Route } from 'react-router-dom';
 import React from 'react'
-import LoginRequiredRoute from '../../containers/LoginRequiredRoute';
+import LoginRequiredRoute from '../LoginRequiredRoute';
 import Navigation from '../../components/Navigation';
 import Loading from '../../containers/Loading';
 

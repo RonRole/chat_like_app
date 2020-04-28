@@ -1,5 +1,5 @@
 import { shallow } from "enzyme";
-import LoginPage from "../../components/LoginPage";
+import LoginPage from "../LogInPage";
 import { Alert } from "react-bootstrap";
 import LoginForm from "../../containers/LoginForm";
 import React from "react"

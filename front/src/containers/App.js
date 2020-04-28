@@ -42,7 +42,7 @@ export class App extends Component {
         <Loading />
         <Navigation/>
         <Switch>
-          <Route path="/login" component={LoginPage}/>
+          <Route path="/signin" component={LoginPage}/>
           <Route path="/signup" component={SignUpPage} />
           <LoginRequiredRoute exact path="/home" component={HomePage}/>
           <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
