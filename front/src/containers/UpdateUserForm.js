@@ -7,19 +7,30 @@ import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 import { Button } from 'react-bootstrap'
 
 
-class UpdateUserForm extends React.Component {z
+class UpdateUserForm extends React.Component {
+
+
+    filterChangedParams(currentUser, userParams) {
+        const changedParams = {}
+        Object.keys(userParams).filter((param) => {
+            return currentUser[param] !== userParams[param]
+        }).forEach((param) => {
+            changedParams[param] = userParams[param]
+        })
+        return changedParams
+    }
 
     render() {
-        const user = this.props.getUserById(this.props.userId)
+        const currentUser = this.props.user
         return (
             <ModalForm
                 {...this.props}
                 header={<strong>プロフィール更新</strong>}
                 body={
                     <div>
-                        <IdFormGroup defaultValue={user.self_id} errorMessages={this.props.getErrorMessagesFromFormName('self_id')}/>
-                        <NameFormGroup defaultValue={user.name} errorMessages={this.props.getErrorMessagesFromFormName('name')}/>
-                        <ProfileImageFormGroup defaultValue={user.image.profile.url} errorMessages={this.props.getErrorMessagesFromFormName('image')}/>
+                        <IdFormGroup defaultValue={currentUser.self_id} errorMessages={this.props.getErrorMessagesFromFormName('self_id')}/>
+                        <NameFormGroup defaultValue={currentUser.name} errorMessages={this.props.getErrorMessagesFromFormName('name')}/>
+                        <ProfileImageFormGroup defaultValue={currentUser.image.profile.url} errorMessages={this.props.getErrorMessagesFromFormName('image')}/>
                     </div>
                 }
                 footer={
@@ -33,11 +44,17 @@ class UpdateUserForm extends React.Component {z
                 }
                 onSubmit={(e) => {
                     e.preventDefault()
+                    const newUserParams = this.filterChangedParams(
+                        currentUser,
+                        {
+                            self_id: e.currentTarget.id.value,
+                            name: e.currentTarget.name.value,
+                            image: e.currentTarget.image.files[0]
+                        }
+                    )
                     this.props.updateUser({
-                        id: this.props.userId,
-                        newSelfId: e.currentTarget.id.value,
-                        newName: e.currentTarget.name.value,
-                        newProfileImage: e.currentTarget.image.files[0]
+                        id: currentUser.id,
+                        ...newUserParams
                     })
                 }}
             />
@@ -47,7 +64,6 @@ class UpdateUserForm extends React.Component {z
 
 const mapStateToProps = (state) => {
     return {
-        getUserById : (userId) => UserModule.reducer.getUserById(state)(userId),
         getErrorMessagesFromFormName : (name) => FormErrorModule.reducer.getErrorsOf(state)("updateUserForm")(name)
     }
 }

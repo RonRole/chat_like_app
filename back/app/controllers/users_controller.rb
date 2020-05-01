@@ -35,6 +35,7 @@ class UsersController < ApplicationController
             render :json => @user
             return
         else
+            puts @user.errors.full_messages
             render :json => @user.fail_result
         end
     end

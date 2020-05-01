@@ -102,6 +102,7 @@ export function* handleUpdateUser(action) {
     const result = yield call(updateUser, action.userParams)
     if(result.isSuccess) {
         alert('プロフィールを更新しました。')
+        yield put(UserActions.setUser(result.data))
         yield put(LogActions.login(result.data))
     }
     if(result.isFail) {

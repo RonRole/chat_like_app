@@ -1,9 +1,9 @@
 class User < ApplicationRecord
     # バリデーション
     validates :name, presence: true
-    validates :password, presence: true
-    validates :password, confirmation: true
-    validates :password_confirmation, presence: true
+    validates :password, presence: true, on: :create
+    validates :password, confirmation: true, on: :create
+    validates :password_confirmation, presence: true, on: :create
     validates :image, presence: true
     validates :self_id, presence: true, uniqueness: true
 

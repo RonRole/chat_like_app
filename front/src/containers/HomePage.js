@@ -17,7 +17,7 @@ export class HomePage extends React.Component {
                 <div className="d-flex justify-content-center">
                     <Button onClick={() => this.setState({updateUserModalShow:true})}>プロフィールを更新する</Button>
                 </div>
-                <UpdateUserForm userId={this.props.loginUser.id} show={this.state.updateUserModalShow} onCancel={() => this.setState({updateUserModalShow:false})} />
+                <UpdateUserForm user={this.props.loginUser} show={this.state.updateUserModalShow} onCancel={() => this.setState({updateUserModalShow:false})} />
             </Container>
         )
     }
