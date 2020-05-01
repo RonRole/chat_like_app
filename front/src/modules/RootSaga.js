@@ -61,6 +61,7 @@ const talkRoomMessageSagas = [
 const userSagas = [
     takeEvery(UserActionTypes.EXEC_CREATE_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleCreateUser)),
     takeEvery(UserActionTypes.EXEC_SEARCH_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleExecSearchUser)),
+    takeEvery(UserActionTypes.EXEC_UPDATE_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleUpdateUser)),
     userSaga.handleGetCurrentRoomUsers()
 ]
 

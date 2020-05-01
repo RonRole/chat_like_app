@@ -1,10 +1,11 @@
 class User < ApplicationRecord
     # バリデーション
-    validates :name, presence: true, uniqueness: true
+    validates :name, presence: true
     validates :password, presence: true
     validates :password, confirmation: true
     validates :password_confirmation, presence: true
     validates :image, presence: true
+    validates :self_id, presence: true, uniqueness: true
 
     has_secure_password
 
@@ -15,6 +16,9 @@ class User < ApplicationRecord
 
     #イメージ画像
     mount_uploader :image, ImageUploader
+
+    #デフォルトのself_idを設定する
+    before_create :set_default_self_id
 
     #登録失敗時のパラメータ(JSON)
     def fail_result
@@ -45,4 +49,11 @@ class User < ApplicationRecord
         #ハッシュ化してデータベースに保存
         update_attribute(:remember_digest, User.digest(remember_token))
     end
+
+    private
+        def set_default_self_id
+            while self.self_id.blank? || User.find_by(self_id: self.self_id).present? do
+                self.self_id = SecureRandom.base64(10)
+            end
+        end
 end

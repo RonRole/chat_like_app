@@ -19,7 +19,7 @@ const UserProfile = ({
             <section id="info">
                 <div id="loginUserID">
                     <strong style={{borderBottom:"1px solid gray"}}>ユーザーID</strong>
-                    <div>{user.id}</div>
+                    <div>{user.self_id}</div>
                 </div>
                 <div id="loginUserName">
                     <strong style={{borderBottom:"1px solid gray"}}>お名前</strong>

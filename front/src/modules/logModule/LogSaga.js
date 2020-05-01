@@ -31,6 +31,7 @@ export function* handleGetExecLoginStart(loginAction) {
     })
     if(accessResult.isSuccess){
         alert(`ようこそ${accessResult.data.name}さん!`)
+        yield put(UserActions.setUser(accessResult.data))
         yield put(LogActions.login(accessResult.data))
         loginAction.history.push('/home')
     }

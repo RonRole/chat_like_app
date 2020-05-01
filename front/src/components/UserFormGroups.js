@@ -5,12 +5,13 @@ import TransparentWhenHovered from './TransparentWhenHovered'
 export const IdFormGroup = ({
     className = "",
     style = "",
+    defaultValue = "",
     errorMessages = []
 }) => {
     return (
-        <Form.Group controlId="idForm" className={className} stayle = {{...style}}>
+        <Form.Group controlId="idForm" className={className} style = {{...style}}>
             <Form.Label>ユーザーID</Form.Label>
-            <Form.Control type="text" name="id" placeholder="ID" isInvalid={errorMessages.length > 0}/>
+            <Form.Control type="text" name="id" placeholder="ID" isInvalid={errorMessages.length > 0} defaultValue={defaultValue}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>
@@ -21,12 +22,13 @@ export const IdFormGroup = ({
 export const NameFormGroup = ({
     className = "",
     style = "",
+    defaultValue = "",
     errorMessages = []
 }) => {
     return (
         <Form.Group controlId="nameForm" className={className} style={{...style}}>
             <Form.Label>名前</Form.Label>
-            <Form.Control type="text" name="name" placeholder="名前" isInvalid={errorMessages.length > 0}/>
+            <Form.Control type="text" name="name" placeholder="名前" isInvalid={errorMessages.length > 0} defaultValue={defaultValue}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>
@@ -37,6 +39,7 @@ export const NameFormGroup = ({
 export const PasswordFormGroup = ({
     className = "",
     style = "",
+    defaultValue = "",
     errorMessages = []
 }) => {
     return (
@@ -53,6 +56,7 @@ export const PasswordFormGroup = ({
 export const PasswordConfirmationFormGroup = ({
     className = "",
     style = "",
+    defaultValue = "",
     errorMessages = []
 }) => {
     return (
@@ -70,7 +74,7 @@ export const PasswordConfirmationFormGroup = ({
 export class ProfileImageFormGroup extends React.Component {
     
     state = {
-        uploadFileImage : null
+        uploadFileImage : this.props.defaultValue
     }
     
     render() {
@@ -83,7 +87,6 @@ export class ProfileImageFormGroup extends React.Component {
                         this.setState({
                             uploadFileImage: e.target.result
                         })
-
                     }
                     input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
                 }}/>

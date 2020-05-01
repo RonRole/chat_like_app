@@ -18,7 +18,7 @@ class UsersController < ApplicationController
     end
 
     def show
-        @user = User.find_by(id:params[:id], name:params[:name])
+        @user = User.find_by(self_id: params[:id], name: params[:name])
         if(@user) 
             render :json => @user#.hash_for_front
         else
@@ -30,7 +30,13 @@ class UsersController < ApplicationController
     end
 
     def update
-
+        @user = User.find(params[:id])
+        if(@user.update(user_params))
+            render :json => @user
+            return
+        else
+            render :json => @user.fail_result
+        end
     end
 
     def destroy

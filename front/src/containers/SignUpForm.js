@@ -17,7 +17,7 @@ class SignUpForm extends React.Component {
                 e.preventDefault()
                 const input=e.currentTarget
                 this.props.signUp({
-                    input: input,
+                    input,
                     history : this.props.history
                 })
             }}>

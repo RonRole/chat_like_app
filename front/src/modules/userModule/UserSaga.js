@@ -36,6 +36,22 @@ const createUser = (
     })
 }
 
+const updateUser = (
+    userParams
+) => {
+    const formData = new FormData()
+    Object.keys(userParams).forEach(paramName => {
+        formData.append(`user[${paramName}]`, userParams[paramName])
+    }) 
+    return DataAccessor.put({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userParams.id}`,
+        parameter : formData,
+        headers : {
+            'Content-Type' : 'multipart/form-data'
+        }
+    })
+}
+
 const searchUser = ({
     userId,
     userName
@@ -44,6 +60,7 @@ const searchUser = ({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}?name=${userName}`
     })
 }
+
 
 
 //saga
@@ -76,6 +93,26 @@ export function* handleCreateUser(action) {
         handleError({
             error : result.data,
             history : action.history
+        })
+    }
+}
+
+export function* handleUpdateUser(action) {
+    console.log(action)
+    const result = yield call(updateUser, action.userParams)
+    if(result.isSuccess) {
+        alert('プロフィールを更新しました。')
+        yield put(LogActions.login(result.data))
+    }
+    if(result.isFail) {
+        yield put(FormErrorActions.setError({
+            formName: 'updateUserForm',
+            errorJson : result.data
+        }))
+    }
+    if(result.isError) {
+        handleError({
+            error : result.data,
         })
     }
 }

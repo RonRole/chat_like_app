@@ -25,7 +25,6 @@ const handleError = ({
             message : 'ログインしろよ'
         }
     }
-    alert("エラーが発生しました")
     return {
         message : 'エラーが発生しました'
     }

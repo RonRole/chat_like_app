@@ -1,6 +1,7 @@
 export const UserActionTypes = {
     EXEC_GET_SELF : "EXEC_GET_SELF",
     EXEC_CREATE_USER : "EXEC_CREATE_USER",
+    EXEC_UPDATE_USER : "EXEC_UPDATE_USER",
     EXEC_SEARCH_USER : "EXEC_SEARCH_USER",
     SET_CREATE_FORM_ERRORS : "SET_CREATE_FORM_ERRORS",
     CLEAR_CREATE_FORM_ERRORS : "CLEAR_CREATE_FORM_ERRORS",
@@ -22,6 +23,14 @@ export default {
             type : UserActionTypes.EXEC_CREATE_USER,
             history,
             userParams,
+        }
+    },
+    execUpdateUser : (
+        userParams
+    ) => {
+        return {
+            type: UserActionTypes.EXEC_UPDATE_USER,
+            userParams
         }
     },
     execSearchUser : ({
