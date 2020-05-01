@@ -20,6 +20,17 @@ class UpdateUserForm extends React.Component {
         return changedParams
     }
 
+    filterNotBlankParams(userParams) {
+        const notBlankParams = {}
+        Object.keys(userParams)
+                .filter((param) => userParams[param])
+                .forEach((param) => {
+                    notBlankParams[param] = userParams[param]
+                })
+        return notBlankParams
+
+    }
+
     render() {
         const currentUser = this.props.user
         return (
@@ -44,14 +55,12 @@ class UpdateUserForm extends React.Component {
                 }
                 onSubmit={(e) => {
                     e.preventDefault()
-                    const newUserParams = this.filterChangedParams(
-                        currentUser,
-                        {
-                            self_id: e.currentTarget.id.value,
-                            name: e.currentTarget.name.value,
-                            image: e.currentTarget.image.files[0]
-                        }
-                    )
+                    const inputParams = {
+                        self_id: e.currentTarget.id.value,
+                        name: e.currentTarget.name.value,
+                        image: e.currentTarget.image.files[0]
+                    }
+                    const newUserParams = this.filterNotBlankParams(this.filterChangedParams(currentUser, inputParams))
                     this.props.updateUser({
                         id: currentUser.id,
                         ...newUserParams
