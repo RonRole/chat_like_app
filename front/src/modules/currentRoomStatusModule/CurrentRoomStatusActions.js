@@ -7,6 +7,8 @@ export const ActionTypes = {
     RECEIVE_MESSAGE : "RECEIVE_MESSAGE",
     SET_CURRENT_USER_IDS : "SET_CURRENT_USER_IDS",
     CLEAR_MESSAGE : "CLEAR_MESSAGE",
+    REFRESH_CURRENT_ROOM_USERS  : "REFRESH_CURRENT_ROOM_USERS",
+    CHANGE_CURRENT_USER_STATUS : "CHANGE_CURRENT_USER_STATUS"
 }
 
 //actionCreators
@@ -66,7 +68,31 @@ const setCurrentUsers = (...users) => {
 const clearMessage = (roomId) => {
     return {
         type : ActionTypes.CLEAR_MESSAGE,
-        roomId : roomId
+        roomId
+    }
+}
+
+const refreshCurrentRoomUsers = ({
+    talkRoomId,
+    userIds
+}) => {
+    return {
+        type : ActionTypes.REFRESH_CURRENT_ROOM_USERS,
+        talkRoomId,
+        userIds
+    }
+}
+
+const changeCurrentUserStatus = ({
+    talkRoomId,
+    userId,
+    status
+}) => {
+    return {
+        type: ActionTypes.CHANGE_CURRENT_USER_STATUS,
+        talkRoomId,
+        userId,
+        status
     }
 }
 
@@ -76,5 +102,7 @@ export default {
     addMessage,
     receiveMessage,
     setCurrentUserIds: setCurrentUsers,
-    clearMessage
+    clearMessage,
+    refreshCurrentRoomUsers,
+    changeCurrentUserStatus
 }

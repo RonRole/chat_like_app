@@ -13,7 +13,6 @@ export const TalkRoomActionTypes = {
     DELETE_TALK_ROOM       : "DELETE_TALK_ROOM",
     UPDATE_TALK_ROOM       : "UPDATE_TALK_ROOM",
     ADD_USERS_TO_TALK_ROOM : "ADD_USERS_TO_TALK_ROOM",
-    REFRESH_CURRENT_ROOM_USERS  : "REFRESH_CURRENT_ROOM_USERS"
 }
 
 export default {
@@ -131,15 +130,4 @@ export default {
             userIds,
         }
     },
-
-    refreshCurrentRoomUsers : ({
-        talkRoomId,
-        userIds
-    }) => {
-        return {
-            type : TalkRoomActionTypes.REFRESH_CURRENT_ROOM_USERS,
-            talkRoomId,
-            userIds
-        }
-    }
 }

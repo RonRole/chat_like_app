@@ -1,9 +1,9 @@
-import {ActionTypes} from "./TalkRoomMessageActoins"
-import Actions from "./TalkRoomMessageActoins"
+import CurrentRoomStatusActions, {ActionTypes} from "./CurrentRoomStatusActions"
+import Actions from "./CurrentRoomStatusActions"
 import { eventChannel } from "redux-saga"
 import { call, take, put, all } from "redux-saga/effects"
 import socketClient from "../socketClient"
-import TalkRoomActions from "../talkRoomModule/TalkRoomActions"
+import TalkRoomActions, { TalkRoomActionTypes } from "../talkRoomModule/TalkRoomActions"
 import UserActions from "../userModule/UserActions"
 
 
@@ -61,9 +61,33 @@ export function* handleGetCurrentUsers() {
     const channel = yield call(createCurrentUsersRecieveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(TalkRoomActions.refreshCurrentRoomUsers({
+        yield put(CurrentRoomStatusActions.refreshCurrentRoomUsers({
             talkRoomId : response.roomId,
             userIds : Object.keys(response.users).map(key => response.users[key]["id"])
+        }))
+    }
+}
+
+//現在ユーザーステータス取得用のイベントチャンネル
+function* createCurrentUserStatusChannel() {
+    return eventChannel(emit => {
+        socketClient.on("currentUserStatus", response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
+export function* handleGetCurrentUserStatus() {
+    const channel = yield call(createCurrentUserStatusChannel)
+    while(true) {
+        const response = yield take(channel)
+        yield put(CurrentRoomStatusActions.changeCurrentUserStatus({
+            talkRoomId : response.roomId,
+            userId : response.userId,
+            status : response.status
         }))
     }
 }
@@ -130,3 +154,16 @@ export function* handleAddMessage() {
     }
 }
 
+/**
+ * socketサーバーにユーザーステータスの変化を通知する
+ */
+export function* handleChangeStatus() {
+    while(true) {
+        const action = yield take(ActionTypes.CHANGE_CURRENT_USER_STATUS)
+        socketClient.emit('currentUserStatus', {
+            roomId : action.talkRoomId,
+            userId : action.userId,
+            status : action.status
+        })
+    }
+}

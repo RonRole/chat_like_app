@@ -9,6 +9,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import CurrentUsersContainer from './CurrentUsersContainer'
 
 class MessagePage extends React.Component {
+
     render(){
         return (
             <Container className="justify-content-center">
@@ -23,7 +24,7 @@ class MessagePage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        allState : state,
+        state,
         getTalkRoomById : (id) => TalkRoomModule.reducer.getTalkRoomById(state)(id),
         getUserById : (userId) => UserModule.reducer.getUserById(state)(userId)
     }

@@ -5,13 +5,18 @@ import React from 'react'
  * topComponent:前面に配置するコンポーネント
  * behindComponent:背面に配置するコンポーネント
  */
-const TransparentWhenHovered = ({
+const Transparent = ({
     frontComponent,
-    backComponent
+    backComponent,
+    transParent=false
 }) => {
     return (
         <div className='d-flex' style={{alignItems:'center'}}>
-            <div className='transparent_when_hovered' style={{zIndex:1}}>
+            <div style={{
+                zIndex:1, 
+                opacity:transParent ? 0.1 : 1.0,
+                transition:'all 0.2s ease-out'
+            }}>
                 {frontComponent}
             </div>
             <div style={{zIndex:0, position:'absolute', textAlign:'center'}}>
@@ -21,4 +26,4 @@ const TransparentWhenHovered = ({
     )
 }
 
-export default TransparentWhenHovered
+export default Transparent

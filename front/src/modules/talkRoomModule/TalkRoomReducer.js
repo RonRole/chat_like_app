@@ -57,14 +57,6 @@ const createReducer = (state = initialState, action) => {
             }
         }
 
-        case TalkRoomActionTypes.REFRESH_CURRENT_ROOM_USERS : {
-            const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {userIds:[]}
-            room['currentUserIds'] = [...action.userIds]
-            return {
-                ...state
-            }
-        }
-
         case TalkRoomActionTypes.UPDATE_TALK_ROOM : {
             state.ownRooms[action.talkRoomId]　= {
                 ...state.ownRooms[action.talkRoomId],
@@ -74,6 +66,7 @@ const createReducer = (state = initialState, action) => {
                 ...state,
             }
         }
+        
         default: {
             return state
         }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, NavItem } from 'react-bootstrap'
-import TransparentWhenHovered from './TransparentWhenHovered'
+import Transparent from './Transparent'
 
 export const IdFormGroup = ({
     className = "",
@@ -74,7 +74,8 @@ export const PasswordConfirmationFormGroup = ({
 export class ProfileImageFormGroup extends React.Component {
     
     state = {
-        uploadFileImage : this.props.defaultValue
+        uploadFileImage : this.props.defaultValue,
+        transParentProfile : false
     }
     
     render() {
@@ -90,13 +91,15 @@ export class ProfileImageFormGroup extends React.Component {
                     }
                     input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
                 }}/>
-                <TransparentWhenHovered
+                <Transparent
                     frontComponent = {
                         <img
                             style={{
                                 backgroundColor:this.state.uploadFileImage ? "white" : "",
                             }}　 
-                            onClick={()=>document.getElementById("signUpImageForm").click()} 
+                            onClick={()=>document.getElementById("signUpImageForm").click()}
+                            onMouseOver={() => this.setState({transParentProfile : true})}
+                            onMouseLeave={() => this.setState({transParentProfile: false})}
                             className="mb-2" 
                             src={this.state.uploadFileImage} 
                             width="200px" 
@@ -112,6 +115,7 @@ export class ProfileImageFormGroup extends React.Component {
                             プロフィール画像変更
                         </div>
                     }
+                    transParent = {this.state.transParentProfile}
                 />
                 <Form.Control.Feedback type="invalid">
                     {this.props.errorMessages.find(e=>e)}

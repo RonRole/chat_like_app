@@ -71,6 +71,19 @@ module.exports = (server) => {
                 users : {...currentRoomMembers[roomId]}
             })
         })
+        socket.on('currentUserStatus', ({
+            roomId,
+            userId,
+            status
+        }) => {
+            console.log('change user status')
+            console.log(`roomId:${roomId}, userId:${userId}, status:${status}`)
+            socket.to(roomId).broadcast.emit('currentUserStatus', {
+                roomId,
+                userId,
+                status
+            })
+        })
         //切断された時
         socket.on('disconnect', () => {
             //切断されたユーザーのいるトークルームのIDを取得

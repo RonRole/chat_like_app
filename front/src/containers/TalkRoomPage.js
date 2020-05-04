@@ -32,7 +32,7 @@ class TalkRoomPage extends React.Component {
         this.props.getOwnRooms()
         this.props.getJoinRooms()
     }
-
+    
     render() {
         return (
             <Container>
@@ -53,6 +53,7 @@ class TalkRoomPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
+        state,
         loginUser : state.logStatus.isLoggedIn,
         ownRoomIds : TalkRoomModule.reducer.getOwnRoomIds(state),
         joinRoomIds : TalkRoomModule.reducer.getJoinRoomIds(state),

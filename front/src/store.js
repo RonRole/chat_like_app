@@ -1,7 +1,7 @@
 
 import {createStore, combineReducers, applyMiddleware} from 'redux'
 
-import TalkRoomMessageModule from './modules/talkRoomMessageModule/TalkRoomMessageModule'
+import TalkRoomMessageModule from './modules/currentRoomStatusModule/CurrentRoomStatusModule'
 
 
 //saga
@@ -19,7 +19,7 @@ const sagaMiddleware = createSagaMiddleware()
 //store setting
 const store = createStore(
     combineReducers({
-        messages  : TalkRoomMessageModule.reducer.createMessageReducer, 
+        currentRoomStatus : TalkRoomMessageModule.reducer.createMessageReducer, 
         logStatus : LogModule.reducer.creatReducer,
         talkRooms : TalkRoomModule.reducer.createReducer,
         loading   : LoadingModule.reducer.createReducer,

@@ -28,7 +28,6 @@ class UpdateUserForm extends React.Component {
                     notBlankParams[param] = userParams[param]
                 })
         return notBlankParams
-
     }
 
     render() {

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import TalkRoomMessageModule from '../modules/talkRoomMessageModule/TalkRoomMessageModule'
+import TalkRoomMessageModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import UserModule from '../modules/userModule/UserModule'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 

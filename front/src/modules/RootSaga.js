@@ -8,7 +8,7 @@ import { LogActionTypes } from "./logModule/LogActions";
 import * as logSaga from "./logModule/LogSaga";
 import { TalkRoomActionTypes } from "./talkRoomModule/TalkRoomActions";
 import * as talkRoomSaga from "./talkRoomModule/TalkRoomSaga"
-import * as talkRoomMessageSaga from "./talkRoomMessageModule/TalkRoomMessageSaga"
+import * as talkRoomMessageSaga from "./currentRoomStatusModule/CurrentRoomStatusSaga"
 import * as userSaga from "./userModule/UserSaga"
 import { UserActionTypes } from "./userModule/UserActions";
 
@@ -55,7 +55,9 @@ const talkRoomMessageSagas = [
     talkRoomMessageSaga.handleLeaveRoom(),
     talkRoomMessageSaga.handleReceiveMessage(),
     talkRoomMessageSaga.handleAddMessage(),
-    talkRoomMessageSaga.handleGetCurrentUsers()
+    talkRoomMessageSaga.handleGetCurrentUsers(),
+    talkRoomMessageSaga.handleGetCurrentUserStatus(),
+    talkRoomMessageSaga.handleChangeStatus()
 ]
 
 const userSagas = [

@@ -29,5 +29,10 @@ describe('トークルーム用のフォーム部品のテスト', () => {
         describe('要素のチェック', () => {
             checkTalkRoomFormElements(title_wrapper)
         })
+        describe('Form.Controlのテスト', () => {
+            test('errorMessagesがない時、isInvalidがfalseになる', () => {
+                title_wrapper.find()
+            })
+        })
     })
 })
