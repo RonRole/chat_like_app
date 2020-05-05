@@ -57,14 +57,13 @@ const createReducer = (state = initialState, action) => {
             }
         }
         case ActionTypes.CLEAR_MESSAGE : {
-            state[action.roomId] = []
+            state[action.roomId]['messages'] = []
             return {
                 ...state
             }
         }
 
         case ActionTypes.REFRESH_CURRENT_ROOM_USERS : {
-            console.log(action)
             const room = state[action.talkRoomId] || {userIds:[]}
             room['currentUserIds'] = [...action.userIds]
             return {

@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-import TalkRoomMessageModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
+import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import UserModule from '../modules/userModule/UserModule'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 
@@ -72,7 +72,7 @@ const mapStateToProps = (state) => {
         state,
         loginUser : state.logStatus.isLoggedIn,
         getTalkRoomById : (roomId) => TalkRoomModule.reducer.getTalkRoomById(state)(roomId),
-        getMessagesByRoomId:(roomId) => TalkRoomMessageModule.reducer.getMessagesByRoomId(state)(roomId),
+        getMessagesByRoomId:(roomId) => CurrentRoomStatusModule.reducer.getMessagesByRoomId(state)(roomId),
         getUserById : (id) => UserModule.reducer.getUserById(state)(id)
     }
 }
@@ -82,11 +82,11 @@ const mapDispatchToProps = (dispatch) => {
         joinRoom:({
             user, 
             roomId
-        }) => dispatch(TalkRoomMessageModule.actions.joinRoom({user, roomId})),
+        }) => dispatch(CurrentRoomStatusModule.actions.joinRoom({user, roomId})),
         leaveRoom:({
             user,
             roomId
-        }) => dispatch(TalkRoomMessageModule.actions.leaveRoom({user, roomId})),
+        }) => dispatch(CurrentRoomStatusModule.actions.leaveRoom({user, roomId})),
     }
 }
 
