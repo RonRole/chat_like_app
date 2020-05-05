@@ -52,7 +52,12 @@ export class MessagesContainer extends React.Component {
                                     <Col className md={message.md}>
                                         <Image src={this.props.getUserById(message.user).image.thumb.url}/>
                                         <strong className="ml-2">{this.props.getUserById(message.user).name}</strong>
-                                        <Alert variant={this.classNameToVariant[message.className]} key={index} style={{overflow:"auto"}}>
+                                        <Alert 
+                                            variant={this.classNameToVariant[message.className]} 
+                                            key={index} 
+                                            style={{
+                                                overflow:"auto"
+                                            }}>
                                             {message.text}
                                         </Alert>
                                     </Col>
