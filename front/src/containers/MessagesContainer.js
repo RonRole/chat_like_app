@@ -48,20 +48,18 @@ export class MessagesContainer extends React.Component {
                     {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
                         return (
                             <CSSTransition key={index} timeout= {100} classNames="fade">
-                                <Row>
-                                    <Col className md={message.md}>
-                                        <Image src={this.props.getUserById(message.user).image.thumb.url}/>
-                                        <strong className="ml-2">{this.props.getUserById(message.user).name}</strong>
-                                        <Alert 
-                                            variant={this.classNameToVariant[message.className]} 
-                                            key={index} 
-                                            style={{
-                                                overflow:"auto"
-                                            }}>
-                                            {message.text}
-                                        </Alert>
-                                    </Col>
-                                </Row>
+                                <div>
+                                    <Image src={this.props.getUserById(message.user).image.thumb.url}/>
+                                    <strong className="ml-2">{this.props.getUserById(message.user).name}</strong>
+                                    <Alert 
+                                        variant={this.classNameToVariant[message.className]} 
+                                        key={index} 
+                                        style={{
+                                            overflow:"auto"
+                                        }}>
+                                        {message.text}
+                                    </Alert>
+                                </div>
                             </CSSTransition>
                         )
                     })}
