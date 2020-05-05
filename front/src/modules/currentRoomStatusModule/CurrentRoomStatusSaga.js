@@ -84,7 +84,7 @@ export function* handleGetCurrentUserStatus() {
     const channel = yield call(createCurrentUserStatusChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(CurrentRoomStatusActions.changeCurrentUserStatus({
+        yield put(CurrentRoomStatusActions.receiveCurrentUserStatus({
             talkRoomId : response.roomId,
             userId : response.userId,
             status : response.status

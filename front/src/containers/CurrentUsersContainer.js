@@ -8,10 +8,6 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
 
 class CurrentUsersContainer extends React.Component {
 
-    componentDidUpdate() {
-        console.log(this.props.getCurrentRoomStatusById(this.props.match.params.id))
-    }
-
     getCurrentUserIds = () => this.props.getCurrentRoomStatusById(this.props.match.params.id)["currentUserIds"] || []
     getCurrentUserStatus = () => this.props.getCurrentRoomStatusById(this.props.match.params.id)["currentUserStatus"] || []
 

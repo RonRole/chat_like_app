@@ -72,7 +72,8 @@ const createReducer = (state = initialState, action) => {
             }
         }
 
-        case ActionTypes.CHANGE_CURRENT_USER_STATUS : {
+        case ActionTypes.CHANGE_CURRENT_USER_STATUS :
+        case ActionTypes.RECEIVE_CURRENT_USER_STATUS : {
             const room = state[action.talkRoomId] || {userIds:[]}
             room['currentUserStatus'] = room['currentUserStatus'] || {}
             room['currentUserStatus'][action.userId] = action.status

@@ -8,7 +8,8 @@ export const ActionTypes = {
     SET_CURRENT_USER_IDS : "SET_CURRENT_USER_IDS",
     CLEAR_MESSAGE : "CLEAR_MESSAGE",
     REFRESH_CURRENT_ROOM_USERS  : "REFRESH_CURRENT_ROOM_USERS",
-    CHANGE_CURRENT_USER_STATUS : "CHANGE_CURRENT_USER_STATUS"
+    CHANGE_CURRENT_USER_STATUS : "CHANGE_CURRENT_USER_STATUS",
+    RECEIVE_CURRENT_USER_STATUS : 'RECEIVE_CURRENT_USER_STATUS'
 }
 
 //actionCreators
@@ -96,6 +97,19 @@ const changeCurrentUserStatus = ({
     }
 }
 
+const receiveCurrentUserStatus = ({
+    talkRoomId,
+    userId,
+    status
+}) => {
+    return {
+        type: ActionTypes.RECEIVE_CURRENT_USER_STATUS,
+        talkRoomId,
+        userId,
+        status
+    }
+}
+
 export default {
     joinRoom,
     leaveRoom,
@@ -104,5 +118,6 @@ export default {
     setCurrentUserIds: setCurrentUsers,
     clearMessage,
     refreshCurrentRoomUsers,
-    changeCurrentUserStatus
+    changeCurrentUserStatus,
+    receiveCurrentUserStatus
 }

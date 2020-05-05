@@ -1,6 +1,6 @@
 import React from 'react'
 import { shallow } from 'enzyme'
-import { TitleFormGroup } from '../TalkRoomFormGroups'
+import { TitleFormGroup, DescriptionFormGroup } from '../TalkRoomFormGroups'
 import { Form } from 'react-bootstrap'
 
 /**
@@ -23,6 +23,28 @@ const checkTalkRoomFormElements = (wrapper) => {
     })
 }
 
+const checkFormWithoutError = (wrapper) => {
+    describe('errorMessagesがない時', () => {
+        test('isInvalidがfalseになる', () => {
+            expect(wrapper.find(Form.Control).props().isInvalid).toBeFalsy()
+        })
+        test('Form.Control.Feedbackのテキストがない', () => {
+            expect(wrapper.find(Form.Control.Feedback).text()).toBe('')
+        })
+    })
+}
+
+const checkFormWithError = (wrapper) => {
+    describe('errorMessagesがある時', () => {
+        test('isInvalidがtrueになる', () => {
+            expect(wrapper.find(Form.Control).props().isInvalid).toBeTruthy()
+        })
+        test('errorMessagesの初めの要素がForm.Control.Feedbackのテキストになる', () => {
+            expect(wrapper.find(Form.Control.Feedback).text()).toBe('test message')
+        })
+    })
+}
+
 describe('トークルーム用のフォーム部品のテスト', () => {
     describe('TitleFormGroupのテスト', () => {
         const title_wrapper = shallow(<TitleFormGroup />)
@@ -30,9 +52,26 @@ describe('トークルーム用のフォーム部品のテスト', () => {
             checkTalkRoomFormElements(title_wrapper)
         })
         describe('Form.Controlのテスト', () => {
-            test('errorMessagesがない時、isInvalidがfalseになる', () => {
-                title_wrapper.find()
-            })
+            const title_wrapper_withoutError = shallow(<TitleFormGroup />)
+            checkFormWithoutError(title_wrapper_withoutError)
+            const title_wrapper_withError = shallow(<TitleFormGroup errorMessages={['test message']}/>)
+            checkFormWithError(title_wrapper_withError)
+        })
+    })
+
+    describe('DescriptionFormGroupのテスト', () => {
+        const description_wrapper = shallow(<DescriptionFormGroup />)
+        describe('要素のチェック', () => {
+            checkTalkRoomFormElements(description_wrapper)
+        })
+        describe('Form.Controlのテスト', () => {
+            const description_wrapper_withoutError = shallow(<DescriptionFormGroup />)
+            checkFormWithoutError(description_wrapper_withoutError)
+            const description_wrapper_withError = shallow(<DescriptionFormGroup errorMessages={['test message']}/>)
+            checkFormWithError(description_wrapper_withError)
         })
     })
 })
+
+
+
