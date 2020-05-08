@@ -1,7 +1,7 @@
 import React from 'react'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Pagination } from 'react-bootstrap'
 import TalkRoomsArea from '../components/TalkRoomsArea'
 import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
@@ -25,7 +25,10 @@ const TalkRoomAreaLabel = ({
 class TalkRoomPage extends React.Component {
 
     state = {
-        createModalShow : false
+        createModalShow : false,
+        paginateLength : 3,
+        selectedOwnRoomPage : 1,
+        selectedJoinRoomPage : 1
     }
 
     componentDidMount() {
@@ -38,9 +41,41 @@ class TalkRoomPage extends React.Component {
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
                 <Button variant="primary" onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
-                <TalkRoomsArea talkRoomIds={this.props.ownRoomIds} />
+                <TalkRoomsArea
+                    className='mb-2' 
+                    talkRoomIds={[...this.props.ownRoomIds].filter((_, index) => {
+                        return (this.state.selectedOwnRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedOwnRoomPage*this.state.paginateLength
+                    })}
+                />
+                <Pagination>
+                    {[...Array(Math.ceil(this.props.ownRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {
+                        return <Pagination.Item 
+                                    key={pageNumber}
+                                    active={pageNumber===this.state.selectedOwnRoomPage} 
+                                    onClick={()=>this.setState({selectedOwnRoomPage:pageNumber})}
+                                >
+                                    {pageNumber}
+                                </Pagination.Item>
+                    })}
+                </Pagination>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
-                <TalkRoomsArea talkRoomIds={this.props.joinRoomIds} readOnly/>
+                <TalkRoomsArea 
+                    className='mb-2'
+                    talkRoomIds={[...this.props.joinRoomIds].filter((_, index) => {
+                        return (this.state.selectedJoinRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedJoinRoomPage*this.state.paginateLength
+                    })}
+                />
+                <Pagination>
+                    {[...Array(Math.ceil(this.props.joinRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {
+                        return <Pagination.Item 
+                                    key={pageNumber}
+                                    active={pageNumber===this.state.selectedJoinRoomPage} 
+                                    onClick={()=>this.setState({selectedJoinRoomPage:pageNumber})}
+                                >
+                                    {pageNumber}
+                                </Pagination.Item>
+                    })}
+                </Pagination>
                 <CreateTalkRoomForm show={this.state.createModalShow} onCancel={()=> {
                     this.setState({
                         createModalShow : false

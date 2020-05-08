@@ -1,13 +1,13 @@
 import React from "react"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
-import { Col } from "react-bootstrap"
+import { Col, Pagination } from "react-bootstrap"
 import TalkRoomCard from "../containers/TalkRoomCard"
 
 class TalkRoomsArea extends React.Component {
 
     render() {
         return (
-            <TransitionGroup className="row">
+            <TransitionGroup className={`row ${this.props.className}`}>
                 {this.props.talkRoomIds.map((talkRoomId,index) => {
                     return(
                         <CSSTransition key = {index} timeout={100} classNames="fade">
