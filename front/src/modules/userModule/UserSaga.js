@@ -3,9 +3,9 @@ import DataAccessor from "../DataAccessor"
 import { call, put, take } from "redux-saga/effects"
 import handleError from "../ErrorHandler"
 import UserActions from "./UserActions"
-import { eventChannel } from "redux-saga"
-import socketClient from "../socketClient"
-import { handleGetExecLoginStart } from "../logModule/LogSaga"
+
+import { createCurrentUserReceiveChannel } from "../socketClient"
+
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 
 const getSelf = () => {
@@ -116,17 +116,6 @@ export function* handleUpdateUser(action) {
             error : result.data,
         })
     }
-}
-
-function* createCurrentUserReceiveChannel() {
-    return eventChannel(emit => {
-        socketClient.on('currentUsers', response => {
-            emit(response)
-        })
-        return () => {
-            socketClient.close()
-        }
-    })
 }
 
 export function* handleGetCurrentRoomUsers() {
