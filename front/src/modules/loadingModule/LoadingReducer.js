@@ -1,4 +1,5 @@
 import { LoadingActionTypes } from "./LoadingActions"
+import createReducerFactory from "../CreateReducerFactory"
 
 /**
  * loadingStateの数字はロード中プロセスの数を表す
@@ -8,20 +9,16 @@ import { LoadingActionTypes } from "./LoadingActions"
  */
 const initialState = 0
 
-const createReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case LoadingActionTypes.START_LOADING : {
-            return state+1
-        }
-        //読み込み中プロセスの数がマイナスにならないように
-        case LoadingActionTypes.FINISH_LOADING : {
-            return Math.max(state-1,0)
-        }
-        default : {
-            return state
-        }
-    }
+const actionHandler = {}
+actionHandler[LoadingActionTypes.START_LOADING] = (state) => {
+    return state+1
 }
+//読み込み中プロセスの数がマイナスにならないように
+actionHandler[LoadingActionTypes.FINISH_LOADING] = (state) => {
+    return Math.max(state-1,0)
+}
+
+const createReducer = createReducerFactory(initialState, actionHandler)
 
 export default {
     createReducer

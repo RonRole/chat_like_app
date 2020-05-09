@@ -12,5 +12,4 @@ export function* handleError(action) {
             yield put(LogActions.logout())
         }
     }
-
 }

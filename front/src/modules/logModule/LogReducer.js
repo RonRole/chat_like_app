@@ -1,4 +1,5 @@
 import { LogActionTypes } from "./LogActions"
+import createReducerFactory from "../CreateReducerFactory"
 
 //Reducers
 const initialState = {
@@ -6,32 +7,28 @@ const initialState = {
     isLoggedIn  : false,
 }
 
-const creatReducer = (state = initialState, action) => {
-    switch(action.type){
-        case LogActionTypes.TRY_LOG_IN: {
-            return {
-                ...state
-            }
-        }
-        case LogActionTypes.LOG_IN: {
-            return {
-                ...state,
-                isLoggedIn:action.loginUser,
-                loginErrorMessages : []
-            }
-        }
-        case LogActionTypes.LOG_OUT: {
-            return {
-                ...state,
-                isLoggedIn:false,
-                loginErrorMessages : []
-            }
-        }
-        default: {
-            return state;
-        }
+const actionHandler = {}
+actionHandler[LogActionTypes.TRY_LOG_IN] = (state) => {
+    return {
+        ...state
     }
 }
+actionHandler[LogActionTypes.LOG_IN] = (state, action) => {
+    return {
+        ...state,
+        isLoggedIn:action.loginUser,
+        loginErrorMessages : []
+    }
+}
+actionHandler[LogActionTypes.LOG_OUT] = (state) => {
+    return {
+        ...state,
+        isLoggedIn:false,
+        loginErrorMessages : []
+    }
+}
+
+const creatReducer = createReducerFactory(initialState, actionHandler)
 
 export default {
     creatReducer

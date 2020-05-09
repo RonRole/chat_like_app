@@ -1,5 +1,6 @@
 import {ActionTypes} from "./CurrentRoomStatusActions"
 import { LogActionTypes } from "../logModule/LogActions"
+import createReducerFactory from "../CreateReducerFactory"
 
 
 /**
@@ -20,13 +21,20 @@ const initialState = {
     }  
 }
 
+/**
+ * state=>roomId=>messagesに変換するselector
+ * @param {*} state 
+ */
 const getMessagesByRoomId = state => {
     return (roomId) => {
         const room = state['currentRoomStatus'][roomId] || initialState[0]
         return room['messages']
     }
 }
-
+/**
+ * state=>roomId=>currentRoomStatusに変換するselector
+ * @param {*} state 
+ */
 const getCurrentStatusOfRoom = state => {
     return (roomId) => {
         const room = state['currentRoomStatus'][roomId] || initialState[0]
@@ -34,62 +42,57 @@ const getCurrentStatusOfRoom = state => {
     }
 }
 
-const createReducer = (state = initialState, action) => {
-    switch(action.type){
-        case LogActionTypes.LOG_IN : {
-            return {
-                ...initialState
-            }
-        }
-        case ActionTypes.ADD_MESSAGE:
-        case ActionTypes.RECEIVE_MESSAGE: {
-            state[action.roomId] = state[action.roomId] || {messages:[]}
-            state[action.roomId]['messages'] = [
-                ...state[action.roomId]['messages'],
-                {
-                    className : action.className,
-                    user      : action.user.id,
-                    text      : action.text
-                }
-            ]
-            return {
-                ...state
-            }
-        }
-        case ActionTypes.CLEAR_MESSAGE : {
-            state[action.roomId]['messages'] = []
-            return {
-                ...state
-            }
-        }
+/**
+ * CurrentRoomStatusReducer用のactionHandler
+ */
+const actionHandler = {}
 
-        case ActionTypes.REFRESH_CURRENT_ROOM_USERS : {
-            const room = state[action.talkRoomId] || {userIds:[]}
-            room['currentUserIds'] = [...action.userIds]
-            return {
-                ...state
-            }
-        }
+actionHandler[LogActionTypes.LOG_IN] = () => initialState
 
-        case ActionTypes.CHANGE_CURRENT_USER_STATUS :
-        case ActionTypes.RECEIVE_CURRENT_USER_STATUS : {
-            const room = state[action.talkRoomId] || {userIds:[]}
-            room['currentUserStatus'] = room['currentUserStatus'] || {}
-            room['currentUserStatus'][action.userId] = action.status
-            return {
-                ...state
-            }
+actionHandler[ActionTypes.ADD_MESSAGE] = 
+actionHandler[ActionTypes.RECEIVE_MESSAGE] = (state, action) => {
+    state[action.roomId] = state[action.roomId] || {messages:[]}
+    state[action.roomId]['messages'] = [
+        ...state[action.roomId]['messages'],
+        {
+            className : action.className,
+            user      : action.user.id,
+            text      : action.text
         }
+    ]
+    return {
+        ...state
+    }
+} 
 
-        default: {
-            return state;
-        }
+actionHandler[ActionTypes.CLEAR_MESSAGE] = (state, action) => {
+    state[action.roomId]['messages'] = []
+    return {
+        ...state
+    } 
+}
+
+actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
+    const room = state[action.talkRoomId] || {userIds:[]}
+    room['currentUserIds'] = [...action.userIds]
+    return {
+        ...state
+    }
+}
+
+actionHandler[ActionTypes.CHANGE_CURRENT_USER_STATUS] = 
+actionHandler[ActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
+    const room = state[action.talkRoomId] || {userIds:[]}
+    room['currentUserStatus'] = room['currentUserStatus'] || {}
+    room['currentUserStatus'][action.userId] = action.status
+    return {
+        ...state
     }
 }
 
 export default {
     getMessagesByRoomId,
     getCurrentStatusOfRoom,
-    createMessageReducer: createReducer
+    createMessageReducer: createReducerFactory(initialState, actionHandler)
 }
 

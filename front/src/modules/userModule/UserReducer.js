@@ -1,5 +1,6 @@
 import { UserActionTypes } from "./UserActions"
 import { LogActionTypes } from "../logModule/LogActions"
+import createReducerFactory from "../CreateReducerFactory"
 
 const defaultUser = {
     "id" : 0,
@@ -26,34 +27,30 @@ const createGetUserById = (state) => (id) => {
     return state["users"][id] || defaultUser
 }
 
-const createReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case LogActionTypes.LOG_IN : {
-            return initialState
-        }
-        case UserActionTypes.ADD_USER : {
-            action.users.forEach(user => {
-                state[user.id] = user
-            })
-            return {
-                ...state
-            }
-        }
-        case UserActionTypes.SET_SEARCHED_USER_IDS : {
-            action.users.forEach(user => {
-                state[user.id] = user
-            })
-            return {
-                ...state,
-                searchedUserIds : action.users.map(user => user.id),
-            }
-        }
-        default : {
-            return state
-        }
+const actionHandler = {}
+actionHandler[LogActionTypes.LOG_IN] = () => {
+    return initialState
+}
+actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
+    action.users.forEach(user => {
+        state[user.id] = user
+    })
+    return {
+        ...state
+    }
+}
+actionHandler[UserActionTypes.SET_SEARCHED_USER_IDS] = (state, action) => {
+    action.users.forEach(user => {
+        state[user.id] = user
+    })
+    return {
+        ...state,
+        searchedUserIds : action.users.map(user => user.id),
     }
 }
 
+const createReducer = createReducerFactory(initialState, actionHandler)
+    
 export default {
     getUserById: createGetUserById,
     createReducer
