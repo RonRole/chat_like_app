@@ -13,6 +13,7 @@ class UsersController < ApplicationController
             render :json => @user#.hash_for_front
             return
         else
+            puts @user.fail_result
             render :json => @user.fail_result
         end
     end

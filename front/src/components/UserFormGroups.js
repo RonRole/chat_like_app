@@ -81,7 +81,7 @@ export class ProfileImageFormGroup extends React.Component {
     render() {
         return(
             <Form.Group controlId="signUpImageForm">
-                <Form.Control style={{display:'none'}} type="file" name="image"   isInvalid={this.props.errorMessages.length > 0} onChange={(e) => {
+                <Form.Control style={{display:'none'}} type="file" name="image" isInvalid={this.props.errorMessages.length > 0} onChange={(e) => {
                     const fileReader = new FileReader()
                     const input = e.currentTarget.files[0]
                     fileReader.onload = e => {
