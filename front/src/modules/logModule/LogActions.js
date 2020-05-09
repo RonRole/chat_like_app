@@ -2,6 +2,7 @@ export const LogActionTypes = {
     EXEC_LOG_IN:"EXEC_LOG_IN",
     DEF_LOG_IN:"DEF_LOG_IN",
     LOG_IN:"LOG_IN",
+    EXEC_LOG_OUT:'EXEC_LOG_OUT',
     LOG_OUT:"LOG_OUT",
 }
 
@@ -32,6 +33,12 @@ export default {
         return {
             type     :LogActionTypes.LOG_IN,
             loginUser
+        }
+    },
+    execLogout : ({history={}}) => {
+        return {
+            type : LogActionTypes.EXEC_LOG_OUT,
+            history
         }
     },
     logout: () => {

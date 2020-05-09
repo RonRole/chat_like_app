@@ -7,6 +7,7 @@ import UserActions from "./UserActions"
 import { createCurrentUserReceiveChannel } from "../socketClient"
 
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
+import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 
 const getSelf = () => {
     return DataAccessor.get(({
@@ -90,10 +91,7 @@ export function* handleCreateUser(action) {
         }))
     }
     if(result.isError) {
-        handleError({
-            error : result.data,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 
@@ -111,9 +109,7 @@ export function* handleUpdateUser(action) {
         }))
     }
     if(result.isError) {
-        handleError({
-            error : result.data,
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 
@@ -142,8 +138,6 @@ export function* handleExecSearchUser(action) {
         }))
     }
     if(searchResult.isError) {
-        handleError({
-            error : searchResult.data
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:searchResult.data}))
     }
 }

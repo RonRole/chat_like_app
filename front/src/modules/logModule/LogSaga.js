@@ -4,22 +4,19 @@ import DataAccessor from "../DataAccessor"
 import handleError from "../ErrorHandler"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import UserActions from "../userModule/UserActions"
+import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 
 //saga
 export function* handleGetDefLoginStart(action) {
     const accessResult = yield call(DataAccessor.get, {
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/login`
     })
-
     if(accessResult.isSuccess) {
         yield put(UserActions.setUser(accessResult.data))
         yield put(LogActions.login(accessResult.data))
     }
     else {
-        handleError({
-            error   : accessResult.data,
-            history : action.history
-        })   
+        yield put(ErrorCodeActions.execHandleError({errorResult:accessResult.data}))
     }
 }
 
@@ -43,14 +40,23 @@ export function* handleGetExecLoginStart(loginAction) {
         }))
     }
     if(accessResult.isError) {
-        handleError({
-            error   : accessResult.data,
-            history : loginAction.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:accessResult.data}))
     }
     loginAction.then();
 }
 
-export function* handleGetLogoutStart(action) {
-    yield put(LogActions.logout());
+export function* handleGetExecLogoutStart(logoutAction) {
+    const result = yield call(DataAccessor.delete, {
+        url :`${process.env.REACT_APP_BACKEND_ADDRESS}/logout`
+    })
+    if(result.isSuccess) {
+        yield put(LogActions.logout());
+        alert('ログアウトしました')
+        logoutAction.history.push('/signin')
+    }
+    if(result.isError) {
+        yield put(ErrorCodeActions.execHandleError({
+            errorResult:result.data,
+        }))
+    }
 }

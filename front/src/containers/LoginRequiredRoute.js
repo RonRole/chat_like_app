@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 
 export class LoginRequiredRoute extends React.Component {
 
+    componentDidUpdate() {
+        console.log(this.props.isLoggedIn)
+    }
     render(){
         if(!this.props.isLoggedIn){
             return  <Route exact={this.props.exact} path={this.props.path} render={()=><Redirect to={{

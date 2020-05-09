@@ -1,9 +1,10 @@
 import DataAccessor from "../DataAccessor"
 import TalkRoomActions from "./TalkRoomActions"
 import { put, call, fork} from "redux-saga/effects"
-import handleError from "../ErrorHandler"
+
 import UserActions from "../userModule/UserActions"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
+import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
@@ -91,10 +92,7 @@ export function* handleGetOwnRooms(action) {
         }
     }
     if(result.isError) {
-        handleError({
-            error   : result.data,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 
@@ -111,10 +109,7 @@ export function* handleGetJoinedTalkRooms(action) {
         alert('トークルームを取得できませんでした')
     }
     if(talkRoomResult.isError) {
-        handleError({
-            error   : talkRoomResult.data,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:talkRoomResult.data}))
     }
 }
 
@@ -131,10 +126,7 @@ export function* handleAddTalkRoom(action) {
         alert('トークルームを追加できませんでした')
     }
     if(addTalkRoomResult.isError) {
-        handleError({
-            error   : addTalkRoomResult.data,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:addTalkRoomResult.data}))
     }
 }
 
@@ -154,9 +146,7 @@ export function* handleUpdateTalkRoom(action) {
         alert(`${action.talkRoom.title}の更新ができませんでした`)
     }
     if(updateTalkRoomResult.isError) {
-        handleError({
-            error : updateTalkRoomResult.error,
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:updateTalkRoomResult.data}))
     }
 }
 
@@ -171,10 +161,7 @@ export function* handleDeleteTalkRoom(action) {
         alert(`トークルームを削除できませんでした`)
     }
     if(deleteTalkRoomResult.isError) {
-        handleError({
-            error : deleteTalkRoomResult.error,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:deleteTalkRoomResult.data}))
     }
 }
 
@@ -188,10 +175,7 @@ export function* handleGetTalkRoomMembers(action) {
         yield put(UserActions.setUser(...Object.keys(result.data).map(key => result.data[key])))
     }
     if(result.isError) {
-        handleError({
-            error : result.error,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 
@@ -215,10 +199,7 @@ export function* handleAddTalkRoomMember(action) {
         }))
     }
     if(result.isError) {
-        handleError({
-            error : result.error,
-            history : action.history
-        })
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 

@@ -17,10 +17,9 @@ const handleError = ({
         }
     }
     //anauthorizeの時、リダイレクト
-    //今のままだとurlが変わるだけでレンダリングされない
-    //historyモジュールを追加し、BrowserRouterから普通のRouterに修正してみる
     if(error.response.status === 401) {
         history.push('/login')
+
         return {
             message : 'ログインしろよ'
         }

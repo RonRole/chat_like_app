@@ -59,11 +59,12 @@ class TalkRoomPage extends React.Component {
                     })}
                 </Pagination>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
-                <TalkRoomsArea 
+                <TalkRoomsArea
                     className='mb-2'
                     talkRoomIds={[...this.props.joinRoomIds].filter((_, index) => {
                         return (this.state.selectedJoinRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedJoinRoomPage*this.state.paginateLength
                     })}
+                    readOnly
                 />
                 <Pagination>
                     {[...Array(Math.ceil(this.props.joinRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {

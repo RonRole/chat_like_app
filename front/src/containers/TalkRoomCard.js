@@ -1,12 +1,10 @@
 import React from "react"
 import { Card, Button, Row, Dropdown, Image } from "react-bootstrap"
-import { Link } from "react-router-dom"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
 import UserModule from "../modules/userModule/UserModule"
-import ModalModule from "../modules/ModalModule/ModalModule"
-import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import OwnerDropdown from "./OwnerDropdown"
+import { withRouter } from "react-router-dom"
 
 class TalkRoomCard extends React.Component {
 
@@ -25,10 +23,10 @@ class TalkRoomCard extends React.Component {
                         <Image style={{width:'50px', height:'50px'}} src={this.getUser(this.getTalkRoom(this.props.id).author_id).image.thumb.url}  roundedCircle/>
                     </div>
                     <div className="d-flex justify-content-end mb-2">
-                        <Link className="btn btn-primary" to={`/talk_rooms/${this.props.id}`}>入る</Link>
+                        <Button onClick={()=>this.props.history.push(`/talk_rooms/${this.props.id}`)}>入る</Button>
                     </div>
                     <div className="d-flex justify-content-end">
-                        {[this.props.readOnly].filter(readOnly => !readOnly).map((readOnly,index) => {
+                        {[this.props.readOnly].filter(readOnly => !readOnly).map((_,index) => {
                             return (
                                <OwnerDropdown key={index} talkRoomId={this.props.id}/>
                             )    
@@ -55,5 +53,4 @@ const mapDispatchToProps = (dispatch) => {
         },
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(TalkRoomCard)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TalkRoomCard))

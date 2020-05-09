@@ -1,6 +1,7 @@
 import {shallow} from 'enzyme';
 import React from 'react';
 import { HomePage } from '../../containers/HomePage';
+import UserProfile from '../../components/UserProfile';
 
 
 //テストユーザー
@@ -23,9 +24,7 @@ const wrapper = shallow(<HomePage loginUser={testUser}/>)
 
 
 describe('HomePage', () => {
-    test('ログインしているユーザーの情報が表示される', () => {
-        expect(wrapper.find('#loginUserID').text()).toContain(testUser.id)
-        expect(wrapper.find('#loginUserName').text()).toContain(testUser.name)
-        expect(wrapper.find('img').prop('src')).toContain(testUser.image.profile.url)
+    test('UserProfileが一つ表示される', () => {
+        expect(wrapper.find(UserProfile).length).toBe(1)
     })
 })

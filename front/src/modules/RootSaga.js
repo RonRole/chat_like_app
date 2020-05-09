@@ -10,7 +10,9 @@ import { TalkRoomActionTypes } from "./talkRoomModule/TalkRoomActions";
 import * as talkRoomSaga from "./talkRoomModule/TalkRoomSaga"
 import * as talkRoomMessageSaga from "./currentRoomStatusModule/CurrentRoomStatusSaga"
 import * as userSaga from "./userModule/UserSaga"
+import * as errorSaga from './errorCodeModule/ErrorCodeSaga'
 import { UserActionTypes } from "./userModule/UserActions";
+import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
 
 function* initialize(action) {
     const login = yield fork(logSaga.handleGetDefLoginStart, action)
@@ -36,7 +38,7 @@ function* login(action) {
 const logSagas = [
     takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(initialize)),
     takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(login)),
-    takeEvery(LogActionTypes.LOG_OUT, logSaga.handleGetLogoutStart),
+    takeEvery(LogActionTypes.EXEC_LOG_OUT, loadingSaga.wrapSagaWithLoading(logSaga.handleGetExecLogoutStart)),
 ]
 
 const talkRoomSagas = [
@@ -67,12 +69,17 @@ const userSagas = [
     userSaga.handleGetCurrentRoomUsers()
 ]
 
+const ErrorCodeSagas = [
+    takeEvery(ErrorCodeActionTypes.HANDLE_ERROR_CODE, errorSaga.handleError)
+]
+
 //rootSaga
 export default function* rootSaga(){
     yield all([
         ...logSagas,
         ...talkRoomSagas,
         ...talkRoomMessageSagas,
-        ...userSagas
+        ...userSagas,
+        ...ErrorCodeSagas
     ])
 }

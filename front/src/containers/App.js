@@ -50,7 +50,7 @@ export class App extends Component {
           <Route path="/signup" component={SignUpPage} />
           <LoginRequiredRoute exact path="/home" component={HomePage}/>
           <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
-          <LoginRequiredRoute path="/talk_rooms/:id" component={MessagesPage}/>
+          <LoginRequiredRoute exact path="/talk_rooms/:id" component={MessagesPage}/>
           <Redirect to="/home" />
         </Switch>
       </Router>  

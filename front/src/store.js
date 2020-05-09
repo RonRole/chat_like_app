@@ -13,6 +13,7 @@ import LoadingModule from './modules/loadingModule/LoadingModule'
 import RootSaga from './modules/RootSaga'
 import FormErrorModule from './modules/FormErrorModule/FormErrorModule'
 import ModalModule from './modules/ModalModule/ModalModule'
+import ErrorCodeModule from './modules/errorCodeModule/ErrorCodeModule'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -25,7 +26,8 @@ const store = createStore(
         loading   : LoadingModule.reducer.createReducer,
         users     : UserModule.reducer.createReducer,
         formErrors: FormErrorModule.reducer.createReducer,
-        modalStates : ModalModule.reducer.createReducer
+        modalStates : ModalModule.reducer.createReducer,
+        errorCodes : ErrorCodeModule.reducer.createReducer 
     }), 
     applyMiddleware(sagaMiddleware)
 )
