@@ -98,7 +98,6 @@ export function* handleCreateUser(action) {
 }
 
 export function* handleUpdateUser(action) {
-    console.log(action)
     const result = yield call(updateUser, action.userParams)
     if(result.isSuccess) {
         alert('プロフィールを更新しました。')
