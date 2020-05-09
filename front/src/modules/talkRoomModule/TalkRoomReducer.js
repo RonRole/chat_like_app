@@ -8,11 +8,21 @@ const initialState = {
     joinRooms: {},
 }
 
+const defaultRoom = {
+    author_id: 0,
+    created_at: '',
+    description: '',
+    id: 0,
+    title: '',
+    updated_at: '',
+    userIds: []
+}
+
 const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
 
 const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
-const getTalkRoomById = (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || {}
+const getTalkRoomById = (state) => (id) => state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || defaultRoom
 
 const actionHandler = {}
 actionHandler[LogActionTypes.LOG_IN ] = () => {
