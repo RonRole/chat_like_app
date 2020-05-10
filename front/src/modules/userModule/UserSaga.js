@@ -3,7 +3,7 @@ import DataAccessor from "../DataAccessor"
 import { call, put, take } from "redux-saga/effects"
 import UserActions from "./UserActions"
 
-import { createCurrentUserReceiveChannel } from "../socketClient"
+import { createCurrentUserReceiveChannel, createMessageReceiveChannel } from "../socketClient"
 
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
@@ -62,7 +62,7 @@ const searchUser = ({
 }
 
 export function* handleReceiveMessage() {
-    const channel = yield call(createCurrentUserReceiveChannel)
+    const channel = yield call(createMessageReceiveChannel)
     //channelがemitするたびに起動
     while(true) {
         const response = yield take(channel)

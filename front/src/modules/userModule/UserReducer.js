@@ -41,6 +41,7 @@ actionHandler[LogActionTypes.LOG_IN] = () => {
 }
 actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
     action.users.forEach(user => {
+        console.log(user)
         state[user.id] = user
     })
     return {
