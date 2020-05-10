@@ -17,12 +17,12 @@ class TalkRoomMembersModal extends React.Component {
                     <ListGroup variant='flush'>
                         <ListGroup.Item variant='success'>
                             <strong>管理者</strong>
-                            <UserProfile user={this.props.getTalkRoomById(this.props.talkRoomId).getAuthor()}/>
+                            <UserProfile user={this.props.getTalkRoomById(this.props.talkRoomId).getAuthor()} without='self_id'/>
                         </ListGroup.Item>
                         {this.props.getTalkRoomById(this.props.talkRoomId).getMembers().map((user,index) => {
                             return (
                                 <ListGroup.Item key={index}>
-                                    <UserProfile user = {user} />
+                                    <UserProfile user = {user} without='self_id'/>
                                 </ListGroup.Item>
                             )
                         })}
