@@ -5,8 +5,13 @@ import { connect } from "react-redux"
 import UserModule from "../modules/userModule/UserModule"
 import OwnerDropdown from "./OwnerDropdown"
 import { withRouter } from "react-router-dom"
+import TalkRoomMembersModal from "./TalkRoomMembersModal"
 
 class TalkRoomCard extends React.Component {
+
+    state = {
+        talkRoomMemberShow : false
+    }
 
     getTalkRoom = (id) => this.props.getTalkRoomById(id)
     getUser = (id) => this.props.getUserById(id)
@@ -20,10 +25,11 @@ class TalkRoomCard extends React.Component {
                             <Card.Title><strong>{this.getTalkRoom(this.props.id).title}</strong></Card.Title>
                             <Card.Text>{this.getTalkRoom(this.props.id).description}</Card.Text>
                         </div>
-                        <Image style={{width:'50px', height:'50px'}} src={this.getUser(this.getTalkRoom(this.props.id).author_id).image.thumb.url}  roundedCircle/>
+                        <Image style={{width:'50px', height:'50px'}} src={this.getTalkRoom(this.props.id).getAuthor().image.thumb.url}  roundedCircle/>
                     </div>
                     <div className="d-flex justify-content-end mb-2">
-                        <Button onClick={()=>this.props.history.push(`/talk_rooms/${this.props.id}`)}>入る</Button>
+                        <Button size='sm' className="mr-2" onClick={()=>this.props.history.push(`/talk_rooms/${this.props.id}`)}>入る</Button>
+                        <Button size='sm' onClick={()=>this.setState({talkRoomMemberShow : true})}>メンバー一覧</Button>
                     </div>
                     <div className="d-flex justify-content-end">
                         {[this.props.readOnly].filter(readOnly => !readOnly).map((_,index) => {
@@ -32,6 +38,7 @@ class TalkRoomCard extends React.Component {
                             )    
                         })}
                     </div>
+                    <TalkRoomMembersModal show={this.state.talkRoomMemberShow} talkRoomId={this.props.id} onCancel={() => this.setState({talkRoomMemberShow:false})}/>
                 </Card.Body>
             </Card>
         )

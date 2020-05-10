@@ -22,7 +22,7 @@ class OwnerDropdown extends React.Component {
         return (
             <Dropdown>
                 <Dropdown.Toggle variant="success">
-                    管理者の特権
+                    ルーム設定
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item style={{color:"blue"}} onClick={() => this.setState({userInvideModalShow : true})}>誘う</Dropdown.Item>

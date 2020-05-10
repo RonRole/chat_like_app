@@ -24,7 +24,7 @@ export class LoginForm　extends React.Component {
                             }}>
                 <NameFormGroup errorMessages={this.props.loginErrorMessages} />
                 <PasswordFormGroup errorMessages={this.props.loginErrorMessages} />
-                <Button variant="primary" type="submit">送信</Button>
+                <Button variant="primary" type="submit">ログイン</Button>
             </Form>
         )
     }

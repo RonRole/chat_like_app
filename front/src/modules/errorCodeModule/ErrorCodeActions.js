@@ -7,7 +7,7 @@ export default {
     execHandleError : ({errorResult, history={}}) => {
         return {
             type: ErrorCodeActionTypes.HANDLE_ERROR_CODE,
-            errorCode : errorResult.response.status,
+            errorCode : (errorResult.response || {}).status,
             history
         }
     },
