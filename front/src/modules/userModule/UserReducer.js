@@ -23,7 +23,15 @@ const initialState = {
     0            : defaultUser,
 }
 
+/**
+ * idからUserを取得する
+ * Userのファクトリーメソッドとして使用する
+ * @param {*} state 
+ */
 const createGetUserById = (state) => (id) => {
+    const user = state["users"][id] || defaultUser
+    user.isAuthorOf = (talkRoomId) => (state.talkRooms.joinRooms[talkRoomId] || state.talkRooms.ownRooms[talkRoomId] || {}).author_id === user.id
+    user.isCurrentUser = () => state.logStatus.isLoggedIn.id === user.id
     return state["users"][id] || defaultUser
 }
 
