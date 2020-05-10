@@ -1,7 +1,6 @@
 import LogActions from "../logModule/LogActions"
 import DataAccessor from "../DataAccessor"
 import { call, put, take } from "redux-saga/effects"
-import handleError from "../ErrorHandler"
 import UserActions from "./UserActions"
 
 import { createCurrentUserReceiveChannel } from "../socketClient"
@@ -62,6 +61,14 @@ const searchUser = ({
     })
 }
 
+export function* handleReceiveMessage() {
+    const channel = yield call(createCurrentUserReceiveChannel)
+    //channelがemitするたびに起動
+    while(true) {
+        const response = yield take(channel)
+        yield put(UserActions.setUser(response.user))
+    }
+}
 
 
 //saga

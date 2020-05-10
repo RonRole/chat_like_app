@@ -1,7 +1,6 @@
 import LogActions, { LogActionTypes } from "./LogActions"
 import { put, call} from "redux-saga/effects"
 import DataAccessor from "../DataAccessor"
-import handleError from "../ErrorHandler"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import UserActions from "../userModule/UserActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"

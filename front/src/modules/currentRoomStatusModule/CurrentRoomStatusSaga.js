@@ -3,8 +3,6 @@ import Actions from "./CurrentRoomStatusActions"
 import { call, take, put } from "redux-saga/effects"
 import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods } from "../socketClient"
 
-import UserActions from "../userModule/UserActions"
-
 /**
  * socketサーバーからメッセージの追加を通知された時、
  * stateに通知されたメッセージを追加する
@@ -14,7 +12,6 @@ export function* handleReceiveMessage() {
     //channelがemitするたびに起動
     while(true) {
         const response = yield take(channel)
-        yield put(UserActions.setUser(response.user))
         yield put(Actions.receiveMessage({
             roomId    : response.roomId,
             className : response.className,
