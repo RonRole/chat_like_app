@@ -19,53 +19,25 @@ const createErrorResponse = (error) => {
     }
 }
 
-export default {
-    get : ({
-        url
-    }) => {
-        return Axios.get(url)
-            .then(response => {
-                return createNormalResponse(response)
-            })
-            .catch(error => {
-                return createErrorResponse(error)
-            })
-    },
-    post : ({
-        url,
-        parameter,
-        headers={}
-    }) => {
-        return Axios.post(url, parameter, headers)
-                    .then(response => {
-                        return createNormalResponse(response)
-                    })
-                    .catch(error => {
-                        return createErrorResponse(error)
-                    })
-    },
+const accessorMap = {
+    get : ({url}) => Axios.get(url),
+    post : ({url, parameter, headers={}}) => Axios.post(url, parameter, headers),
+    put : ({url,parameter}) => Axios.put(url, parameter),
+    delete : ({url}) => Axios.delete(url)    
+}
 
-    put : ({
-        url,
-        parameter,
-    }) => {
-        return Axios.put(url, parameter)
-                    .then(response => {
-                        return createNormalResponse(response)
-                    })
-                    .catch(error => {
-                        return createErrorResponse(error)
-                    })
-    },
-    delete : ({
-        url
-    }) => {
-        return Axios.delete(url)
-                    .then(response => {
-                        return createNormalResponse(response)
-                    })
-                    .catch(error => {
-                        return createErrorResponse(error)
-                    })
-    }
+const handleData = (promise) => {
+    return promise
+        .then(response => {
+            return createNormalResponse(response)
+        })
+        .catch(error => {
+            return createErrorResponse(error)
+        })
+}
+export default {
+    get   : ({url}) => handleData(accessorMap.get({url})),
+    post  : ({url, parameter, headers={}}) => handleData(accessorMap.post({url,parameter,headers})),
+    put   : ({url, parameter}) => handleData(accessorMap.put({url, parameter})),
+    delete: ({url}) => handleData(accessorMap.delete({url}))
 }
