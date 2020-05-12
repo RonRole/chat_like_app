@@ -19,13 +19,6 @@ const createErrorResponse = (error) => {
     }
 }
 
-const accessorMap = {
-    get : ({url}) => Axios.get(url),
-    post : ({url, parameter, headers={}}) => Axios.post(url, parameter, headers),
-    put : ({url,parameter}) => Axios.put(url, parameter),
-    delete : ({url}) => Axios.delete(url)    
-}
-
 const handleData = (promise) => {
     return promise
         .then(response => {
@@ -36,8 +29,8 @@ const handleData = (promise) => {
         })
 }
 export default {
-    get   : ({url}) => handleData(accessorMap.get({url})),
-    post  : ({url, parameter, headers={}}) => handleData(accessorMap.post({url,parameter,headers})),
-    put   : ({url, parameter}) => handleData(accessorMap.put({url, parameter})),
-    delete: ({url}) => handleData(accessorMap.delete({url}))
+    get   : ({url}) => handleData(Axios.get(url)),
+    post  : ({url, parameter, headers={}}) => handleData(Axios.post(url,parameter,headers)),
+    put   : ({url, parameter}) => handleData(Axios.put(url, parameter)),
+    delete: ({url}) => handleData(Axios.delete(url))
 }
