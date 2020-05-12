@@ -5,19 +5,22 @@ import { Container, Image } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import UserModule from '../modules/userModule/UserModule'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
 import CurrentUsersContainer from './CurrentUsersContainer'
+import Sidebar from '../components/Sidebar'
 
 class MessagePage extends React.Component {
 
     render(){
         return (
-            <Container className="justify-content-center">
-                <strong>{this.props.getTalkRoomById(this.props.match.params.id).title}</strong>
-                <CurrentUsersContainer {...this.props} className='mb-2' style={{height:'auto', width:'100%', border:"1px solid gray"}}/>
-                <MessagesContainer {...this.props} className="mb-2" style={{height:"65vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
-                <MessageFormContainer {...this.props} />
-            </Container>
+            <div>
+                <Sidebar />
+                <Container className="justify-content-center">
+                    <strong>{this.props.getTalkRoomById(this.props.match.params.id).title}</strong>
+                    <CurrentUsersContainer {...this.props} className='mb-2' style={{height:'auto', width:'100%', border:"1px solid gray"}}/>
+                    <MessagesContainer {...this.props} className="mb-2" style={{height:"65vh", width:"100%", overflow:"scroll", border:"1px solid gray"}}/>
+                    <MessageFormContainer {...this.props} />
+                </Container>
+            </div>
         )
     }
 }
