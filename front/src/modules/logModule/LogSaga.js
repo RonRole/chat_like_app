@@ -17,6 +17,7 @@ export function* handleGetDefLoginStart(action) {
     else {
         yield put(ErrorCodeActions.execHandleError({errorResult:accessResult.data}))
     }
+    action.then()
 }
 
 export function* handleGetExecLoginStart(loginAction) {

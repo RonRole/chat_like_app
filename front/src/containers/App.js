@@ -21,6 +21,10 @@ export class App extends Component {
     defaultLoaded : false
   }
 
+  componentDidUpdate() {
+    console.log(this.props.state)
+  }
+
   componentDidMount(){
     this.props.defaultLogin({
       history : this.props.history,
@@ -72,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(state=>{return {state} }, mapDispatchToProps)(App);

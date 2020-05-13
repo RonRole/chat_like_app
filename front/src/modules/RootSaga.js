@@ -17,27 +17,19 @@ import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
 function* initialize(action) {
     const login = yield fork(logSaga.handleGetDefLoginStart, action)
     yield join(login)
-    const ownRooms = yield fork(talkRoomSaga.handleGetOwnRooms, action)
-    const joinRooms = yield fork(talkRoomSaga.handleGetJoinedTalkRooms, action)
-    yield join(ownRooms)
-    yield join(joinRooms)
     action.then()
 }
 
 function* login(action) {
     const login = yield fork(logSaga.handleGetExecLoginStart, action)
     yield join(login)
-    const ownRooms = yield fork(talkRoomSaga.handleGetOwnRooms, action)
-    const joinRooms = yield fork(talkRoomSaga.handleGetJoinedTalkRooms, action)
-    yield join(ownRooms)
-    yield join(joinRooms)
     action.then()
 }
 
 
 const logSagas = [
-    takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(initialize)),
-    takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(login)),
+    takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(logSaga.handleGetDefLoginStart)),
+    takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(logSaga.handleGetExecLoginStart)),
     takeEvery(LogActionTypes.EXEC_LOG_OUT, loadingSaga.wrapSagaWithLoading(logSaga.handleGetExecLogoutStart)),
 ]
 

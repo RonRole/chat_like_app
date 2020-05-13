@@ -32,8 +32,19 @@ const getTalkRoomById = (state) => (id) => {
 }
 
 const actionHandler = {}
-actionHandler[LogActionTypes.LOG_IN ] = () => {
-    return initialState
+actionHandler[LogActionTypes.LOG_IN] = (state) => {
+    return {
+        ...state,
+        ...initialState
+
+    }
+
+}
+actionHandler[LogActionTypes.DEF_LOG_IN] = (state) => {
+    return {
+        ...state,
+        ...initialState
+    }
 }
 actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
     state.ownRooms = {}
