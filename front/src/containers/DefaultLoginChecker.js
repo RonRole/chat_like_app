@@ -1,5 +1,4 @@
 import React from 'react'
-import Loading from './Loading'
 import { connect } from 'react-redux'
 import LogModule from '../modules/logModule/LogModule'
 

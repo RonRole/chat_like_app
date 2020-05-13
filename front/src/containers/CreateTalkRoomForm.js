@@ -6,7 +6,46 @@ import { Button } from "react-bootstrap"
 import { TitleFormGroup, DescriptionFormGroup } from '../components/TalkRoomFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
+/**
+ * ModalFormのHeader
+ */
+const TalkRoomFormHeader = () => (
+    <strong>トークルームをつくる</strong>
+)
 
+/**
+ * ModalFormのBodyコンポーネント
+ */
+class TalkRoomFormBodyComp extends React.Component {
+    render() {
+        return (
+            <div>
+                <TitleFormGroup errorMessages={this.props.getFormErrorMessagesOf('title')}/>
+                <DescriptionFormGroup errorMessages={this.props.getFormErrorMessagesOf('description')}/>
+            </div>
+        )
+    }
+}
+
+const TalkRoomFormBody = connect(state => {
+    return {
+        getFormErrorMessagesOf : name => FormErrorModule.reducer.getErrorsOf(state)('createTalkRoomForm')(name)
+    }
+})(TalkRoomFormBodyComp)
+
+class TalkRoomFormFooter extends React.Component {
+    render() {
+        return (
+            <div>
+                <Button className="mr-2" type="submit">つくる</Button>
+                <Button variant="secondary" onClick={() => {
+                    this.props.onCancel()}
+                }>やめる</Button>    
+            </div> 
+        )
+    }
+}
+    
 /**
  * TalkRoomFormGroup + ModalForm
  */
@@ -15,22 +54,14 @@ class CreateTalkRoomFormComp extends React.Component {
         return (
             <ModalForm
                 {...this.props}
-                header = {<strong>トークルームをつくる</strong>}
-                body = {
-                    <div>
-                        <TitleFormGroup errorMessages={this.props.getFormErrorMessagesOf('title')}/>
-                        <DescriptionFormGroup errorMessages={this.props.getFormErrorMessagesOf('description')}/>
-                    </div>
-                }
-                footer = {
-                    <div>
-                        <Button className="mr-2" type="submit">つくる</Button>
-                        <Button variant="secondary" onClick={() => {
-                            this.props.clearFormErrorMessages()
-                            this.props.onCancel()}
-                        }>やめる</Button>    
-                    </div>  
-                }
+                header = {<TalkRoomFormHeader />}
+                body = {<TalkRoomFormBody />}
+                footer =  {
+                    <TalkRoomFormFooter onCancel={() => {
+                        this.props.clearFormErrorMessages()
+                        this.props.onCancel()
+                    }}
+                />}
                 onSubmit = {(e) => {
                     e.preventDefault()
                     this.props.addTalkRoom({
@@ -44,10 +75,10 @@ class CreateTalkRoomFormComp extends React.Component {
         )
     }
 }
+
 const mapStateToProps = (state) => {
     return {
         loginUser : state.logStatus.isLoggedIn,
-        getFormErrorMessagesOf : name => FormErrorModule.reducer.getErrorsOf(state)('createTalkRoomForm')(name)
     }
 }
 

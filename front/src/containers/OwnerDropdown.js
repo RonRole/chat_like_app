@@ -4,6 +4,7 @@ import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import { connect } from "react-redux"
 import UserInviteForm from "./UserInviteForm"
+import UserInviteFormNeo from "./UserInviteFormNeo"
 
 /**
  * オーナー専用のドロップダウンメニューでやんす
@@ -34,11 +35,12 @@ class OwnerDropdown extends React.Component {
                         this.props.destroyTalkRoom(this.props.talkRoomId)
                     }}>消す</Dropdown.Item>
                 </Dropdown.Menu>
-                <UserInviteForm talkRoomId={this.props.talkRoomId}
+                <UserInviteFormNeo talkRoomId={this.props.talkRoomId}
                                 show = {this.state.userInvideModalShow} 
                                 onCancel = {() => {
                                     this.setState({userInvideModalShow:false})
-                                }}/>
+                                }}
+                />
                 <UpdateTalkRoomForm talkRoomId={this.props.talkRoomId}
                                     show = {this.state.updateModalShow}
                                     onCancel = {() => {
