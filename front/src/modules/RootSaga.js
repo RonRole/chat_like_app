@@ -22,8 +22,8 @@ const logSagas = [
 
 const talkRoomSagas = [
     //talkRoomSaga
-    takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(talkRoomSaga.handleGetOwnRooms)),
-    takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(talkRoomSaga.handleGetOwnRooms)),
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.wrapSagaWithLoading(talkRoomSaga.handleGetOwnRooms)),
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.wrapSagaWithLoading(talkRoomSaga.handleGetJoinedTalkRooms)),
     takeEvery(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, talkRoomSaga.handleGetOwnRooms),
     takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, talkRoomSaga.handleGetJoinedTalkRooms),
     takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, talkRoomSaga.handleAddTalkRoom),
