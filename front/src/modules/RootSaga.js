@@ -14,19 +14,6 @@ import * as errorSaga from './errorCodeModule/ErrorCodeSaga'
 import { UserActionTypes } from "./userModule/UserActions";
 import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
 
-function* initialize(action) {
-    const login = yield fork(logSaga.handleGetDefLoginStart, action)
-    yield join(login)
-    action.then()
-}
-
-function* login(action) {
-    const login = yield fork(logSaga.handleGetExecLoginStart, action)
-    yield join(login)
-    action.then()
-}
-
-
 const logSagas = [
     takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(logSaga.handleGetDefLoginStart)),
     takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(logSaga.handleGetExecLoginStart)),
