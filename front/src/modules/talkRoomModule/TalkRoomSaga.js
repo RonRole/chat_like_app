@@ -124,6 +124,10 @@ export function* handleAddTalkRoom(action) {
     }
     if(addTalkRoomResult.isFail) {
         alert('トークルームを追加できませんでした')
+        yield put(FormErrorActions.setError({
+            formName : "createTalkRoomForm",
+            errorJson : addTalkRoomResult.data
+        }))
     }
     if(addTalkRoomResult.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:addTalkRoomResult.data}))
@@ -144,6 +148,10 @@ export function* handleUpdateTalkRoom(action) {
     }
     if(updateTalkRoomResult.isFail) {
         alert(`${action.talkRoom.title}の更新ができませんでした`)
+        yield put(FormErrorActions.setError({
+            formName : "updateTalkRoomForm",
+            errorJson : updateTalkRoomResult.data
+        }))
     }
     if(updateTalkRoomResult.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:updateTalkRoomResult.data}))

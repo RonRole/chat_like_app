@@ -23,7 +23,9 @@ class TalkRoomsController < ApplicationController
         @talk_room = @current_user.talk_rooms.new(talkroom_params)
         if(@talk_room.save)
             render :json => @talk_room
-        end 
+        else
+            render :json => @talk_room.fail_result
+        end
     end
 
     def show
@@ -35,9 +37,8 @@ class TalkRoomsController < ApplicationController
         @talk_room = TalkRoom.find(params[:id])
         if(@talk_room.update_attributes(talkroom_params))
             render :json => @talk_room
-            return
         else
-            render :json => {isFail: true}
+            render :json => @talk_room.fail_result
         end
     end
 

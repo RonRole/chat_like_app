@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { Button } from "react-bootstrap"
 import { TitleFormGroup, DescriptionFormGroup } from '../components/TalkRoomFormGroups'
+import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
 
 /**
@@ -15,11 +16,19 @@ class CreateTalkRoomFormComp extends React.Component {
             <ModalForm
                 {...this.props}
                 header = {<strong>トークルームをつくる</strong>}
-                body = {<div><TitleFormGroup/><DescriptionFormGroup/></div>}
+                body = {
+                    <div>
+                        <TitleFormGroup errorMessages={this.props.getFormErrorMessagesOf('title')}/>
+                        <DescriptionFormGroup errorMessages={this.props.getFormErrorMessagesOf('description')}/>
+                    </div>
+                }
                 footer = {
                     <div>
                         <Button className="mr-2" type="submit">つくる</Button>
-                        <Button variant="secondary" onClick={this.props.onCancel}>やめる</Button>    
+                        <Button variant="secondary" onClick={() => {
+                            this.props.clearFormErrorMessages()
+                            this.props.onCancel()}
+                        }>やめる</Button>    
                     </div>  
                 }
                 onSubmit = {(e) => {
@@ -29,7 +38,7 @@ class CreateTalkRoomFormComp extends React.Component {
                         description : e.currentTarget.description.value,
                         authorId : this.props.loginUser.id
                     })
-                    this.props.onCancel()
+                    this.props.clearFormErrorMessages()
                 }}
             />
         )
@@ -38,6 +47,7 @@ class CreateTalkRoomFormComp extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loginUser : state.logStatus.isLoggedIn,
+        getFormErrorMessagesOf : name => FormErrorModule.reducer.getErrorsOf(state)('createTalkRoomForm')(name)
     }
 }
 
@@ -54,6 +64,7 @@ const mapDispatchToProps = (dispatch) => {
                 authorId
             }))
         },
+        clearFormErrorMessages : () => dispatch(FormErrorModule.actions.clearErrorByName('createTalkRoomForm'))
     }
 }
 

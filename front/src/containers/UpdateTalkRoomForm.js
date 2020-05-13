@@ -4,6 +4,7 @@ import { TitleFormGroup, DescriptionFormGroup } from "../components/TalkRoomForm
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
 import { Button } from "react-bootstrap"
+import FormErrorModule from "../modules/FormErrorModule/FormErrorModule"
 
 class UpdateTalkRoomForm extends React.Component {
     render() {
@@ -12,7 +13,12 @@ class UpdateTalkRoomForm extends React.Component {
             <ModalForm 
                 {...this.props}
                 header = {<strong>トークルームをかえる</strong>}
-                body = {<div><TitleFormGroup defaultValue={talkRoom.title}/><DescriptionFormGroup defaultValue={talkRoom.description}/></div>}
+                body = {
+                    <div>
+                        <TitleFormGroup errorMessages={this.props.getFormErrorMessagesOf('title')} defaultValue={talkRoom.title}/>
+                        <DescriptionFormGroup errorMessages={this.props.getFormErrorMessagesOf('description')} defaultValue={talkRoom.description}/>
+                    </div>
+                }
                 footer = {
                     <div>
                         <Button className="mr-2" type="submit">かえる</Button>
@@ -23,8 +29,8 @@ class UpdateTalkRoomForm extends React.Component {
                     e.preventDefault()
                     this.props.updateTalkRoom({
                         talkRoomId : this.props.talkRoomId,
-                        title : e.currentTarget.title.value,
-                        description : e.currentTarget.description.value
+                        title : e.currentTarget.title.value || talkRoom.title,
+                        description : e.currentTarget.description.value || talkRoom.description
                     })
                     this.props.onCancel()
                 }}        
@@ -35,7 +41,8 @@ class UpdateTalkRoomForm extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        getTalkRoomById : (talkRoomId) => TalkRoomModule.reducer.getTalkRoomById(state)(talkRoomId)
+        getTalkRoomById : (talkRoomId) => TalkRoomModule.reducer.getTalkRoomById(state)(talkRoomId),
+        getFormErrorMessagesOf : name => FormErrorModule.reducer.getErrorsOf(state)('updateTalkRoomForm')(name)
     }
 }
 
@@ -51,7 +58,8 @@ const mapDispatchToProps = (dispatch) => {
                 title,
                 description
             }))
-        }
+        },
+        clearFormErrorMessages : () => dispatch(FormErrorModule.actions.clearErrorByName('updateTalkRoomForm'))
     }
 }
 

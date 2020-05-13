@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+    include FailResultHelper
     # バリデーション
     validates :name, presence: true
     validates :password, presence: true, on: :create
@@ -19,15 +20,6 @@ class User < ApplicationRecord
 
     #デフォルトのself_idを設定する
     before_create :set_default_self_id
-
-    #登録失敗時のパラメータ(JSON)
-    def fail_result
-        fail_result = {isFail:true}
-        self.errors.each do |name|
-            fail_result[name] = self.errors.full_messages_for(name)
-        end
-        fail_result
-    end
 
     #受け取った文字列をハッシュにして返す
     class << self

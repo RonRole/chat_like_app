@@ -12,7 +12,7 @@ export const TitleFormGroup = ({
             <Form.Label>タイトル</Form.Label>
             <Form.Control type="text" name="title" placeholder="タイトル" isInvalid={errorMessages.length > 0} defaultValue={defaultValue}/>
             <Form.Control.Feedback type="invalid">
-                {errorMessages.find(e=>e)}
+                {errorMessages}
             </Form.Control.Feedback>
         </Form.Group>
     )
