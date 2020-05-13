@@ -1,5 +1,4 @@
 import { TalkRoomActionTypes } from "./TalkRoomActions";
-import { LogActionTypes } from "../logModule/LogActions";
 import createReducerFactory from "../CreateReducerFactory";
 import UserModule from "../userModule/UserModule";
 
@@ -23,7 +22,7 @@ const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
 
 const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
-const getTalkRoomById = (state) => (id) => {
+const createTalkRoomById = (state) => (id) => {
     const room = state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || defaultRoom
     room.getAllUsers = () => [...new Set([...(room.userIds || []), room.author_id])].map(id => UserModule.reducer.getUserById(state)(id))
     room.getAuthor = () => UserModule.reducer.getUserById(state)(room.author_id)
@@ -32,20 +31,6 @@ const getTalkRoomById = (state) => (id) => {
 }
 
 const actionHandler = {}
-actionHandler[LogActionTypes.LOG_IN] = (state) => {
-    return {
-        ...state,
-        ...initialState
-
-    }
-
-}
-actionHandler[LogActionTypes.DEF_LOG_IN] = (state) => {
-    return {
-        ...state,
-        ...initialState
-    }
-}
 actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
     state.ownRooms = {}
     action.talkRooms.forEach(room => {
@@ -100,6 +85,6 @@ const createReducer = createReducerFactory(initialState, actionHandler)
 export default {
     getOwnRoomIds,
     getJoinRoomIds,
-    getTalkRoomById,
+    getTalkRoomById: createTalkRoomById,
     createReducer
 }
