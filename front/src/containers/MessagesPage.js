@@ -7,13 +7,18 @@ import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import UserModule from '../modules/userModule/UserModule'
 import CurrentUsersContainer from './CurrentUsersContainer'
 import Sidebar from '../components/Sidebar'
+import { Link } from 'react-router-dom'
 
 class MessagePage extends React.Component {
 
     render(){
         return (
             <div>
-                <Sidebar />
+                <Sidebar>
+                    <Link className='nav-link' onClick={()=>alert('Unko')}>Test</Link>
+                    <Link className = "nav-link" to="/talk_rooms">退出する</Link>
+                    <Link className = "nav-link" to="/talk_rooms">Test</Link>
+                </Sidebar>
                 <Container className="justify-content-center">
                     <strong>{this.props.getTalkRoomById(this.props.match.params.id).title}</strong>
                     <CurrentUsersContainer {...this.props} className='mb-2' style={{height:'auto', width:'100%', border:"1px solid gray"}}/>

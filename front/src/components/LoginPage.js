@@ -2,6 +2,9 @@ import React from 'react'
 import { Container, Alert, Row, Col } from 'react-bootstrap'
 import LoginForm from '../containers/LoginForm'
 
+/**
+ * ログインページのデザイン設定・配置を行うコンポーネント
+ */
 class LoginPage extends React.Component {
     render() {
         return (

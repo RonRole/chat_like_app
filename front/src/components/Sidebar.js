@@ -9,7 +9,7 @@ const spanMap = {
     lg : 2
 }
 
-const SidebarBody = () => {
+const SidebarBody = ({children=[]}) => {
     return (
         <Col xs={{span:spanMap.xs}} 
             sm={{span:spanMap.sm}} 
@@ -19,9 +19,7 @@ const SidebarBody = () => {
             style={{zIndex:3,paddingRight:0}}>
             <nav className='navbar navbar-expand-sm navbar-dark bg-dark h-100 w-100'>
                 <Nav className='navbar-nav' style={{display:'block',height:'100%'}}>
-                    <Link className='nav-link' onClick={()=>alert('Unko')}>Test</Link>
-                    <Link className = "nav-link" to="/talk_rooms">退出する</Link>
-                    <Link className = "nav-link" to="/talk_rooms">Test</Link>
+                    {children}
                 </Nav>
             </nav>
         </Col>
@@ -96,7 +94,9 @@ class Sidebar extends React.Component {
             <Row>
                 {this.state.open ?
                     <div>
-                        <SidebarBody />
+                        <SidebarBody>
+                            {this.props.children}
+                        </SidebarBody>
                         <CursorWhenOpened onClick={() => this.setState({open:false})} />
                     </div>
                 : 

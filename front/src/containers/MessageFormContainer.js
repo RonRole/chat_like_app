@@ -1,11 +1,9 @@
 import React from 'react'
 //import { Actions, Variants } from '../modules/TalkRoomMessageModule'
 import TalkRoomMessageModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
-import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 
 import { connect } from 'react-redux'
-import { Container, Form, Row, Col } from 'react-bootstrap'
-import MessageSendButton from '../components/MessageSendButton'
+import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 
 export class MessageFormContainer extends React.Component {
 
@@ -47,7 +45,7 @@ export class MessageFormContainer extends React.Component {
                             /> 
                         </Col>
                         <Col xs={2} sm={2} md={1}>
-                            <MessageSendButton />
+                            <Button variant="warning" type="submit">▶</Button>
                         </Col>
                     </Row>
                 </Form>

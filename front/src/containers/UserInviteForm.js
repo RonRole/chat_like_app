@@ -9,7 +9,6 @@ import UserProfile from "../components/UserProfile"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 import UserInviteButton from "./UserInviteButton"
 
-
 class UserInviteForm extends React.Component {
 
     checkAlreadyJoined(user) {
