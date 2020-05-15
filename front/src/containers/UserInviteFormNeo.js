@@ -5,7 +5,7 @@
  * ・
  */
 import React from 'react'
-import { IdFormGroup, NameFormGroup } from '../components/UserFormGroups'
+import UserFormGroups from '../components/UserFormGroups'
 import ModalForm from '../components/ModalForm'
 import { connect } from 'react-redux'
 import UserInviteButton from './UserInviteButton'
@@ -25,7 +25,7 @@ const ModalHeader = () => <strong>ユーザーを誘う</strong>
 class SearchedUsersFieldComp extends React.Component {
     render() {
         return (
-        <TransitionGroup>
+            <TransitionGroup>
                 {[...this.props.searchedUserIds].map(id => this.props.getUserById(id)).filter(e=>e).map((user,index) => {
                     return (
                         <CSSTransition key={user.id} classNames="fade" timeout={100}>
@@ -56,8 +56,8 @@ class ModalBodyComp extends React.Component {
     render() {
         return (
             <div>
-                <IdFormGroup errorMessages={this.props.userInviteErrorMessages} rejectNullOnView/>
-                <NameFormGroup errorMessages={this.props.userInviteErrorMessages} rejectNullOnView/>
+                <UserFormGroups.IdFormGroup errorMessages={this.props.userInviteErrorMessages} rejectNullOnView/>
+                <UserFormGroups.NameFormGroup errorMessages={this.props.userInviteErrorMessages} rejectNullOnView/>
                 <SearchedUsersField talkRoomId={this.props.talkRoomId}/>
             </div>
         )

@@ -1,10 +1,11 @@
 import React from 'react'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
-import { Container, Button, Pagination } from 'react-bootstrap'
-import TalkRoomsArea from '../components/TalkRoomsArea'
+import { Container, Button, Pagination, Col } from 'react-bootstrap'
 import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
+import TalkRoomCard from './TalkRoomCard'
+import TransitionItems from '../components/TransitionItems'
 
 
 
@@ -41,12 +42,15 @@ class TalkRoomPage extends React.Component {
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
                 <Button variant="primary" onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
-                <TalkRoomsArea
-                    className='mb-2' 
-                    talkRoomIds={[...this.props.ownRoomIds].filter((_, index) => {
+                <TransitionItems className='row'>
+                    {[...this.props.ownRoomIds].filter((_, index) => {
                         return (this.state.selectedOwnRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedOwnRoomPage*this.state.paginateLength
-                    })}
-                />
+                    }).map((id,index) => (
+                        <Col key={index} md='4'>
+                            <TalkRoomCard id={id} key={id} />
+                        </Col>
+                    ))}
+                </TransitionItems>
                 <Pagination>
                     {[...Array(Math.ceil(this.props.ownRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {
                         return <Pagination.Item 
@@ -59,13 +63,15 @@ class TalkRoomPage extends React.Component {
                     })}
                 </Pagination>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
-                <TalkRoomsArea
-                    className='mb-2'
-                    talkRoomIds={[...this.props.joinRoomIds].filter((_, index) => {
+                <TransitionItems className='row'>
+                    {[...this.props.joinRoomIds].filter((_, index) => {
                         return (this.state.selectedJoinRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedJoinRoomPage*this.state.paginateLength
-                    })}
-                    readOnly
-                />
+                    }).map((id,index) => (
+                        <Col key={index} md='4'>
+                            <TalkRoomCard id={id} key={id} readOnly/>
+                        </Col>
+                    ))}
+                </TransitionItems>
                 <Pagination>
                     {[...Array(Math.ceil(this.props.joinRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {
                         return <Pagination.Item 

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Form, NavItem } from 'react-bootstrap'
 
-export const TitleFormGroup = ({
+
+const TitleFormGroup = ({
     className = "",
     style = "",
     errorMessages = [],
@@ -18,7 +19,7 @@ export const TitleFormGroup = ({
     )
 }
 
-export const DescriptionFormGroup = ({
+const DescriptionFormGroup = ({
     className = "",
     style = "",
     errorMessages = [],
@@ -35,3 +36,9 @@ export const DescriptionFormGroup = ({
         </Form.Group>
     )
 }
+
+const TalkRoomFormGroups = {}
+TalkRoomFormGroups.Title = TitleFormGroup
+TalkRoomFormGroups.Description = DescriptionFormGroup
+
+export default TalkRoomFormGroups

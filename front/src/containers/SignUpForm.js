@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Button, Container } from 'react-bootstrap'
 import UserModule from '../modules/userModule/UserModule'
 import { connect } from 'react-redux'
-import { NameFormGroup, PasswordFormGroup, PasswordConfirmationFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
+import UserFormGroups, { NameFormGroup, PasswordFormGroup, PasswordConfirmationFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
 class SignUpForm extends React.Component {
@@ -21,10 +21,10 @@ class SignUpForm extends React.Component {
                     history : this.props.history
                 })
             }}>
-                <NameFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("name")}/>
-                <PasswordFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password")} />
-                <PasswordConfirmationFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password_confirmation")} />
-                <ProfileImageFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("image")}/>
+                <UserFormGroups.NameFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("name")}/>
+                <UserFormGroups.PasswordFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password")} />
+                <UserFormGroups.PasswordConfirmationFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password_confirmation")} />
+                <UserFormGroups.ProfileImageFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("image")}/>
                 <Button variant="primary" type="submit">登録する</Button>
             </Form>
         )

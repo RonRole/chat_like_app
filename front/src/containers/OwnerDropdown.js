@@ -3,7 +3,6 @@ import { Dropdown } from "react-bootstrap"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import { connect } from "react-redux"
-import UserInviteForm from "./UserInviteForm"
 import UserInviteFormNeo from "./UserInviteFormNeo"
 
 /**

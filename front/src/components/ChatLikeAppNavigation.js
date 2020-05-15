@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar, Nav } from 'react-bootstrap';
 
-class Navigation extends React.Component {
+class ChatLikeAppNavigation extends React.Component {
     render() {
         return (
             <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
@@ -17,4 +17,4 @@ class Navigation extends React.Component {
     }
 }
 
-export default Navigation;
+export default ChatLikeAppNavigation;

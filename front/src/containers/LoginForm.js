@@ -1,12 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
 import { Form, Button } from 'react-bootstrap'
 import LogModule from '../modules/logModule/LogModule'
-import { NameFormGroup, PasswordFormGroup } from '../components/UserFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
+import { withRouter } from 'react-router-dom'
+import UserFormGroups from '../components/UserFormGroups'
 
-export class LoginForm　extends React.Component {
+class LoginForm　extends React.Component {
 
     componentWillUnmount() {
         this.props.clearLoginError()
@@ -18,12 +18,12 @@ export class LoginForm　extends React.Component {
                                 formEvent.preventDefault()
                                 const input = formEvent.currentTarget
                                 this.props.login({
-                                    input   : input,
+                                    input,
                                     history : this.props.history
                                 })
                             }}>
-                <NameFormGroup errorMessages={this.props.loginErrorMessages} />
-                <PasswordFormGroup errorMessages={this.props.loginErrorMessages} />
+                <UserFormGroups.NameFormGroup errorMessages={this.props.loginErrorMessages} />
+                <UserFormGroups.PasswordFormGroup errorMessages={this.props.loginErrorMessages} />
                 <Button variant="primary" type="submit">ログイン</Button>
             </Form>
         )
@@ -60,4 +60,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(LoginForm))

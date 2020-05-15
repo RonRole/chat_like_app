@@ -1,18 +1,21 @@
 import React from 'react'
-import { Redirect, Route } from 'react-router-dom'
+import { Redirect, Route, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 /**
  * stateのisLoggedInが設定されていない場合(=ログインがされていない場合)
  * /signinにリダイレクトするRouteコンポーネント
  */
-export class LoginRequiredRoute extends React.Component {
+class LoginRequiredRoute extends React.Component {
 
     render(){
         if(!this.props.isLoggedIn){
             return  <Route exact={this.props.exact} path={this.props.path} render={()=><Redirect to={{
                 pathname:"/signin",
-                flash:"ログインしろよ",
+                flash: {
+                    message:'ログインしてください',
+                    variant:'danger'
+                },
             }}/>}/>
         }
         return <Route {...this.props}/>
@@ -25,4 +28,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps, null)(LoginRequiredRoute)
+export default connect(mapStateToProps, null)(withRouter(LoginRequiredRoute))

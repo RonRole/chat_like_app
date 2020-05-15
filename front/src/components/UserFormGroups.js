@@ -2,7 +2,9 @@ import React from 'react'
 import { Form, NavItem } from 'react-bootstrap'
 import Transparent from './Transparent'
 
-export const IdFormGroup = ({
+const UserFormGroups = {}
+
+UserFormGroups.IdFormGroup = ({
     className = "",
     style = "",
     defaultValue = "",
@@ -20,7 +22,7 @@ export const IdFormGroup = ({
     )
 }
 
-export const NameFormGroup = ({
+UserFormGroups.NameFormGroup = ({
     className = "",
     style = "",
     defaultValue = "",
@@ -38,7 +40,7 @@ export const NameFormGroup = ({
     )
 }
 
-export const PasswordFormGroup = ({
+UserFormGroups.PasswordFormGroup = ({
     className = "",
     style = "",
     defaultValue = "",
@@ -55,7 +57,7 @@ export const PasswordFormGroup = ({
     )
 }
 
-export const PasswordConfirmationFormGroup = ({
+UserFormGroups.PasswordConfirmationFormGroup = ({
     className = "",
     style = "",
     defaultValue = "",
@@ -73,7 +75,7 @@ export const PasswordConfirmationFormGroup = ({
 }
 
 
-export class ProfileImageFormGroup extends React.Component {
+class ProfileImageFormGroup extends React.Component {
     
     state = {
         uploadFileImage : this.props.defaultValue,
@@ -93,8 +95,8 @@ export class ProfileImageFormGroup extends React.Component {
                     }
                     input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
                 }}/>
-                <Transparent
-                    frontComponent = {
+                <Transparent>
+                    <Transparent.Front transParent={this.state.transParentProfile}>
                         <img
                             style={{
                                 backgroundColor:this.state.uploadFileImage ? "white" : "",
@@ -107,16 +109,18 @@ export class ProfileImageFormGroup extends React.Component {
                             width="200px" 
                             height="200px"
                         />
-                    }
-                    backComponent = {
+                    </Transparent.Front>
+                    <Transparent.Back>
                         <div style={{
-                                fontWeight:"bold", 
-                                color:"gray",
-                                width:'200px'
-                        }}>
-                            プロフィール画像変更
+                                    fontWeight:"bold", 
+                                    color:"gray",
+                                    width:'200px'
+                            }}>
+                                プロフィール画像変更
                         </div>
-                    }
+                    </Transparent.Back>
+                </Transparent>
+                <Transparent
                     transParent = {this.state.transParentProfile}
                 />
                 <Form.Control.Feedback type="invalid">
@@ -126,3 +130,7 @@ export class ProfileImageFormGroup extends React.Component {
         )
     }
 }
+
+UserFormGroups.ProfileImageFormGroup = ProfileImageFormGroup
+
+export default UserFormGroups

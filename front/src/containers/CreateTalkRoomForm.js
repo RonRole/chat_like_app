@@ -3,7 +3,7 @@ import ModalForm from '../components/ModalForm'
 import { connect } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { Button } from "react-bootstrap"
-import { TitleFormGroup, DescriptionFormGroup } from '../components/TalkRoomFormGroups'
+import TalkRoomFormGroups, { TitleFormGroup, DescriptionFormGroup } from '../components/TalkRoomFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 
 /**
@@ -20,8 +20,8 @@ class TalkRoomFormBodyComp extends React.Component {
     render() {
         return (
             <div>
-                <TitleFormGroup errorMessages={this.props.getFormErrorMessagesOf('title')}/>
-                <DescriptionFormGroup errorMessages={this.props.getFormErrorMessagesOf('description')}/>
+                <TalkRoomFormGroups.Title errorMessages={this.props.getFormErrorMessagesOf('title')}/>
+                <TalkRoomFormGroups.Description errorMessages={this.props.getFormErrorMessagesOf('description')}/>
             </div>
         )
     }
@@ -52,16 +52,8 @@ class TalkRoomFormFooter extends React.Component {
 class CreateTalkRoomFormComp extends React.Component {
     render() {
         return (
-            <ModalForm
+            <ModalForm 
                 {...this.props}
-                header = {<TalkRoomFormHeader />}
-                body = {<TalkRoomFormBody />}
-                footer =  {
-                    <TalkRoomFormFooter onCancel={() => {
-                        this.props.clearFormErrorMessages()
-                        this.props.onCancel()
-                    }}
-                />}
                 onSubmit = {(e) => {
                     e.preventDefault()
                     this.props.addTalkRoom({
@@ -71,7 +63,20 @@ class CreateTalkRoomFormComp extends React.Component {
                     })
                     this.props.clearFormErrorMessages()
                 }}
-            />
+            >
+                <ModalForm.Header>
+                    <TalkRoomFormHeader />
+                </ModalForm.Header>
+                <ModalForm.Body>
+                    <TalkRoomFormBody />
+                </ModalForm.Body>
+                <ModalForm.Footer>
+                    <TalkRoomFormFooter onCancel={() => {
+                        this.props.clearFormErrorMessages()
+                        this.props.onCancel()
+                    }}/>
+                </ModalForm.Footer>
+            </ModalForm>
         )
     }
 }

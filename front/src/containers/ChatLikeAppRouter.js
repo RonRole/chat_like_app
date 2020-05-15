@@ -9,6 +9,7 @@ import LoginPage from '../components/LoginPage';
 import TalkRoomPage from './TalkRoomPage'
 import HomePage from './HomePage';
 import SignUpPage from '../components/SignUpPage';
+import WrapWithFlashMessage from '../components/WrapWithFlashMessage';
 
 
 /**

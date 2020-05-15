@@ -1,6 +1,6 @@
 import React from "react"
 import ModalForm from "../components/ModalForm"
-import { TitleFormGroup, DescriptionFormGroup } from "../components/TalkRoomFormGroups"
+import TalkRoomFormGroups, { TitleFormGroup, DescriptionFormGroup } from "../components/TalkRoomFormGroups"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
 import { Button } from "react-bootstrap"
@@ -15,8 +15,8 @@ class UpdateTalkRoomForm extends React.Component {
                 header = {<strong>トークルームをかえる</strong>}
                 body = {
                     <div>
-                        <TitleFormGroup errorMessages={this.props.getFormErrorMessagesOf('title')} defaultValue={talkRoom.title}/>
-                        <DescriptionFormGroup errorMessages={this.props.getFormErrorMessagesOf('description')} defaultValue={talkRoom.description}/>
+                        <TalkRoomFormGroups.Title errorMessages={this.props.getFormErrorMessagesOf('title')} defaultValue={talkRoom.title}/>
+                        <TalkRoomFormGroups.Description errorMessages={this.props.getFormErrorMessagesOf('description')} defaultValue={talkRoom.description}/>
                     </div>
                 }
                 footer = {

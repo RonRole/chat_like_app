@@ -6,24 +6,34 @@ import React from 'react'
  * behindComponent:背面に配置するコンポーネント
  */
 const Transparent = ({
-    frontComponent,
-    backComponent,
-    transParent=false
+    children = [],
 }) => {
     return (
         <div className='d-flex' style={{alignItems:'center'}}>
-            <div style={{
-                zIndex:1, 
-                opacity:transParent ? 0.1 : 1.0,
-                transition:'all 0.2s ease-out'
-            }}>
-                {frontComponent}
-            </div>
-            <div style={{zIndex:0, position:'absolute', textAlign:'center'}}>
-                {backComponent}
-            </div>
+            {children}
         </div>                
     )
 }
+
+Transparent.Front = ({
+    children,
+    transParent = false
+}) => (
+    <div style={{
+        zIndex:1, 
+        opacity:transParent ? 0.1 : 1.0,
+        transition:'all 0.2s ease-out'
+    }}>
+        {children}
+    </div>
+)
+
+Transparent.Back = ({
+    children
+}) => (
+    <div style={{zIndex:0, position:'absolute', textAlign:'center'}}>
+        {children}
+    </div>
+)
 
 export default Transparent

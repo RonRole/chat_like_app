@@ -15,7 +15,7 @@ class MessagePage extends React.Component {
         return (
             <div>
                 <Sidebar>
-                    <Link className='nav-link' onClick={()=>alert('Unko')}>Test</Link>
+                    <Link className='nav-link' to=''>Test</Link>
                     <Link className = "nav-link" to="/talk_rooms">退出する</Link>
                     <Link className = "nav-link" to="/talk_rooms">Test</Link>
                 </Sidebar>
