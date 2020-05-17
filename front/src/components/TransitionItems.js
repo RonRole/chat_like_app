@@ -1,13 +1,12 @@
 import React from "react"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
-import { Col, Pagination } from "react-bootstrap"
 
 
 class TransitionItems extends React.Component {
     render() {
         return (
-            <TransitionGroup {...this.props.style} {...this.props.className}>
-                {[...this.props.children].map((item,index) => {
+            <TransitionGroup style={this.props.style} className={this.props.className}>
+                {[this.props.children].flat().map((item,index) => {
                     return(
                         <CSSTransition key = {index} timeout={this.props.timeout} classNames={this.props.classNames}>
                             {item}

@@ -6,6 +6,7 @@ import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
 import TalkRoomCard from './TalkRoomCard'
 import TransitionItems from '../components/TransitionItems'
+import { TransitionGroup, CSSTransition, Transition } from 'react-transition-group'
 
 
 
@@ -26,6 +27,7 @@ const TalkRoomAreaLabel = ({
 class TalkRoomPage extends React.Component {
 
     state = {
+
         createModalShow : false,
         paginateLength : 3,
         selectedOwnRoomPage : 1,
@@ -42,7 +44,7 @@ class TalkRoomPage extends React.Component {
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
                 <Button variant="primary" onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
-                <TransitionItems className='row'>
+                <TransitionItems className='row' classNames='fade'>
                     {[...this.props.ownRoomIds].filter((_, index) => {
                         return (this.state.selectedOwnRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedOwnRoomPage*this.state.paginateLength
                     }).map((id,index) => (
@@ -63,7 +65,7 @@ class TalkRoomPage extends React.Component {
                     })}
                 </Pagination>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
-                <TransitionItems className='row'>
+                <TransitionItems className='row' classNames='fade'>
                     {[...this.props.joinRoomIds].filter((_, index) => {
                         return (this.state.selectedJoinRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedJoinRoomPage*this.state.paginateLength
                     }).map((id,index) => (

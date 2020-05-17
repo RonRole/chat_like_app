@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+//CSSTransitionGroup
+//slide
+.slide-enter {
+  width : 0;
+  overflow: hidden;
+}
+
+.slide-enter-active {
+  width : 50%;
+  overflow: hidden;
+  transition: all 200ms ease-in;
+}
+
+.slide-enter-done {
+  width : 100%;
+  transition: all 200ms ease-in;
+}
+
+.slide-exit {
+  width : 100%;
+}
+
+.slide-exit-active {
+  width : 50%;
+  overflow: hidden;
+  transition: all 200ms ease-out;
+}
+
+.slide-exit-done {
+  width : 0;
+  overflow: hidden;
+  transition: all 200ms ease-out;
+}
+
+//fade
+.fade-enter {
+  opacity:0;
+  transition: all 100ms ease-in;
+}
+
+.fade-enter-active {
+  opacity:.5;
+  transition: all 100ms ease-in;
+}
+
+.fade-enter-done {
+  opacity:1;
+  transition: all 100ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity:.5;
+  transition: all 100ms ease-out;
+}
+
+.fade-exit-done {
+  opacity: 0;
+  transition: all 100ms ease-out;
+}
+
+/*Login Page*/
+#login_form {
+  display: grid;
+  justify-content: center;
+}
+
+input {
+  display:grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+}
+
+/*img*/
+img {
+  object-fit: contain;
+}

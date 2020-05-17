@@ -9,6 +9,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "history": "^4.10.1",
+    "node-sass": "^4.14.1",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
@@ -25,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!your-module-name)/\"",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "compile:sass" : "yarn node-sass ./src/index.scss ./src/index.css -w"
   },
   "eslintConfig": {
     "extends": "react-app"

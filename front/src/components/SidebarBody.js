@@ -1,29 +1,27 @@
 import React from 'react'
-import { Nav, Col } from 'react-bootstrap'
+import { Nav, Col, Button } from 'react-bootstrap'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 
 const SidebarBody = ({
-    spanMap,
-    children=[]
+    children=[],
+    className='',
+    style={}
 }) => {
     return (
-        <Col xs={{span:spanMap.xs}} 
-            sm={{span:spanMap.sm}} 
-            md={{span:spanMap.md}}
-            lg={{span:spanMap.lg}} 
-            className='position-fixed h-100' 
-            style={{zIndex:3,paddingRight:0}}>
-            <nav className='navbar navbar-expand-sm navbar-dark bg-dark h-100 w-100'>
+        <div className={className} style={style}>
+            <nav className='navbar navbar-expand-sm navbar-dark bg-dark h-100'>
                 <Nav className='navbar-nav' style={{display:'block',height:'100%'}}>
                     {children}
                 </Nav>
             </nav>
-        </Col>
+        </div>
     )
 }
 
-SidebarBody.defaultProps = {
-   spanMap : {xs:5,sm:4,md:3,lg:2}
+SidebarBody.defaultProps={
+    className:'h-100',
+    style:{width:'40vw', maxWidth:'300px'}
 }
 
 export default SidebarBody

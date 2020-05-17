@@ -1,5 +1,5 @@
 import React from 'react'
-import { Nav, Col } from 'react-bootstrap'
+import { Nav } from 'react-bootstrap'
 
 class CursorWhenClosed extends React.Component {
 
@@ -9,11 +9,10 @@ class CursorWhenClosed extends React.Component {
 
     render() {
         return (
-            <Col className='position-fixed h-100' 
+            <div className={this.props.className}
                 style={{
-                    zIndex:3,
-                    width:'40px',
-                    opacity : this.state.mouseOnOpenCol ? 0.8 : 1.0
+                    ...this.props.style,
+                    opacity : this.state.mouseOnOpenCol ? 0.8 : 1.0,
                 }}
                 onClick={(e) => this.props.onClick(e)}
                 onMouseOver={() => this.setState({mouseOnOpenCol:true})}
@@ -24,9 +23,14 @@ class CursorWhenClosed extends React.Component {
                         <a className='nav-link'>▶</a>
                     </Nav>
                 </nav>
-            </Col>
+            </div>
         )
     }
+}
+
+CursorWhenClosed.defaultProps = {
+    className:'h-100',
+    style:{}
 }
 
 class CursorWhenOpened extends React.Component {
@@ -35,15 +39,9 @@ class CursorWhenOpened extends React.Component {
     }
     render() {
         return (
-            <Col className='position-fixed h-100'
-                xs={{offset:this.props.offsetMap.xs}}
-                sm={{offset:this.props.offsetMap.sm}}
-                md={{offset:this.props.offsetMap.md}}
-                lg={{offset:this.props.offsetMap.lg}}
+            <div className={this.props.className}
                 style={{
-                    zIndex:3,
-                    width:'40px',
-                    paddingLeft:0,
+                    ...this.props.style,
                     opacity : this.state.mouseOnOpenCol ? 0.8 : 1.0
                 }}
                 onClick={(e) => this.props.onClick(e)}
@@ -55,18 +53,14 @@ class CursorWhenOpened extends React.Component {
                         <a className='nav-link'>◀︎</a>
                     </Nav>
                 </nav>
-            </Col>
+            </div>
         )
     }
 }
 
 CursorWhenOpened.defaultProps = {
-    offsetMap : {
-        xs : 5,
-        sm : 4,
-        md : 3,
-        lg : 2
-    }
+    className:'h-100',
+    style:{}
 }
 
 const SidebarCursor = {
