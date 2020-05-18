@@ -2,10 +2,10 @@ import React from 'react';
 //bootstrap
 import { Link } from 'react-router-dom';
 
-import ChatLikeAppNavigation from '../components/ChatLikeAppNavigation'
-import DefaultLoginChecker from './DefaultLoginChecker';
+import ChatLikeAppNavigation from './ChatLikeAppNavigation'
+import DefaultLoginChecker from '../containers/DefaultLoginChecker';
 import ChatLikeAppRouter from './ChatLikeAppRouter';
-import Loading from './Loading';
+import Loading from '../containers/Loading';
 
 
 /**

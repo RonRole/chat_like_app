@@ -11,6 +11,7 @@ import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
  */
 class CreateTalkRoomFormComp extends React.Component {
     render() {
+
         return (
             <ModalForm 
                 {...this.props}

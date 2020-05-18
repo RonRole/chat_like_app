@@ -1,15 +1,14 @@
 import React from 'react';
 //redux
-import MessagesPage from './MessagesPage'
+import MessagesPage from '../containers/MessagesPage'
 //bootstrap
 import { Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
 
-import LoginRequiredRoute from './LoginRequiredRoute';
-import LoginPage from '../components/LoginPage';
-import TalkRoomPage from './TalkRoomPage'
-import HomePage from './HomePage';
-import SignUpPage from '../components/SignUpPage';
-import WrapWithFlashMessage from '../components/WrapWithFlashMessage';
+import LoginRequiredRoute from '../containers/LoginRequiredRoute';
+import LoginPage from './LoginPage';
+import TalkRoomPage from '../containers/TalkRoomPage'
+import HomePage from '../containers/HomePage';
+import SignUpPage from './SignUpPage';
 
 
 /**

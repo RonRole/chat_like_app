@@ -6,10 +6,6 @@ import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
 import TalkRoomCard from './TalkRoomCard'
 import TransitionItems from '../components/TransitionItems'
-import { TransitionGroup, CSSTransition, Transition } from 'react-transition-group'
-
-
-
 
 const TalkRoomAreaLabel = ({
     userName,

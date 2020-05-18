@@ -4,7 +4,6 @@ import { Image, Container } from "react-bootstrap"
 
 const UserProfile = ({
     className = "",
-    style = {},
     without = [],
     user = {
         id:0,
