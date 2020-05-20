@@ -1,6 +1,7 @@
 export const LogActionTypes = {
+    EXEC_DEF_LOG_IN:"EXEC_DEF_LOG_IN",
+    FINISH_DEF_LOG_IN:"FINISH_DEF_LOG_IN",
     EXEC_LOG_IN:"EXEC_LOG_IN",
-    DEF_LOG_IN:"DEF_LOG_IN",
     LOG_IN:"LOG_IN",
     EXEC_LOG_OUT:'EXEC_LOG_OUT',
     LOG_OUT:"LOG_OUT",
@@ -19,16 +20,17 @@ export default {
             then
         }
     },
-    cookieLogin:({
-        history,
-        then
-    }) => {
+    cookieLogin:() => {
         return {
-            type    : LogActionTypes.DEF_LOG_IN,
-            history,
-            then
+            type    : LogActionTypes.EXEC_DEF_LOG_IN,
         }
     },
+    finishDefLogin:() => {
+        return {
+            type : LogActionTypes.FINISH_DEF_LOG_IN
+        }
+    },
+
     login: (loginUser) => {
         return {
             type     :LogActionTypes.LOG_IN,

@@ -1,7 +1,6 @@
 /**
  * APIアクセス時のエラーを処理する
  */
-
 const handleError = ({
     error,
     history

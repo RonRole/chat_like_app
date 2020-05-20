@@ -1,17 +1,15 @@
 import React from 'react'
-import { Nav, Col, Button } from 'react-bootstrap'
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { Nav } from 'react-bootstrap'
+
 
 
 const SidebarBody = ({
     children=[],
-    className='',
-    style={}
 }) => {
     return (
-        <div className={className} style={style}>
+        <div className='h-100 sidebar_body'>
             <nav className='navbar navbar-expand-sm navbar-dark bg-dark h-100'>
-                <Nav className='navbar-nav' style={{display:'block',height:'100%'}}>
+                <Nav className='sidebar_items navbar-nav h-100'>
                     {children}
                 </Nav>
             </nav>
@@ -19,9 +17,5 @@ const SidebarBody = ({
     )
 }
 
-SidebarBody.defaultProps={
-    className:'h-100',
-    style:{width:'40vw', maxWidth:'300px'}
-}
 
 export default SidebarBody

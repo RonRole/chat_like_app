@@ -60,6 +60,7 @@ actionHandler[UserActionTypes.SET_SEARCHED_USER_IDS] = (state, action) => {
 const createReducer = createReducerFactory(initialState, actionHandler)
     
 export default {
+    defaultUser,
     getUserById: createGetUserById,
     createReducer
 }

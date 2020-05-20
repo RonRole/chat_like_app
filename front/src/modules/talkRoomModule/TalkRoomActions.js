@@ -35,7 +35,7 @@ export default {
         authorId
     }) => {
         return {
-            type       :TalkRoomActionTypes.EXEC_ADD_ROOM,
+            type:TalkRoomActionTypes.EXEC_ADD_ROOM,
             history,
             title,
             description,

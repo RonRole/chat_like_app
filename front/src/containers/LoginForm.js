@@ -11,8 +11,9 @@ class LoginForm　extends React.Component {
     componentWillUnmount() {
         this.props.clearLoginError()
     }
-
+    
     render(){
+
         return(
             <Form onSubmit={(formEvent) => {
                                 formEvent.preventDefault()

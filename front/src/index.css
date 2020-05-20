@@ -7,54 +7,24 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace; }
 
-.slide-enter {
-  width: 0;
-  overflow: hidden; }
-
-.slide-enter-active {
-  width: 50%;
-  overflow: hidden;
-  transition: all 200ms ease-in; }
-
-.slide-enter-done {
-  width: 100%;
-  transition: all 200ms ease-in; }
-
-.slide-exit {
-  width: 100%; }
-
-.slide-exit-active {
-  width: 50%;
-  overflow: hidden;
-  transition: all 200ms ease-out; }
-
-.slide-exit-done {
-  width: 0;
-  overflow: hidden;
-  transition: all 200ms ease-out; }
-
-.fade-enter {
-  opacity: 0;
-  transition: all 100ms ease-in; }
-
 .fade-enter-active {
   opacity: .5;
-  transition: all 100ms ease-in; }
+  transition: width 100ms ease-in; }
 
 .fade-enter-done {
   opacity: 1;
-  transition: all 100ms ease-in; }
+  transition: width 100ms ease-in; }
 
 .fade-exit {
   opacity: 1; }
 
 .fade-exit-active {
   opacity: .5;
-  transition: all 100ms ease-out; }
+  transition: width 100ms ease-out; }
 
 .fade-exit-done {
   opacity: 0;
-  transition: all 100ms ease-out; }
+  transition: width 100ms ease-out; }
 
 /*Login Page*/
 #login_form {
@@ -69,3 +39,41 @@ input {
 /*img*/
 img {
   object-fit: contain; }
+
+/*sidebar*/
+.sidebar {
+  position: absolute;
+  left: -300px; }
+  .sidebar * {
+    z-index: 100; }
+  .sidebar .sidebar_open {
+    display: block; }
+  .sidebar .sidebar_items {
+    display: block; }
+  .sidebar .slide-enter {
+    left: -300px; }
+  .sidebar .slide-enter-active {
+    left: -150px;
+    transition: all 200ms ease; }
+  .sidebar .slide-enter-done {
+    left: 0;
+    transition: all 200ms ease; }
+  .sidebar .slide-exit {
+    left: 0; }
+  .sidebar .slide-exit-active {
+    left: -150px;
+    transition: all 200ms ease; }
+  .sidebar .slide-exit-done {
+    left: -300px;
+    transition: all 200ms ease; }
+  .sidebar .sidebar_body {
+    width: 300px; }
+  .sidebar .sidebar_cursor {
+    width: 20px;
+    opacity: 1.0; }
+    .sidebar .sidebar_cursor:hover {
+      opacity: 0.8; }
+
+/*current_users_container*/
+.current_users_container {
+  border: solid 1px gray; }

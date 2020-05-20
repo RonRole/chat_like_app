@@ -2,91 +2,57 @@ import React from 'react'
 //import { Actions, Variants } from '../modules/TalkRoomMessageModule'
 import TalkRoomMessageModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
+import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
+import { withRouter } from 'react-router-dom'
 
-export class MessageFormContainer extends React.Component {
-
-    startInputting = () => this.props.changeUserStatus({
-        talkRoomId : this.props.match.params.id,
-        userId : this.props.loginUser.id,
-        status: '入力中'                                    
-    })
-
-    finishInputting = () => this.props.changeUserStatus({
-        talkRoomId : this.props.match.params.id,
-        userId : this.props.loginUser.id,
+const MessageFormContainer = ({
+    match
+}) => {
+    const logStatus = useSelector(state=>state.logStatus)
+    const dispatch = useDispatch()
+    const startInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+        talkRoomId : match.params.id,
+        userId : logStatus.isLoggedIn.id,
+        status : '入力中'
+    }))
+    const finishInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+        talkRoomId : match.params.id,
+        userId : logStatus.isLoggedIn.id,
         status : ''
-    })
-
-    render() {
-        return (
-            <Container {...this.props}>
-                <Form onSubmit={(formEvent) => {
-                        formEvent.preventDefault()
-                        this.props.sendMessage({
-                            roomId    : this.props.match.params.id,
-                            className : "myMessage",
-                            text      : formEvent.currentTarget.inputMessage.value,
-                            user      : this.props.loginUser
-                        })
-                        formEvent.currentTarget.inputMessage.value = ""
-                        this.finishInputting()
-                    }}>
-                    <Row>
-                        <Col xs={10} sm={10} md={11}>
-                            <Form.Control 
-                                name="inputMessage" 
-                                type="text" 
-                                placeholder="メッセージを入力してね" 
-                                onFocus={this.startInputting}
-                                onChange={this.startInputting}
-                                onBlur={this.finishInputting}
-                            /> 
-                        </Col>
-                        <Col xs={2} sm={2} md={1}>
-                            <Button variant="warning" type="submit">▶</Button>
-                        </Col>
-                    </Row>
-                </Form>
-            </Container>
-        )
-    }
+    }))
+    return (
+        <Container>
+            <Form onSubmit = {e => {
+                e.preventDefault()
+                dispatch(TalkRoomMessageModule.actions.addMessage({
+                    roomId    : match.params.id,
+                    className : "myMessage",
+                    text      : e.currentTarget.inputMessage.value,
+                    user      : logStatus.isLoggedIn
+                }))
+                finishInputting()
+                e.currentTarget.inputMessage.value=''
+            }}>
+                <Row>
+                    <Col xs={10} sm={10} md={11}>
+                        <Form.Control 
+                            name="inputMessage" 
+                            type="text" 
+                            placeholder="メッセージを入力してね" 
+                            onFocus={startInputting}
+                            onChange={startInputting}
+                            onBlur={finishInputting}
+                        /> 
+                    </Col>
+                    <Col xs={2} sm={2} md={1}>
+                        <Button variant="warning" type="submit">▶</Button>
+                    </Col>
+                </Row>
+            </Form>
+        </Container>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loginUser : state.logStatus.isLoggedIn
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        changeUserStatus : ({
-            talkRoomId,
-            userId,
-            status
-        }) => {
-            dispatch(TalkRoomMessageModule.actions.changeCurrentUserStatus({
-                talkRoomId,
-                userId,
-                status
-            }))
-        },
-        sendMessage:({
-            roomId,
-            className,
-            text,
-            user
-        }) => {
-            dispatch(TalkRoomMessageModule.actions.addMessage({
-                roomId,
-                className,
-                text,
-                user
-            }))
-        }
-    }
-}
-
-export default connect(mapStateToProps,mapDispatchToProps)(MessageFormContainer)
+export default withRouter(MessageFormContainer)

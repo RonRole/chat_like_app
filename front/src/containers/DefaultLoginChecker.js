@@ -1,6 +1,7 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import LogModule from '../modules/logModule/LogModule'
+
 
 /**
  * デフォルトログイン(セッションが残っているときに、その情報を利用してログインする)を行うコンポーネント
@@ -8,42 +9,17 @@ import LogModule from '../modules/logModule/LogModule'
  * 完了している => 子要素を表示する
  * 完了していない => 真っ白
  */
-class DefaultLoginChecker extends React.Component {
-    state = {
-        defaultLoginFinished : false
-    }
-    componentDidMount() {
-        this.props.defaultLogin({
-          history : this.props.history,
-          then : () => this.setState({
-            defaultLoginFinished : true
-          })
-        })
-    }
-    render() {
-        if(!this.state.defaultLoginFinished) {
-            return (
-                <div></div>
-            )
-        }
-        return (
-            this.props.children
-        )
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-      defaultLogin:({
-        history,
-        then
-      }) => {
-        dispatch(LogModule.actions.cookieLogin({
-          history,
-          then
-        }))
+const DefaultLoginChecker = ({
+  children
+}) => {
+  const dispatch = useDispatch()
+  const defaultLoginFinished = useSelector(state=> state.logStatus.defaultLoginFinished)
+  useEffect(() => {
+      if(!defaultLoginFinished){
+        dispatch(LogModule.actions.cookieLogin()) 
       }
-    }
+    })
+  return defaultLoginFinished ? <div>{children}</div> : <div></div>
 }
 
-export default connect(null, mapDispatchToProps)(DefaultLoginChecker)
+export default DefaultLoginChecker

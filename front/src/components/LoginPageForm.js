@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { Row, Col } from "react-bootstrap"
 import LoginForm from "../containers/LoginForm"
 
-const LoginFormWithRouter = withRouter(({
+const LoginFormWithRouter = ({
     history
 }) => (
     <Row>
@@ -11,6 +11,6 @@ const LoginFormWithRouter = withRouter(({
             <LoginForm history={history}/>
         </Col>
     </Row>
-))
+)
 
-export default LoginFormWithRouter
+export default withRouter(LoginFormWithRouter)

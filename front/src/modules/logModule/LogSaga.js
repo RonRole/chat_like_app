@@ -6,7 +6,7 @@ import UserActions from "../userModule/UserActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 
 //saga
-export function* handleGetDefLoginStart(action) {
+export function* handleGetDefLoginStart() {
     const accessResult = yield call(DataAccessor.get, {
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/login`
     })
@@ -17,7 +17,7 @@ export function* handleGetDefLoginStart(action) {
     else {
         yield put(ErrorCodeActions.execHandleError({errorResult:accessResult.data}))
     }
-    action.then()
+    yield put(LogActions.finishDefLogin())
 }
 
 export function* handleGetExecLoginStart(loginAction) {

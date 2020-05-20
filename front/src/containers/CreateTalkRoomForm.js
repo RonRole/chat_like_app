@@ -1,68 +1,55 @@
 import React from 'react'
 import ModalForm from '../components/ModalForm'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { Button } from "react-bootstrap"
 import TalkRoomFormGroups from '../components/TalkRoomFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
-    
+
 /**
- * TalkRoomFormGroup + ModalForm
+ * 
+ * @param {boolean} show -true:表示 false:非表示
+ * @param {function} closeModalAction -modalを閉じるためのメソッド
  */
-class CreateTalkRoomFormComp extends React.Component {
-    render() {
+const CreateTalkRoomForm = ({
+    show = false,
+    toCloseModalAction = () => console.log('onCancel event')
+}) => {
 
-        return (
-            <ModalForm 
-                {...this.props}
-                onSubmit = {(e) => {
-                    e.preventDefault()
-                    this.props.addTalkRoom({
-                        title : e.currentTarget.title.value,
-                        description : e.currentTarget.description.value,
-                        authorId : this.props.loginUser.id
-                    })
-                    this.props.clearFormErrorMessages()
-                }}
-            >
-                <ModalForm.Header>
-                    <strong>トークルームをつくる</strong>
-                </ModalForm.Header>
-                <ModalForm.Body>
-                    <TalkRoomFormGroups.Title errorMessages={this.props.getFormErrorMessagesOf('title')}/>
-                    <TalkRoomFormGroups.Description errorMessages={this.props.getFormErrorMessagesOf('description')}/>
-                </ModalForm.Body>
-                <ModalForm.Footer>
-                    <Button className="mr-2" type="submit">つくる</Button>
-                    <Button variant="secondary" onClick={this.props.onCancel}>やめる</Button>    
-                </ModalForm.Footer>
-            </ModalForm>
-        )
-    }
+    const loginUser = useSelector(state => state.logStatus.isLoggedIn)　|| {}
+    const thisFormError = useSelector(state => state.formErrors.createTalkRoomForm) || {}
+    const dispatch = useDispatch()
+
+    return (
+        <ModalForm 
+            show={show}
+            onSubmit = {(e) => {
+                e.preventDefault()
+                const inputs = e.currentTarget
+                dispatch(TalkRoomModule.actions.execAddTalkRoom({
+                    title : inputs.title.value,
+                    description : inputs.description.value,
+                    authorId : loginUser.id
+                }))
+                dispatch(FormErrorModule.actions.clearErrorByName('createTalkRoomForm'))
+            }}
+        >
+            <ModalForm.Header>
+                <strong>トークルームをつくる</strong>
+            </ModalForm.Header>
+            <ModalForm.Body>
+                <TalkRoomFormGroups.Title errorMessages={thisFormError.title}/>
+                <TalkRoomFormGroups.Description errorMessages={thisFormError.description}/>
+            </ModalForm.Body>
+            <ModalForm.Footer>
+                <Button className="mr-2" type="submit">つくる</Button>
+                <Button variant="secondary" onClick={() => {
+                    toCloseModalAction()
+                    dispatch(FormErrorModule.actions.clearErrorByName('createTalkRoomForm'))
+                }}>やめる</Button>    
+            </ModalForm.Footer>
+        </ModalForm>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loginUser : state.logStatus.isLoggedIn,
-        getFormErrorMessagesOf : paramName => FormErrorModule.reducer.getErrorsOf(state)('createTalkRoomForm')(paramName)
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addTalkRoom : ({
-            title,
-            description,
-            authorId
-        }) => {
-            dispatch(TalkRoomModule.actions.execAddTalkRoom({
-                title,
-                description,
-                authorId
-            }))
-        },
-        clearFormErrorMessages : () => dispatch(FormErrorModule.actions.clearErrorByName('createTalkRoomForm'))
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CreateTalkRoomFormComp)
+export default CreateTalkRoomForm

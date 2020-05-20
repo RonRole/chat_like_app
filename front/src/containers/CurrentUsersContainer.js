@@ -1,61 +1,29 @@
 import React from 'react'
-import { Container, Image } from 'react-bootstrap'
-import { connect } from 'react-redux'
-import UserModule from '../modules/userModule/UserModule'
+import { Container } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
-import Transparent from '../components/Transparent'
-import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
+import CurrentUserStatusThumb from './CurrentUserStatusThumb'
+import { withRouter } from 'react-router-dom'
 
-class CurrentUsersContainer extends React.Component {
 
-    getCurrentUserIds = () => this.props.getCurrentRoomStatusById(this.props.match.params.id)["currentUserIds"] || []
-    getCurrentUserStatus = () => this.props.getCurrentRoomStatusById(this.props.match.params.id)["currentUserStatus"] || []
-
-    render() {
-        return (
-            <Container {...this.props}>
-                <h6><strong>今いる人たち</strong></h6>
-                <TransitionGroup className='d-flex'>
-                    {this.getCurrentUserIds().map(id => this.props.getUserById(id)).map((user,index) => {
-                        return (
-                            <CSSTransition key={index} timeout={100} classNames="fade">
-                                <Transparent>
-                                    <Transparent.Front transParent={this.getCurrentUserStatus()[user.id]}>
-                                        <Image  className="mr-2 mb-2" 
-                                                src={user.image.thumb.url} 
-                                                style={{
-                                                    width:'50px', 
-                                                    height:'50px',
-                                                    zIndex:'1'}} 
-                                                fluid
-                                        />
-                                    </Transparent.Front>
-                                    <Transparent.Back>
-                                        <div style={{
-                                             fontWeight:'bold',
-                                             textAlign:'center',
-                                             width:'50px'
-                                        }}>
-                                            {this.getCurrentUserStatus()[user.id]}
-                                        </div>
-                                    </Transparent.Back>                                        
-                                </Transparent>         
-                            </CSSTransition>
-                        )
-                    })}
-                </TransitionGroup>
-            </Container>
-        )
-    }
+const CurrentUsersContainer = ({
+    match
+}) => {
+    const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
+    const thisRoomStatus = currentRoomStatus[match.params.id] || currentRoomStatus[0]
+    return (
+        <Container className='current_users_container mb-2'>
+            <h6><strong>今いる人たち</strong></h6>
+            <TransitionGroup>
+                {[thisRoomStatus.currentUserIds].flat().map((id,index) => {
+                    return (
+                        <CSSTransition key={index} timeout={100} classNames="fade">
+                            <CurrentUserStatusThumb talkRoomId={match.params.id} userId={id} />     
+                        </CSSTransition>
+                    )
+                })}
+            </TransitionGroup>
+        </Container>
+    )
 }
-
-
-const mapStateToProps = (state) => {
-    return {
-        allState : state,
-        getCurrentRoomStatusById : (id) => CurrentRoomStatusModule.reducer.getCurrentStatusOfRoom(state)(id),
-        getUserById : (userId) => UserModule.reducer.getUserById(state)(userId)
-    }
-}
-
-export default connect(mapStateToProps)(CurrentUsersContainer)
+export default withRouter(CurrentUsersContainer)

@@ -81,10 +81,11 @@ class TalkRoomPage extends React.Component {
                                 </Pagination.Item>
                     })}
                 </Pagination>
-                <CreateTalkRoomForm show={this.state.createModalShow} onCancel={()=> {
-                    this.setState({
-                        createModalShow : false
-                    })
+                <CreateTalkRoomForm show={this.state.createModalShow} 
+                                    toCloseModalAction ={()=> {
+                                    this.setState({
+                                        createModalShow : false
+                                    })
                 }}/>
             </Container>
         )

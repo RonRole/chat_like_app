@@ -2,7 +2,7 @@
 /**
  * ActionTypeとSagaを結びつける
  */
-import { all, takeEvery, put, join, fork } from "redux-saga/effects";
+import { all, takeEvery　} from "redux-saga/effects";
 import * as loadingSaga from "./loadingModule/LoadingSaga"
 import { LogActionTypes } from "./logModule/LogActions";
 import * as logSaga from "./logModule/LogSaga";
@@ -15,15 +15,15 @@ import { UserActionTypes } from "./userModule/UserActions";
 import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
 
 const logSagas = [
-    takeEvery(LogActionTypes.DEF_LOG_IN, loadingSaga.wrapSagaWithLoading(logSaga.handleGetDefLoginStart)),
-    takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.wrapSagaWithLoading(logSaga.handleGetExecLoginStart)),
-    takeEvery(LogActionTypes.EXEC_LOG_OUT, loadingSaga.wrapSagaWithLoading(logSaga.handleGetExecLogoutStart)),
+    takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
+    takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetExecLoginStart)),
+    takeEvery(LogActionTypes.EXEC_LOG_OUT, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetExecLogoutStart)),
 ]
 
 const talkRoomSagas = [
     //talkRoomSaga
-    takeEvery(LogActionTypes.LOG_IN, loadingSaga.wrapSagaWithLoading(talkRoomSaga.handleGetOwnRooms)),
-    takeEvery(LogActionTypes.LOG_IN, loadingSaga.wrapSagaWithLoading(talkRoomSaga.handleGetJoinedTalkRooms)),
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetOwnRooms)),
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetJoinedTalkRooms)),
     takeEvery(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, talkRoomSaga.handleGetOwnRooms),
     takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, talkRoomSaga.handleGetJoinedTalkRooms),
     takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, talkRoomSaga.handleAddTalkRoom),
@@ -44,9 +44,9 @@ const talkRoomMessageSagas = [
 ]
 
 const userSagas = [
-    takeEvery(UserActionTypes.EXEC_CREATE_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleCreateUser)),
-    takeEvery(UserActionTypes.EXEC_SEARCH_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleExecSearchUser)),
-    takeEvery(UserActionTypes.EXEC_UPDATE_USER, loadingSaga.wrapSagaWithLoading(userSaga.handleUpdateUser)),
+    takeEvery(UserActionTypes.EXEC_CREATE_USER, loadingSaga.addLoadingStateUntilSagaFinish(userSaga.handleCreateUser)),
+    takeEvery(UserActionTypes.EXEC_SEARCH_USER, loadingSaga.addLoadingStateUntilSagaFinish(userSaga.handleExecSearchUser)),
+    takeEvery(UserActionTypes.EXEC_UPDATE_USER, loadingSaga.addLoadingStateUntilSagaFinish(userSaga.handleUpdateUser)),
     userSaga.handleReceiveMessage(),
     userSaga.handleGetCurrentRoomUsers()
 ]

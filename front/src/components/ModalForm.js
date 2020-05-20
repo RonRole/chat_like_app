@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
+import { Modal,　Form } from 'react-bootstrap'
 
 /**
  * Modalで表示するフォーム
@@ -10,17 +10,18 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap'
  *  Footer Component
  * }
  */
-class ModalForm extends React.Component {
-    render() {
-        return (
-            <Modal show={this.props.show} size="md" centered>
-                <Form onSubmit={(formEvent) => this.props.onSubmit(formEvent)}>
-                    {this.props.children}
-                </Form>
-            </Modal>
-        )
-    }
-}
+
+const ModalForm = ({
+    show,
+    onSubmit,
+    children
+}) => (
+    <Modal show={show} size="md" centered>
+        <Form onSubmit={(formEvent) => onSubmit(formEvent)}>
+            {children}
+        </Form>
+    </Modal>
+)
 
 ModalForm.defaultProps = {
     show : false,

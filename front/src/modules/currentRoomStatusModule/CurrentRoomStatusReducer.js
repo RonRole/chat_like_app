@@ -7,18 +7,18 @@ import createReducerFactory from "../CreateReducerFactory"
  * トークルームのid : メッセージ一覧
  */
 const initialState = {
-    0:{
+    0: {
         currentUserIds:[],
         currentUserStatus: {
             0:''
         },
         messages:[{
-            "roomID" : 0,
-            "className" : "",
-            "text" : "",
-            "user" : "",
+            roomID : 0,
+            className : "",
+            text : "",
+            user : "",
         }]
-    }  
+    }
 }
 
 /**
@@ -51,7 +51,7 @@ actionHandler[LogActionTypes.LOG_IN] = () => initialState
 
 actionHandler[ActionTypes.ADD_MESSAGE] = 
 actionHandler[ActionTypes.RECEIVE_MESSAGE] = (state, action) => {
-    state[action.roomId] = state[action.roomId] || {messages:[]}
+    state[action.roomId] = state[action.roomId] || initialState[0]
     state[action.roomId]['messages'] = [
         ...state[action.roomId]['messages'],
         {
@@ -73,7 +73,7 @@ actionHandler[ActionTypes.CLEAR_MESSAGE] = (state, action) => {
 }
 
 actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
-    const room = state[action.talkRoomId] || {userIds:[]}
+    const room = state[action.talkRoomId] || initialState[0]
     room['currentUserIds'] = [...action.userIds]
     return {
         ...state
@@ -82,7 +82,7 @@ actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
 
 actionHandler[ActionTypes.CHANGE_CURRENT_USER_STATUS] = 
 actionHandler[ActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
-    const room = state[action.talkRoomId] || {userIds:[]}
+    const room = state[action.talkRoomId] || initialState[0]
     room['currentUserStatus'] = room['currentUserStatus'] || {}
     room['currentUserStatus'][action.userId] = action.status
     return {
@@ -91,6 +91,7 @@ actionHandler[ActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
 }
 
 export default {
+    initialState,
     getMessagesByRoomId,
     getCurrentStatusOfRoom,
     createMessageReducer: createReducerFactory(initialState, actionHandler)

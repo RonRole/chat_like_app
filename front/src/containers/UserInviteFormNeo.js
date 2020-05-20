@@ -20,7 +20,7 @@ import { Button } from 'react-bootstrap'
  * 
  */
 
-const ModalHeader = () => <strong>ユーザーを誘う</strong>
+
 
 class SearchedUsersFieldComp extends React.Component {
     render() {
@@ -100,11 +100,8 @@ const ModalFooter = connect(null, dispatch => {
 class UserInviteFormNeoComp extends React.Component {
     render() {
         return (
-            <ModalForm
-                {...this.props}
-                header = {<ModalHeader {...this.props}/>}
-                body = {<ModalBody talkRoomId={this.props.talkRoomId} {...this.props}/>}
-                footer = {<ModalFooter {...this.props}/>}
+            <ModalForm 
+                show={this.props.show}
                 onSubmit = {(e) => {
                     e.preventDefault()
                     this.props.clearErrorMessages()
@@ -113,7 +110,17 @@ class UserInviteFormNeoComp extends React.Component {
                         userName:e.currentTarget.name.value
                     })
                 }}
-            />
+            >
+                <ModalForm.Header>
+                    <strong>ユーザーを誘う</strong>
+                </ModalForm.Header>
+                <ModalForm.Body>
+                    <ModalBody {...this.props}/>
+                </ModalForm.Body>
+                <ModalForm.Footer>
+                    <ModalFooter {...this.props}/>
+                </ModalForm.Footer>
+            </ModalForm>
         )
     }
 }
