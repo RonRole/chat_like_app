@@ -16,18 +16,19 @@ import ChatLikeAppRouter from './ChatLikeAppRouter';
 export class App extends React.Component {
   render() {
     return (
-      <Loading>
+      <>
+        <Loading/>
         <DefaultLoginChecker>
-            <ChatLikeAppRouter>
-                <ChatLikeAppNavigation>
-                  <Link className = "nav-link" to="/home">Home</Link>
-                  <Link className = "nav-link" to="/signup">Sign Up</Link>
-                  <Link className = "nav-link" to="/signin">Sign In</Link>
-                  <Link className = "nav-link" to="/talk_rooms">Talk Rooms</Link>
-                </ChatLikeAppNavigation>
-            </ChatLikeAppRouter>
+          <ChatLikeAppRouter>
+            <ChatLikeAppNavigation>
+              <Link className = "nav-link" to="/home">Home</Link>
+              <Link className = "nav-link" to="/signup">Sign Up</Link>
+              <Link className = "nav-link" to="/signin">Sign In</Link>
+              <Link className = "nav-link" to="/talk_rooms">Talk Rooms</Link>
+            </ChatLikeAppNavigation>
+          </ChatLikeAppRouter>
         </DefaultLoginChecker>
-        </Loading>
+      </>
     )
   }
 }

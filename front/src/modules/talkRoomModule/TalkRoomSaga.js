@@ -181,7 +181,7 @@ export function* handleGetTalkRoomMembers(action) {
             talkRoomId : action.talkRoomId,
             userIds : [...Object.keys(result.data).map(key => result.data[key]["id"])]
         }))
-        yield put(UserActions.setUser(result.data))
+        yield put(UserActions.setUser(...result.data))
     }
     if(result.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))

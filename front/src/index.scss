@@ -113,6 +113,22 @@ img {
   }
 }
 
+/*loading component*/
+.loading {
+  z-index: 9998;
+
+  .loading_background {
+    background-color: gray;
+    opacity: .5;
+  }
+
+  .loading_item {
+    font-weight:bold; 
+    text-shadow:1px 1px 0 black; 
+    color:white; 
+  }
+}
+
 /*current_users_container*/
 .current_users_container {
   border: solid 1px gray;

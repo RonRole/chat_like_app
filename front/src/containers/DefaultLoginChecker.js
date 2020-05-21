@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, {useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import LogModule from '../modules/logModule/LogModule'
 
@@ -18,7 +18,7 @@ const DefaultLoginChecker = ({
       if(!defaultLoginFinished){
         dispatch(LogModule.actions.cookieLogin()) 
       }
-    })
+    }, [defaultLoginFinished])
   return defaultLoginFinished ? <div>{children}</div> : <div></div>
 }
 

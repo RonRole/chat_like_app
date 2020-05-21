@@ -74,6 +74,17 @@ img {
     .sidebar .sidebar_cursor:hover {
       opacity: 0.8; }
 
+/*loading component*/
+.loading {
+  z-index: 9998; }
+  .loading .loading_background {
+    background-color: gray;
+    opacity: .5; }
+  .loading .loading_item {
+    font-weight: bold;
+    text-shadow: 1px 1px 0 black;
+    color: white; }
+
 /*current_users_container*/
 .current_users_container {
   border: solid 1px gray; }
