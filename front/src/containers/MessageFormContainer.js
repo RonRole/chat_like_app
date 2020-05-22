@@ -44,6 +44,7 @@ const MessageFormContainer = ({
                             onFocus={startInputting}
                             onChange={startInputting}
                             onBlur={finishInputting}
+                            required
                         /> 
                     </Col>
                     <Col xs={2} sm={2} md={1}>

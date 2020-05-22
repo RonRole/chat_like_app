@@ -8,7 +8,7 @@ const CurrentUserStatusThumb = ({
     userId
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
-    const thisRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus[0]
+    const thisRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus.default
 
     const userStatus = useSelector(state=>state.users)
     const user = userStatus[userId] || userStatus[0]

@@ -5,6 +5,7 @@ export const TalkRoomActionTypes = {
     EXEC_DELETE_ROOM          : "EXEC_DELETE_ROOM",
     EXEC_UPDATE_ROOM          : "EXEC_UPDATE_ROOM",
     EXEC_ADD_USER_TO_TALKROOM : "EXEC_ADD_USER_TO_TALKROOM",
+    EXEC_GET_TALKROOM_AUTHOR  : "EXEC_GET_TALKROOM_AUTHOR",
     EXEC_GET_TALKROOM_MEMBERS : "EXEC_GET_TALKROOM_MEMBER",
 
     SET_OWN_ROOMS          : "SET_OWN_ROOMS",
@@ -74,7 +75,16 @@ export default {
         }
     },
 
-    execGetTalkRoomUser:(
+    execGetTalkRoomAuthor: (
+        talkRoomId
+    ) => {
+        return {
+            type : TalkRoomActionTypes.EXEC_GET_TALKROOM_AUTHOR,
+            talkRoomId
+        }
+    },
+
+    execGetTalkRoomMembers:(
         talkRoomId
     ) => {
         return {
@@ -120,7 +130,7 @@ export default {
         }
     },
 
-    addUsersToTalkRoom : ({
+    addMembersToTalkRoom : ({
         talkRoomId,
         userIds
     }) => {

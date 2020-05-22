@@ -7,38 +7,12 @@ import createReducerFactory from "../CreateReducerFactory"
  * トークルームのid : メッセージ一覧
  */
 const initialState = {
-    0: {
+    default: {
         currentUserIds:[],
         currentUserStatus: {
-            0:''
+            default:''
         },
-        messages:[{
-            roomID : 0,
-            className : "",
-            text : "",
-            user : "",
-        }]
-    }
-}
-
-/**
- * state=>roomId=>messagesに変換するselector
- * @param {*} state 
- */
-const getMessagesByRoomId = state => {
-    return (roomId) => {
-        const room = state['currentRoomStatus'][roomId] || initialState[0]
-        return room['messages']
-    }
-}
-/**
- * state=>roomId=>currentRoomStatusに変換するselector
- * @param {*} state 
- */
-const getCurrentStatusOfRoom = state => {
-    return (roomId) => {
-        const room = state['currentRoomStatus'][roomId] || initialState[0]
-        return room
+        messages:[]
     }
 }
 
@@ -51,12 +25,12 @@ actionHandler[LogActionTypes.LOG_IN] = () => initialState
 
 actionHandler[ActionTypes.ADD_MESSAGE] = 
 actionHandler[ActionTypes.RECEIVE_MESSAGE] = (state, action) => {
-    state[action.roomId] = state[action.roomId] || initialState[0]
+    state[action.roomId] = state[action.roomId] || initialState.default
     state[action.roomId]['messages'] = [
         ...state[action.roomId]['messages'],
         {
             className : action.className,
-            user      : action.user.id,
+            userId      : action.user.id,
             text      : action.text
         }
     ]
@@ -73,7 +47,7 @@ actionHandler[ActionTypes.CLEAR_MESSAGE] = (state, action) => {
 }
 
 actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
-    const room = state[action.talkRoomId] || initialState[0]
+    const room = state[action.talkRoomId] || initialState.default
     room['currentUserIds'] = [...action.userIds]
     return {
         ...state
@@ -82,7 +56,7 @@ actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
 
 actionHandler[ActionTypes.CHANGE_CURRENT_USER_STATUS] = 
 actionHandler[ActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
-    const room = state[action.talkRoomId] || initialState[0]
+    const room = state[action.talkRoomId] || initialState.default
     room['currentUserStatus'] = room['currentUserStatus'] || {}
     room['currentUserStatus'][action.userId] = action.status
     return {
@@ -91,9 +65,6 @@ actionHandler[ActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
 }
 
 export default {
-    initialState,
-    getMessagesByRoomId,
-    getCurrentStatusOfRoom,
     createMessageReducer: createReducerFactory(initialState, actionHandler)
 }
 

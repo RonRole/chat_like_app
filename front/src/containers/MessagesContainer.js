@@ -1,97 +1,64 @@
-import React from 'react'
-import {connect} from 'react-redux'
-import { Container, Alert, Row, Col, Image } from 'react-bootstrap'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector} from 'react-redux'
+import { Container} from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
-import UserModule from '../modules/userModule/UserModule'
-import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
+import { withRouter } from 'react-router-dom'
+import Message from '../components/UserMessage'
 
-export class MessagesContainer extends React.Component {
-
-    classNameToVariant = {
+const MessagesContainer = ({
+    match
+}) => {
+    const classNameToVariant = {
         "joinRoom" : "primary",
         "leaveRoom" : "danger",
         "myMessage" : "success",
         "receiveMessage" : "secondary"
     }
+    const dispatch = useDispatch()
+    const loginUser = useSelector(state => state.logStatus.isLoggedIn)
+    const users = useSelector(state => state.users)
+    const currentRoomStatus = useSelector(state => state.currentRoomStatus)
+    const messages = (currentRoomStatus[match.params.id] || currentRoomStatus.default).messages
 
-    componentDidMount(){
-        this.props.joinRoom({
-            user : this.props.loginUser,
-            roomId: this.props.match.params.id
-        })
+    useEffect(() => {
+        dispatch(CurrentRoomStatusModule.actions.joinRoom({
+            user : loginUser,
+            roomId : match.params.id
+        }))
         window.onbeforeunload = () => {
-            this.props.leaveRoom({
-                user : this.props.loginUser,
-                roomId : this.props.match.params.id
-            })
+            dispatch(CurrentRoomStatusModule.actions.leaveRoom({
+                user : loginUser,
+                roomId : match.params.id
+            }))
         }
-    }
+        return () => dispatch(CurrentRoomStatusModule.actions.leaveRoom({
+            user : loginUser,
+            roomId : match.params.id
+        }))
+    }, [])
+    useEffect(() => {
+        const messageArea = document.getElementById("messagesContainer")
+        messageArea.scroll(0, document.getElementById("messagesContainer").scrollHeight)
+    }, [messages])
 
-    componentWillUnmount() {
-        this.props.leaveRoom({
-            user : this.props.loginUser,
-            roomId : this.props.match.params.id
-        })
-
-    }   
-
-    componentDidUpdate(){
-        const messageArea = document.getElementById("messageArea")
-        messageArea.scroll(0, document.getElementById("messageArea").scrollHeight)
-    }
-
-    render() {
-        return (
-            <Container id = "messageArea" className={this.props.className} style={this.props.style}>
-                <TransitionGroup>
-                    {this.props.getMessagesByRoomId(this.props.match.params.id).map((message,index) => {
-                        return (
-                            <CSSTransition key={index} timeout= {100} classNames="fade">
-                                <div>
-                                    <Image src={this.props.getUserById(message.user).image.thumb.url}/>
-                                    <strong className="ml-2">{this.props.getUserById(message.user).name}</strong>
-                                    <Alert 
-                                        variant={this.classNameToVariant[message.className]} 
-                                        key={index} 
-                                        style={{
-                                            overflow:"auto"
-                                        }}>
-                                        {message.text}
-                                    </Alert>
-                                </div>
-                            </CSSTransition>
-                        )
-                    })}
-                </TransitionGroup>
-            </Container>
-        )
-    }
+    return (
+        <Container id = "messagesContainer" className='mb-2 pb-4'>
+            <TransitionGroup>
+                {[messages].flat().filter(message=>message).map((message,index) => {
+                    return (
+                        <CSSTransition key={index} timeout= {100} classNames="fade">
+                            <Message userName={(users[message.userId] || users[0]).name} 
+                                    userImageUrl={(users[message.userId] || users[0]).image.thumb.url} 
+                                    text={message.text} 
+                                    variant={classNameToVariant[message.className]} 
+                            />
+                        </CSSTransition>
+                    )
+                })}
+            </TransitionGroup>
+        </Container>
+    )
 }
 
-
-const mapStateToProps = (state) => {
-    return {
-        state,
-        loginUser : state.logStatus.isLoggedIn,
-        getTalkRoomById : (roomId) => TalkRoomModule.reducer.getTalkRoomById(state)(roomId),
-        getMessagesByRoomId:(roomId) => CurrentRoomStatusModule.reducer.getMessagesByRoomId(state)(roomId),
-        getUserById : (id) => UserModule.reducer.getUserById(state)(id)
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        joinRoom:({
-            user, 
-            roomId
-        }) => dispatch(CurrentRoomStatusModule.actions.joinRoom({user, roomId})),
-        leaveRoom:({
-            user,
-            roomId
-        }) => dispatch(CurrentRoomStatusModule.actions.leaveRoom({user, roomId})),
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(MessagesContainer);
-
+export default withRouter(MessagesContainer)

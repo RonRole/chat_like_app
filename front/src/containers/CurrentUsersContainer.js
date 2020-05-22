@@ -10,11 +10,12 @@ const CurrentUsersContainer = ({
     match
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
-    const thisRoomStatus = currentRoomStatus[match.params.id] || currentRoomStatus[0]
+    const thisRoomStatus = currentRoomStatus[match.params.id] || currentRoomStatus.default
+    
     return (
         <Container className='current_users_container mb-2'>
             <h6><strong>今いる人たち</strong></h6>
-            <TransitionGroup>
+            <TransitionGroup className='d-flex'>
                 {[thisRoomStatus.currentUserIds].flat().map((id,index) => {
                     return (
                         <CSSTransition key={index} timeout={100} classNames="fade">

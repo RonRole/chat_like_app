@@ -15,10 +15,8 @@ const DefaultLoginChecker = ({
   const dispatch = useDispatch()
   const defaultLoginFinished = useSelector(state=> state.logStatus.defaultLoginFinished)
   useEffect(() => {
-      if(!defaultLoginFinished){
-        dispatch(LogModule.actions.cookieLogin()) 
-      }
-    }, [defaultLoginFinished])
+      dispatch(LogModule.actions.cookieLogin()) 
+    }, [])
   return defaultLoginFinished ? <div>{children}</div> : <div></div>
 }
 

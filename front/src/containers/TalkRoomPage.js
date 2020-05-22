@@ -45,7 +45,7 @@ class TalkRoomPage extends React.Component {
                         return (this.state.selectedOwnRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedOwnRoomPage*this.state.paginateLength
                     }).map((id,index) => (
                         <Col key={index} md='4'>
-                            <TalkRoomCard id={id} key={id} />
+                            <TalkRoomCard talkRoomId={id}/>
                         </Col>
                     ))}
                 </TransitionItems>
@@ -66,7 +66,7 @@ class TalkRoomPage extends React.Component {
                         return (this.state.selectedJoinRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedJoinRoomPage*this.state.paginateLength
                     }).map((id,index) => (
                         <Col key={index} md='4'>
-                            <TalkRoomCard id={id} key={id} readOnly/>
+                            <TalkRoomCard talkRoomId={id} readOnly/>
                         </Col>
                     ))}
                 </TransitionItems>

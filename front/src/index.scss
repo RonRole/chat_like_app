@@ -134,3 +134,9 @@ img {
   border: solid 1px gray;
 }
 
+//messagesContainer
+#messagesContainer {
+  height: 60vh;
+  border : solid 1px gray;
+  overflow: scroll;
+}

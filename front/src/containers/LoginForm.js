@@ -1,49 +1,26 @@
-import React from 'react'
-import {connect} from 'react-redux'
+import React, { useEffect } from 'react'
+import {connect, useDispatch, useSelector} from 'react-redux'
 import { Form, Button } from 'react-bootstrap'
 import LogModule from '../modules/logModule/LogModule'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 import { withRouter } from 'react-router-dom'
 import UserFormGroups from '../components/UserFormGroups'
 
-class LoginForm　extends React.Component {
-
-    componentWillUnmount() {
-        this.props.clearLoginError()
-    }
-    
-    render(){
-
-        return(
-            <Form onSubmit={(formEvent) => {
-                                formEvent.preventDefault()
-                                const input = formEvent.currentTarget
-                                this.props.login({
-                                    input,
-                                    history : this.props.history
-                                })
-                            }}>
-                <UserFormGroups.NameFormGroup errorMessages={this.props.loginErrorMessages} />
-                <UserFormGroups.PasswordFormGroup errorMessages={this.props.loginErrorMessages} />
-                <Button variant="primary" type="submit">ログイン</Button>
-            </Form>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        state,
-        loginErrorMessages : FormErrorModule.reducer.getErrorsOf(state)("loginForm")("messages")
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login:({
-            input,
-            history
-        }) => {
+const LoginForm = ({
+    history
+}) => {
+    const loginFormError=useSelector(state=>state.formErrors.loginForm)
+    const loginErrorMessages = (loginFormError || {}).messages
+    const dispatch = useDispatch()
+    useEffect(() => {
+        return () => {
+            dispatch(FormErrorModule.actions.clearErrorByName('loginForm'))
+        }
+    }, [])
+    return (
+        <Form onSubmit={(formEvent) => {
+            formEvent.preventDefault()
+            const input = formEvent.currentTarget
             dispatch(LogModule.actions.execLogin(
                 {
                     session:{
@@ -53,12 +30,12 @@ const mapDispatchToProps = (dispatch) => {
                     history               
                 }
             ))
-        },
-        logout:()=> dispatch(LogModule.actions.logout()),
-        clearLoginError : () => {
-            dispatch(FormErrorModule.actions.clearErrorByName("loginForm"))
-        }
-    }
+        }}>
+            <UserFormGroups.NameFormGroup errorMessages={loginErrorMessages} />
+            <UserFormGroups.PasswordFormGroup errorMessages={loginErrorMessages} />
+            <Button variant="primary" type="submit">ログイン</Button>
+        </Form>
+    )
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(withRouter(LoginForm))
+export default withRouter(LoginForm)

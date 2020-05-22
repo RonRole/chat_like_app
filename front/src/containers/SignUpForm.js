@@ -1,49 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Button, Container } from 'react-bootstrap'
 import UserModule from '../modules/userModule/UserModule'
-import { connect } from 'react-redux'
+import { connect, useDispatch, useSelector } from 'react-redux'
 import UserFormGroups, { NameFormGroup, PasswordFormGroup, PasswordConfirmationFormGroup, ProfileImageFormGroup } from '../components/UserFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
+import { withRouter } from 'react-router-dom'
 
-class SignUpForm extends React.Component {
+const SignUpForm = ({
+    history
+}) => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        return () => {
+            dispatch(FormErrorModule.actions.clearErrorByName('signUpForm'))
+        }
+    }, [])
+    const formErrorStatus = useSelector(state=>state.formErrors)
+    const signUpFormErrors = formErrorStatus.signUpForm || {}
 
-    componentWillUnmount(){
-        this.props.clearErrorMessages()
-    }
-
-    render() {
-        return (
-            <Form onSubmit={(e) => {
-                e.preventDefault()
-                const input=e.currentTarget
-                this.props.signUp({
-                    input,
-                    history : this.props.history
-                })
-            }}>
-                <UserFormGroups.NameFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("name")}/>
-                <UserFormGroups.PasswordFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password")} />
-                <UserFormGroups.PasswordConfirmationFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("password_confirmation")} />
-                <UserFormGroups.ProfileImageFormGroup errorMessages = {this.props.getErrorMessagesFromFormName("image")}/>
-                <Button variant="primary" type="submit">登録する</Button>
-            </Form>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {
-        state : state,
-        getErrorMessagesFromFormName : (name) => FormErrorModule.reducer.getErrorsOf(state)("signUpForm")(name)
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        signUp : ({
-            input,
-            history
-        }) => {
+    return (
+        <Form onSubmit={(e) => {
+            e.preventDefault()
+            const input=e.currentTarget
             dispatch(UserModule.actions.execCreateUser({
                 userParams: {
                     name: input.name.value,
@@ -53,11 +31,15 @@ const mapDispatchToProps = (dispatch) => {
                 },
                 history
             }))
-        },
-        clearErrorMessages : () => {
-            dispatch(FormErrorModule.actions.clearErrorByName("signUpForm"))
-        }
-    }
+        }}>
+            <UserFormGroups.NameFormGroup errorMessages = {signUpFormErrors.name}/>
+            <UserFormGroups.PasswordFormGroup errorMessages = {signUpFormErrors.password} />
+            <UserFormGroups.PasswordConfirmationFormGroup errorMessages = {signUpFormErrors.password_confirmation} />
+            <UserFormGroups.ProfileImageFormGroup errorMessages = {signUpFormErrors.image}/>
+            <Button variant="primary" type="submit">登録する</Button>
+        </Form>
+    )
+
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)
+export default withRouter(SignUpForm)

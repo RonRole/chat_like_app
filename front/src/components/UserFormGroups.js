@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Form, NavItem } from 'react-bootstrap'
 import Transparent from './Transparent'
 
@@ -74,61 +74,59 @@ UserFormGroups.PasswordConfirmationFormGroup = ({
     )
 }
 
+const ProfileImageFormGroup = ({
+    defaultValue,
+    errorMessages
+}) => {
+    const [uploadFileImage, setUploadFileImage] = useState(defaultValue)
+    const [transParentProfile, setTransParentProfile] = useState(false)
 
-class ProfileImageFormGroup extends React.Component {
-    
-    state = {
-        uploadFileImage : this.props.defaultValue,
-        transParentProfile : false
-    }
-    
-    render() {
-        return(
-            <Form.Group controlId="signUpImageForm">
-                <Form.Control style={{display:'none'}} type="file" name="image" isInvalid={this.props.errorMessages.length > 0} onChange={(e) => {
-                    const fileReader = new FileReader()
-                    const input = e.currentTarget.files[0]
-                    fileReader.onload = e => {
-                        this.setState({
-                            uploadFileImage: e.target.result
-                        })
-                    }
-                    input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
-                }}/>
-                <Transparent>
-                    <Transparent.Front transParent={this.state.transParentProfile}>
-                        <img
-                            style={{
-                                backgroundColor:this.state.uploadFileImage ? "white" : "",
-                            }}　 
-                            onClick={()=>document.getElementById("signUpImageForm").click()}
-                            onMouseOver={() => this.setState({transParentProfile : true})}
-                            onMouseLeave={() => this.setState({transParentProfile: false})}
-                            className="mb-2" 
-                            src={this.state.uploadFileImage} 
-                            width="200px" 
-                            height="200px"
-                        />
-                    </Transparent.Front>
-                    <Transparent.Back>
-                        <div style={{
-                                    fontWeight:"bold", 
-                                    color:"gray",
-                                    width:'200px'
-                            }}>
-                                プロフィール画像変更
-                        </div>
-                    </Transparent.Back>
-                </Transparent>
-                <Transparent
-                    transParent = {this.state.transParentProfile}
-                />
-                <Form.Control.Feedback type="invalid">
-                    {this.props.errorMessages.find(e=>e)}
-                </Form.Control.Feedback>
-            </Form.Group>
-        )
-    }
+    return (
+        <Form.Group controlId="signUpImageForm">
+            <Form.Control style={{display:'none'}} type="file" name="image" isInvalid={errorMessages.length > 0} onChange={(e) => {
+                const fileReader = new FileReader()
+                const input = e.currentTarget.files[0]
+                fileReader.onload = e => {
+                    setUploadFileImage(e.target.result)
+                }
+                input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
+            }}/>
+            <Transparent>
+                <Transparent.Front transParent={transParentProfile}>
+                    <img
+                        style={{
+                            backgroundColor:uploadFileImage ? "white" : "",
+                        }}　 
+                        onClick={()=>document.getElementById("signUpImageForm").click()}
+                        onMouseOver={() => setTransParentProfile(true)}
+                        onMouseLeave={() => setTransParentProfile(false)}
+                        className="mb-2" 
+                        src={uploadFileImage} 
+                        width="200px" 
+                        height="200px"
+                    />
+                </Transparent.Front>
+                <Transparent.Back>
+                    <div style={{
+                        fontWeight:"bold", 
+                        color:"gray",
+                        width:'200px'
+                    }}>
+                        プロフィール画像変更
+                    </div>
+                </Transparent.Back>
+            </Transparent>
+
+            <Form.Control.Feedback type="invalid">
+                {errorMessages.find(e=>e)}
+            </Form.Control.Feedback>
+        </Form.Group>
+    )
+}
+
+ProfileImageFormGroup.defaultProps = {
+    defaultValue : null,
+    errorMessages : []
 }
 
 UserFormGroups.ProfileImageFormGroup = ProfileImageFormGroup

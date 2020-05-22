@@ -1,6 +1,6 @@
 import React from "react"
 import ModalForm from "../components/ModalForm"
-import TalkRoomFormGroups, { TitleFormGroup, DescriptionFormGroup } from "../components/TalkRoomFormGroups"
+import TalkRoomFormGroups from "../components/TalkRoomFormGroups"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { connect } from "react-redux"
 import { Button } from "react-bootstrap"

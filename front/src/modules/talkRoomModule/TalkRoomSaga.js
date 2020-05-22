@@ -57,12 +57,22 @@ const deleteTalkRoom = (talkRoomId) => {
     })
 }
 
+//トークルームの管理者取得
+const getTalkRoomAuthor = (
+    talkRoomId
+) => {
+    return DataAccessor.get({
+        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/author`
+    })
+}
+
+
 //トークルームのメンバー取得
 const getTalkRoomMembers = (
     talkRoomId,
 ) => {
     return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users`
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/member`
     })
 }
 
@@ -88,7 +98,7 @@ export function* handleGetOwnRooms(action) {
         yield put(TalkRoomActions.setOwnRooms(result.data))
         //取得したトークルームのユーザーを設定する
         for(let room of result.data) {
-            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomUser(room.id))
+            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomMembers(room.id))
         }
     }
     if(result.isError) {
@@ -102,7 +112,8 @@ export function* handleGetJoinedTalkRooms(action) {
         yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
         //取得したトークルームのユーザーを設定する
         for(let room of talkRoomResult.data) {
-            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomUser(room.id))
+            yield fork(handleGetTalkRoomAuthor, TalkRoomActions.execGetTalkRoomAuthor(room.id))
+            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomMembers(room.id))
         }
     }
     if(talkRoomResult.isFail) {
@@ -174,10 +185,20 @@ export function* handleDeleteTalkRoom(action) {
     }
 }
 
+export function* handleGetTalkRoomAuthor(action) {
+    const result = yield call(getTalkRoomAuthor, action.talkRoomId)
+    if(result.isSuccess) {
+        yield put(UserActions.setUser(result.data))
+    }
+    if(result.isError) {
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
+    }
+}
+
 export function* handleGetTalkRoomMembers(action) {
     const result = yield call(getTalkRoomMembers, action.talkRoomId)
     if(result.isSuccess) {
-        yield put(TalkRoomActions.addUsersToTalkRoom({
+        yield put(TalkRoomActions.addMembersToTalkRoom({
             talkRoomId : action.talkRoomId,
             userIds : [...Object.keys(result.data).map(key => result.data[key]["id"])]
         }))
@@ -193,7 +214,7 @@ export function* handleAddTalkRoomMember(action) {
     if(result.isSuccess) {
         alert(`${result.data.name}を追加しました`)
         yield put(UserActions.setUser(result.data))
-        yield put(TalkRoomActions.addUsersToTalkRoom({
+        yield put(TalkRoomActions.addMembersToTalkRoom({
             talkRoomId : action.talkRoomId,
             userIds : [action.userId]
         }))

@@ -1,68 +1,50 @@
-import React from "react"
+import React, { useState } from "react"
 import { Dropdown } from "react-bootstrap"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
-import { connect } from "react-redux"
+import { connect, useDispatch, useSelector } from "react-redux"
 import UserInviteFormNeo from "./UserInviteFormNeo"
 
 /**
- * オーナー専用のドロップダウンメニューでやんす
- * container componentでやんす
+ * オーナー専用のドロップダウンメニュー
  */
-class OwnerDropdown extends React.Component {
-
-    state = {
-        userInvideModalShow : false,
-        updateModalShow : false
-    }
-
-    getTalkRoom = (id) => this.props.getTalkRoomById(id)
-
-    render() {
-        return (
-            <Dropdown>
-                <Dropdown.Toggle variant="success">
-                    ルーム設定
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item style={{color:"blue"}} onClick={() => this.setState({userInvideModalShow : true})}>誘う</Dropdown.Item>
-                    <Dropdown.Item style={{color:"orange"}} onClick={()=>this.setState({updateModalShow : true})}>作り直す</Dropdown.Item>
-                    <Dropdown.Item style={{color:"red"}} onClick={()=> {
-                        if(!window.confirm(`${this.getTalkRoom(this.props.talkRoomId).title}を削除しますか?`)){
-                            return
-                        }
-                        this.props.destroyTalkRoom(this.props.talkRoomId)
-                    }}>消す</Dropdown.Item>
-                </Dropdown.Menu>
-                <UserInviteFormNeo talkRoomId={this.props.talkRoomId}
-                                show = {this.state.userInvideModalShow} 
+const OwnerDropdown = ({
+    talkRoomId
+}) => {
+    const talkRoomsStatus = useSelector(state=>state.talkRooms)
+    const thisRoom = talkRoomsStatus.joinRooms[talkRoomId] || talkRoomsStatus.ownRooms[talkRoomId] || talkRoomsStatus.defaultRoom
+    const dispatch = useDispatch()
+    const [inviteUserModalShow, setUserInviteModalShow] = useState(false)
+    const [updateRoomModalShow, setUpdateRoomModalShow] = useState(false)
+    return (
+        <Dropdown>
+            <Dropdown.Toggle variant="success">
+                ルーム設定
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+                <Dropdown.Item style={{color:"blue"}} onClick={() => setUserInviteModalShow(true)}>誘う</Dropdown.Item>
+                <Dropdown.Item style={{color:"orange"}} onClick={()=>setUpdateRoomModalShow(true)}>作り直す</Dropdown.Item>
+                <Dropdown.Item style={{color:"red"}} onClick={()=> {
+                    if(!window.confirm(`${thisRoom.title}を削除しますか?`)){
+                        return
+                    }
+                    dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
+                }}>消す</Dropdown.Item>
+            </Dropdown.Menu>
+            <UserInviteFormNeo talkRoomId={talkRoomId}
+                            show = {inviteUserModalShow} 
+                            onCancel = {() => {
+                                setUserInviteModalShow(false)
+                            }}
+            />
+            <UpdateTalkRoomForm talkRoomId={talkRoomId}
+                                show = {updateRoomModalShow}
                                 onCancel = {() => {
-                                    this.setState({userInvideModalShow:false})
+                                    setUpdateRoomModalShow(false)
                                 }}
-                />
-                <UpdateTalkRoomForm talkRoomId={this.props.talkRoomId}
-                                    show = {this.state.updateModalShow}
-                                    onCancel = {() => {
-                                        this.setState({updateModalShow:false})
-                                    }}
-                />
-            </Dropdown>
-        )
-    }
+            />
+        </Dropdown>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        getTalkRoomById : (id) => TalkRoomModule.reducer.getTalkRoomById(state)(id)
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        destroyTalkRoom : (talkRoomId) => {
-            dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(OwnerDropdown)
+export default OwnerDropdown

@@ -5,10 +5,10 @@ import UserModule from "../userModule/UserModule";
 //reducer
 const initialState = {
     ownRooms : {},
-    joinRooms: {},
+    joinRooms: {}
 }
 
-const defaultRoom = {
+initialState.default = {
     author_id: 0,
     created_at: '',
     description: '',
@@ -23,7 +23,7 @@ const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
 const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
 const createTalkRoomById = (state) => (id) => {
-    const room = state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || defaultRoom
+    const room = state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || initialState.default
     room.getAllUsers = () => [...new Set([...(room.userIds || []), room.author_id])].map(id => UserModule.reducer.getUserById(state)(id))
     room.getAuthor = () => UserModule.reducer.getUserById(state)(room.author_id)
     room.getMembers = () => [...new Set(room.userIds || [])].filter(id => id !== room.author_id).map(id => UserModule.reducer.getUserById(state)(id))

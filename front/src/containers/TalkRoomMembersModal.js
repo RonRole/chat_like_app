@@ -1,47 +1,43 @@
 import React from 'react'
 import { Modal, ListGroup, Button } from 'react-bootstrap'
 import UserProfile from '../components/UserProfile'
-import UserModule from '../modules/userModule/UserModule'
-import { connect } from 'react-redux'
-import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
+import { useSelector } from 'react-redux'
 
-class TalkRoomMembersModal extends React.Component {
 
-    render() {
-        return (
-            <Modal show = {this.props.show}>
-                <Modal.Header>
-                    <strong>{this.props.getTalkRoomById(this.props.talkRoomId).title}のメンバー</strong>
-                </Modal.Header>
-                <Modal.Body style={{maxHeight:'60vh',overflow:'scroll'}}>
-                    <ListGroup variant='flush'>
-                        <ListGroup.Item variant='success'>
-                            <strong>管理者</strong>
-                            <UserProfile user={this.props.getTalkRoomById(this.props.talkRoomId).getAuthor()} without='self_id'/>
+
+const TalkRoomMembersModal = ({
+    show,
+    onCancel,
+    talkRoomId
+}) => {
+    const talkRooms=useSelector(state=>state.talkRooms)
+    const thisRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
+
+    const users=useSelector(state=>state.users)
+    
+    return (
+        <Modal show={show}>
+            <Modal.Header>
+                <strong>{thisRoom.title}のメンバー</strong>
+            </Modal.Header>
+            <Modal.Body id='talkRoomMembersModalBody'>
+                <ListGroup variant='flush'>
+                    <ListGroup.Item variant='success'>
+                        <strong>管理者</strong>
+                        <UserProfile user={users[thisRoom.author_id] || users[0]} without='self_id'/>
+                    </ListGroup.Item>
+                    {[thisRoom.userIds].flat().map((userId,index) => (
+                        <ListGroup.Item key={index}>
+                            <UserProfile user = {users[userId] || users[0]} without='self_id'/>
                         </ListGroup.Item>
-                        {this.props.getTalkRoomById(this.props.talkRoomId).getMembers().map((user,index) => {
-                            return (
-                                <ListGroup.Item key={index}>
-                                    <UserProfile user = {user} without='self_id'/>
-                                </ListGroup.Item>
-                            )
-                        })}
-                    </ListGroup>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant='secondary' onClick={this.props.onCancel}>閉じる</Button>
-                </Modal.Footer>
-            </Modal>
-        )
-    }
+                    ))}
+                </ListGroup>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant='secondary' onClick={onCancel}>閉じる</Button>
+            </Modal.Footer>
+        </Modal>
+    )
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loginUser : state.logStatus.isLoggedIn,
-        getUserById : (userId) => UserModule.reducer.getUserById(state)(userId),
-        getTalkRoomById : (talkRoomId) => TalkRoomModule.reducer.getTalkRoomById(state)(talkRoomId)
-    }
-}
-
-export default connect(mapStateToProps)(TalkRoomMembersModal)
+export default TalkRoomMembersModal

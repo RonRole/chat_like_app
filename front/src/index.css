@@ -88,3 +88,8 @@ img {
 /*current_users_container*/
 .current_users_container {
   border: solid 1px gray; }
+
+#messagesContainer {
+  height: 60vh;
+  border: solid 1px gray;
+  overflow: scroll; }
