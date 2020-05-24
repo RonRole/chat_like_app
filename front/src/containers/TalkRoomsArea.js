@@ -13,7 +13,7 @@ const OwnRoomsArea = ({
     const [selectedPage, setSelectedPage] = useState(1)
     return (
         <>
-            <SeparateForPagination className='row' WrapWith={TransitionGroup}>
+            <SeparateForPagination className='row mb-2 talkRoomCardsRow' selectedPage={selectedPage} WrapWith={TransitionGroup}>
                 {ownRoomArray.map((ownRoom,index) => (
                     <CSSTransition timeout={100} classNames='fade' key={index}>
                         <Col md={4}>
@@ -45,11 +45,11 @@ const JoinRoomsArea = ({
     const [selectedPage, setSelectedPage] = useState(1)
     return (
         <>
-            <SeparateForPagination className='row' wrapWith={TransitionGroup}>
+            <SeparateForPagination className='row mb-2 talkRoomCardsRow' selectedPage={selectedPage} wrapWith={TransitionGroup}>
                 {joinRoomArray.map((joinRoom,index) => (
                     <CSSTransition timeout={100} classNames='fade' key={index}>
                         <Col md={4}>
-                            <TalkRoomCard talkRoomId={joinRoom.id}/>
+                            <TalkRoomCard talkRoomId={joinRoom.id} readOnly/>
                         </Col>
                     </CSSTransition>
                 ))}
@@ -69,5 +69,10 @@ JoinRoomsArea.defaultProps = {
     itemLengthPerPage : 3
 }
 
+const TalkRoomsArea = {
+    OwnRoomsArea,
+    JoinRoomsArea
+}
 
-export default OwnRoomsArea
+
+export default TalkRoomsArea

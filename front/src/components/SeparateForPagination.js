@@ -9,9 +9,10 @@ const SeparateForPagination = ({
 }) => {
     return (
         <WrapWith className={className}>
-            {[...Array(itemLengthPerPage)].map((_,index) => (
-                children[itemLengthPerPage*(selectedPage-1)+index]
-            ))}
+            {[...Array(itemLengthPerPage)].map((_,index) => {
+                const item = children[itemLengthPerPage*(selectedPage-1)+index]
+                return item
+            })}
         </WrapWith>
     )
 }

@@ -9,22 +9,22 @@ code {
 
 .fade-enter-active {
   opacity: .5;
-  transition: width 100ms ease-in; }
+  transition: all 100ms ease-in; }
 
 .fade-enter-done {
   opacity: 1;
-  transition: width 100ms ease-in; }
+  transition: all 100ms ease-in; }
 
 .fade-exit {
   opacity: 1; }
 
 .fade-exit-active {
   opacity: .5;
-  transition: width 100ms ease-out; }
+  transition: all 100ms ease-out; }
 
 .fade-exit-done {
   opacity: 0;
-  transition: width 100ms ease-out; }
+  transition: all 100ms ease-out; }
 
 /*Login Page*/
 #login_form {
@@ -97,3 +97,6 @@ img {
 #talkRoomMembersModalBody {
   max-height: '60v';
   overflow: scroll; }
+
+.talkRoomCardsRow .fade-exit-active {
+  display: none; }

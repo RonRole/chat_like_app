@@ -1,12 +1,13 @@
 import React from 'react'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
-import { Container, Button, Pagination, Col } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
-import TalkRoomCard from './TalkRoomCard'
-import TransitionItems from '../components/TransitionItems'
-import OwnRoomsArea from './TalkRoomsArea'
+
+
+
+import TalkRoomsArea from './TalkRoomsArea'
 
 const TalkRoomAreaLabel = ({
     userName,
@@ -25,11 +26,7 @@ const TalkRoomAreaLabel = ({
 class TalkRoomPage extends React.Component {
 
     state = {
-
         createModalShow : false,
-        paginateLength : 3,
-        selectedOwnRoomPage : 1,
-        selectedJoinRoomPage : 1
     }
 
     componentDidMount() {
@@ -41,29 +38,10 @@ class TalkRoomPage extends React.Component {
         return (
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
-                <Button variant="primary" onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
-                <OwnRoomsArea itemLengthPerPage={3} />
+                <Button variant="primary" className='mb-2' onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
+                <TalkRoomsArea.OwnRoomsArea itemLengthPerPage={3} />
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
-                <TransitionItems className='row' classNames='fade'>
-                    {[...this.props.joinRoomIds].filter((_, index) => {
-                        return (this.state.selectedJoinRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedJoinRoomPage*this.state.paginateLength
-                    }).map((id,index) => (
-                        <Col key={index} md='4'>
-                            <TalkRoomCard talkRoomId={id} readOnly/>
-                        </Col>
-                    ))}
-                </TransitionItems>
-                <Pagination>
-                    {[...Array(Math.ceil(this.props.joinRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {
-                        return <Pagination.Item 
-                                    key={pageNumber}
-                                    active={pageNumber===this.state.selectedJoinRoomPage} 
-                                    onClick={()=>this.setState({selectedJoinRoomPage:pageNumber})}
-                                >
-                                    {pageNumber}
-                                </Pagination.Item>
-                    })}
-                </Pagination>
+                <TalkRoomsArea.JoinRoomsArea itemLengthPerPage={3} />
                 <CreateTalkRoomForm show={this.state.createModalShow} 
                                     toCloseModalAction ={()=> {
                                     this.setState({

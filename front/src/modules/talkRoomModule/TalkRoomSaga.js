@@ -173,12 +173,13 @@ export function* handleUpdateTalkRoom(action) {
 export function* handleDeleteTalkRoom(action) {
     const deleteTalkRoomResult = yield call(deleteTalkRoom, action.talkRoomId)
     if(deleteTalkRoomResult.isSuccess) {
+        alert('削除しました')
         yield put(TalkRoomActions.deleteTalkRoom({
             talkRoomId : action.talkRoomId
         }))
     }
     if(deleteTalkRoomResult.isFail) {
-        alert(`トークルームを削除できませんでした`)
+        alert(`削除できませんでした`)
     }
     if(deleteTalkRoomResult.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:deleteTalkRoomResult.data}))
