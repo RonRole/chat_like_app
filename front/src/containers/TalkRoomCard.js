@@ -12,9 +12,9 @@ const TalkRoomCard = ({
 }) => {
     const [showTalkRoomMemberModal, setShowTalkRoomMemberModal] = useState(false)
     const talkRoomsStatus = useSelector(state=>state.talkRooms)
-    const thisRoom = talkRoomsStatus.joinRooms[talkRoomId] || talkRoomsStatus.ownRooms[talkRoomId] || talkRoomsStatus.defaultRoom
+    const thisRoom = talkRoomsStatus.joinRooms[talkRoomId] || talkRoomsStatus.ownRooms[talkRoomId] || talkRoomsStatus.default
     const userStatus = useSelector(state=>state.users)
-
+    
     return (
         <Card>
             <Card.Body>

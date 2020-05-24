@@ -1,13 +1,13 @@
 import React from 'react';
 //redux
-import MessagesPage from '../containers/MessagesPage'
+import CurrentRoomPage from './CurrentRoomPage'
 //bootstrap
 import { Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-dom';
 
 import LoginRequiredRoute from '../containers/LoginRequiredRoute';
 import LoginPage from './LoginPage';
 import TalkRoomPage from '../containers/TalkRoomPage'
-import HomePage from '../containers/HomePage';
+import HomePage from './HomePage';
 import SignUpPage from './SignUpPage';
 
 
@@ -24,7 +24,7 @@ const ChatLikeAppRouter = ({children}) => (
             <Route path="/signup" component={SignUpPage} />
             <LoginRequiredRoute exact path="/home" component={HomePage}/>
             <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
-            <LoginRequiredRoute exact path="/talk_rooms/:id" component={MessagesPage}/>
+            <LoginRequiredRoute exact path="/talk_rooms/:id" component={CurrentRoomPage}/>
             <Redirect to="/home" />
         </Switch>
     </Router>

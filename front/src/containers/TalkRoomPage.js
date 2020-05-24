@@ -6,6 +6,7 @@ import CreateTalkRoomForm from './CreateTalkRoomForm'
 import ModalModule from '../modules/ModalModule/ModalModule'
 import TalkRoomCard from './TalkRoomCard'
 import TransitionItems from '../components/TransitionItems'
+import OwnRoomsArea from './TalkRoomsArea'
 
 const TalkRoomAreaLabel = ({
     userName,
@@ -19,6 +20,7 @@ const TalkRoomAreaLabel = ({
         </div>
     )
 }
+
 
 class TalkRoomPage extends React.Component {
 
@@ -40,26 +42,7 @@ class TalkRoomPage extends React.Component {
             <Container>
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが作成したトークルーム" />
                 <Button variant="primary" onClick={() => this.setState({createModalShow:true})}>トークルームを追加</Button>
-                <TransitionItems className='row' classNames='fade'>
-                    {[...this.props.ownRoomIds].filter((_, index) => {
-                        return (this.state.selectedOwnRoomPage-1)*this.state.paginateLength <= index && index < this.state.selectedOwnRoomPage*this.state.paginateLength
-                    }).map((id,index) => (
-                        <Col key={index} md='4'>
-                            <TalkRoomCard talkRoomId={id}/>
-                        </Col>
-                    ))}
-                </TransitionItems>
-                <Pagination>
-                    {[...Array(Math.ceil(this.props.ownRoomIds.length/this.state.paginateLength))].map((_, index) => index+1).map((pageNumber) => {
-                        return <Pagination.Item 
-                                    key={pageNumber}
-                                    active={pageNumber===this.state.selectedOwnRoomPage} 
-                                    onClick={()=>this.setState({selectedOwnRoomPage:pageNumber})}
-                                >
-                                    {pageNumber}
-                                </Pagination.Item>
-                    })}
-                </Pagination>
+                <OwnRoomsArea itemLengthPerPage={3} />
                 <TalkRoomAreaLabel userName={this.props.loginUser.name} text="さんが参加しているトークルーム" />
                 <TransitionItems className='row' classNames='fade'>
                     {[...this.props.joinRoomIds].filter((_, index) => {

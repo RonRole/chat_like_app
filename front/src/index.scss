@@ -105,7 +105,7 @@ img {
   }
 
   .sidebar_cursor {
-    width: 20px;
+    max-width: 30px;
     opacity: 1.0;
     &:hover {
       opacity: 0.8;
@@ -138,5 +138,10 @@ img {
 #messagesContainer {
   height: 60vh;
   border : solid 1px gray;
+  overflow: scroll;
+}
+
+#talkRoomMembersModalBody {
+  max-height: '60v';
   overflow: scroll;
 }
