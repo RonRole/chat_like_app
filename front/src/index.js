@@ -5,7 +5,7 @@ import './index.css';
 import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import store from './store'
-//redux
+//reduxå
 import {Provider} from 'react-redux'
 import history from './modules/HistoryModule';
 

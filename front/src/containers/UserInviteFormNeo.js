@@ -106,7 +106,7 @@ class UserInviteFormNeoComp extends React.Component {
                     e.preventDefault()
                     this.props.clearErrorMessages()
                     this.props.searchUser({
-                        userId : e.currentTarget.id.value,
+                        userSelfId : e.currentTarget.id.value,
                         userName:e.currentTarget.name.value
                     })
                 }}
@@ -128,11 +128,11 @@ class UserInviteFormNeoComp extends React.Component {
 export default connect(null, dispatch => {
     return {
         searchUser : ({
-            userId,
+            userSelfId,
             userName
         }) => {
             dispatch(UserModule.actions.execSearchUser({
-                userId,
+                userSelfId,
                 userName
             }))
         },

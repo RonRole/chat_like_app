@@ -14,6 +14,7 @@ import RootSaga from './modules/RootSaga'
 import FormErrorModule from './modules/FormErrorModule/FormErrorModule'
 import ModalModule from './modules/ModalModule/ModalModule'
 import ErrorCodeModule from './modules/errorCodeModule/ErrorCodeModule'
+import MessageImageModule from './modules/messageImageModule/MessageImageModule'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -22,6 +23,7 @@ const store = createStore(
     combineReducers({
         currentRoomStatus : TalkRoomMessageModule.reducer.createMessageReducer, 
         logStatus : LogModule.reducer.creatReducer,
+        messageImages : MessageImageModule.reducer.createReducer,
         talkRooms : TalkRoomModule.reducer.createReducer,
         loading   : LoadingModule.reducer.createReducer,
         users     : UserModule.reducer.createReducer,

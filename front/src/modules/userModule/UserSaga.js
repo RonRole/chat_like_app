@@ -53,11 +53,11 @@ const updateUser = (
 }
 
 const searchUser = ({
-    userId,
+    userSelfId,
     userName
 }) => {
     return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}?name=${userName}`
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/search?self_id=${userSelfId}&name=${userName}`
     })
 }
 
@@ -130,7 +130,7 @@ export function* handleGetCurrentRoomUsers() {
 
 export function* handleExecSearchUser(action) {
     const searchResult = yield call(searchUser, {
-        userId : action.userId,
+        userSelfId : action.userSelfId,
         userName : action.userName
     })
     if(searchResult.isSuccess) {

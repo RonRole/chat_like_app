@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 //import { Actions, Variants } from '../modules/TalkRoomMessageModule'
 import TalkRoomMessageModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 
@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Container, Form, Row, Col, Button } from 'react-bootstrap'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import { withRouter } from 'react-router-dom'
+import MessageImageModalForm from './MessageImageModalForm'
 
 const MessageFormContainer = ({
     match
 }) => {
+    const [messageImageModalShow, setMessageImageModalShow] = useState(false)
     const logStatus = useSelector(state=>state.logStatus)
     const dispatch = useDispatch()
     const startInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
@@ -36,7 +38,7 @@ const MessageFormContainer = ({
                 e.currentTarget.inputMessage.value=''
             }}>
                 <Row>
-                    <Col xs={10} sm={10} md={11}>
+                    <Col xs={8} sm={8} md={9} lg={10}>
                         <Form.Control 
                             name="inputMessage" 
                             type="text" 
@@ -47,11 +49,22 @@ const MessageFormContainer = ({
                             required
                         /> 
                     </Col>
-                    <Col xs={2} sm={2} md={1}>
+                    <Col xs={2} sm={2} md={2} lg={1}>
+                        <Button variant='primary' onClick={()=>{
+                            startInputting()
+                            setMessageImageModalShow(true)
+                        }}>Image</Button>
+                    </Col>
+                    <Col xs={2} sm={2} md={1} lg={1}>
                         <Button variant="warning" type="submit">▶</Button>
                     </Col>
                 </Row>
             </Form>
+
+            <MessageImageModalForm show={messageImageModalShow} onCancel={() => {
+                setMessageImageModalShow(false)
+                finishInputting()
+            }} />
         </Container>
     )
 }

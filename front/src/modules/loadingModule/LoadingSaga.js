@@ -14,11 +14,13 @@ export function* unlockView() {
  * 引数のsagaの実行が完了するまで、stateのloadingプロセスを追加します。
  * @param {*} saga 
  */
-export function addLoadingStateUntilSagaFinish(saga){
+export function addLoadingStateUntilSagaFinish(...argSagas){
     return function*(action) {
         yield put(LoadingActions.startLoading());
-        const argSaga = yield fork(saga, action)
-        yield join(argSaga)
+        for(const saga of argSagas) {
+            const currentSaga = yield fork(saga, action)
+            yield join(currentSaga)
+        }
         yield put(LoadingActions.finishLoading())
     }
 }

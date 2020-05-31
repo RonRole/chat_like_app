@@ -34,12 +34,12 @@ export default {
         }
     },
     execSearchUser : ({
-        userId,
+        userSelfId,
         userName
     }) => {
         return {
             type : UserActionTypes.EXEC_SEARCH_USER,
-            userId,
+            userSelfId,
             userName
         }
     },

@@ -13,11 +13,18 @@ import * as userSaga from "./userModule/UserSaga"
 import * as errorSaga from './errorCodeModule/ErrorCodeSaga'
 import { UserActionTypes } from "./userModule/UserActions";
 import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
+import { MessageImageActionTypes } from "./messageImageModule/MessageImageActions";
+import * as messageImageSaga from "./messageImageModule/MessageImageSaga"
 
 const logSagas = [
     takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
     takeEvery(LogActionTypes.EXEC_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetExecLoginStart)),
     takeEvery(LogActionTypes.EXEC_LOG_OUT, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetExecLogoutStart)),
+]
+
+const messageImageSagas = [
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(messageImageSaga.handleClearMessageImage,messageImageSaga.handleFetchLoginUsersMessageImages)),
+    takeEvery(MessageImageActionTypes.EXEC_UPLOAD_MESSAGE_IMAGE, loadingSaga.addLoadingStateUntilSagaFinish(messageImageSaga.handleUploadMessageImage))
 ]
 
 const talkRoomSagas = [
@@ -60,6 +67,7 @@ const ErrorCodeSagas = [
 export default function* rootSaga(){
     yield all([
         ...logSagas,
+        ...messageImageSagas,
         ...talkRoomSagas,
         ...talkRoomMessageSagas,
         ...userSagas,

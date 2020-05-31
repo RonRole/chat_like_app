@@ -13,13 +13,12 @@ class UsersController < ApplicationController
             render :json => @user#.hash_for_front
             return
         else
-            puts @user.fail_result
             render :json => @user.fail_result
         end
     end
 
-    def show
-        @user = User.find_by(self_id: params[:id], name: params[:name])
+    def search
+        @user = User.find_by(self_id: params[:self_id], name: params[:name])
         if(@user) 
             render :json => @user#.hash_for_front
         else
@@ -36,7 +35,6 @@ class UsersController < ApplicationController
             render :json => @user
             return
         else
-            puts @user.errors.full_messages
             render :json => @user.fail_result
         end
     end
@@ -47,4 +45,6 @@ class UsersController < ApplicationController
     def self
         render :json => current_user#.hash_for_front
     end
+
+
 end

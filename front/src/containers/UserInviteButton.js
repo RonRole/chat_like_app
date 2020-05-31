@@ -10,7 +10,7 @@ const UserInviteButton = ({
     getTalkRoomById,
     addUserToTalkRoom
 }) => {
-    const userIsAlreadyExist = [getTalkRoomById(talkRoomId).userIds].flat().some(id => id===userId)
+    const userIsAlreadyExist = [getTalkRoomById(talkRoomId).userIds, getTalkRoomById(talkRoomId).author_id].flat().some(id => id===userId)
     if(userIsAlreadyExist) {
         return <Button variant="success" disabled>すでに参加しています</Button>
     }
