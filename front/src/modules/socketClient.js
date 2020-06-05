@@ -50,16 +50,18 @@ export const clientToServerMethods = {
     disconnectToServer : () => socketClient.disconnect(),
     tellJoinedRoom : ({
         user,
-        roomId
+        roomId,
+        text
     }) => {
-        socketClient.emit('joinRoom',{user, roomId})
+        socketClient.emit('joinRoom',{user, roomId, text})
         socketClient.emit('currentUsers', roomId)
     },
     tellLeavedRoom : ({
         user,
-        roomId
+        roomId,
+        text
     }) => {
-        socketClient.emit('leaveRoom',{user, roomId})
+        socketClient.emit('leaveRoom',{user, roomId, text})
         socketClient.emit('currentUsers', roomId)
     },
     tellCurrentRoomUsersChanged : (roomId) => socketClient.emit('currentUsers', roomId),
@@ -76,11 +78,13 @@ export const clientToServerMethods = {
     },
     sendMessage : ({
         roomId,
+        className,
         text,
         user
     }) => {
         socketClient.emit('sendMessage', {
             roomId, 
+            className,
             text,
             user
         })

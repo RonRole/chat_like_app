@@ -13,19 +13,21 @@ export const ActionTypes = {
 }
 
 //actionCreators
-const joinRoom = ({user, roomId}) => {
+const joinRoom = ({user, roomId, text}) => {
     return {
         type   : ActionTypes.JOIN_ROOM,
         user,
-        roomId
+        roomId,
+        text
     }
 }
 
-const leaveRoom = ({user, roomId}) => {
+const leaveRoom = ({user, roomId, text}) => {
     return {
         type : ActionTypes.LEAVE_ROOM,
         user,
         roomId,
+        text
     }
 }
 

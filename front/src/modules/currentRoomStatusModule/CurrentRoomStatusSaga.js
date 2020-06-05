@@ -62,7 +62,11 @@ export function* handleJoinRoom() {
         //reconnectイベントに備えることで、サーバーからの切断=>再接続に対応
         serverToClientMothods.readyToRecconect({user:action.user, roomId:action.roomId})
         clientToServerMethods.connectToServer()
-        clientToServerMethods.tellJoinedRoom({user: action.user, roomId:action.roomId})
+        clientToServerMethods.tellJoinedRoom({
+            user: action.user, 
+            roomId:action.roomId,
+            text:action.text
+        })
     }
 }
 
@@ -75,7 +79,7 @@ export function* handleLeaveRoom() {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
     while(true) {
         const action = yield take(ActionTypes.LEAVE_ROOM)
-        clientToServerMethods.tellLeavedRoom({user:action.user, roomId:action.roomId})
+        clientToServerMethods.tellLeavedRoom({user:action.user, roomId:action.roomId, text:action.text})
         //トークルームの内容をクリアする
         yield put(Actions.clearMessage(action.roomId))
         clientToServerMethods.disconnectToServer()
@@ -101,6 +105,7 @@ export function* handleAddMessage() {
         const action = yield take(ActionTypes.ADD_MESSAGE)
         clientToServerMethods.sendMessage({
             roomId    : action.roomId, 
+            className : action.className,
             text      : action.text,
             user      : action.user
         })

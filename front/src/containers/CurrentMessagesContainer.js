@@ -4,17 +4,11 @@ import { Container} from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import { withRouter } from 'react-router-dom'
-import Message from '../components/UserMessage'
+import UserMessage from '../components/UserMessage'
 
 const MessagesContainer = ({
     match
 }) => {
-    const classNameToVariant = {
-        "joinRoom" : "primary",
-        "leaveRoom" : "danger",
-        "myMessage" : "success",
-        "receiveMessage" : "secondary"
-    }
     const dispatch = useDispatch()
     const loginUser = useSelector(state => state.logStatus.isLoggedIn)
     const users = useSelector(state => state.users)
@@ -24,12 +18,14 @@ const MessagesContainer = ({
     useEffect(() => {
         dispatch(CurrentRoomStatusModule.actions.joinRoom({
             user : loginUser,
-            roomId : match.params.id
+            roomId : match.params.id,
+            text: `${loginUser.name}が参加しました`
         }))
         window.onbeforeunload = () => {
             dispatch(CurrentRoomStatusModule.actions.leaveRoom({
                 user : loginUser,
-                roomId : match.params.id
+                roomId : match.params.id,
+                text:`${loginUser.name}が退出しました`
             }))
         }
         return () => dispatch(CurrentRoomStatusModule.actions.leaveRoom({
@@ -48,10 +44,11 @@ const MessagesContainer = ({
                 {[messages].flat().filter(message=>message).map((message,index) => {
                     return (
                         <CSSTransition key={index} timeout= {100} classNames="fade">
-                            <Message userName={(users[message.userId] || users[0]).name} 
-                                    userImageUrl={(users[message.userId] || users[0]).image.thumb.url} 
-                                    text={message.text} 
-                                    variant={classNameToVariant[message.className]} 
+                            <UserMessage
+                                userName={(users[message.userId] || users[0]).name} 
+                                userImageUrl={(users[message.userId] || users[0]).image.thumb.url} 
+                                text={message.text} 
+                                messageType={message.className}
                             />
                         </CSSTransition>
                     )

@@ -12,60 +12,49 @@ module.exports = (server) => {
     }
     
     io.sockets.on('connection', socket => {
-        console.log('socket : connected')
         //トークルーム参加
-        socket.on('joinRoom', ({user = {},　roomId}) => {
+        socket.on('joinRoom', ({user = {},　roomId, text = '参加者が現れた!'}) => {
             currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
-            console.log(`${roomId}に${user.name}が現れた!!!`)
-            console.log(currentRoomMembers[socket.id])
             socket.join(roomId)
             io.sockets.in(roomId).emit('receiveMessage', {
-                roomId : roomId,
-                className : "joinRoom",
-                user : user,
-                text : `${user.name}が参加しました`,
+                roomId,
+                className : 'joinRoom',
+                user,
+                text,
             })
         })
-        socket.on('rejoinRoom', ({user = {}, roomId}) => {
+        socket.on('rejoinRoom', ({user = {}, roomId, text　= '復帰しました'}) => {
             currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
-            console.log(`${roomId}に${user.name}が再び現れた!!!`)
-            console.log(currentRoomMembers[socket.id])
             socket.join(roomId)
             io.sockets.in(roomId).emit('receiveMessage', {
-                roomId : roomId,
+                roomId,
                 className : "joinRoom",
-                user : user,
-                text : `${user.name}が復帰しました`,
+                user,
+                text
             })
         })
-        socket.on('leaveRoom', ({user = {}, roomId}) => {
-            console.log(socket.id)
+        socket.on('leaveRoom', ({user = {}, roomId, text='退出しました'}) => {
             delete (currentRoomMembers[roomId] || {})[socket.id]
-            console.log(`${roomId}から${user.name}が離れました`)
-            console.log(currentRoomMembers[roomId])
             io.sockets.in(roomId).emit('receiveMessage', {
-                roomId : roomId,
+                roomId,
                 className : "leaveRoom",
-                user : user,
-                text : `${user.name}が退出しました`
+                user,
+                text
             })
         })
         //メッセージ送信
-        socket.on('sendMessage',({roomId, user, text}) => {
-            console.log(`${roomId},${user},${text}`)
+        socket.on('sendMessage',({roomId, className='receiveMessage', user, text}) => {
             socket.to(roomId).broadcast.emit('receiveMessage', {
-                roomId: roomId, 
-                className:"receiveMessage", 
-                user : user,
-                text : text
+                roomId, 
+                className, 
+                user,
+                text
             })
         })
         //現在のトークルームのメンバーを取得
         socket.on('currentUsers', (roomId) => {
-            console.log("get current users")
-            console.log(currentRoomMembers)
             io.sockets.in(roomId).emit('currentUsers', {
                 roomId : roomId,
                 users : {...currentRoomMembers[roomId]}
@@ -95,16 +84,15 @@ module.exports = (server) => {
             //切断されたユーザーをトークルームから削除し、そのメンバーに対象のユーザーが切断されたことを通知する
             for(let roomId of disconnectedRooms) {
                 const user = currentRoomMembers[roomId][socket.id]
-                console.log(`${user.name}が切断されました`)
                 io.sockets.in(roomId).emit('receiveMessage', {
-                    roomId : roomId,
+                    roomId,
                     className : "leaveRoom",
                     user : user,
                     text : `${user.name}が切断されました`
                 })
                 delete currentRoomMembers[roomId][socket.id]
                 io.sockets.in(roomId).emit('currentUsers', {
-                    roomId : roomId,
+                    roomId,
                     users : {...currentRoomMembers[roomId]}
                 })
             }
