@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import ModalForm from '../components/ModalForm'
 import { Modal, Button, Form, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageImageModule from '../modules/messageImageModule/MessageImageModule'
-import Transparent from '../components/Transparent'
-import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
-import { withRouter } from 'react-router-dom'
-import MessageImageSendField from './MessageImageSendField'
+import SendMessageImageField from './MessageImageSendField'
 
-const MessageImageModalForm = ({
-    match,
+const CurrentMessageImageModalForm = ({
     show,
+    talkRoomId,
     onCancel
 }) => {
     const dispatch = useDispatch()
@@ -29,7 +26,7 @@ const MessageImageModalForm = ({
                 <h6>画像を選んでね</h6>
             </Modal.Header>
             <Modal.Body className="d-flex">
-                <MessageImageSendField />
+                <SendMessageImageField talkRoomId={talkRoomId}/>
             </Modal.Body>
             <Modal.Footer>
                 <Form.Group>
@@ -42,4 +39,4 @@ const MessageImageModalForm = ({
     )
 }
 
-export default withRouter(MessageImageModalForm)
+export default CurrentMessageImageModalForm

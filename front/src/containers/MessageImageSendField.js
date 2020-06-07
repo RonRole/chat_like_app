@@ -5,8 +5,8 @@ import Transparent from '../components/Transparent';
 import { Image } from 'react-bootstrap';
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule';
 
-const MessageImageSendField = ({
-    match
+const SendMessageImageField = ({
+    talkRoomId
 }) => {
     const [underMouseImageId, setUnderMouseImageId] = useState(0);
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
@@ -24,7 +24,7 @@ const MessageImageSendField = ({
                         onMouseLeave={()=>setUnderMouseImageId(0)}
                         onClick={() => {
                             dispatch(CurrentRoomStatusModule.actions.addMessage({
-                                roomId : match.params.id,
+                                roomId : talkRoomId,
                                 user : loginUser,
                                 className : 'messageImage',
                                 text:messageImage.src.profile.url
@@ -37,4 +37,4 @@ const MessageImageSendField = ({
     )
 }
 
-export default withRouter(MessageImageSendField)
+export default SendMessageImageField

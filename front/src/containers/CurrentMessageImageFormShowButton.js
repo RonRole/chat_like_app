@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
-import { withRouter } from 'react-router-dom'
 import { Button } from 'react-bootstrap'
-import MessageImageModalForm from './MessageImageModalForm'
+import CurrentMessageImageModalForm from './CurrentMessageImageModalForm'
 
-const MessageImageButton = ({
-    match
+const CurrentMessageImageFormShowButton = ({
+    talkRoomId
 }) => {
     const [messageImageModalShow, setMessageImageModalShow] = useState(false)
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
@@ -16,16 +15,16 @@ const MessageImageButton = ({
         <>
             <Button variant='primary' onClick={()=>{
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
-                    talkRoomId : match.params.id,
+                    talkRoomId,
                     userId : loginUser.id,
                     status : '入力中'
                 }))
                 setMessageImageModalShow(true)
             }}>Image</Button>
-            <MessageImageModalForm roomId={match.params.id} show={messageImageModalShow} onCancel={() => {
+            <CurrentMessageImageModalForm  talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
                 setMessageImageModalShow(false)
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
-                    talkRoomId : match.params.id,
+                    talkRoomId,
                     userId : loginUser.id,
                     status : ''
                 }))
@@ -34,4 +33,4 @@ const MessageImageButton = ({
     )
 }
 
-export default withRouter(MessageImageButton)
+export default CurrentMessageImageFormShowButton

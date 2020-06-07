@@ -10,7 +10,7 @@ const HomePage = () => {
 
     return (
         <Container className="justify-content-end">
-            <LoginUserProfile />
+            <LoginUserProfile className='mb-2' />
             <div className="d-flex justify-content-center mb-2">
                 <Button onClick={() => setUpdateUserFormShowing(true)}>プロフィールを更新する</Button>
             </div>

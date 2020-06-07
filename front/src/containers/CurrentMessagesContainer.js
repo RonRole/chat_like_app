@@ -7,30 +7,30 @@ import { withRouter } from 'react-router-dom'
 import UserMessage from '../components/UserMessage'
 
 const MessagesContainer = ({
-    match
+    talkRoomId
 }) => {
     const dispatch = useDispatch()
     const loginUser = useSelector(state => state.logStatus.isLoggedIn)
     const users = useSelector(state => state.users)
     const currentRoomStatus = useSelector(state => state.currentRoomStatus)
-    const messages = (currentRoomStatus[match.params.id] || currentRoomStatus.default).messages
+    const messages = (currentRoomStatus[talkRoomId] || currentRoomStatus.default).messages
 
     useEffect(() => {
         dispatch(CurrentRoomStatusModule.actions.joinRoom({
             user : loginUser,
-            roomId : match.params.id,
+            roomId : talkRoomId,
             text: `${loginUser.name}が参加しました`
         }))
         window.onbeforeunload = () => {
             dispatch(CurrentRoomStatusModule.actions.leaveRoom({
                 user : loginUser,
-                roomId : match.params.id,
+                roomId : talkRoomId,
                 text:`${loginUser.name}が退出しました`
             }))
         }
         return () => dispatch(CurrentRoomStatusModule.actions.leaveRoom({
             user : loginUser,
-            roomId : match.params.id
+            roomId : talkRoomId
         }))
     }, [])
     useEffect(() => {
@@ -58,4 +58,4 @@ const MessagesContainer = ({
     )
 }
 
-export default withRouter(MessagesContainer)
+export default MessagesContainer

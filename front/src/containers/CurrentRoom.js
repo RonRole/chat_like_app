@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap'
 import CurrentUsersContainer from './CurrentUsersContainer'
 import CurrentMessagesContainer from './CurrentMessagesContainer'
 import CurrentMessageFormContainer from './CurrentMessageFormContainer'
+import CurrentMessageImageFormShowButton from './CurrentMessageImageFormShowButton'
 
 const CurrentRoom = ({
     talkRoomId
@@ -13,9 +14,10 @@ const CurrentRoom = ({
     return (
         <Container className="justify-content-center">
             <strong>{thisRoom.title}</strong>
-            <CurrentUsersContainer/>
-            <CurrentMessagesContainer />
-            <CurrentMessageFormContainer />
+            <CurrentUsersContainer talkRoomId = {talkRoomId}/>
+            <CurrentMessagesContainer talkRoomId = {talkRoomId} />
+            <CurrentMessageFormContainer talkRoomId = {talkRoomId}/>
+            <CurrentMessageImageFormShowButton talkRoomId = {talkRoomId} />
         </Container>
     )
 }
