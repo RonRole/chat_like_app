@@ -3,7 +3,15 @@ import { LogActionTypes } from "../logModule/LogActions"
 import createReducerFactory from "../CreateReducerFactory"
 
 
-const initialState = {}
+const initialState = {
+
+}
+
+initialState.default = {
+    "formCategory" : {
+        "formName" : ""
+    }
+}
 
 const getErrorsOf = (state) => (formCategory) => (formName) => {
     return (state["formErrors"][formCategory] || [])[formName] || []

@@ -20,9 +20,9 @@ const initialState = {
     //ユーザー検索時、見つけたユーザーのIDを入れる
     searchedUserIds : [],
     //ID:ユーザー
+    default      : defaultUser,
     0            : defaultUser,
 }
-
 /**
  * idからUserを取得する
  * Userのファクトリーメソッドとして使用する

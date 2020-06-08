@@ -9,12 +9,12 @@ UserFormGroups.IdFormGroup = ({
     style = "",
     defaultValue = "",
     errorMessages = [],
-    rejectNullOnView = false
+    required = false
 }) => {
     return (
         <Form.Group controlId="idForm" className={className} style = {{...style}}>
             <Form.Label>ユーザーID</Form.Label>
-            <Form.Control type="text" name="id" placeholder="ID" isInvalid={errorMessages.length > 0} defaultValue={defaultValue} required={rejectNullOnView}/>
+            <Form.Control type="text" name="id" placeholder="ID" isInvalid={errorMessages.length > 0} defaultValue={defaultValue} required={required}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>
@@ -27,12 +27,12 @@ UserFormGroups.NameFormGroup = ({
     style = "",
     defaultValue = "",
     errorMessages = [],
-    rejectNullOnView = false
+    required = false
 }) => {
     return (
         <Form.Group controlId="nameForm" className={className} style={{...style}}>
             <Form.Label>名前</Form.Label>
-            <Form.Control type="text" name="name" placeholder="名前" isInvalid={errorMessages.length > 0} defaultValue={defaultValue} required={rejectNullOnView}/>
+            <Form.Control type="text" name="name" placeholder="名前" isInvalid={errorMessages.length > 0} defaultValue={defaultValue} required={required}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
             </Form.Control.Feedback>

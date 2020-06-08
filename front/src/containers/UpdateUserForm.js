@@ -1,56 +1,22 @@
 import React from 'react'
 import ModalForm from '../components/ModalForm'
 import UserModule from '../modules/userModule/UserModule'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
-import { Button, Form, Modal } from 'react-bootstrap'
+import { Button, Modal } from 'react-bootstrap'
 import UserFormGroups from '../components/UserFormGroups'
 
-/**
- * ユーザー更新用のフォーム部品を設定して配置するコンポーネント
- */
-const UpdateUserFormBodyComp = ({defaultUser, getErrorMessagesFromFormName}) => (
-    <div>
-        <UserFormGroups.IdFormGroup defaultValue={defaultUser.self_id} errorMessages={getErrorMessagesFromFormName('self_id')}/>
-        <UserFormGroups.NameFormGroup defaultValue={defaultUser.name} errorMessages={getErrorMessagesFromFormName('name')}/>
-        <UserFormGroups.ProfileImageFormGroup defaultValue={defaultUser.image.profile.url} errorMessages={getErrorMessagesFromFormName('image')}/>
-    </div>
-)
-
-const UpdateUserFormBody = connect(state => {
-    return {
-        getErrorMessagesFromFormName : (name) => FormErrorModule.reducer.getErrorsOf(state)("updateUserForm")(name)
-    }
-})(UpdateUserFormBodyComp)
-
-/**
- * ユーザー更新フォームのフッター部分を設定して配置するコンポーネント
- */
-const UpdateUserFormFooterComp = ({onCancel, clearErrorMessages}) => (
-    <div className='d-flex justify-content-end'>
-        <Button type='submit' className='mr-2'>更新</Button>
-        <Button variant='secondary' onClick={() => {
-            clearErrorMessages()
-            onCancel()
-        }}>やめる</Button>
-    </div>
-)
-
-const UpdateUserFormFooter = connect(null, dispatch => {
-    return {
-        clearErrorMessages : () => {
-            dispatch(FormErrorModule.actions.clearErrorByName("updateUserForm"))
-        }
-    }
-})(UpdateUserFormFooterComp)
-
-/**
- * ModalFormにコンポーネントと登録時のメソッドを与えて、
- * ユーザー更新用のフォームを構成するコンポーネント
- */
-class UpdateUserForm extends React.Component {
-
-    filterChangedParams(currentUser, userParams) {
+const UpdateUserForm = ({
+    userId,
+    show,
+    onCancel,
+}) => {
+    const users = useSelector(state=>state.users)
+    const updateTargetUser = users[userId] || users.default
+    const formErrors = useSelector(state=>state.formErrors)
+    const updateUserFormErrors =  formErrors["updateUserForm"] || {self_id:[], name:[], image:[]}
+    const dispatch = useDispatch();
+    function filterChangedParams(currentUser, userParams) {
         const changedParams = {}
         Object.keys(userParams).filter((param) => {
             return currentUser[param] !== userParams[param]
@@ -59,8 +25,7 @@ class UpdateUserForm extends React.Component {
         })
         return changedParams
     }
-
-    filterNotBlankParams(userParams) {
+    function filterNotBlankParams(userParams) {
         const notBlankParams = {}
         Object.keys(userParams)
                 .filter((param) => userParams[param])
@@ -69,42 +34,40 @@ class UpdateUserForm extends React.Component {
                 })
         return notBlankParams
     }
-
-    render() {
-        return (
-            <ModalForm 
-                {...this.props} 
-                onSubmit={(e) => {
-                    e.preventDefault()
-                    const inputParams = {
-                        self_id: e.currentTarget.id.value,
-                        name: e.currentTarget.name.value,
-                        image: e.currentTarget.image.files[0]
-                    }
-                    const newUserParams = this.filterNotBlankParams(this.filterChangedParams(this.props.user, inputParams))
-                    this.props.updateUser({
-                        id: this.props.user.id,
-                        ...newUserParams
-                    })
-            }}>
-                <ModalForm.Header>
-                    <strong>プロフィール更新</strong>
-                </ModalForm.Header>
-                <ModalForm.Body>
-                    <UpdateUserFormBody defaultUser={this.props.user}/>
-                </ModalForm.Body>
-                <ModalForm.Footer>
-                    <UpdateUserFormFooter onCancel={this.props.onCancel}/>
-                </ModalForm.Footer>
-            </ModalForm>
-        )
-    }
+    return (
+        <ModalForm
+            show = {show}
+            onSubmit={e => {
+                e.preventDefault()
+                const inputParams = {
+                    self_id: e.currentTarget.id.value,
+                    name: e.currentTarget.name.value,
+                    image: e.currentTarget.image.files[0]
+                }
+                const newUserParams = filterNotBlankParams(filterChangedParams(updateTargetUser, inputParams))
+                dispatch(UserModule.actions.execUpdateUser({
+                    id: userId,
+                    ...newUserParams
+                }))
+            }}
+        >
+            <ModalForm.Header>
+                <strong>プロフィール更新</strong>
+            </ModalForm.Header>
+            <ModalForm.Body>
+                <UserFormGroups.IdFormGroup defaultValue={updateTargetUser.self_id} errorMessages={updateUserFormErrors.self_id}/>
+                <UserFormGroups.NameFormGroup defaultValue={updateTargetUser.name} errorMessages={updateUserFormErrors.name}/>
+                <UserFormGroups.ProfileImageFormGroup defaultValue={updateTargetUser.image.profile.url} errorMessages={updateUserFormErrors.image}/>
+            </ModalForm.Body>
+            <Modal.Footer className="d-flex justify-content-end">
+                <Button type='submit' className='mr-2'>更新</Button>
+                <Button variant='secondary' onClick={() => {
+                    dispatch(FormErrorModule.actions.clearErrorByName("updateUserForm"))
+                    onCancel()
+                }}>やめる</Button>
+            </Modal.Footer>
+        </ModalForm>
+    )
 }
 
-export default connect(null, dispatch => {
-    return {
-        updateUser : (userParams) => {
-            dispatch(UserModule.actions.execUpdateUser(userParams))
-        }
-    }
-})(UpdateUserForm)
+export default UpdateUserForm

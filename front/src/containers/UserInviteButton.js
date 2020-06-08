@@ -1,45 +1,30 @@
 import React from 'react'
 import { Button } from 'react-bootstrap'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
-import { connect } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 
 const UserInviteButton = ({
     userId,
     talkRoomId,
-    getTalkRoomById,
-    addUserToTalkRoom
 }) => {
+<<<<<<< HEAD
     const userIsAlreadyExist = [getTalkRoomById(talkRoomId).userIds, getTalkRoomById(talkRoomId).author_id].flat().some(id => id===userId)
+=======
+    const talkRooms = useSelector(state=>state.talkRooms)
+    const inviteRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
+    const dispatch = useDispatch()
+    const userIsAlreadyExist = [inviteRoom.userIds].flat().some(id => id===userId)
+>>>>>>> classコンポーネントを全てfunctionコンポーネントに置き換え
     if(userIsAlreadyExist) {
         return <Button variant="success" disabled>すでに参加しています</Button>
     }
     return <Button variant="success" onClick={() => {
-        addUserToTalkRoom({
+        dispatch(TalkRoomModule.actions.execAddUserToTalkRoom({
             userId,
             talkRoomId
-        })
+        }))
     }}>誘う</Button>
 }
 
-const mapStateToProps = (state) => {
-    return {
-        getTalkRoomById : talkRoomId => TalkRoomModule.reducer.getTalkRoomById(state)(talkRoomId),
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addUserToTalkRoom : ({
-            userId,
-            talkRoomId
-        }) => {
-            dispatch(TalkRoomModule.actions.execAddUserToTalkRoom({
-                userId,
-                talkRoomId
-            }))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UserInviteButton)
+export default UserInviteButton
