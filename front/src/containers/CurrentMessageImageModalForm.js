@@ -13,15 +13,7 @@ const CurrentMessageImageModalForm = ({
     const dispatch = useDispatch()
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
     return (
-        <ModalForm show={show} onSubmit={(e)=>{
-            e.preventDefault()
-            dispatch(MessageImageModule.actions.execUploadMessageImage({
-                userId:loginUser.id,
-                messageImageParams: {
-                    src:e.currentTarget.message_image.files[0]
-                }
-            }))
-        }}>
+        <ModalForm show={show}>
             <Modal.Header>
                 <h6>画像を選んでね</h6>
             </Modal.Header>
@@ -30,8 +22,23 @@ const CurrentMessageImageModalForm = ({
             </Modal.Body>
             <Modal.Footer>
                 <Form.Group>
-                    <Form.Control type='file' name='message_image'/>
-                    <Button className='ml-2' type='submit' variant='warning'>▶︎</Button>
+                    <Form.Control 
+                        className='invisible position-absolute' 
+                        id='messageImageUploadForm' 
+                        type='file' 
+                        name='message_image'
+                        onChange={(e) => {
+                            dispatch(MessageImageModule.actions.execUploadMessageImage({
+                                userId:loginUser.id,
+                                messageImageParams: {
+                                    src:e.currentTarget.files[0]
+                                }
+                            }))
+                        }}
+                    />
+                    <Button className='ml-2' variant='primary' onClick={() => {
+                        document.getElementById('messageImageUploadForm').click()
+                    }}>画像をアップロードする</Button>
                 </Form.Group>
                 <Button className='ml-2' variant='secondary'　onClick={onCancel}>やめる</Button>
             </Modal.Footer>

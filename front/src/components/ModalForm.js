@@ -14,10 +14,11 @@ import { Modal,　Form } from 'react-bootstrap'
 const ModalForm = ({
     show,
     onSubmit,
+    name,
     children
 }) => (
     <Modal show={show} size="md" centered>
-        <Form onSubmit={(formEvent) => onSubmit(formEvent)}>
+        <Form onSubmit={(formEvent) => onSubmit(formEvent)} name={name}>
             {children}
         </Form>
     </Modal>
@@ -25,6 +26,7 @@ const ModalForm = ({
 
 ModalForm.defaultProps = {
     show : false,
+    name : '',
     onSubmit : (e) => {
         console.log('please set onSubmit event')
     }

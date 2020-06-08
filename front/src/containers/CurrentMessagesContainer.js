@@ -3,7 +3,6 @@ import { useDispatch, useSelector} from 'react-redux'
 import { Container} from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
-import { withRouter } from 'react-router-dom'
 import UserMessage from '../components/UserMessage'
 
 const MessagesContainer = ({
