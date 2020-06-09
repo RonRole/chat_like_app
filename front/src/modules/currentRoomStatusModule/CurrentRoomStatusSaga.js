@@ -1,4 +1,4 @@
-import CurrentRoomStatusActions, {ActionTypes} from "./CurrentRoomStatusActions"
+import CurrentRoomStatusActions, {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import Actions from "./CurrentRoomStatusActions"
 import { call, take, put } from "redux-saga/effects"
 import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods } from "../socketClient"
@@ -58,7 +58,7 @@ export function* handleGetCurrentUserStatus() {
 export function* handleJoinRoom() {
     while(true) {
         //JOIN_ROOMが発行される毎に起動
-        const action = yield take(ActionTypes.JOIN_ROOM)
+        const action = yield take(CurrentRoomStatusActionTypes.JOIN_ROOM)
         //reconnectイベントに備えることで、サーバーからの切断=>再接続に対応
         serverToClientMothods.readyToRecconect({user:action.user, roomId:action.roomId})
         clientToServerMethods.connectToServer()
@@ -78,7 +78,7 @@ export function* handleJoinRoom() {
 export function* handleLeaveRoom() {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
     while(true) {
-        const action = yield take(ActionTypes.LEAVE_ROOM)
+        const action = yield take(CurrentRoomStatusActionTypes.LEAVE_ROOM)
         clientToServerMethods.tellLeavedRoom({user:action.user, roomId:action.roomId, text:action.text})
         //トークルームの内容をクリアする
         yield put(Actions.clearMessage(action.roomId))
@@ -91,7 +91,7 @@ export function* handleLeaveRoom() {
  */
 export function* handleDisconnectedFromServer() {
     while(true) {
-        const action = yield take(ActionTypes.DISCONNECTED_FROM_SERVER)
+        const action = yield take(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER)
         alert('サーバーから切断されました')
         action.history.push('/talk_rooms')
     }
@@ -102,7 +102,7 @@ export function* handleDisconnectedFromServer() {
  */
 export function* handleAddMessage() {
     while(true) {
-        const action = yield take(ActionTypes.ADD_MESSAGE)
+        const action = yield take(CurrentRoomStatusActionTypes.ADD_MESSAGE)
         clientToServerMethods.sendMessage({
             roomId    : action.roomId, 
             className : action.className,
@@ -117,7 +117,7 @@ export function* handleAddMessage() {
  */
 export function* handleChangeStatus() {
     while(true) {
-        const action = yield take(ActionTypes.CHANGE_CURRENT_USER_STATUS)
+        const action = yield take(CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_STATUS)
         clientToServerMethods.tellCurrentRoomUserStatusChanged({
             roomId : action.talkRoomId,
             userId : action.userId,

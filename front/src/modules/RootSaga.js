@@ -2,12 +2,13 @@
 /**
  * ActionTypeとSagaを結びつける
  */
-import { all, takeEvery　} from "redux-saga/effects";
+import { all, takeEvery, takeMaybe, takeLatest　} from "redux-saga/effects";
 import * as loadingSaga from "./loadingModule/LoadingSaga"
 import { LogActionTypes } from "./logModule/LogActions";
 import * as logSaga from "./logModule/LogSaga";
 import { TalkRoomActionTypes } from "./talkRoomModule/TalkRoomActions";
 import * as talkRoomSaga from "./talkRoomModule/TalkRoomSaga"
+import {CurrentRoomStatusActionTypes} from "./currentRoomStatusModule/CurrentRoomStatusActions"
 import * as talkRoomMessageSaga from "./currentRoomStatusModule/CurrentRoomStatusSaga"
 import * as userSaga from "./userModule/UserSaga"
 import * as errorSaga from './errorCodeModule/ErrorCodeSaga'
@@ -15,6 +16,7 @@ import { UserActionTypes } from "./userModule/UserActions";
 import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
 import { MessageImageActionTypes } from "./messageImageModule/MessageImageActions";
 import * as messageImageSaga from "./messageImageModule/MessageImageSaga"
+import * as soundSaga from "./soundModule/SoundSaga"
 
 const logSagas = [
     takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
@@ -63,6 +65,12 @@ const ErrorCodeSagas = [
     takeEvery(ErrorCodeActionTypes.HANDLE_ERROR_CODE, errorSaga.handleError)
 ]
 
+const SoundSagas = [
+    takeLatest(CurrentRoomStatusActionTypes.JOIN_ROOM, soundSaga.playBGM),
+    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.pauseBGM),
+    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM)
+]
+
 //rootSaga
 export default function* rootSaga(){
     yield all([
@@ -71,6 +79,7 @@ export default function* rootSaga(){
         ...talkRoomSagas,
         ...talkRoomMessageSagas,
         ...userSagas,
-        ...ErrorCodeSagas
+        ...ErrorCodeSagas,
+        ...SoundSagas
     ])
 }

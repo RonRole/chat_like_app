@@ -1,4 +1,4 @@
-import {ActionTypes} from "./CurrentRoomStatusActions"
+import {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import { LogActionTypes } from "../logModule/LogActions"
 import createReducerFactory from "../CreateReducerFactory"
 
@@ -23,8 +23,8 @@ const actionHandler = {}
 
 actionHandler[LogActionTypes.LOG_IN] = () => initialState
 
-actionHandler[ActionTypes.ADD_MESSAGE] = 
-actionHandler[ActionTypes.RECEIVE_MESSAGE] = (state, action) => {
+actionHandler[CurrentRoomStatusActionTypes.ADD_MESSAGE] = 
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_MESSAGE] = (state, action) => {
     state[action.roomId] = state[action.roomId] || initialState.default
     state[action.roomId]['messages'] = [
         ...state[action.roomId]['messages'],
@@ -39,14 +39,14 @@ actionHandler[ActionTypes.RECEIVE_MESSAGE] = (state, action) => {
     }
 } 
 
-actionHandler[ActionTypes.CLEAR_MESSAGE] = (state, action) => {
+actionHandler[CurrentRoomStatusActionTypes.CLEAR_MESSAGE] = (state, action) => {
     state[action.roomId]['messages'] = []
     return {
         ...state
     } 
 }
 
-actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
+actionHandler[CurrentRoomStatusActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
     const room = state[action.talkRoomId] || initialState.default
     room['currentUserIds'] = [...action.userIds]
     return {
@@ -54,8 +54,8 @@ actionHandler[ActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
     }
 }
 
-actionHandler[ActionTypes.CHANGE_CURRENT_USER_STATUS] = 
-actionHandler[ActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
+actionHandler[CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_STATUS] = 
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state,action) => {
     const room = state[action.talkRoomId] || initialState.default
     room['currentUserStatus'] = room['currentUserStatus'] || {}
     room['currentUserStatus'][action.userId] = action.status

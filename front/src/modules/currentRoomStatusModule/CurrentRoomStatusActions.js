@@ -1,5 +1,5 @@
 //actionTypes
-export const ActionTypes = {
+export const CurrentRoomStatusActionTypes = {
     JOIN_ROOM       : "JOIN_ROOM",
     LEAVE_ROOM      : "LEAVE_ROOM",
     DISCONNECTED_FROM_SERVER : "DISCONNECTED_FROM_SERVER",
@@ -15,7 +15,7 @@ export const ActionTypes = {
 //actionCreators
 const joinRoom = ({user, roomId, text}) => {
     return {
-        type   : ActionTypes.JOIN_ROOM,
+        type   : CurrentRoomStatusActionTypes.JOIN_ROOM,
         user,
         roomId,
         text
@@ -24,7 +24,7 @@ const joinRoom = ({user, roomId, text}) => {
 
 const leaveRoom = ({user, roomId, text}) => {
     return {
-        type : ActionTypes.LEAVE_ROOM,
+        type : CurrentRoomStatusActionTypes.LEAVE_ROOM,
         user,
         roomId,
         text
@@ -38,7 +38,7 @@ const addMessage = ({
     text,
 }) => {
     return {
-        type     : ActionTypes.ADD_MESSAGE,
+        type     : CurrentRoomStatusActionTypes.ADD_MESSAGE,
         roomId,
         className,
         user,
@@ -53,7 +53,7 @@ const receiveMessage = ({
     text
 }) => {
     return {
-        type     : ActionTypes.RECEIVE_MESSAGE,
+        type     : CurrentRoomStatusActionTypes.RECEIVE_MESSAGE,
         roomId,
         className,
         user,
@@ -63,14 +63,14 @@ const receiveMessage = ({
 
 const setCurrentUsers = (...users) => {
     return {
-        type : ActionTypes.SET_CURRENT_USER_IDS,
+        type : CurrentRoomStatusActionTypes.SET_CURRENT_USER_IDS,
         users
     }
 } 
 
 const clearMessage = (roomId) => {
     return {
-        type : ActionTypes.CLEAR_MESSAGE,
+        type : CurrentRoomStatusActionTypes.CLEAR_MESSAGE,
         roomId
     }
 }
@@ -80,7 +80,7 @@ const refreshCurrentRoomUsers = ({
     userIds
 }) => {
     return {
-        type : ActionTypes.REFRESH_CURRENT_ROOM_USERS,
+        type : CurrentRoomStatusActionTypes.REFRESH_CURRENT_ROOM_USERS,
         talkRoomId,
         userIds
     }
@@ -92,7 +92,7 @@ const changeCurrentUserStatus = ({
     status
 }) => {
     return {
-        type: ActionTypes.CHANGE_CURRENT_USER_STATUS,
+        type: CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_STATUS,
         talkRoomId,
         userId,
         status
@@ -105,7 +105,7 @@ const receiveCurrentUserStatus = ({
     status
 }) => {
     return {
-        type: ActionTypes.RECEIVE_CURRENT_USER_STATUS,
+        type: CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_STATUS,
         talkRoomId,
         userId,
         status
