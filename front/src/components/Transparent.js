@@ -7,9 +7,10 @@ import React from 'react'
  */
 const Transparent = ({
     children = [],
+    className
 }) => {
     return (
-        <div className='d-flex' style={{alignItems:'center'}}>
+        <div className={`d-flex ${className}`} style={{alignItems:'center'}}>
             {children}
         </div>                
     )

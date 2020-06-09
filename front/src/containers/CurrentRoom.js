@@ -12,7 +12,7 @@ const CurrentRoom = ({
     const roomsStatus = useSelector(state=>state.talkRooms)
     const thisRoom = roomsStatus.ownRooms[talkRoomId] || roomsStatus.joinRooms[talkRoomId] || roomsStatus.default
     return (
-        <Container className="justify-content-center">
+        <Container className="justify-content-center pl-5 pl-sm-0">
             <strong>{thisRoom.title}</strong>
             <CurrentUsersContainer talkRoomId = {talkRoomId}/>
             <CurrentMessagesContainer talkRoomId = {talkRoomId} />

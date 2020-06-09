@@ -6,7 +6,7 @@ const SidebarCursor = ({
     pointRightSide
 }) => (
     <div className='sidebar_cursor' onClick={onClickCursor}>
-        <nav className='navbar navbar-expand-sm navbar-dark bg-dark h-100 w-100 d-flex justify-content-center'>
+        <nav className='navbar navbar-dark bg-dark h-100 d-flex justify-content-center'>
             <Nav className='navbar-nav'>
                 <a className='nav-link'>{pointRightSide ? '▶︎' : '◀︎'}</a>
             </Nav>
