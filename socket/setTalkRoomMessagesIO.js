@@ -13,42 +13,57 @@ module.exports = (server) => {
     
     io.sockets.on('connection', socket => {
         //トークルーム参加
-        socket.on('joinRoom', ({user = {},　roomId, text = '参加者が現れた!'}) => {
+        socket.on('joinRoom', ({
+            roomId, 
+            messageType = 'text', 
+            messageClass='receiveMessage', 
+            user, 
+            text
+        }) => {
             currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
             socket.join(roomId)
-            io.sockets.in(roomId).emit('receiveMessage', {
+            socket.to(roomId).broadcast.emit('joinRoom', {
                 roomId,
-                className : 'joinRoom',
                 user,
-                text,
-            })
-        })
-        socket.on('rejoinRoom', ({user = {}, roomId, text　= '復帰しました'}) => {
-            currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
-            currentRoomMembers[roomId][socket.id] = user
-            socket.join(roomId)
-            io.sockets.in(roomId).emit('receiveMessage', {
-                roomId,
-                className : "joinRoom",
-                user,
+                messageType,
+                messageClass,
                 text
             })
         })
-        socket.on('leaveRoom', ({user = {}, roomId, text='退出しました'}) => {
+        socket.on('rejoinRoom', ({user = {}, roomId }) => {
+            currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
+            currentRoomMembers[roomId][socket.id] = user
+            socket.join(roomId)
+        })
+        socket.on('leaveRoom', ({
+            roomId, 
+            messageType = 'text', 
+            messageClass='receiveMessage', 
+            user, 
+            text
+        }) => {
             delete (currentRoomMembers[roomId] || {})[socket.id]
-            io.sockets.in(roomId).emit('receiveMessage', {
+            socket.to(roomId).broadcast.emit('leaveRoom', {
                 roomId,
-                className : "leaveRoom",
                 user,
+                messageType,
+                messageClass,
                 text
             })
         })
         //メッセージ送信
-        socket.on('sendMessage',({roomId, className='receiveMessage', user, text}) => {
+        socket.on('sendMessage',({
+            roomId, 
+            messageType = 'text', 
+            messageClass='receiveMessage', 
+            user, 
+            text
+        }) => {
             socket.to(roomId).broadcast.emit('receiveMessage', {
-                roomId, 
-                className, 
+                roomId,
+                messageType,
+                messageClass,
                 user,
                 text
             })
@@ -56,19 +71,17 @@ module.exports = (server) => {
         //現在のトークルームのメンバーを取得
         socket.on('currentUsers', (roomId) => {
             io.sockets.in(roomId).emit('currentUsers', {
-                roomId : roomId,
+                roomId,
                 users : {...currentRoomMembers[roomId]}
             })
         })
         socket.on('currentUserStatus', ({
-            roomId,
+            talkRoomId,
             userId,
             status
         }) => {
-            console.log('change user status')
-            console.log(`roomId:${roomId}, userId:${userId}, status:${status}`)
-            socket.to(roomId).broadcast.emit('currentUserStatus', {
-                roomId,
+            socket.to(talkRoomId).broadcast.emit('currentUserStatus', {
+                talkRoomId,
                 userId,
                 status
             })

@@ -33,7 +33,7 @@ const UserInviteForm = ({
                 e.preventDefault()
                 dispatch(FormErrorModule.actions.clearErrorByName('userInviteForm'))
                 dispatch(UserModule.actions.execSearchUser({
-                    userId : e.currentTarget.id.value,
+                    userSelfId : e.currentTarget.id.value,
                     userName : e.currentTarget.name.value
                 }))
             }}

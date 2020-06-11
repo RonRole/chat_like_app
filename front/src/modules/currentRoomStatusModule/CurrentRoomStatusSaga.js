@@ -1,7 +1,23 @@
 import CurrentRoomStatusActions, {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import Actions from "./CurrentRoomStatusActions"
 import { call, take, put } from "redux-saga/effects"
-import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods } from "../socketClient"
+import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel } from "../socketClient"
+
+export function* handleReceiveJoinRoom() {
+    const channel = yield call(createReceiveJoinChannel)
+    while(true) {
+        const response = yield take(channel)
+        yield put(Actions.receiveJoinRoom(response));
+    }
+}
+
+export function* handleReceiveLeaveRoom() {
+    const channel = yield call(createReceiveLeaveChannel)
+    while(true) {
+        const response = yield take(channel)
+        yield put(Actions.receiveLeaveRoom(response))
+    }
+}
 
 /**
  * socketサーバーからメッセージの追加を通知された時、
@@ -12,12 +28,7 @@ export function* handleReceiveMessage() {
     //channelがemitするたびに起動
     while(true) {
         const response = yield take(channel)
-        yield put(Actions.receiveMessage({
-            roomId    : response.roomId,
-            className : response.className,
-            text      : response.text,
-            user      : response.user
-        }))
+        yield put(Actions.receiveMessage(response))
     }
 }
 
@@ -39,14 +50,10 @@ export function* handleGetCurrentUsers() {
 
 
 export function* handleGetCurrentUserStatus() {
-    const channel = yield call(createCurrentUserReceiveChannel)
+    const channel = yield call(createCurrentUserStatusReceiveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(CurrentRoomStatusActions.receiveCurrentUserStatus({
-            talkRoomId : response.roomId,
-            userId : response.userId,
-            status : response.status
-        }))
+        yield put(CurrentRoomStatusActions.receiveCurrentUserStatus(response))
     }
 }
 
@@ -60,13 +67,9 @@ export function* handleJoinRoom() {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(CurrentRoomStatusActionTypes.JOIN_ROOM)
         //reconnectイベントに備えることで、サーバーからの切断=>再接続に対応
-        serverToClientMothods.readyToRecconect({user:action.user, roomId:action.roomId})
+        serverToClientMothods.readyToRecconect(action)
         clientToServerMethods.connectToServer()
-        clientToServerMethods.tellJoinedRoom({
-            user: action.user, 
-            roomId:action.roomId,
-            text:action.text
-        })
+        clientToServerMethods.tellJoinedRoom(action)
     }
 }
 
@@ -79,7 +82,7 @@ export function* handleLeaveRoom() {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
     while(true) {
         const action = yield take(CurrentRoomStatusActionTypes.LEAVE_ROOM)
-        clientToServerMethods.tellLeavedRoom({user:action.user, roomId:action.roomId, text:action.text})
+        clientToServerMethods.tellLeavedRoom(action)
         //トークルームの内容をクリアする
         yield put(Actions.clearMessage(action.roomId))
         clientToServerMethods.disconnectToServer()
@@ -100,15 +103,10 @@ export function* handleDisconnectedFromServer() {
 /**
  * socketサーバーにトークルームへのメッセージ追加を通知する
  */
-export function* handleAddMessage() {
+export function* handleSendMessage() {
     while(true) {
-        const action = yield take(CurrentRoomStatusActionTypes.ADD_MESSAGE)
-        clientToServerMethods.sendMessage({
-            roomId    : action.roomId, 
-            className : action.className,
-            text      : action.text,
-            user      : action.user
-        })
+        const action = yield take(CurrentRoomStatusActionTypes.SEND_MESSAGE)
+        clientToServerMethods.sendMessage(action)
     }
 }
 
@@ -118,10 +116,6 @@ export function* handleAddMessage() {
 export function* handleChangeStatus() {
     while(true) {
         const action = yield take(CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_STATUS)
-        clientToServerMethods.tellCurrentRoomUserStatusChanged({
-            roomId : action.talkRoomId,
-            userId : action.userId,
-            status : action.status
-        })
+        clientToServerMethods.tellCurrentRoomUserStatusChanged(action)
     }
 }

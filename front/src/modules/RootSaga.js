@@ -45,9 +45,11 @@ const talkRoomSagas = [
 
 const talkRoomMessageSagas = [
     talkRoomMessageSaga.handleJoinRoom(),
+    talkRoomMessageSaga.handleReceiveJoinRoom(),
     talkRoomMessageSaga.handleLeaveRoom(),
+    talkRoomMessageSaga.handleReceiveLeaveRoom(),
     talkRoomMessageSaga.handleReceiveMessage(),
-    talkRoomMessageSaga.handleAddMessage(),
+    talkRoomMessageSaga.handleSendMessage(),
     talkRoomMessageSaga.handleGetCurrentUsers(),
     talkRoomMessageSaga.handleGetCurrentUserStatus(),
     talkRoomMessageSaga.handleChangeStatus()
@@ -68,7 +70,9 @@ const ErrorCodeSagas = [
 const SoundSagas = [
     takeLatest(CurrentRoomStatusActionTypes.JOIN_ROOM, soundSaga.playBGM),
     takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.pauseBGM),
-    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM)
+    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM),
+    takeEvery(CurrentRoomStatusActionTypes.ADD_MESSAGE, soundSaga.playAddMessageSound),
+    takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound)
 ]
 
 //rootSaga

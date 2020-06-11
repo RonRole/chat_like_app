@@ -29,7 +29,15 @@ const MessageFormContainer = ({
                     e.preventDefault()
                     dispatch(TalkRoomMessageModule.actions.addMessage({
                         roomId    : talkRoomId,
-                        className : "myMessage",
+                        messageType : 'text',
+                        messageClass : "myMessage",
+                        text      : e.currentTarget.inputMessage.value,
+                        user      : loginUser
+                    }))
+                    dispatch(TalkRoomMessageModule.actions.sendMessage({
+                        roomId    : talkRoomId,
+                        messageType : 'text',
+                        messageClass : "receiveMessage",
                         text      : e.currentTarget.inputMessage.value,
                         user      : loginUser
                     }))

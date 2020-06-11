@@ -13,24 +13,32 @@ const MessagesContainer = ({
     const users = useSelector(state => state.users)
     const currentRoomStatus = useSelector(state => state.currentRoomStatus)
     const messages = (currentRoomStatus[talkRoomId] || currentRoomStatus.default).messages
-
     useEffect(() => {
         dispatch(CurrentRoomStatusModule.actions.joinRoom({
             user : loginUser,
             roomId : talkRoomId,
-            text: `${loginUser.name}が参加しました`
+            messageType : 'text',
+            messageClass:'joinRoom',
+            text : `${loginUser.name}さんが参加しました`
         }))
         window.onbeforeunload = () => {
             dispatch(CurrentRoomStatusModule.actions.leaveRoom({
                 user : loginUser,
                 roomId : talkRoomId,
-                text:`${loginUser.name}が退出しました`
+                messageType:'text',
+                messageClass:'leaveRoom',
+                text : `${loginUser.name}さんが退出しました`
             }))
         }
-        return () => dispatch(CurrentRoomStatusModule.actions.leaveRoom({
-            user : loginUser,
-            roomId : talkRoomId
-        }))
+        return ()　=> {
+            dispatch(CurrentRoomStatusModule.actions.leaveRoom({
+                user : loginUser,
+                roomId : talkRoomId,
+                messageType:'text',
+                messageClass:'leaveRoom',
+                text : `${loginUser.name}さんが退出しました`
+            }))
+        }
     }, [])
     useEffect(() => {
         const messageArea = document.getElementById("messagesContainer")
@@ -46,8 +54,9 @@ const MessagesContainer = ({
                             <UserMessage
                                 userName={(users[message.userId] || users[0]).name} 
                                 userImageUrl={(users[message.userId] || users[0]).image.thumb.url} 
-                                text={message.text} 
-                                messageType={message.className}
+                                text={message.text}
+                                messageType = {message.messageType}
+                                messageClass={message.messageClass}
                             />
                         </CSSTransition>
                     )

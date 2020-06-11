@@ -1,7 +1,7 @@
 import { Image, Alert } from "react-bootstrap";
 import React from 'react'
 
-const MessageCategories = {}
+const MessageTypes = {}
 
 const MessageProtoType = ({
     userImageUrl,
@@ -16,31 +16,29 @@ const MessageProtoType = ({
     </div>
 )
 
-MessageCategories.joinRoom = ({
+MessageTypes.text = {}
+MessageTypes.text.joinRoom = ({
     text
 }) => (
     <Alert variant='primary'>
         {text}
     </Alert>
 )
-
-MessageCategories.leaveRoom = ({
+MessageTypes.text.leaveRoom = ({
     text
 }) => (
     <Alert variant='danger'>
         {text}
     </Alert>
 )
-
-MessageCategories.myMessage = ({
+MessageTypes.text.myMessage = ({
     text
 }) => (
     <Alert variant='success'>
         {text}
     </Alert>
 )
-
-MessageCategories.receiveMessage = ({
+MessageTypes.text.receiveMessage = ({
     text
 }) => (
     <Alert variant='secondary'>
@@ -48,7 +46,8 @@ MessageCategories.receiveMessage = ({
     </Alert>
 )
 
-MessageCategories.messageImage = ({
+MessageTypes.image = {}
+MessageTypes.image.messageImage = ({
     text
 }) => (
     <div className='mb-2'>
@@ -60,10 +59,12 @@ MessageCategories.messageImage = ({
 const UserMessage = ({
     userImageUrl,
     userName,
-    messageType = 'receiveMessage',
+    messageType,
+    messageClass,
     text
 }) => {
-    const MessageCategory = MessageCategories[messageType]
+    const MessageType = MessageTypes[messageType] || MessageTypes.text
+    const MessageCategory = MessageType[messageClass] || MessageTypes.text.receiveMessage
     return (
         <MessageProtoType userImageUrl={userImageUrl} userName={userName}>
             <MessageCategory text={text}/>
@@ -74,7 +75,8 @@ const UserMessage = ({
 UserMessage.defaultProps = {
     userImageUrl : '',
     userName : 'no name',
-    messageType:'receiveMessage',
+    messageType:'test',
+    messageClass:'receiveMessage',
     text : 'test text'
 }
 

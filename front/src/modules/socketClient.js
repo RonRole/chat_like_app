@@ -10,6 +10,28 @@ console.log(`socket client connect to ${process.env.REACT_APP_SOCKET_ADDRESS}`)
 const socketClient = io.connect(process.env.REACT_APP_SOCKET_ADDRESS, {path: (process.env.REACT_APP_SOCKET_PATH || '/socket.io')})
 
 //イベントチャンネル
+export function* createReceiveJoinChannel() {
+    return eventChannel(emit => {
+        socketClient.on('joinRoom', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
+export function* createReceiveLeaveChannel() {
+    return eventChannel(emit => {
+        socketClient.on('leaveRoom', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
 export function* createMessageReceiveChannel() {
     return eventChannel(emit => {
         socketClient.on('receiveMessage', response => {
@@ -49,42 +71,60 @@ export const clientToServerMethods = {
     connectToServer : () => socketClient.connect(),
     disconnectToServer : () => socketClient.disconnect(),
     tellJoinedRoom : ({
-        user,
         roomId,
-        text
+        messageType,
+        messageClass,
+        text,
+        user
     }) => {
-        socketClient.emit('joinRoom',{user, roomId, text})
+        socketClient.emit('joinRoom',{
+            roomId,
+            messageType,
+            messageClass,
+            text,
+            user
+        })
         socketClient.emit('currentUsers', roomId)
     },
     tellLeavedRoom : ({
-        user,
         roomId,
-        text
+        messageType,
+        messageClass,
+        text,
+        user
     }) => {
-        socketClient.emit('leaveRoom',{user, roomId, text})
+        socketClient.emit('leaveRoom',{
+            roomId,
+            messageType,
+            messageClass,
+            text,
+            user
+        })
         socketClient.emit('currentUsers', roomId)
     },
     tellCurrentRoomUsersChanged : (roomId) => socketClient.emit('currentUsers', roomId),
     tellCurrentRoomUserStatusChanged : ({
-        roomId,
+        talkRoomId,
         userId,
         status
     }) => {
         socketClient.emit('currentUserStatus', {
-            roomId,
+            talkRoomId,
             userId,
             status
         })
     },
     sendMessage : ({
         roomId,
-        className,
+        messageType,
+        messageClass,
         text,
         user
     }) => {
         socketClient.emit('sendMessage', {
             roomId, 
-            className,
+            messageType,
+            messageClass,
             text,
             user
         })

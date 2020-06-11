@@ -23,15 +23,19 @@ const actionHandler = {}
 
 actionHandler[LogActionTypes.LOG_IN] = () => initialState
 
+actionHandler[CurrentRoomStatusActionTypes.JOIN_ROOM] =
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_JOIN_ROOM] = 
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_LEAVE_ROOM] =
 actionHandler[CurrentRoomStatusActionTypes.ADD_MESSAGE] = 
 actionHandler[CurrentRoomStatusActionTypes.RECEIVE_MESSAGE] = (state, action) => {
     state[action.roomId] = state[action.roomId] || initialState.default
     state[action.roomId]['messages'] = [
         ...state[action.roomId]['messages'],
         {
-            className : action.className,
-            userId      : action.user.id,
-            text      : action.text
+            messageType  : action.messageType,
+            messageClass : action.messageClass,
+            userId       : action.user.id,
+            text         : action.text
         }
     ]
     return {

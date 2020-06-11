@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import Transparent from '../components/Transparent';
 import { Image } from 'react-bootstrap';
@@ -27,7 +26,15 @@ const SendMessageImageField = ({
                             dispatch(CurrentRoomStatusModule.actions.addMessage({
                                 roomId : talkRoomId,
                                 user : loginUser,
-                                className : 'messageImage',
+                                messageType : 'image',
+                                messageClass : 'messageImage',
+                                text:messageImage.src.profile.url
+                            }))
+                            dispatch(CurrentRoomStatusModule.actions.sendMessage({
+                                roomId : talkRoomId,
+                                user : loginUser,
+                                messageType : 'image',
+                                messageClass : 'messageImage',
                                 text:messageImage.src.profile.url
                             }))
                         }}
