@@ -12,7 +12,6 @@ class UsersMessageImages::MessageImagesController < ApplicationController
             render :json => @users_message_image
             return
         else
-            puts @users_message_image.fail_result
             render :json => @users_message_image.fail_result
         end
     end

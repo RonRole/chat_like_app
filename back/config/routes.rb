@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     collection do
       get 'own'
       get 'join'
+      get 'users'
     end
 
     resources :users, module:"talkroom_users", only: [:index, :create, :destroy] do

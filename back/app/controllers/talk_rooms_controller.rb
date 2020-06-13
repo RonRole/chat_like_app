@@ -2,20 +2,26 @@ class TalkRoomsController < ApplicationController
     include TalkRoomHelper
     # 自身が管理者のトークルームを取得する
     def own
-        @talk_rooms = current_user.own_rooms
-        render :json => @talk_rooms
+        @talk_rooms = current_user.own_rooms.includes(:users)
+        render :json => @talk_rooms.map(&:with_user_id_json)
     end
 
     # 自身がメンバーであるトークルームを取得する
     def join
-        @talk_rooms = current_user.talk_rooms - current_user.own_rooms
-        render :json => @talk_rooms
+        @talk_rooms = current_user.talk_rooms - current_user.own_rooms.includes(:users)
+        render :json => @talk_rooms.map(&:with_user_id_json)
     end
 
     # 自身が管理者・メンバーであるトークルームを取得する
     def index
-        @talk_rooms = current_user.talk_rooms
+        @talk_rooms = current_user.talk_rooms + current_user.own_rooms
         render :json => @talk_rooms
+    end
+
+    # 自身が管理者・メンバーであるトークルーム全ての管理者・メンバーを取得する
+    def users
+        @talk_rooms = current_user.own_rooms.includes(:users) + current_user.talk_rooms.includes(:users)
+        render :json => @talk_rooms.flat_map(&:users).uniq
     end
 
     def create
