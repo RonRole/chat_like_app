@@ -95,7 +95,7 @@ img {
   overflow: scroll; }
 
 #talkRoomMembersModalBody {
-  max-height: '60vh';
+  max-height: 60vh;
   overflow: scroll; }
 
 .talkRoomCardsRow .fade-exit-active {
