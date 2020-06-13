@@ -69,8 +69,10 @@ const ErrorCodeSagas = [
 ]
 
 const SoundSagas = [
-    takeLatest(CurrentRoomStatusActionTypes.JOIN_ROOM, soundSaga.playBGM),
-    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.pauseBGM),
+    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, soundSaga.playJoinRoomSound),
+    takeEvery(CurrentRoomStatusActionTypes.RECEIVE_JOIN_ROOM, soundSaga.playJoinRoomSound),
+    takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.playLeaveRoomSound),
+    takeEvery(CurrentRoomStatusActionTypes.RECEIVE_LEAVE_ROOM, soundSaga.playLeaveRoomSound),
     takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM),
     takeEvery(CurrentRoomStatusActionTypes.ADD_MESSAGE, soundSaga.playAddMessageSound),
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound)

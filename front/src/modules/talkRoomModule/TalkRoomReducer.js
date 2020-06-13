@@ -64,7 +64,7 @@ actionHandler[TalkRoomActionTypes.DELETE_TALK_ROOM] = (state, action) => {
 actionHandler[TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM] = (state, action) => {
     const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {user_ids:[]}
     const beforeuser_ids = (room['user_ids'] || [])
-    room['user_ids'] = [...new Set([...beforeuser_ids,...action.user_ids])]
+    room['user_ids'] = [...new Set([...beforeuser_ids,...action.userIds])]
     return {
         ...state
     }

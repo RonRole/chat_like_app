@@ -14,14 +14,28 @@ export function* pauseBGM() {
 }
 
 export function* playAddMessageSound() {
-    const sound = new Audio(`${process.env.PUBLIC_URL}/add_message.mp3`)
+    const sound = new Audio(`${process.env.PUBLIC_URL}/sounds/add_message.mp3`)
     yield sound.play().catch(err => {
         console.log(err)
     })
 }
 
 export function* playReceiveMessageSound() {
-    const sound = new Audio(`${process.env.PUBLIC_URL}/receive_message.mp3`)
+    const sound = new Audio(`${process.env.PUBLIC_URL}/sounds/receive_message.mp3`)
+    yield sound.play().catch(err => {
+        console.log(err)
+    })
+}
+
+export function* playJoinRoomSound() {
+    const sound = new Audio(`${process.env.PUBLIC_URL}/sounds/入店するときのベル.mp3`)
+    yield sound.play().catch(err => {
+        console.log(err)
+    })
+}
+
+export function* playLeaveRoomSound() {
+    const sound = new Audio(`${process.env.PUBLIC_URL}/sounds/se_maoudamashii_chime08.mp3`)
     yield sound.play().catch(err => {
         console.log(err)
     })
