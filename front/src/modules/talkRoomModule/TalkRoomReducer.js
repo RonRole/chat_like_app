@@ -15,7 +15,7 @@ initialState.default = {
     id: 0,
     title: '',
     updated_at: '',
-    userIds: []
+    user_ids: []
 }
 
 const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
@@ -24,9 +24,9 @@ const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
 const createTalkRoomById = (state) => (id) => {
     const room = state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || initialState.default
-    room.getAllUsers = () => [...new Set([...(room.userIds || []), room.author_id])].map(id => UserModule.reducer.getUserById(state)(id))
+    room.getAllUsers = () => [...new Set([...(room.user_ids || []), room.author_id])].map(id => UserModule.reducer.getUserById(state)(id))
     room.getAuthor = () => UserModule.reducer.getUserById(state)(room.author_id)
-    room.getMembers = () => [...new Set(room.userIds || [])].filter(id => id !== room.author_id).map(id => UserModule.reducer.getUserById(state)(id))
+    room.getMembers = () => [...new Set(room.user_ids || [])].filter(id => id !== room.author_id).map(id => UserModule.reducer.getUserById(state)(id))
     return room
 }
 
@@ -62,9 +62,9 @@ actionHandler[TalkRoomActionTypes.DELETE_TALK_ROOM] = (state, action) => {
     }
 }
 actionHandler[TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM] = (state, action) => {
-    const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {userIds:[]}
-    const beforeUserIds = (room['userIds'] || [])
-    room['userIds'] = [...new Set([...beforeUserIds,...action.userIds])]
+    const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {user_ids:[]}
+    const beforeuser_ids = (room['user_ids'] || [])
+    room['user_ids'] = [...new Set([...beforeuser_ids,...action.user_ids])]
     return {
         ...state
     }

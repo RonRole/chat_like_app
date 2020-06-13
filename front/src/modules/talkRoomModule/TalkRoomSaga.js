@@ -96,10 +96,6 @@ export function* handleGetOwnRooms(action) {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
         yield put(TalkRoomActions.setOwnRooms(result.data))
-        //取得したトークルームのユーザーを設定する
-        for(let room of result.data) {
-            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomMembers(room.id))
-        }
     }
     if(result.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
@@ -110,11 +106,6 @@ export function* handleGetJoinedTalkRooms(action) {
     const talkRoomResult = yield call(getJoinRooms)
     if(talkRoomResult.isSuccess) {
         yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
-        //取得したトークルームのユーザーを設定する
-        for(let room of talkRoomResult.data) {
-            yield fork(handleGetTalkRoomAuthor, TalkRoomActions.execGetTalkRoomAuthor(room.id))
-            yield fork(handleGetTalkRoomMembers, TalkRoomActions.execGetTalkRoomMembers(room.id))
-        }
     }
     if(talkRoomResult.isFail) {
         alert('トークルームを取得できませんでした')
@@ -122,6 +113,11 @@ export function* handleGetJoinedTalkRooms(action) {
     if(talkRoomResult.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:talkRoomResult.data}))
     }
+}
+
+export function* handleGetRelatedUsers() {
+    const relatedUsers = yield call(() => DataAccessor.get({url:`${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/users`}))
+    yield put(UserActions.setUser(...relatedUsers.data))
 }
 
 export function* handleAddTalkRoom(action) {

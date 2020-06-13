@@ -82,7 +82,7 @@ export default {
             type : TalkRoomActionTypes.EXEC_GET_TALKROOM_AUTHOR,
             talkRoomId
         }
-    },
+    },  
 
     execGetTalkRoomMembers:(
         talkRoomId

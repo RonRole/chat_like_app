@@ -2,7 +2,7 @@
 /**
  * ActionTypeとSagaを結びつける
  */
-import { all, takeEvery, takeMaybe, takeLatest　} from "redux-saga/effects";
+import { all, takeEvery, takeLatest　} from "redux-saga/effects";
 import * as loadingSaga from "./loadingModule/LoadingSaga"
 import { LogActionTypes } from "./logModule/LogActions";
 import * as logSaga from "./logModule/LogSaga";
@@ -33,6 +33,7 @@ const talkRoomSagas = [
     //talkRoomSaga
     takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetOwnRooms)),
     takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetJoinedTalkRooms)),
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetRelatedUsers)),
     takeEvery(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, talkRoomSaga.handleGetOwnRooms),
     takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, talkRoomSaga.handleGetJoinedTalkRooms),
     takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, talkRoomSaga.handleAddTalkRoom),
