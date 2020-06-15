@@ -6,6 +6,12 @@ run:
     cd /usr/src/front
     node ./heroku-express.js & \
 
+    cd /usr/src/socket
+    node ./socket_server.js & \
+
+    cd /usr/src/nomlish
+    node ./nomlish_server.js & \
+
     cd /usr/src/app
     bundle exec rake db:migrate 
     bundle exec puma -C config/puma.rb -p $API_PORT
