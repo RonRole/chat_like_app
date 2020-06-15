@@ -5,6 +5,7 @@ const nomlish = require('nomlish')
  */
 const app = express()
 app.get('/translate/:level', (req, res) => {
+    console.log('nomlish access')
     res.header('Access-Control-Allow-Origin', process.env.REACT_APP_FRONTEND_ADDRESS)
     res.header('Access-Control-Allow-Credentials','true')
     nomlish.translate(text, req.params.level)
