@@ -17,15 +17,7 @@ class TalkRoomsController < ApplicationController
         @talk_rooms = current_user.talk_rooms + current_user.own_rooms
         render :json => @talk_rooms
     end
-
-    # 自身が管理者・メンバーであるトークルーム全ての管理者・メンバーを取得する
-    def users
-        @talk_rooms = 
-            current_user.own_rooms.includes(:author).includes(:users) +
-            current_user.talk_rooms.includes(:author).includes(:users)
-        render :json => @talk_rooms.flat_map(&:author).uniq + @talk_rooms.flat_map(&:users).uniq
-    end
-
+    
     def create
         @current_user = current_user
         @talk_room = @current_user.talk_rooms.new(talkroom_params)

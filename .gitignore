@@ -3,6 +3,7 @@
 # dependencies
 front/node_modules
 socket/node_modules
+nomlish/node_modules
 front/.pnp
 .pnp.js
 
@@ -30,4 +31,4 @@ yarn-debug.log*
 yarn-error.log*
 
 #for heroku
-#front_heroku.env
+front_heroku.env

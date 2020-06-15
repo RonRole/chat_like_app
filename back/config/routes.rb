@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #user
-  resources :users, except:[:show, :index] do
+  resources :users do
     collection do 
       get 'search'
     end
@@ -18,7 +18,6 @@ Rails.application.routes.draw do
     collection do
       get 'own'
       get 'join'
-      get 'users'
     end
 
     resources :users, module:"talkroom_users", only: [:index, :create, :destroy] do

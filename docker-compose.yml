@@ -41,5 +41,13 @@ services:
     ports:
       - "8000:8000"
     command: sh -c "yarn install && node ./socket_server.js"
+  nomlish:
+    build: ./nomlish
+    env_file: docker-compose.env
+    volumes:
+      - ./nomlish:/app
+    ports:
+      - "9000:9000"
+    command: sh -c "npm install && node ./nomlish_server.js"
 volumes:
   db_data: {}
