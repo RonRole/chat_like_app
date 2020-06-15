@@ -6,9 +6,6 @@ run:
     cd /usr/src/front
     node ./heroku-express.js & \
 
-    cd /usr/src/socket
-    node ./socket_server.js & \
-
     cd /usr/src/nomlish
     node ./nomlish_server.js & \
 
