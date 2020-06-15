@@ -2,10 +2,10 @@ const proxy = require('express-http-proxy');
 const express = require('express')
 const PORT = process.env.PORT || 5000
 const setTalkRoomMessagesIO = (server) => require('/usr/src/socket/setTalkRoomMessagesIO')(server)
-const nomlishServer = require('/usr/src/nomlish/nomlish_server.js')
 
 console.log(`api is served on ${process.env.API_HOST}:${process.env.API_PORT}`)
 console.log(`socket is served on ${process.env.SOCKET_HOST}:${process.env.SOCKET_PORT}`)
+console.log(`nomlish is served on ${process.env.NOMLISH_HOST}:${process.env.NOMLISH_PORT}`)
 
 const server = express()
                   .use(express.static('/usr/src/front/build'))
@@ -17,5 +17,3 @@ const server = express()
                   .listen(PORT, () => console.log(`Front Listening on ${ PORT }`))
 
 setTalkRoomMessagesIO(server)
-nomlishServer.listen(process.env.NOMLISH_PORT, process.env.NOMLISH_HOST, 0, () => console.log(`nomlish server started at ${process.env.NOMLISH_HOST}:${process.env.NOMLISH_PORT}`))
-

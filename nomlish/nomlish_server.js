@@ -13,4 +13,3 @@ app.get('/translate/:level', (req, res) => {
             .catch(err=>console.error(err))
 })
 app.listen(process.env.NOMLISH_PORT, process.env.NOMLISH_HOST, 0, () => console.log(`nomlish server started at ${process.env.NOMLISH_HOST}:${process.env.NOMLISH_PORT}`))
-export default app
