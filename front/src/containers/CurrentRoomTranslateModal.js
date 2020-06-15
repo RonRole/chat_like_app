@@ -5,7 +5,6 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
 /**
  * 送信するときの翻訳モードを選択するためのモーダル
  */
-
  const CurrentRoomTranslateModal = ({
     talkRoomId,
     show,
@@ -46,10 +45,20 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
                     }))
                     onCancel()
                 }}>決定</Button>
-                <Button variant='secondary' onClick={onCancel}>やめる</Button>
+                <Button variant='secondary' onClick={()=>{
+                    setTranslateMode(safeCurrentRoomStatus.translateMode)
+                    onCancel()
+                }}>やめる</Button>
             </Modal.Footer>
         </Modal>
     )
+ }
+
+
+ CurrentRoomTranslateModal.defaultProps = {
+     talkRoomId : 0,
+     show : false,
+     onCancel : () => console.log('please set onCancel function')
  }
 
  export default CurrentRoomTranslateModal
