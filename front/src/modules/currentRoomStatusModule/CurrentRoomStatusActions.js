@@ -12,7 +12,10 @@ export const CurrentRoomStatusActionTypes = {
     CLEAR_MESSAGE               : "CLEAR_MESSAGE",
     REFRESH_CURRENT_ROOM_USERS  : "REFRESH_CURRENT_ROOM_USERS",
     CHANGE_CURRENT_USER_STATUS  : "CHANGE_CURRENT_USER_STATUS",
-    RECEIVE_CURRENT_USER_STATUS : 'RECEIVE_CURRENT_USER_STATUS'
+    RECEIVE_CURRENT_USER_STATUS : 'RECEIVE_CURRENT_USER_STATUS',
+
+    SUBMIT_TEXT_MESSAGE         : "CHANGE_NOMLISH",
+    CHANGE_TRANSLATION          : "CHANGE_TRANSLATION"
 }
 
 //actionCreators
@@ -186,6 +189,32 @@ const receiveCurrentUserStatus = ({
     }
 }
 
+const submitTextMessage = ({
+    roomId,
+    user,
+    text,
+    translateMode
+}) => {
+    return {
+        type     : CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,
+        roomId,
+        user,
+        text,
+        translateMode
+    }
+}
+
+const changeTranslation = ({
+    talkRoomId,
+    translateMode
+}) => {
+    return {
+        type : CurrentRoomStatusActionTypes.CHANGE_TRANSLATION,
+        talkRoomId,
+        translateMode
+    }
+}
+
 export default {
     joinRoom,
     receiveJoinRoom,
@@ -198,5 +227,8 @@ export default {
     clearMessage,
     refreshCurrentRoomUsers,
     changeCurrentUserStatus,
-    receiveCurrentUserStatus
+    receiveCurrentUserStatus,
+
+    submitTextMessage,
+    changeTranslation
 }

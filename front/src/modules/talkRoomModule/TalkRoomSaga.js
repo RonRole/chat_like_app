@@ -57,25 +57,6 @@ const deleteTalkRoom = (talkRoomId) => {
     })
 }
 
-//トークルームの管理者取得
-const getTalkRoomAuthor = (
-    talkRoomId
-) => {
-    return DataAccessor.get({
-        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/author`
-    })
-}
-
-
-//トークルームのメンバー取得
-const getTalkRoomMembers = (
-    talkRoomId,
-) => {
-    return DataAccessor.get({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/member`
-    })
-}
-
 //メンバー追加
 const addMemberToTalkRoom = ({
     talkRoomId,
@@ -92,7 +73,7 @@ const addMemberToTalkRoom = ({
 }
 
 //saga
-export function* handleGetOwnRooms(action) {
+export function* handleGetOwnRooms() {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
         yield put(TalkRoomActions.setOwnRooms(result.data))
@@ -102,7 +83,7 @@ export function* handleGetOwnRooms(action) {
     }
 }
 
-export function* handleGetJoinedTalkRooms(action) {
+export function* handleGetJoinedTalkRooms() {
     const talkRoomResult = yield call(getJoinRooms)
     if(talkRoomResult.isSuccess) {
         yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
@@ -113,11 +94,6 @@ export function* handleGetJoinedTalkRooms(action) {
     if(talkRoomResult.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:talkRoomResult.data}))
     }
-}
-
-export function* handleGetRelatedUsers() {
-    const relatedUsers = yield call(() => DataAccessor.get({url:`${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/users`}))
-    yield put(UserActions.setUser(...relatedUsers.data))
 }
 
 export function* handleAddTalkRoom(action) {
@@ -179,30 +155,6 @@ export function* handleDeleteTalkRoom(action) {
     }
     if(deleteTalkRoomResult.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:deleteTalkRoomResult.data}))
-    }
-}
-
-export function* handleGetTalkRoomAuthor(action) {
-    const result = yield call(getTalkRoomAuthor, action.talkRoomId)
-    if(result.isSuccess) {
-        yield put(UserActions.setUser(result.data))
-    }
-    if(result.isError) {
-        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
-    }
-}
-
-export function* handleGetTalkRoomMembers(action) {
-    const result = yield call(getTalkRoomMembers, action.talkRoomId)
-    if(result.isSuccess) {
-        yield put(TalkRoomActions.addMembersToTalkRoom({
-            talkRoomId : action.talkRoomId,
-            userIds : [...Object.keys(result.data).map(key => result.data[key]["id"])]
-        }))
-        yield put(UserActions.setUser(...result.data))
-    }
-    if(result.isError) {
-        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 

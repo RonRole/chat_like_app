@@ -61,6 +61,11 @@ const searchUser = ({
     })
 }
 
+export function* handleGetRelatedUsers() {
+    const relatedUsers = yield call(() => DataAccessor.get({url:`${process.env.REACT_APP_BACKEND_ADDRESS}/users`}))
+    yield put(UserActions.setUser(...relatedUsers.data))
+}
+
 export function* handleReceiveMessage() {
     const channel = yield call(createMessageReceiveChannel)
     //channelがemitするたびに起動
@@ -72,7 +77,7 @@ export function* handleReceiveMessage() {
 
 
 //saga
-export function* handleGetSelf(action) {
+export function* handleGetSelf() {
     const result = yield call(getSelf)
     if(result.isSuccess) {
     }

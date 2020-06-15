@@ -29,7 +29,7 @@ const initialState = {
  * @param {*} state 
  */
 const createGetUserById = (state) => (id) => {
-    const user = state["users"][id] || defaultUser
+    const user = state["users"][id] || {...defaultUser}
     user.isAuthorOf = (talkRoomId) => (state.talkRooms.joinRooms[talkRoomId] || state.talkRooms.ownRooms[talkRoomId] || {}).author_id === user.id
     user.isCurrentUser = () => state.logStatus.isLoggedIn.id === user.id
     return state["users"][id] || defaultUser
@@ -37,7 +37,7 @@ const createGetUserById = (state) => (id) => {
 
 const actionHandler = {}
 actionHandler[LogActionTypes.LOG_IN] = () => {
-    return initialState
+    return {...initialState}
 }
 actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
     action.users.forEach(user => {

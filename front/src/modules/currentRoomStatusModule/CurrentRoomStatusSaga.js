@@ -63,6 +63,7 @@ export function* handleGetCurrentUserStatus() {
  * 現在ユーザーの更新を依頼する。
  */
 export function* handleJoinRoom() {
+
     while(true) {
         //JOIN_ROOMが発行される毎に起動
         const action = yield take(CurrentRoomStatusActionTypes.JOIN_ROOM)
@@ -119,3 +120,20 @@ export function* handleChangeStatus() {
         clientToServerMethods.tellCurrentRoomUserStatusChanged(action)
     }
 }
+
+export function* handleSubmitTextMessage(action) {
+    const translateMode = action.translateMode || {translate : text=>text}
+    const text = yield translateMode.translate(action.text)
+    yield put(CurrentRoomStatusActions.addMessage({
+        ...action,
+        messageType : 'text',
+        messageClass : 'myMessage',
+        text
+    }))
+    yield put(CurrentRoomStatusActions.sendMessage({
+        ...action,
+        messageType : 'text',
+        messageClass : 'receiveMessage',
+        text
+    }))
+} 

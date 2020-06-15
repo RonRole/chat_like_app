@@ -3,12 +3,15 @@ import React from 'react'
 import TalkRoomMessageModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Form, Row, Col, Button } from 'react-bootstrap'
+import { Container, Form, Button　} from 'react-bootstrap'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 
 const MessageFormContainer = ({
     talkRoomId
 }) => {
+    const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
+    const currentRoom = currentRoomStatus[talkRoomId] || currentRoomStatus.default
+    const translateMode = currentRoom.translateMode
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
     const dispatch = useDispatch()
     const startInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
@@ -27,19 +30,11 @@ const MessageFormContainer = ({
                 className='row mb-2'
                 onSubmit = {e => {
                     e.preventDefault()
-                    dispatch(TalkRoomMessageModule.actions.addMessage({
+                    dispatch(TalkRoomMessageModule.actions.submitTextMessage({
                         roomId    : talkRoomId,
-                        messageType : 'text',
-                        messageClass : "myMessage",
                         text      : e.currentTarget.inputMessage.value,
-                        user      : loginUser
-                    }))
-                    dispatch(TalkRoomMessageModule.actions.sendMessage({
-                        roomId    : talkRoomId,
-                        messageType : 'text',
-                        messageClass : "receiveMessage",
-                        text      : e.currentTarget.inputMessage.value,
-                        user      : loginUser
+                        user      : loginUser,
+                        translateMode
                     }))
                     finishInputting()
                     e.currentTarget.inputMessage.value=''
@@ -49,7 +44,7 @@ const MessageFormContainer = ({
                     className = 'col-10 col-lg-11'
                     name="inputMessage" 
                     type="text" 
-                    placeholder="メッセージを入力してね" 
+                    placeholder={currentRoom.translateMode.placeholder}
                     onFocus={startInputting}
                     onChange={startInputting}
                     onBlur={finishInputting}
