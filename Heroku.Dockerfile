@@ -23,6 +23,7 @@ WORKDIR /usr/src/front
 RUN yarn add express && \
     yarn add ejs && \ 
     yarn add express-http-proxy && \
+    yarn add nomlish && \
     yarn install && \
     mv front_heroku.env .env && \
     yarn build
