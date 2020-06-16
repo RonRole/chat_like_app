@@ -9,9 +9,11 @@ app.get('/translate/:level', (req, res) => {
     res.header('Access-Control-Allow-Credentials','true')
     const text = req.query.text
     if(nomlish.translate) {
-        res.send(nomlish.translate(text, req.params.level))
+        res.send("SAWAIKEI!!!")
     }
-    res.json(nomlish.translate(text))
+    else {
+        res.send('GOZZILA!!!')
+    }
     // nomlish.translate(text, req.params.level)
     //         .then(response => res.send(response))
     //         .catch(err=>console.error(err))
