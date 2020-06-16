@@ -8,7 +8,10 @@ app.get('/translate/:level', (req, res) => {
     res.header('Access-Control-Allow-Origin', process.env.REACT_APP_FRONTEND_ADDRESS)
     res.header('Access-Control-Allow-Credentials','true')
     const text = req.query.text
-    res.send(nomlish.translate(text))
+    if(nomlish) {
+        res.send('sawaikei!!!!')
+    }
+    res.json(nomlish.translate(text))
     // nomlish.translate(text, req.params.level)
     //         .then(response => res.send(response))
     //         .catch(err=>console.error(err))
