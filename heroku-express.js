@@ -11,7 +11,7 @@ const server = express()
                   .use(express.static('/usr/src/front/build'))
                   .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`))
                   .get('/socket.io', proxy(`${process.env.SOCKET_HOST}:${process.env.SOCKET_PORT}`))
-                  .get('/nomlish', (req,res) => {
+                  .get('/nomlish/*', (req,res) => {
                     const text = req.query.text
                     nomlish.translate(text, req.params.level)
                             .then(response => res.send(response))
