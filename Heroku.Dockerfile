@@ -1,4 +1,4 @@
-FROM ruby:2.6.3
+FROM ruby:2.6.3-alpine
 
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
