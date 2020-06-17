@@ -3,55 +3,66 @@ import React from 'react'
 
 const MessageTypes = {}
 
-const MessageProtoType = ({
-    userImageUrl,
-    userName,
-    className,
-    children
-}) => (
-    <div className={className}>
-        <Image src={userImageUrl} roundedCircle/>
-        <strong className="ml-2">{userName}</strong>
-        {children}
-    </div>
-)
-
 MessageTypes.text = {}
 MessageTypes.text.joinRoom = ({
-    text
+    text,
 }) => (
-    <Alert variant='primary'>
-        {text}
-    </Alert>
+    <Alert variant='primary' className='col-sm-6 offset-sm-3 text-center'>{text}</Alert>
 )
 MessageTypes.text.leaveRoom = ({
     text
 }) => (
-    <Alert variant='danger'>
-        {text}
-    </Alert>
+    <Alert variant='danger' className='col-sm-6 offset-sm-3 text-center'>{text}</Alert>
 )
 MessageTypes.text.myMessage = ({
+    userImageUrl,
+    userName,
     text
 }) => (
-    <Alert variant='success'>
-        {text}
-    </Alert>
+    <>
+        <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+        <Alert variant='success' className='col-sm-6'>{text}</Alert>
+    </>
 )
 MessageTypes.text.receiveMessage = ({
+    userImageUrl,
+    userName,
     text
 }) => (
-    <Alert variant='secondary'>
-        {text}
-    </Alert>
+    <>
+        <div className='offset-sm-6'>
+            <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+        </div>
+        <Alert variant='secondary' className='col-sm-6 offset-sm-6'>{text}</Alert>
+    </>
 )
 
 MessageTypes.image = {}
 MessageTypes.image.messageImage = ({
+    userImageUrl,
+    userName,
     text
 }) => (
-    <div className='mb-2'>
-        <Image src={text} />
+    <div>
+        <div>
+            <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+        </div>
+        <Image src={text} className='mb-2'/>
+    </div>
+)
+
+MessageTypes.image.receiveMessageImage = ({
+    userImageUrl,
+    userName,
+    text
+}) => (
+    <div className='d-flex justify-content-end offset-sm-6 col-sm-6'>
+        <div>
+            <div>
+                <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+            </div>
+            <Image src={text} className='mb-2'/>
+        </div>
     </div>
 )
 
@@ -66,9 +77,7 @@ const UserMessage = ({
     const MessageType = MessageTypes[messageType] || MessageTypes.text
     const MessageCategory = MessageType[messageClass] || MessageTypes.text.receiveMessage
     return (
-        <MessageProtoType userImageUrl={userImageUrl} userName={userName}>
-            <MessageCategory text={text}/>
-        </MessageProtoType>
+        <MessageCategory userImageUrl={userImageUrl} userName={userName} text={text}/>
     )
 }
 

@@ -4,7 +4,7 @@ RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     mkdir /usr/src/nomlish && \
     apk update && \
-    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client
+    apk add --no-cache npm yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client
 
 
 WORKDIR /usr/src
