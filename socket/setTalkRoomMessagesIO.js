@@ -99,7 +99,7 @@ module.exports = (server) => {
                 const user = currentRoomMembers[roomId][socket.id]
                 io.sockets.in(roomId).emit('receiveMessage', {
                     roomId,
-                    className : "leaveRoom",
+                    messageClass : "leaveRoom",
                     user : user,
                     text : `${user.name}が切断されました`
                 })
