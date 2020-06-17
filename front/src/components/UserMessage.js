@@ -50,7 +50,6 @@ MessageTypes.image.messageImage = ({
         <Image src={text} className='mb-2'/>
     </div>
 )
-
 MessageTypes.image.receiveMessageImage = ({
     userImageUrl,
     userName,
