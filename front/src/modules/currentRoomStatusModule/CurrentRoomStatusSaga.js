@@ -123,7 +123,8 @@ export function* handleChangeStatus() {
 
 export function* handleSubmitTextMessage(action) {
     const translateMode = action.translateMode || {translate : text=>text}
-    const text = yield translateMode.translate(action.text)
+    const text = yield　call(translateMode.translate, action.text)
+    console.log(text)
     yield put(CurrentRoomStatusActions.addMessage({
         ...action,
         messageType : 'text',

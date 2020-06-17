@@ -10,7 +10,7 @@ app.get('/translate/:level', (req, res) => {
     const text = req.query.text
     nomlish.translate(text, req.params.level)
             .then(response => res.send(response))
-            .catch(err=>console.error(err))
+            .catch(err=>res.send(err))
 })
 app.listen(process.env.NOMLISH_PORT, process.env.NOMLISH_HOST, 300, () => console.log(`nomlish server started at ${process.env.NOMLISH_HOST}:${process.env.NOMLISH_PORT}`))
     

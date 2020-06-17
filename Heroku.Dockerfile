@@ -32,7 +32,7 @@ WORKDIR /usr/src/socket
 RUN yarn install
 
 WORKDIR /usr/src/nomlish
-RUN yarn install
+RUN npm install
 
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
