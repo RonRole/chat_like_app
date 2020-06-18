@@ -1,6 +1,6 @@
 build:
   docker:
-    web: ./Heroku2.Dockerfile
+    web: ./Heroku.Dockerfile
 run:
   web: |    
     cd /usr/src/front

@@ -1,11 +1,8 @@
-FROM ruby:2.6.3-alpine 
-
+FROM ruby:latest
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     mkdir /usr/src/nomlish && \
-    apk update && \
-    apk add --no-cache npm yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client
-
+    apt-get update -qq && apt-get install -y nodejs npm postgresql-client
 
 WORKDIR /usr/src
 ADD ./back ./app
@@ -20,20 +17,16 @@ RUN gem update bundler && \
     bundle install
 
 WORKDIR /usr/src/front
-RUN yarn add express && \
-    yarn add ejs && \ 
-    yarn add express-http-proxy && \
-    yarn install && \
+RUN npm install --save express && \
+    npm install --save ejs && \ 
+    npm install --save express-http-proxy && \
+    npm install && \
     mv front_heroku.env .env && \
-    yarn build
+    npm run build
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
-RUN yarn install
+RUN npm install
 
 WORKDIR /usr/src/nomlish
 RUN npm install
-
-WORKDIR /usr/src/app
-RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \
-    apk del libxml2-dev curl-dev make gcc libc-dev g++
