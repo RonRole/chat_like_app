@@ -29,4 +29,4 @@ WORKDIR /usr/src/socket
 RUN npm install
 
 WORKDIR /usr/src/nomlish
-RUN npm install
+RUN ls && npm install
