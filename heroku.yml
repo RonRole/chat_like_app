@@ -7,6 +7,7 @@ run:
     node ./heroku-express.js & \
 
     cd /usr/src/nomlish & \
+    ls & \
     node ./nomlish_server.js
 
     cd /usr/src/app
