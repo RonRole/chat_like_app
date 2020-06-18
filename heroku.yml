@@ -7,7 +7,8 @@ run:
     node ./heroku-express.js & \
 
     cd /usr/src/nomlish & \
-    ls & \
+    rm -rf ./node_modules
+    npm install
     node ./nomlish_server.js
 
     cd /usr/src/app
