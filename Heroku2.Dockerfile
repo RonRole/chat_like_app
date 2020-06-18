@@ -2,7 +2,7 @@ FROM ruby:latest
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     mkdir /usr/src/nomlish && \
-    apt-get update -qq && apt-get install -y nodejs yarn postgresql postgresql-dev postgresql-client
+    apt-get update -qq && apt-get install -y nodejs yarn postgresql-client
 
 WORKDIR /usr/src
 ADD ./back ./app
