@@ -2,8 +2,7 @@ FROM ruby:latest
 RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     mkdir /usr/src/nomlish && \
-    ls && \
-    apt-get update -qq && apt-get install -y nodejs yarn postgresql-client
+    apt-get update -qq && apt-get install -y nodejs npm postgresql-client
 
 WORKDIR /usr/src
 ADD ./back ./app
@@ -18,16 +17,16 @@ RUN gem update bundler && \
     bundle install
 
 WORKDIR /usr/src/front
-RUN yarn add express && \
-    yarn add ejs && \ 
-    yarn add express-http-proxy && \
+RUN npm install express && \
+    npm install ejs && \ 
+    npm install express-http-proxy && \
     yarn install && \
     mv front_heroku.env .env && \
     yarn build
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
-RUN yarn install
+RUN npm install
 
 WORKDIR /usr/src/nomlish
-RUN yarn install
+RUN npm install
