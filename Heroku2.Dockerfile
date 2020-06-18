@@ -17,9 +17,9 @@ RUN gem update bundler && \
     bundle install
 
 WORKDIR /usr/src/front
-RUN npm install express && \
-    npm install ejs && \ 
-    npm install express-http-proxy && \
+RUN npm install --save express && \
+    npm install --save ejs && \ 
+    npm install --save express-http-proxy && \
     npm install && \
     mv front_heroku.env .env && \
     npm run build
