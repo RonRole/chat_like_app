@@ -15,7 +15,7 @@ const CurrentMessageImageModalForm = ({
     return (
         <ModalForm show={show}>
             <Modal.Header>
-                <h6>画像を選んでね</h6>
+                <h6><strong>画像を選択してください</strong></h6>
             </Modal.Header>
             <Modal.Body className="d-flex row" style={{overflow:'scroll'}}>
                 <SendMessageImageField talkRoomId={talkRoomId}/>
@@ -38,7 +38,7 @@ const CurrentMessageImageModalForm = ({
                     />
                     <Button className='ml-2' variant='primary' onClick={() => {
                         document.getElementById('messageImageUploadForm').click()
-                    }}>画像をアップロードする</Button>
+                    }}>新しい画像をアップロードする</Button>
                 </Form.Group>
                 <Button className='ml-2' variant='secondary'　onClick={onCancel}>やめる</Button>
             </Modal.Footer>

@@ -34,7 +34,7 @@ const SendMessageImageField = ({
                                 roomId : talkRoomId,
                                 user : loginUser,
                                 messageType : 'image',
-                                messageClass : 'messageImage',
+                                messageClass : 'receiveMessageImage',
                                 text:messageImage.src.profile.url
                             }))
                         }}

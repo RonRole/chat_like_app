@@ -15,7 +15,6 @@ class UsersController < ApplicationController
         @user = User.new(user_params)
         if(@user.save)
             render :json => @user#.hash_for_front
-            return
         else
             render :json => @user.fail_result
         end
@@ -37,7 +36,6 @@ class UsersController < ApplicationController
         @user = User.find(params[:id])
         if(@user.update(user_params))
             render :json => @user
-            return
         else
             render :json => @user.fail_result
         end

@@ -4,7 +4,7 @@ RUN mkdir /usr/src/front && \
     mkdir /usr/src/socket && \
     mkdir /usr/src/nomlish && \
     apk update && \
-    apk add --no-cache yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client
+    apk add --no-cache npm yarn tzdata libxml2-dev curl-dev make gcc libc-dev g++ mariadb-dev imagemagick6-dev postgresql postgresql-dev postgresql-client
 
 
 WORKDIR /usr/src
@@ -32,7 +32,7 @@ WORKDIR /usr/src/socket
 RUN yarn install
 
 WORKDIR /usr/src/nomlish
-RUN yarn install
+RUN npm install
 
 WORKDIR /usr/src/app
 RUN rm -rf /usr/local/bundle/cache/* /usr/local/share/.cache/* /var/cache/* /tmp/* && \

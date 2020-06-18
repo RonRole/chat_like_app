@@ -5,7 +5,6 @@ class SessionsController < ApplicationController
         @current_user = current_user
         if(@current_user) 
             render :json => @current_user#.hash_for_front
-            return
         end
         render_authorize_error
     end
