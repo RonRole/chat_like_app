@@ -20,9 +20,9 @@ WORKDIR /usr/src/front
 RUN npm install express && \
     npm install ejs && \ 
     npm install express-http-proxy && \
-    yarn install && \
+    npm install && \
     mv front_heroku.env .env && \
-    yarn build
+    npm run build
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
