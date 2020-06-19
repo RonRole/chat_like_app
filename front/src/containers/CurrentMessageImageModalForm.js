@@ -17,7 +17,7 @@ const CurrentMessageImageModalForm = ({
             <Modal.Header>
                 <h6><strong>画像を選択してください</strong></h6>
             </Modal.Header>
-            <Modal.Body className="d-flex row" style={{overflow:'scroll'}}>
+            <Modal.Body className="d-flex row m-2" style={{overflow:'scroll'}}>
                 <SendMessageImageField talkRoomId={talkRoomId}/>
             </Modal.Body>
             <Modal.Footer>
