@@ -9,6 +9,7 @@ ADD ./back ./app
 ADD ./front ./front
 ADD ./front_heroku.env ./front
 ADD ./socket ./socket
+ADD ./nomlish ./nomlish
 
 
 WORKDIR /usr/src/app
