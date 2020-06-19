@@ -45,7 +45,7 @@ const JoinRoomsArea = ({
     const [selectedPage, setSelectedPage] = useState(1)
     return (
         <>
-            <SeparateForPagination className='row mb-2 talkRoomCardsRow' selectedPage={selectedPage} wrapWith={TransitionGroup}>
+            <SeparateForPagination className='row mb-2 talkRoomCardsRow' selectedPage={selectedPage} WrapWith={TransitionGroup}>
                 {joinRoomArray.map((joinRoom,index) => (
                     <CSSTransition timeout={100} classNames='fade' key={index}>
                         <Col md={4}>
