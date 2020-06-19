@@ -1,12 +1,12 @@
 build:
   docker:
-    web: ./HerokuWithNomlish.Dockerfile
+    web: ./Heroku.Dockerfile
 run:
   web: |    
     cd /usr/src/front
     node ./heroku-express.js & \
 
-    cd /usr/src/nomlish & \
+    cd /usr/src/nomlish
     node ./nomlish_server.js & \
 
     cd /usr/src/app
