@@ -10,7 +10,6 @@ class UsersMessageImages::MessageImagesController < ApplicationController
         @users_message_image=MessageImage.new(users_message_image_params)
         if(User.find(params[:user_id]).message_images << @users_message_image)
             render :json => @users_message_image
-            return
         else
             render :json => @users_message_image.fail_result
         end

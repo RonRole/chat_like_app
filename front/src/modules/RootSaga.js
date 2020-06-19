@@ -38,7 +38,8 @@ const talkRoomSagas = [
     takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, talkRoomSaga.handleAddTalkRoom),
     takeEvery(TalkRoomActionTypes.EXEC_UPDATE_ROOM, talkRoomSaga.handleUpdateTalkRoom),
     takeEvery(TalkRoomActionTypes.EXEC_DELETE_ROOM, talkRoomSaga.handleDeleteTalkRoom),
-    takeEvery(TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM, talkRoomSaga.handleAddTalkRoomMember)
+    takeEvery(TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM, talkRoomSaga.handleAddTalkRoomMember),
+    takeEvery(TalkRoomActionTypes.EXEC_REMOVE_USERS_FROM_TALKROOM, talkRoomSaga.handleRemoveUsersFromTalkRoom)
 ]
 
 const talkRoomMessageSagas = [

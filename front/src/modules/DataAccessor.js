@@ -32,5 +32,5 @@ export default {
     get   : ({url}) => handleData(Axios.get(url)),
     post  : ({url, parameter, headers={}}) => handleData(Axios.post(url,parameter,headers)),
     put   : ({url, parameter}) => handleData(Axios.put(url, parameter)),
-    delete: ({url}) => handleData(Axios.delete(url))
+    delete: ({url, parameter}) => handleData(Axios.delete(url, {data : parameter}))
 }

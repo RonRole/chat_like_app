@@ -182,6 +182,26 @@ export function* handleAddTalkRoomMember(action) {
     }
 }
 
+export function* handleRemoveUsersFromTalkRoom(action) {
+    const result = yield call(DataAccessor.delete, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${action.talkRoomId}/users/destroy_multiple`,
+        parameter : {'ids': action.userIds}
+    })
+    if(result.isSuccess) {
+        alert("ユーザーをトークルームから追い出しました")
+        yield put(TalkRoomActions.removeUsersFromTalkRoom({
+            userIds : action.userIds,
+            talkRoomId : action.talkRoomId
+        }))
+    }
+    if(result.isFail) {
+        alert('削除できませんでした')
+    }
+    if(result.isError) {
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
+    }
+}
+
 
 
 

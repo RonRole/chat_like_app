@@ -2,21 +2,19 @@ class TalkroomUsers::UsersController < ApplicationController
     include TalkRoomHelper
     include UserHelper
     def author
-        @talk_room = TalkRoom.find(params[:talk_room_id])
-        @author = @talk_room.author
+        @author = User.joins(:own_rooms).where('talk_rooms.id=?', params[:talk_room_id])
         render :json => @author
     end
 
     def member
-        @talk_room = TalkRoom.find(params[:talk_room_id])
-        @talkroom_users = @talk_room.users
-        render :json => @talkroom_users
+        @members = User.joins(:talk_rooms).where('talk_rooms.id=?', params[:talk_room_id])
+        render :json => @members
     end
 
     def index
-        @talk_room = TalkRoom.find(params[:talk_room_id])
-        @talkroom_users = @talk_room.users + [@talk_room.author]
-        render :json => @talkroom_users
+        @author = User.joins(:own_rooms).where('talk_rooms.id=?', params[:talk_room_id])
+        @members = User.joins(:talk_rooms).where('talk_rooms.id=?', params[:talk_room_id])
+        render :json => [@author] + @members
     end
 
     def create
@@ -25,12 +23,23 @@ class TalkroomUsers::UsersController < ApplicationController
         if(@user)
             @talk_room.users << @user
             render :json => @user
+            return
         else
             render :json => {isFail:true}
         end
     end
 
     def destroy
+        puts User.where(id:params[:id])
     end
 
+    def destroy_multiple
+        @talk_room = TalkRoom.find(params[:talk_room_id])
+        @users = User.where(id:params[:ids])
+        if(@talk_room.users.delete(@users))
+            render :json => @users
+        else
+            render :json => {isFail:true}
+        end
+    end
 end

@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       collection do
         get 'author'
         get 'member'
+        delete 'destroy_multiple'
       end
     end
   end

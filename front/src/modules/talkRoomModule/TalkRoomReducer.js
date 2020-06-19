@@ -70,6 +70,18 @@ actionHandler[TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM] = (state, action) => {
     }
 }
 
+actionHandler[TalkRoomActionTypes.REMOVE_USERS_FROM_TALKROOM] = (state, action) => {
+    const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {user_ids:[]}
+    const beforeuser_ids = new Set(room['user_ids'] || [])
+    action.userIds.forEach(id => {
+        beforeuser_ids.delete(id)
+    })
+    room['user_ids'] = [...beforeuser_ids]
+    return {
+        ...state,
+    }
+}
+
 actionHandler[TalkRoomActionTypes.UPDATE_TALK_ROOM ] = (state, action) => {
     state.ownRooms[action.talkRoomId]　= {
         ...state.ownRooms[action.talkRoomId],
