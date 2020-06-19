@@ -6,7 +6,7 @@ import { Route, Switch, Redirect, BrowserRouter as Router} from 'react-router-do
 
 import LoginRequiredRoute from '../containers/LoginRequiredRoute';
 import LoginPage from './LoginPage';
-import TalkRoomPage from '../containers/TalkRoomPage'
+import TalkRoomPage from './TalkRoomPage'
 import HomePage from './HomePage';
 import SignUpPage from './SignUpPage';
 
