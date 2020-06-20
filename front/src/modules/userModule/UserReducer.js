@@ -40,19 +40,23 @@ actionHandler[LogActionTypes.LOG_IN] = () => {
     return {...initialState}
 }
 actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
-    action.users.forEach(user => {
+    const newState = action.users.reduce((state, user) => {
         state[user.id] = user
-    })
+        return state
+    }, state)
     return {
-        ...state
+        ...state,
+        ...newState
     }
 }
 actionHandler[UserActionTypes.SET_SEARCHED_USER_IDS] = (state, action) => {
-    action.users.forEach(user => {
+    const newState = action.users.reduce((state, user) => {
         state[user.id] = user
-    })
+        return state
+    }, state)
     return {
         ...state,
+        ...newState,
         searchedUserIds : action.users.map(user => user.id),
     }
 }

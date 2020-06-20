@@ -3,7 +3,7 @@ import { Dropdown, Modal, ListGroup, Button } from "react-bootstrap"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import { useDispatch, useSelector } from "react-redux"
-import UserInviteFormNeo from "./UserInviteFormNeo"
+import UserInviteFormNeo from "./UserInviteForm"
 import RemoveTalkRoomMembersModal from "./RemoveTalkRoomMemberModal"
 
 

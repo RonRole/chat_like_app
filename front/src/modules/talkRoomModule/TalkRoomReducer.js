@@ -32,21 +32,23 @@ const createTalkRoomById = (state) => (id) => {
 
 const actionHandler = {}
 actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
-    state.ownRooms = {}
-    action.talkRooms.forEach(room => {
-        state.ownRooms[room.id] = room
-    })
+    const newOwnRooms = action.talkRooms.reduce((ownRooms, room) => {
+        ownRooms[room.id] = room
+        return ownRooms
+    }, {})
     return {
         ...state,
+        ownRooms : newOwnRooms
     }
 }
 actionHandler[TalkRoomActionTypes.SET_JOINED_ROOMS] = (state, action) => {
-    state.joinRooms = {}
-    action.talkRooms.forEach(room => {
-        state.joinRooms[room.id] = room
-    });
+    const newJoinRooms = action.talkRooms.reduce((joinRooms, room) => {
+        joinRooms[room.id] = room
+        return joinRooms
+    }, {})
     return {
         ...state,
+        joinRooms : newJoinRooms
    }
 }
 actionHandler[TalkRoomActionTypes.ADD_TALK_ROOM] = (state, action) => {
@@ -72,11 +74,12 @@ actionHandler[TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM] = (state, action) => {
 
 actionHandler[TalkRoomActionTypes.REMOVE_USERS_FROM_TALKROOM] = (state, action) => {
     const room = state.ownRooms[action.talkRoomId] || state.joinRooms[action.talkRoomId] || {user_ids:[]}
-    const beforeuser_ids = new Set(room['user_ids'] || [])
-    action.userIds.forEach(id => {
-        beforeuser_ids.delete(id)
-    })
-    room['user_ids'] = [...beforeuser_ids]
+    const beforeUserIds = new Set(room['user_ids'] || [])
+    const afterUserIds = action.userIds.reduce((beforeUserIds, userId) => {
+        beforeUserIds.delete(userId)
+        return beforeUserIds
+    }, beforeUserIds)
+    room['user_ids'] = afterUserIds
     return {
         ...state,
     }

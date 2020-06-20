@@ -14,11 +14,13 @@ const initialState = {
 const actionHandler={}
 actionHandler[MessageImageActionTypes.ADD_MESSAGE_IMAGE] = (state, action) => {
     const newMessageImages = action.messageImages.flat()
-    newMessageImages.forEach(newMessageImage => {
+    const newState = newMessageImages.reduce((state, newMessageImage) => {
         state[newMessageImage.id] = newMessageImage
-    })
+        return state
+    }, state)
     return {
-        ...state
+        ...state,
+        ...newState
     }
 }
 actionHandler[MessageImageActionTypes.CLEAR_MESSAGE_IMAGE] = (state, action) => {
@@ -28,11 +30,12 @@ actionHandler[MessageImageActionTypes.CLEAR_MESSAGE_IMAGE] = (state, action) => 
 }
 actionHandler[MessageImageActionTypes.REMOVE_MESSAGE_IMAGE] = (state, action) => {
     const deleteMessageImageIds = [action.messageImageIds].flat()
-    deleteMessageImageIds.forEach(messageImageId => {
+    const newState = deleteMessageImageIds.reduce((state,messageImageId) => {
         delete state[messageImageId]
-    })
+        return state
+    }, state)
     return {
-        ...state
+        ...newState
     }
 }
 

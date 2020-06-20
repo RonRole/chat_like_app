@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     def create
         @user = User.new(user_params)
         if(@user.save)
-            render :json => @user#.hash_for_front
+            render :json => @user
         else
             render :json => @user.fail_result
         end
@@ -23,12 +23,9 @@ class UsersController < ApplicationController
     def search
         @user = User.find_by(self_id: params[:self_id], name: params[:name])
         if(@user) 
-            render :json => @user#.hash_for_front
+            render :json => @user
         else
-            render :json => {
-                isFail: true, 
-                messages: ["この#{User.human_attribute_name(:id)}、#{User.human_attribute_name(:name)}の組み合わせのユーザーがいません"]
-            }
+            render :json => self.fail_search_json
         end
     end
 
@@ -45,8 +42,16 @@ class UsersController < ApplicationController
     end
 
     def self
-        render :json => current_user#.hash_for_front
+        render :json => current_user
     end
 
+    private
+        #ユーザー検索失敗時にフロントに渡すjson
+        def fail_search_json
+            {
+                isFail: true,
+                messages: ["この#{User.human_attribute_name(:self_id)}、#{User.human_attribute_name(:name)}の組み合わせのユーザーがいません"]
+            }
+        end
 
 end

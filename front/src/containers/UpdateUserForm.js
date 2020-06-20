@@ -16,24 +16,15 @@ const UpdateUserForm = ({
     const formErrors = useSelector(state=>state.formErrors)
     const updateUserFormErrors =  formErrors["updateUserForm"] || {self_id:[], name:[], image:[]}
     const dispatch = useDispatch();
-    function filterChangedParams(currentUser, userParams) {
-        const changedParams = {}
-        Object.keys(userParams).filter((param) => {
-            return currentUser[param] !== userParams[param]
-        }).forEach((param) => {
-            changedParams[param] = userParams[param]
-        })
-        return changedParams
-    }
-    function filterNotBlankParams(userParams) {
-        const notBlankParams = {}
+    const filterUpdateParams = (currentUser, userParams) => (
         Object.keys(userParams)
+                .filter(param => currentUser[param] !== userParams[param])
                 .filter((param) => userParams[param])
-                .forEach((param) => {
-                    notBlankParams[param] = userParams[param]
-                })
-        return notBlankParams
-    }
+                .reduce((result, param) => {
+                    result[param] = userParams[param]
+                    return result
+                }, {})
+    )
     return (
         <ModalForm
             show = {show}
@@ -44,7 +35,7 @@ const UpdateUserForm = ({
                     name: e.currentTarget.name.value,
                     image: e.currentTarget.image.files[0]
                 }
-                const newUserParams = filterNotBlankParams(filterChangedParams(updateTargetUser, inputParams))
+                const newUserParams = filterUpdateParams(updateTargetUser, inputParams)
                 dispatch(UserModule.actions.execUpdateUser({
                     id: userId,
                     ...newUserParams

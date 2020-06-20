@@ -33,6 +33,7 @@ class User < ApplicationRecord
         def new_token
             SecureRandom.urlsafe_base64
         end
+
     end
 
     #ログイン処理用のトークンを保存する

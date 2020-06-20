@@ -23,10 +23,10 @@ const getSelf = () => {
 const createUser = (
     userParams
 ) => {
-    const formData = new FormData()
-    Object.keys(userParams).forEach(paramName => {
+    const formData = Object.keys(userParams).reduce((formData,paramName) => {
         formData.append(`user[${paramName}]`, userParams[paramName])
-    })
+        return formData
+    }, new FormData())
     return DataAccessor.post({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users`,
         parameter : formData,
@@ -39,10 +39,10 @@ const createUser = (
 const updateUser = (
     userParams
 ) => {
-    const formData = new FormData()
-    Object.keys(userParams).forEach(paramName => {
+    const formData = Object.keys(userParams).reduce((formData,paramName) => {
         formData.append(`user[${paramName}]`, userParams[paramName])
-    }) 
+        return formData
+    }, new FormData())
     return DataAccessor.put({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userParams.id}`,
         parameter : formData,

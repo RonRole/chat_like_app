@@ -32,10 +32,10 @@ const UserProfile = ({
         <Image style={{objectFit:'contain'}} src={user.image.profile.url} />
     )
 
-    const activeKeys = {}
-    Object.keys(profileContents).filter(key => !without.includes(key)).forEach(key => {
-        activeKeys[key] = key
-    })
+    const activeKeys = Object.keys(profileContents).filter(key => !without.includes(key)).reduce((result, key) => {
+        result[key] = key
+        return result
+    }, {})
     
     return (
         <Container　className={`${className} d-flex justify-content-center`}>

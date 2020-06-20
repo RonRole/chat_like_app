@@ -29,10 +29,10 @@ const createMessageImage = ({
     userId,
     messageImageParams
 }) => {
-    const formData = new FormData()
-    Object.keys(messageImageParams).forEach(paramName => {
+    const formData = Object.keys(messageImageParams).reduce((formData,paramName) => {
         formData.append(`message_image[${paramName}]`, messageImageParams[paramName])
-    })
+        return formData
+    }, new FormData())
     return DataAccessor.post({
         url:`${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}/message_images`,
         parameter: formData,
