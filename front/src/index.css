@@ -100,3 +100,22 @@ img {
 
 .talkRoomCardsRow .fade-exit-active {
   display: none; }
+
+.pointer {
+  cursor: pointer; }
+
+@keyframes opacity_iterate {
+  0% {
+    opacity: 1.0; }
+  50% {
+    opacity: 0.5; }
+  100% {
+    opacity: 1.0; } }
+
+.opacity_iterate:hover {
+  animation-name: opacity_iterate;
+  animation-duration: 1.0s;
+  animation-iteration-count: infinite; }
+
+.opacity_under_mouse:hover {
+  opacity: 0.5; }

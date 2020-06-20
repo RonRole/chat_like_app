@@ -18,7 +18,7 @@ const SendMessageImageField = ({
                 <Transparent.Front transParent={messageImage.id === underMouseImageId}>
                     <Image
                         key={index}
-                        className='mr-1'
+                        className='mr-1 pointer'
                         src={messageImage.src.thumb.url} 
                         onMouseOver={()=>setUnderMouseImageId(messageImage.id)}
                         onMouseLeave={()=>setUnderMouseImageId(0)}

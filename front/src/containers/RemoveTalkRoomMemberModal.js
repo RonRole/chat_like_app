@@ -32,7 +32,7 @@ const RemoveTalkRoomMembersModal = ({
                     <TransitionGroup>
                         {[...new Set(thisRoom.user_ids)].map((userId,index) => (
                             <CSSTransition key={index} timeout={200} classNames='fade'>
-                                <ListGroup.Item variant={selectedUserIds[userId]} onClick={() => {
+                                <ListGroup.Item variant={selectedUserIds[userId]} className='pointer opacity_iterate' onClick={() => {
                                     selectedUserIds[userId] ? delete selectedUserIds[userId] : selectedUserIds[userId] = 'danger'
                                     addSelectedUserId({
                                         ...selectedUserIds

@@ -24,6 +24,7 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
                 <ListGroup>
                     {Object.keys(translateModes).map((keyName, index) => (
                         <ListGroup.Item 
+                            className='pointer opacity_iterate'
                             key = {index}
                             onClick = {() => setTranslateMode(translateModes[keyName])} 
                             active={selectedTranslateMode === translateModes[keyName]}
