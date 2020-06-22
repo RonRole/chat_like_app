@@ -86,6 +86,17 @@ module.exports = (server) => {
                 status
             })
         })
+        socket.on('currentUserPosition', ({
+            talkRoomId,
+            userId,
+            position
+        }) => {
+            socket.to(talkRoomId).broadcast.emit('currentUserPosition', {
+                talkRoomId,
+                userId,
+                position
+            })
+        })
         //切断された時
         socket.on('disconnect', () => {
             //切断されたユーザーのいるトークルームのIDを取得

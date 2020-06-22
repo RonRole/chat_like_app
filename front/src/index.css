@@ -119,3 +119,8 @@ img {
 
 .opacity_under_mouse:hover {
   opacity: 0.5; }
+
+#map {
+  height: 20vh; }
+  #map .map {
+    max-height: 20vh; }

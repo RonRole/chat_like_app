@@ -11,8 +11,14 @@ const initialState = {
     default: {
         translateMode : translateModes.simple,
         currentUserIds:[],
-        currentUserStatus: {
-            default:''
+        currentUserStatus:{
+            0 : ''
+        },
+        currentUserPosition:{
+            0 : {
+                latitude:0,
+                longitude:0
+            }
         },
         messages:[]
     }
@@ -76,6 +82,16 @@ actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state
     return {
         ...state
     }
+}
+
+actionHandler[CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_POSITION] =
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_POSITIOJN] = (state, action) => {
+    const room = state[action.talkRoomId] || {...initialState.default}
+    room['currentUserPosition'] = room['currentUserPosition'] || {}
+    room['currentUserPosition'][action.userId] = action.position
+    return {
+        ...state
+    } 
 }
 
 export default {

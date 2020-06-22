@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Container } from 'react-bootstrap'
+import { Button, Container, Col } from 'react-bootstrap'
 import LoginUserProfile from '../containers/LoginUserProfile'
 import UpdateLoginUserForm from '../containers/UpdateLoginUserForm'
 import LogoutButton from '../containers/LogoutButton'
@@ -9,12 +9,12 @@ const HomePage = () => {
 
 
     return (
-        <Container className="justify-content-end">
+        <Container className="justify-content-center">
             <LoginUserProfile className='mb-2' />
-            <div className="d-flex justify-content-center mb-2">
+            <div className='d-flex justify-content-center'>
                 <Button onClick={() => setUpdateUserFormShowing(true)}>プロフィールを更新する</Button>
             </div>
-            <div className="d-flex justify-content-center">
+            <div className='d-flex justify-content-center'>
                 <LogoutButton>ログアウト</LogoutButton>
             </div>
             <UpdateLoginUserForm show={showUpdateUserForm} onCancel={() => setUpdateUserFormShowing(false)} />

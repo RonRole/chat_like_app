@@ -66,6 +66,17 @@ export function* createCurrentUserStatusReceiveChannel() {
     })
 }
 
+export function* createCurrentUserPositionReceiveChannel() {
+    return eventChannel(emit => {
+        socketClient.on('currentUserPosition', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
 //ソケット通信　クライアント=>サーバー
 export const clientToServerMethods = {
     connectToServer : () => socketClient.connect(),
@@ -112,6 +123,17 @@ export const clientToServerMethods = {
             talkRoomId,
             userId,
             status
+        })
+    },
+    tellCurrentRoomUserPositionChanged : ({
+        talkRoomId,
+        userId,
+        position = {latitude:0, longitude: 0}
+    }) => {
+        socketClient.emit('currentUserPosition', {
+            talkRoomId,
+            userId,
+            position
         })
     },
     sendMessage : ({

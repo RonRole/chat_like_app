@@ -186,3 +186,10 @@ img {
     opacity: 0.5;
   }
 }
+
+#map {
+  height: 20vh;
+  .map {
+    max-height: 20vh;
+  }
+}
