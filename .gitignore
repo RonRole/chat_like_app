@@ -25,10 +25,10 @@ front/build
 .env.test.local
 .env.production.local
 docker-compose.env
+#for heroku
+front_heroku.env
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-#for heroku
-front_heroku.env
