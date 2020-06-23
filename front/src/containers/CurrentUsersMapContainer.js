@@ -14,7 +14,6 @@ const CurrentUsersMapContainer = ({
     const users = useSelector(state=>state.users)
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
     const dispatch = useDispatch()
-
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(position=> {
             dispatch(CurrentRoomStatusModule.actions.changeCurrentUserPosition({
@@ -25,6 +24,8 @@ const CurrentUsersMapContainer = ({
                     longitude : position.coords.longitude
                 }
             }))
+        }, err => {
+            alert(`エラーが発生しました　code:${err.code} ${err.message}`)
         })
     }, [])
 

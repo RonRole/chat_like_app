@@ -72,7 +72,7 @@ module.exports = (server) => {
         socket.on('currentUsers', (roomId) => {
             io.sockets.in(roomId).emit('currentUsers', {
                 roomId,
-                users : {...currentRoomMembers[roomId]}
+                users : [...Object.values(currentRoomMembers[roomId])]
             })
         })
         socket.on('currentUserStatus', ({
@@ -86,15 +86,24 @@ module.exports = (server) => {
                 status
             })
         })
-        socket.on('currentUserPosition', ({
+        socket.on('changeUserPosition', ({
             talkRoomId,
-            userId,
             position
         }) => {
-            socket.to(talkRoomId).broadcast.emit('currentUserPosition', {
+            currentRoomMembers[talkRoomId] = currentRoomMembers[talkRoomId] || {}
+            currentRoomMembers[talkRoomId][socket.id] ? currentRoomMembers[talkRoomId][socket.id].position = position : {}
+            io.sockets.in(talkRoomId).emit('currentUserPosition', {
                 talkRoomId,
-                userId,
-                position
+                users : [...Object.values(currentRoomMembers[talkRoomId])]
+            })
+        })
+        socket.on('currentUserPosition', ({
+            talkRoomId
+        }) => {
+            currentRoomMembers[talkRoomId] = currentRoomMembers[talkRoomId] || {}
+            io.sockets.in(talkRoomId).emit('currentUserPosition', {
+                talkRoomId,
+                users : [...Object.values(currentRoomMembers[talkRoomId])]
             })
         })
         //切断された時

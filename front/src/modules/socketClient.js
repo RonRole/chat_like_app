@@ -130,10 +130,17 @@ export const clientToServerMethods = {
         userId,
         position = {latitude:0, longitude: 0}
     }) => {
-        socketClient.emit('currentUserPosition', {
+        socketClient.emit('changeUserPosition', {
             talkRoomId,
             userId,
             position
+        })
+    },
+    tellGetCurrentRoomUserPosition : ({
+        talkRoomId
+    }) => {
+        socketClient.emit('currentUserPosition', {
+            talkRoomId
         })
     },
     sendMessage : ({

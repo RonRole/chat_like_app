@@ -85,7 +85,7 @@ actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state
 }
 
 actionHandler[CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_POSITION] =
-actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_POSITIOJN] = (state, action) => {
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_POSITION] = (state, action) => {
     const room = state[action.talkRoomId] || {...initialState.default}
     room['currentUserPosition'] = room['currentUserPosition'] || {}
     room['currentUserPosition'][action.userId] = action.position

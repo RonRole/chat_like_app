@@ -1,7 +1,7 @@
 import CurrentRoomStatusActions, {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import Actions from "./CurrentRoomStatusActions"
-import { call, take, put } from "redux-saga/effects"
-import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel } from "../socketClient"
+import { call, take, put, fork } from "redux-saga/effects"
+import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel, createCurrentUserPositionReceiveChannel } from "../socketClient"
 
 export function* handleReceiveJoinRoom() {
     const channel = yield call(createReceiveJoinChannel)
@@ -42,8 +42,9 @@ export function* handleGetCurrentUsers() {
         const response = yield take(channel)
         yield put(CurrentRoomStatusActions.refreshCurrentRoomUsers({
             talkRoomId : response.roomId,
-            userIds : Object.keys(response.users).map(key => response.users[key]["id"])
+            userIds : response.users.map(user => user.id)
         }))
+
     }
 }
 
@@ -55,6 +56,29 @@ export function* handleGetCurrentUserStatus() {
         const response = yield take(channel)
         yield put(CurrentRoomStatusActions.receiveCurrentUserStatus(response))
     }
+}
+
+export function* handleReceiveCurrentUserPosition() {
+    const channel = yield call(createCurrentUserPositionReceiveChannel)
+    while(true) {
+        const response = yield take(channel)
+        for(const user of response.users) {
+            yield put(CurrentRoomStatusActions.receiveChangeCurrentUserPosition({
+                talkRoomId : response.talkRoomId,
+                userId : user.id,
+                position : user.position
+            }))
+        }
+        
+    }
+}
+
+export function* handleTellChangeUserPosition(action) {
+    clientToServerMethods.tellCurrentRoomUserPositionChanged(action)
+}
+
+export function* handleTellCurrentUserPosition(action) {
+    clientToServerMethods.tellGetCurrentRoomUserPosition(action);
 }
 
 /**

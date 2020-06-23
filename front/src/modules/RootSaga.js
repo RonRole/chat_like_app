@@ -51,9 +51,12 @@ const talkRoomMessageSagas = [
     talkRoomMessageSaga.handleSendMessage(),
     talkRoomMessageSaga.handleGetCurrentUsers(),
     talkRoomMessageSaga.handleGetCurrentUserStatus(),
+    talkRoomMessageSaga.handleReceiveCurrentUserPosition(),
     talkRoomMessageSaga.handleChangeStatus(),
 
-    takeEvery(CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,　loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleSubmitTextMessage))
+    takeEvery(CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,　loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleSubmitTextMessage)),
+    takeEvery(CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_POSITION, talkRoomMessageSaga.handleTellChangeUserPosition),
+    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, talkRoomMessageSaga.handleTellCurrentUserPosition)
 ]
 
 const userSagas = [

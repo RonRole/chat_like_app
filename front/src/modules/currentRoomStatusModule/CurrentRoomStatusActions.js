@@ -14,7 +14,7 @@ export const CurrentRoomStatusActionTypes = {
     CHANGE_CURRENT_USER_STATUS  : "CHANGE_CURRENT_USER_STATUS",
     RECEIVE_CURRENT_USER_STATUS : 'RECEIVE_CURRENT_USER_STATUS',
     CHANGE_CURRENT_USER_POSITION: "CHANGE_CURRENT_USER_POSITION",
-    RECEIVE_CURRENT_USER_POSITIOJN:"RECEIVE_CURRENT_USER_POSITION",
+    RECEIVE_CURRENT_USER_POSITION:"RECEIVE_CURRENT_USER_POSITION",
 
     SUBMIT_TEXT_MESSAGE         : "CHANGE_NOMLISH",
     CHANGE_TRANSLATION          : "CHANGE_TRANSLATION"
@@ -204,6 +204,19 @@ const changeCurrentUserPosition = ({
     }
 }
 
+const receiveChangeCurrentUserPosition = ({
+    talkRoomId,
+    userId,
+    position
+}) => {
+    return {
+        type: CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_POSITION,
+        talkRoomId,
+        userId,
+        position
+    }
+}
+
 const submitTextMessage = ({
     roomId,
     user,
@@ -244,7 +257,9 @@ export default {
 
     changeCurrentUserStatus,
     receiveCurrentUserStatus,
+    
     changeCurrentUserPosition,
+    receiveChangeCurrentUserPosition,
 
     submitTextMessage,
     changeTranslation
