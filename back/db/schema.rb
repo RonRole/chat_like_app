@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_24_121833) do
+ActiveRecord::Schema.define(version: 2020_06_24_073418) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bgms", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "src"
+    t.string "title", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bgms_on_user_id"
+  end
 
   create_table "message_images", force: :cascade do |t|
     t.bigint "user_id"

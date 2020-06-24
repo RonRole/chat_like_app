@@ -17,6 +17,8 @@ import { ErrorCodeActionTypes } from "./errorCodeModule/ErrorCodeActions";
 import { MessageImageActionTypes } from "./messageImageModule/MessageImageActions";
 import * as messageImageSaga from "./messageImageModule/MessageImageSaga"
 import * as soundSaga from "./soundModule/SoundSaga"
+import {UserPositionActionTypes} from './userPositionModule/UserPositionActions'
+import * as userPositionSaga from './userPositionModule/UserPositionSaga'
 
 const logSagas = [
     takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
@@ -51,12 +53,9 @@ const talkRoomMessageSagas = [
     talkRoomMessageSaga.handleSendMessage(),
     talkRoomMessageSaga.handleGetCurrentUsers(),
     talkRoomMessageSaga.handleGetCurrentUserStatus(),
-    talkRoomMessageSaga.handleReceiveCurrentUserPosition(),
     talkRoomMessageSaga.handleChangeStatus(),
 
     takeEvery(CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,　loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleSubmitTextMessage)),
-    takeEvery(CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_POSITION, talkRoomMessageSaga.handleTellChangeUserPosition),
-    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, talkRoomMessageSaga.handleTellCurrentUserPosition)
 ]
 
 const userSagas = [
@@ -66,6 +65,12 @@ const userSagas = [
     takeEvery(UserActionTypes.EXEC_UPDATE_USER, loadingSaga.addLoadingStateUntilSagaFinish(userSaga.handleUpdateUser)),
     userSaga.handleReceiveMessage(),
     userSaga.handleGetCurrentRoomUsers()
+]
+
+const userPositionSagas = [
+    userPositionSaga.handleReceiveCurrentUserPosition(),
+    takeEvery(UserPositionActionTypes.CHANGE_CURRENT_USER_POSITION, userPositionSaga.handleTellChangeUserPosition),
+    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, userPositionSaga.handleTellChangeUserPosition)
 ]
 
 const ErrorCodeSagas = [
@@ -91,6 +96,7 @@ export default function* rootSaga(){
         ...talkRoomMessageSagas,
         ...userSagas,
         ...ErrorCodeSagas,
-        ...SoundSagas
+        ...SoundSagas,
+        ...userPositionSagas
     ])
 }

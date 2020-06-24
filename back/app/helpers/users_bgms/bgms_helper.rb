@@ -1,0 +1,2 @@
+module UsersBgms::BgmsHelper
+end

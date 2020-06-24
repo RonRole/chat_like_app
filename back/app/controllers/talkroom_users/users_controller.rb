@@ -30,7 +30,6 @@ class TalkroomUsers::UsersController < ApplicationController
     end
 
     def destroy
-        puts User.where(id:params[:id])
     end
 
     def destroy_multiple

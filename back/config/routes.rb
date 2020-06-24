@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get 'search'
     end
     resources :message_images, module:"users_message_images"
+    resources :bgms, module:'users_bgms'
   end
 
   #session

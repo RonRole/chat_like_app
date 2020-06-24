@@ -12,8 +12,8 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
  }) => {
     const currentRoomStatus = useSelector(state => state.currentRoomStatus)
     const safeCurrentRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus.default
-    const translateModes = currentRoomStatus.translateModes
-    const [selectedTranslateMode, setTranslateMode] = useState(safeCurrentRoomStatus.translateMode)
+    const translateModes = useSelector(state => state.translateModes)
+    const [selectedTranslateMode, setTranslateMode] = useState(translateModes[safeCurrentRoomStatus.translateMode])
     const dispatch = useDispatch()
     return ( 
         <Modal show={show}>
@@ -22,32 +22,32 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
             </Modal.Header>
             <Modal.Body>
                 <ListGroup>
-                    {Object.keys(translateModes).map((keyName, index) => (
+                    {Object.values(translateModes).map((translateMode, index) => (
                         <ListGroup.Item 
                             className='pointer opacity_iterate'
                             key = {index}
-                            onClick = {() => setTranslateMode(translateModes[keyName])} 
-                            active={selectedTranslateMode === translateModes[keyName]}
+                            onClick = {() => setTranslateMode(translateMode)} 
+                            active={selectedTranslateMode === translateMode}
                         >
-                            {translateModes[keyName].modeName}
+                            {translateMode.modeName}
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
             </Modal.Body>
             <Modal.Body>
                 <h6>{selectedTranslateMode.modeTitle}</h6>
-                <p>{selectedTranslateMode.description}</p>
+                <div>{selectedTranslateMode.description}</div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant='primary' onClick={() => {
                     dispatch(CurrentRoomStatusModule.actions.changeTranslation({
                         talkRoomId,
-                        translateMode: selectedTranslateMode
+                        translateMode: selectedTranslateMode.modeId
                     }))
                     onCancel()
                 }}>決定</Button>
                 <Button variant='secondary' onClick={()=>{
-                    setTranslateMode(safeCurrentRoomStatus.translateMode)
+                    setTranslateMode(translateModes[safeCurrentRoomStatus.translateMode])
                     onCancel()
                 }}>やめる</Button>
             </Modal.Footer>

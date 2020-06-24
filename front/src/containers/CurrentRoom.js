@@ -6,6 +6,7 @@ import CurrentMessagesContainer from './CurrentMessagesContainer'
 import CurrentMessageFormContainer from './CurrentMessageFormContainer'
 import CurrentMessageImageFormShowButton from './CurrentMessageImageFormShowButton'
 import CurrentUsersMapContainer from './CurrentUsersMapContainer'
+import CurrentRoomUserTracer from './CurrentRoomUserTracer'
 
 
 
@@ -27,6 +28,7 @@ const CurrentRoom = ({
             </Container>
             <Container className='col-0 col-lg-3 d-none d-lg-block'>
                 <CurrentUsersMapContainer talkRoomId={talkRoomId} />
+                <CurrentRoomUserTracer talkRoomId={talkRoomId}/>
             </Container>
         </Row>
     )

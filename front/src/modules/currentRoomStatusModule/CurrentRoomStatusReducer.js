@@ -1,24 +1,17 @@
 import {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import { LogActionTypes } from "../logModule/LogActions"
 import createReducerFactory from "../CreateReducerFactory"
-import translateModes from './TranslateModes'
+
 
 /**
  * トークルームのid : メッセージ一覧
  */
 const initialState = {
-    translateModes,
     default: {
-        translateMode : translateModes.simple,
+        translateMode : 'simple',
         currentUserIds:[],
         currentUserStatus:{
             0 : ''
-        },
-        currentUserPosition:{
-            0 : {
-                latitude:0,
-                longitude:0
-            }
         },
         messages:[]
     }
@@ -82,16 +75,6 @@ actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_STATUS] = (state
     return {
         ...state
     }
-}
-
-actionHandler[CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_POSITION] =
-actionHandler[CurrentRoomStatusActionTypes.RECEIVE_CURRENT_USER_POSITION] = (state, action) => {
-    const room = state[action.talkRoomId] || {...initialState.default}
-    room['currentUserPosition'] = room['currentUserPosition'] || {}
-    room['currentUserPosition'][action.userId] = action.position
-    return {
-        ...state
-    } 
 }
 
 export default {

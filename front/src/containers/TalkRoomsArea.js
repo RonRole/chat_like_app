@@ -9,7 +9,7 @@ const OwnRoomsArea = ({
     itemLengthPerPage
 }) => {
     const ownRooms = useSelector(state=>state.talkRooms.ownRooms)
-    const ownRoomArray = Object.keys(ownRooms).map(key=>ownRooms[key])
+    const ownRoomArray = Object.values(ownRooms)
     const [selectedPage, setSelectedPage] = useState(1)
     return (
         <>
@@ -41,7 +41,7 @@ const JoinRoomsArea = ({
     itemLengthPerPage
 }) => {
     const joinRooms = useSelector(state=>state.talkRooms.joinRooms)
-    const joinRoomArray = Object.keys(joinRooms).map(key=>joinRooms[key])
+    const joinRoomArray = Object.values(joinRooms)
     const [selectedPage, setSelectedPage] = useState(1)
     return (
         <>

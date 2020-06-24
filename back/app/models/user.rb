@@ -15,6 +15,7 @@ class User < ApplicationRecord
     has_many :user_talk_room_refs
     has_many :talk_rooms, through: :user_talk_room_refs
     has_many :message_images
+    has_many :bgms
 
     #イメージ画像
     mount_uploader :image, ImageUploader

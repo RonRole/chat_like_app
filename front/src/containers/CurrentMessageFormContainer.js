@@ -11,7 +11,7 @@ const MessageFormContainer = ({
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const currentRoom = currentRoomStatus[talkRoomId] || currentRoomStatus.default
-    const translateMode = currentRoom.translateMode
+    const translateModes = useSelector(state=>state.translateModes)
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
     const dispatch = useDispatch()
     const startInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
@@ -34,7 +34,7 @@ const MessageFormContainer = ({
                         roomId    : talkRoomId,
                         text      : e.currentTarget.inputMessage.value,
                         user      : loginUser,
-                        translateMode
+                        translateMode : translateModes[currentRoom.translateMode]
                     }))
                     finishInputting()
                     e.currentTarget.inputMessage.value=''
@@ -44,7 +44,7 @@ const MessageFormContainer = ({
                     className = 'col-10 col-lg-11'
                     name="inputMessage" 
                     type="text" 
-                    placeholder={currentRoom.translateMode.placeholder}
+                    placeholder={translateModes[currentRoom.translateMode].placeholder}
                     onFocus={startInputting}
                     onChange={startInputting}
                     onBlur={finishInputting}
