@@ -7,6 +7,7 @@ import CurrentMessageFormContainer from './CurrentMessageFormContainer'
 import CurrentMessageImageFormShowButton from './CurrentMessageImageFormShowButton'
 import CurrentUsersMapContainer from './CurrentUsersMapContainer'
 import CurrentRoomUserTracer from './CurrentRoomUserTracer'
+import BgmModalFormShowButton from './BgmModalFormShowButton'
 
 
 
@@ -25,6 +26,8 @@ const CurrentRoom = ({
                 <CurrentMessagesContainer talkRoomId = {talkRoomId} />
                 <CurrentMessageFormContainer talkRoomId = {talkRoomId}/>
                 <CurrentMessageImageFormShowButton talkRoomId = {talkRoomId} />
+                <BgmModalFormShowButton talkRoomId = {talkRoomId} />
+
             </Container>
             <Container className='col-0 col-lg-3 d-none d-lg-block'>
                 <CurrentUsersMapContainer talkRoomId={talkRoomId} />
