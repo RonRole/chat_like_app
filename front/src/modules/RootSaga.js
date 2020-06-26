@@ -19,6 +19,7 @@ import * as messageImageSaga from "./messageImageModule/MessageImageSaga"
 import * as soundSaga from "./soundModule/SoundSaga"
 import {UserPositionActionTypes} from './userPositionModule/UserPositionActions'
 import * as userPositionSaga from './userPositionModule/UserPositionSaga'
+import { SoundActionTypes } from "./soundModule/SoundActions";
 
 const logSagas = [
     takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
@@ -82,9 +83,12 @@ const SoundSagas = [
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_JOIN_ROOM, soundSaga.playJoinRoomSound),
     takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.playLeaveRoomSound),
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_LEAVE_ROOM, soundSaga.playLeaveRoomSound),
-    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM),
     takeEvery(CurrentRoomStatusActionTypes.ADD_MESSAGE, soundSaga.playAddMessageSound),
-    takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound)
+    takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound),
+
+    takeLatest(SoundActionTypes.START_BGM, soundSaga.playBGM),
+    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.pauseBGM),
+    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM),
 ]
 
 //rootSaga

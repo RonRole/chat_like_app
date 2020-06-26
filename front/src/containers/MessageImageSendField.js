@@ -14,33 +14,29 @@ const SendMessageImageField = ({
     const safeMessageImages = Object.keys(messageImages).filter(key => messageImages[key] && messageImages[key].src && messageImages[key].src.thumb).map(key=>messageImages[key])
     return (
         safeMessageImages.map((messageImage,index) => (
-            <Transparent key={index}>
-                <Transparent.Front transParent={messageImage.id === underMouseImageId}>
-                    <Image
-                        key={index}
-                        className='mr-1 pointer'
-                        src={messageImage.src.thumb.url} 
-                        onMouseOver={()=>setUnderMouseImageId(messageImage.id)}
-                        onMouseLeave={()=>setUnderMouseImageId(0)}
-                        onClick={() => {
-                            dispatch(CurrentRoomStatusModule.actions.addMessage({
-                                roomId : talkRoomId,
-                                user : loginUser,
-                                messageType : 'image',
-                                messageClass : 'messageImage',
-                                text:messageImage.src.profile.url
-                            }))
-                            dispatch(CurrentRoomStatusModule.actions.sendMessage({
-                                roomId : talkRoomId,
-                                user : loginUser,
-                                messageType : 'image',
-                                messageClass : 'receiveMessageImage',
-                                text:messageImage.src.profile.url
-                            }))
-                        }}
-                    />
-                </Transparent.Front>
-            </Transparent>
+            <Image
+                key={index}
+                className='mr-1 pointer opacity_under_mouse'
+                src={messageImage.src.thumb.url} 
+                onMouseOver={()=>setUnderMouseImageId(messageImage.id)}
+                onMouseLeave={()=>setUnderMouseImageId(0)}
+                onClick={() => {
+                    dispatch(CurrentRoomStatusModule.actions.addMessage({
+                        roomId : talkRoomId,
+                        user : loginUser,
+                        messageType : 'image',
+                        messageClass : 'messageImage',
+                        text:messageImage.src.profile.url
+                    }))
+                    dispatch(CurrentRoomStatusModule.actions.sendMessage({
+                        roomId : talkRoomId,
+                        user : loginUser,
+                        messageType : 'image',
+                        messageClass : 'receiveMessageImage',
+                        text:messageImage.src.profile.url
+                    }))
+                }}
+            />
         ))
     )
 }

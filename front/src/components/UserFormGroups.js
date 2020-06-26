@@ -89,7 +89,7 @@ const ProfileImageFormGroup = ({
                 fileReader.onload = e => {
                     setUploadFileImage(e.target.result)
                 }
-                input ? fileReader.readAsDataURL(input) : this.setState({uploadFileImage:null})
+                input ? fileReader.readAsDataURL(input) : setUploadFileImage(null)
             }}/>
             <Transparent>
                 <Transparent.Front transParent={transParentProfile}>

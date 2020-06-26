@@ -125,3 +125,19 @@ img {
   #map .map {
     max-width: 80%;
     max-height: 20vh; }
+
+.user_thumb_size {
+  width: 50px;
+  height: 50px; }
+
+.transparent {
+  display: flex;
+  text-align: center; }
+  .transparent .front {
+    z-index: 1;
+    transition: all 0.2s ease-out; }
+    .transparent .front.opacity {
+      opacity: 0.1; }
+  .transparent .back {
+    z-index: 0;
+    position: absolute; }

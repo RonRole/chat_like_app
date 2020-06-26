@@ -25,7 +25,7 @@ const CurrentRoom = ({
                 <CurrentUsersContainer talkRoomId = {talkRoomId}/>
                 <CurrentMessagesContainer talkRoomId = {talkRoomId} />
                 <CurrentMessageFormContainer talkRoomId = {talkRoomId}/>
-                <CurrentMessageImageFormShowButton talkRoomId = {talkRoomId} />
+                <CurrentMessageImageFormShowButton className='mr-2' talkRoomId = {talkRoomId} />
                 <BgmModalFormShowButton talkRoomId = {talkRoomId} />
 
             </Container>

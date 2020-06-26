@@ -194,3 +194,27 @@ img {
     max-height: 20vh;
   }
 }
+
+.user_thumb_size {
+  width : 50px;
+  height: 50px;
+}
+
+.transparent {
+  display: flex;
+  text-align: center;
+
+  .front {
+    z-index: 1;
+    transition : all 0.2s ease-out;
+
+    &.opacity {
+      opacity: 0.1;
+    }
+  }
+
+  .back {
+    z-index: 0;
+    position: absolute;
+  }
+}

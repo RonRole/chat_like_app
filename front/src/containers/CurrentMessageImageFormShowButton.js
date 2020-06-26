@@ -5,7 +5,8 @@ import { Button } from 'react-bootstrap'
 import CurrentMessageImageModalForm from './CurrentMessageImageModalForm'
 
 const CurrentMessageImageFormShowButton = ({
-    talkRoomId
+    talkRoomId,
+    className
 }) => {
     const [messageImageModalShow, setMessageImageModalShow] = useState(false)
     const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
@@ -13,11 +14,11 @@ const CurrentMessageImageFormShowButton = ({
 
     return (
         <>
-            <Button variant='primary' onClick={()=>{
+            <Button variant='primary' className={className} onClick={()=>{
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
-                    status : '入力中'
+                    status : '🖼'
                 }))
                 setMessageImageModalShow(true)
             }}>Image</Button>

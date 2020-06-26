@@ -10,7 +10,7 @@ const Transparent = ({
     className
 }) => {
     return (
-        <div className={`d-flex ${className}`} style={{alignItems:'center'}}>
+        <div className={`transparent ${className}`}>
             {children}
         </div>                
     )
@@ -20,11 +20,7 @@ Transparent.Front = ({
     children,
     transParent = false
 }) => (
-    <div style={{
-        zIndex:1, 
-        opacity:transParent ? 0.1 : 1.0,
-        transition:'all 0.2s ease-out'
-    }}>
+    <div className={`front ${transParent ? 'opacity' : ''}`}>
         {children}
     </div>
 )
@@ -32,7 +28,7 @@ Transparent.Front = ({
 Transparent.Back = ({
     children
 }) => (
-    <div style={{zIndex:0, position:'absolute', textAlign:'center'}}>
+    <div className='back'>
         {children}
     </div>
 )
