@@ -13,7 +13,7 @@ module.exports = (server) => {
     
     io.sockets.on('connection', socket => {
         //トークルーム参加
-        socket.on('joinRoom', ({
+        socket.on('joinRoomMessage', ({
             roomId, 
             messageType = 'text', 
             messageClass='receiveMessage', 
@@ -23,7 +23,7 @@ module.exports = (server) => {
             currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
             socket.join(roomId)
-            socket.to(roomId).broadcast.emit('joinRoom', {
+            socket.to(roomId).broadcast.emit('joinRoomMessage', {
                 roomId,
                 user,
                 messageType,
@@ -31,12 +31,12 @@ module.exports = (server) => {
                 text
             })
         })
-        socket.on('rejoinRoom', ({user = {}, roomId }) => {
+        socket.on('rejoinRoomMessage', ({user = {}, roomId }) => {
             currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
             socket.join(roomId)
         })
-        socket.on('leaveRoom', ({
+        socket.on('leaveRoomMessage', ({
             roomId, 
             messageType = 'text', 
             messageClass='receiveMessage', 
@@ -44,7 +44,7 @@ module.exports = (server) => {
             text
         }) => {
             delete (currentRoomMembers[roomId] || {})[socket.id]
-            socket.to(roomId).broadcast.emit('leaveRoom', {
+            socket.to(roomId).broadcast.emit('leaveRoomMessage', {
                 roomId,
                 user,
                 messageType,
@@ -70,9 +70,10 @@ module.exports = (server) => {
         })
         //現在のトークルームのメンバーを取得
         socket.on('currentUsers', (roomId) => {
+            users = Object.values(currentRoomMembers[roomId] || {})
             io.sockets.in(roomId).emit('currentUsers', {
                 roomId,
-                users : [...Object.values(currentRoomMembers[roomId])]
+                users
             })
         })
         socket.on('currentUserStatus', ({
@@ -105,7 +106,16 @@ module.exports = (server) => {
                 talkRoomId,
                 users : [...Object.values(currentRoomMembers[talkRoomId])]
             })
-        })
+        }),
+        socket.on('changeRoomBgm',({
+            talkRoomId,
+            bgmSrcUrl
+        }) => {
+            io.sockets.in(talkRoomId).emit('changeRoomBgm', {
+                talkRoomId,
+                bgmSrcUrl
+            })
+        }),
         //切断された時
         socket.on('disconnect', () => {
             //切断されたユーザーのいるトークルームのIDを取得
@@ -119,7 +129,7 @@ module.exports = (server) => {
                 const user = currentRoomMembers[roomId][socket.id]
                 io.sockets.in(roomId).emit('receiveMessage', {
                     roomId,
-                    messageClass : "leaveRoom",
+                    messageClass : "leaveRoomMessage",
                     user : user,
                     text : `${user.name}が切断されました`
                 })
