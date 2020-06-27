@@ -12,7 +12,7 @@ const BgmModalFormShowButton = ({
             <Button variant='primary' className={className} onClick={() => {
                 setBgmModalShow(true)
             }}>BGM</Button>
-            <BgmModalForm show={bgmModalShow} onCancel={()=>setBgmModalShow(false)}/>
+            <BgmModalForm talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>setBgmModalShow(false)}/>
         </>
     )
 }

@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux'
 const CurrentRoomUserTracer = ({
     talkRoomId
 }) => {
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     const dispatch = useDispatch()
 
     useEffect(() => {

@@ -1,4 +1,3 @@
-import Message from "../../components/UserMessage"
 
 export const MessageImageActionTypes = {
     //for saga

@@ -8,7 +8,7 @@ const SendMessageImageField = ({
     talkRoomId
 }) => {
     const [underMouseImageId, setUnderMouseImageId] = useState(0);
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     const messageImages = useSelector(state=>state.messageImages)
     const dispatch = useDispatch()
     const safeMessageImages = Object.keys(messageImages).filter(key => messageImages[key] && messageImages[key].src && messageImages[key].src.thumb).map(key=>messageImages[key])

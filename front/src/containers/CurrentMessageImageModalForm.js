@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import MessageImageModule from '../modules/messageImageModule/MessageImageModule'
 import SendMessageImageField from './MessageImageSendField'
 
-const UplodeMessageImageFormGroup = () => {
+const UploadMessageImageFormGroup = () => {
     const dispatch = useDispatch()
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
         <Form.Group>
             <Form.Control 
@@ -37,7 +37,7 @@ const CurrentMessageImageModalForm = ({
     onCancel
 }) => {
     return (
-        <ModalForm show={show}>
+        <Modal show={show}>
             <Modal.Header>
                 <h6><strong>画像を選択してください</strong></h6>
             </Modal.Header>
@@ -45,10 +45,10 @@ const CurrentMessageImageModalForm = ({
                 <SendMessageImageField talkRoomId={talkRoomId}/>
             </Modal.Body>
             <Modal.Footer>
-                <UplodeMessageImageFormGroup />
+                <UploadMessageImageFormGroup />
                 <Button className='ml-2' variant='secondary'　onClick={onCancel}>やめる</Button>
             </Modal.Footer>
-        </ModalForm>
+        </Modal>
     )
 }
 

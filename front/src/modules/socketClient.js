@@ -12,7 +12,7 @@ const socketClient = io.connect(process.env.REACT_APP_SOCKET_ADDRESS, {path: (pr
 //イベントチャンネル
 export function* createReceiveJoinChannel() {
     return eventChannel(emit => {
-        socketClient.on('joinRoom', response => {
+        socketClient.on('joinRoomMessage', response => {
             emit(response)
         })
         return () => {
@@ -23,7 +23,7 @@ export function* createReceiveJoinChannel() {
 
 export function* createReceiveLeaveChannel() {
     return eventChannel(emit => {
-        socketClient.on('leaveRoom', response => {
+        socketClient.on('leaveRoomMessage', response => {
             emit(response)
         })
         return () => {
@@ -77,6 +77,18 @@ export function* createCurrentUserPositionReceiveChannel() {
     })
 }
 
+export function* createReceiveRoomBgmChannel() {
+    return eventChannel(emit => {
+        socketClient.on('changeRoomBgm', response => {
+            console.log('sawai')
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+} 
+
 //ソケット通信　クライアント=>サーバー
 export const clientToServerMethods = {
     connectToServer : () => socketClient.connect(),
@@ -88,7 +100,7 @@ export const clientToServerMethods = {
         text,
         user
     }) => {
-        socketClient.emit('joinRoom',{
+        socketClient.emit('joinRoomMessage',{
             roomId,
             messageType,
             messageClass,
@@ -104,7 +116,7 @@ export const clientToServerMethods = {
         text,
         user
     }) => {
-        socketClient.emit('leaveRoom',{
+        socketClient.emit('leaveRoomMessage',{
             roomId,
             messageType,
             messageClass,
@@ -156,6 +168,15 @@ export const clientToServerMethods = {
             messageClass,
             text,
             user
+        })
+    },
+    tellChangeRoomBgm : ({
+        talkRoomId,
+        bgmSrcUrl
+    }) => {
+        socketClient.emit('changeRoomBgm', {
+            talkRoomId,
+            bgmSrcUrl
         })
     }
 }

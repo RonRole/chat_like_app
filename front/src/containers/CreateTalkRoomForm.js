@@ -15,7 +15,7 @@ const CreateTalkRoomForm = ({
     show = false,
     toCloseModalAction = () => console.log('onCancel event')
 }) => {
-    const loginUser = useSelector(state => state.logStatus.isLoggedIn)　|| {}
+    const loginUser = useSelector(state => state.logStatus.loginUser)　|| {}
     const thisFormError = useSelector(state => state.formErrors.createTalkRoomForm) || {}
     const dispatch = useDispatch()
     return (

@@ -107,12 +107,16 @@ const ProfileImageFormGroup = ({
                     />
                 </Transparent.Front>
                 <Transparent.Back>
-                    <div style={{
-                        fontWeight:"bold", 
-                        color:"gray",
-                        width:'200px'
+                    <div className='d-flex align-items-center'
+                        style={{
+                            fontWeight:"bold", 
+                            color:"gray",
+                            height:'200px',
+                            width:'200px',
                     }}>
-                        プロフィール画像変更
+                        <div className = 'w-100'>
+                            プロフィール画像変更
+                        </div>
                     </div>
                 </Transparent.Back>
             </Transparent>

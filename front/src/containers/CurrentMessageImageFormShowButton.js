@@ -9,7 +9,7 @@ const CurrentMessageImageFormShowButton = ({
     className
 }) => {
     const [messageImageModalShow, setMessageImageModalShow] = useState(false)
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     const dispatch = useDispatch()
 
     return (

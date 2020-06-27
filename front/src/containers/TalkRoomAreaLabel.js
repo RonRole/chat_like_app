@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 const TalkRoomAreaLabel = {}
 const OwnRoomLabel = () => {
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
         <div>
             <h6 style={{borderBottom:"1px solid gray"}}>
@@ -14,7 +14,7 @@ const OwnRoomLabel = () => {
 }
 
 const JoinRoomLabel = () => {
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
         <div>
             <h6 style={{borderBottom:"1px solid gray"}}>

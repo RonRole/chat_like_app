@@ -57,6 +57,8 @@ const talkRoomMessageSagas = [
     talkRoomMessageSaga.handleChangeStatus(),
 
     takeEvery(CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,　loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleSubmitTextMessage)),
+    takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, talkRoomMessageSaga.changeRoomBgm),
+    talkRoomMessageSaga.handleReceiveChangeRoomBgm()
 ]
 
 const userSagas = [
@@ -89,6 +91,12 @@ const SoundSagas = [
     takeLatest(SoundActionTypes.START_BGM, soundSaga.playBGM),
     takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.pauseBGM),
     takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM),
+
+    takeEvery(SoundActionTypes.EXEC_UPLOAD_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.uploadBGM)),
+    takeEvery(LogActionTypes.LOG_IN, soundSaga.fetchUserBgms),
+    
+    takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, soundSaga.playBGM),
+    takeEvery(CurrentRoomStatusActionTypes.RECEIVE_CHANGE_ROOM_BGM, soundSaga.playBGM),
 ]
 
 //rootSaga

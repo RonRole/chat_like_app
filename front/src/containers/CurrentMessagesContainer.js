@@ -9,7 +9,7 @@ const MessagesContainer = ({
     talkRoomId
 }) => {
     const dispatch = useDispatch()
-    const loginUser = useSelector(state => state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state => state.logStatus.loginUser)
     const users = useSelector(state => state.users)
     const currentRoomStatus = useSelector(state => state.currentRoomStatus)
     const messages = (currentRoomStatus[talkRoomId] || currentRoomStatus.default).messages

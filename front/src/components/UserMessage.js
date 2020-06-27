@@ -4,6 +4,12 @@ import React from 'react'
 const MessageTypes = {}
 
 MessageTypes.text = {}
+MessageTypes.text.system = ({
+    text,
+}) => (
+    <Alert variant='warning' className='col-sm-6 offset-sm-3 text-center'>{text}</Alert>
+)
+
 MessageTypes.text.joinRoom = ({
     text,
 }) => (

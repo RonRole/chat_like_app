@@ -3,7 +3,6 @@ import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { connect } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 import CreateTalkRoomForm from '../containers/CreateTalkRoomForm'
-import ModalModule from '../modules/ModalModule/ModalModule'
 
 
 

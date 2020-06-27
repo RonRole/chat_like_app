@@ -6,7 +6,7 @@ const UpdateLoginUserForm = ({
     show,
     onCancel
 }) => {
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
         <UpdateUserForm userId={loginUser.id} show={show} onCancel={onCancel} />
     )

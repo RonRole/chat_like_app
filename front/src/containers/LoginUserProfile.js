@@ -6,7 +6,7 @@ const LoginUserProfile = ({
     without,
     className
 }) => {
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
         <UserProfile className={className} user={loginUser} without={without} />
     )   

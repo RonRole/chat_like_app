@@ -12,7 +12,7 @@ const MessageFormContainer = ({
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const currentRoom = currentRoomStatus[talkRoomId] || currentRoomStatus.default
     const translateModes = useSelector(state=>state.translateModes)
-    const loginUser = useSelector(state=>state.logStatus.isLoggedIn)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     const dispatch = useDispatch()
     const startInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
         talkRoomId,

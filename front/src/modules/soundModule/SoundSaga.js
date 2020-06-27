@@ -1,8 +1,12 @@
+import DataAccessor from "../DataAccessor"
+import { call, put } from "redux-saga/effects"
+import SoundActions from "./SoundActions"
 
-const bgm = new Audio(`${process.env.PUBLIC_URL}/Nomad.mp3`)
+const bgm = new Audio()
 bgm.loop = true
 
-export function* playBGM() {
+export function* playBGM(action) {
+    bgm.src = action.bgmSrcUrl
     yield bgm.play().catch(err => {
         console.log(err)
     })
@@ -39,4 +43,37 @@ export function* playLeaveRoomSound() {
     yield sound.play().catch(err => {
         console.log(err)
     })
+}
+
+export function* uploadBGM(action) {
+    const formData = Object.keys(action.bgmParams).reduce((formData, paramName) => {
+        formData.append(`bgm[${paramName}]`, action.bgmParams[paramName])
+        return formData
+    }, new FormData())
+    const result = yield call(DataAccessor.post, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${action.userId}/bgms`,
+        parameter : formData,
+        headers : {
+            'Content-Type' : 'multipart/form-data'
+        }
+    })
+    if(result.isSuccess) {
+        yield put(SoundActions.addBgms({
+            bgms : result.data
+        }))
+    }
+    else {
+        alert('bgmのアップロードに失敗しました')
+    }
+}
+
+
+export function* fetchUserBgms(action) {
+    const userId = action.userId || action.loginUser.id
+    const result = yield call(DataAccessor.get, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}/bgms`
+    })
+    yield put(SoundActions.addBgms({
+        bgms : result.data
+    }))
 }

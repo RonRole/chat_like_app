@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
 /**
- * stateのisLoggedInが設定されていない場合(=ログインがされていない場合)
+ * stateのloginUserが設定されていない場合(=ログインがされていない場合)
  * /signinにリダイレクトするRouteコンポーネント
  */
 const LoginRequiredRoute = ({
@@ -12,7 +12,7 @@ const LoginRequiredRoute = ({
     component
 }) => {
     const logStatus = useSelector(state => state.logStatus)
-    if(!logStatus.isLoggedIn){
+    if(!logStatus.loginUser){
         return  <Route exact={exact} path={path} render={()=><Redirect to={{
             pathname:"/signin",
             flash: {

@@ -7,7 +7,7 @@ const errorCodeHandler = {}
 errorCodeHandler[401] = (state) => {
     return {
         ...state,
-        isLoggedIn : false
+        loginUser : false
     }
 }
 const actionHandler = {}

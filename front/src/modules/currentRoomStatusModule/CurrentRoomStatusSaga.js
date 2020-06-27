@@ -1,7 +1,7 @@
 import CurrentRoomStatusActions, {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import Actions from "./CurrentRoomStatusActions"
 import { call, take, put, fork } from "redux-saga/effects"
-import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel, createCurrentUserPositionReceiveChannel } from "../socketClient"
+import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel, createCurrentUserPositionReceiveChannel, createReceiveRoomBgmChannel } from "../socketClient"
 
 export function* handleReceiveJoinRoom() {
     const channel = yield call(createReceiveJoinChannel)
@@ -42,7 +42,7 @@ export function* handleGetCurrentUsers() {
         const response = yield take(channel)
         yield put(CurrentRoomStatusActions.refreshCurrentRoomUsers({
             talkRoomId : response.roomId,
-            userIds : response.users.map(user => user.id)
+            userIds : [response.users].flat().map(user => user.id)
         }))
 
     }
@@ -138,3 +138,22 @@ export function* handleSubmitTextMessage(action) {
         text
     }))
 } 
+
+export function* changeRoomBgm(action) {
+    yield call(clientToServerMethods.tellChangeRoomBgm, {
+        talkRoomId : action.talkRoomId,
+        bgmSrcUrl : action.bgmSrcUrl
+    })
+}
+
+export function* handleReceiveChangeRoomBgm() {
+    const channel = yield call(createReceiveRoomBgmChannel)
+    while(true) {
+        const response = yield take(channel)
+        console.log(response)
+        yield put(CurrentRoomStatusActions.receiveChangeRoomBgm({
+            talkRoomId : response.talkRoomId,
+            bgmSrcUrl : response.bgmSrcUrl
+        }))
+    }
+}

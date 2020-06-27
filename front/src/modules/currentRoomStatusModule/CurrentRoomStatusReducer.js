@@ -2,7 +2,6 @@ import {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
 import { LogActionTypes } from "../logModule/LogActions"
 import createReducerFactory from "../CreateReducerFactory"
 
-
 /**
  * トークルームのid : メッセージ一覧
  */

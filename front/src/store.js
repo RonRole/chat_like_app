@@ -12,11 +12,11 @@ import UserModule from './modules/userModule/UserModule'
 import LoadingModule from './modules/loadingModule/LoadingModule'
 import RootSaga from './modules/RootSaga'
 import FormErrorModule from './modules/FormErrorModule/FormErrorModule'
-import ModalModule from './modules/ModalModule/ModalModule'
 import ErrorCodeModule from './modules/errorCodeModule/ErrorCodeModule'
 import MessageImageModule from './modules/messageImageModule/MessageImageModule'
 import UserPositionModule from './modules/userPositionModule/UserPositionModule'
 import TranslateModule from './modules/translateModeModule/TranslateModule'
+import SoundReducer from './modules/soundModule/SoundReducer'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -26,13 +26,14 @@ const store = createStore(
         currentRoomStatus : TalkRoomMessageModule.reducer.createMessageReducer, 
         logStatus : LogModule.reducer.creatReducer,
         messageImages : MessageImageModule.reducer.createReducer,
+        bgms : SoundReducer.createReducer,
         talkRooms : TalkRoomModule.reducer.createReducer,
         loading   : LoadingModule.reducer.createReducer,
         users     : UserModule.reducer.createReducer,
         userPositions : UserPositionModule.reducer.createUserPositionReducer,
         formErrors: FormErrorModule.reducer.createReducer,
         errorCodes : ErrorCodeModule.reducer.createReducer,
-        translateModes : TranslateModule.reducer.createReducer
+        translateModes : TranslateModule.reducer.createReducer,
         
     }), 
     applyMiddleware(sagaMiddleware)

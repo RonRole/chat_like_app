@@ -5,8 +5,8 @@ import createReducerFactory from "../CreateReducerFactory"
 const initialState = {
     //セッションによるログインを行なったかどうか
     defaultLoginFinished : false,
-    //ログイン状態
-    isLoggedIn  : false,
+    //ログインしているユーザー
+    loginUser : null,
 }
 
 const actionHandler = {}
@@ -24,14 +24,14 @@ actionHandler[LogActionTypes.FINISH_DEF_LOG_IN] = (state) => {
 actionHandler[LogActionTypes.LOG_IN] = (state, action) => {
     return {
         ...state,
-        isLoggedIn:action.loginUser,
+        loginUser:action.loginUser,
         loginErrorMessages : []
     }
 }
 actionHandler[LogActionTypes.LOG_OUT] = (state) => {
     return {
         ...state,
-        isLoggedIn:false,
+        loginUser:false,
         loginErrorMessages : []
     }
 }

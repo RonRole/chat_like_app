@@ -31,7 +31,7 @@ const initialState = {
 const createGetUserById = (state) => (id) => {
     const user = state["users"][id] || {...defaultUser}
     user.isAuthorOf = (talkRoomId) => (state.talkRooms.joinRooms[talkRoomId] || state.talkRooms.ownRooms[talkRoomId] || {}).author_id === user.id
-    user.isCurrentUser = () => state.logStatus.isLoggedIn.id === user.id
+    user.isCurrentUser = () => state.logStatus.loginUser.id === user.id
     return state["users"][id] || defaultUser
 }
 
