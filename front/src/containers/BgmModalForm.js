@@ -26,13 +26,13 @@ const BgmList = ({
                         roomId : talkRoomId,
                         messageClass : 'system',
                         user : loginUser,
-                        text : <div><p>{loginUser.name}さんがBGMを流しました</p><p>{bgm.title}</p></div>
+                        text : `${loginUser.name}さんがBGMを流しました`
                     }))
                     dispatch(CurrentRoomStatusModule.actions.sendMessage({
                         roomId : talkRoomId,
                         messageClass : 'system',
                         user : loginUser,
-                        text : `${loginUser.name}さんがBGMを流しました`
+                        text :`${loginUser.name}さんがBGMを流しました`
                     }))
                     dispatch(CurrentRoomStatusModule.actions.changeRoomBgm({
                         talkRoomId,

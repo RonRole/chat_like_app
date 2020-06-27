@@ -18,12 +18,12 @@ const TalkRoomCard = ({
     return (
         <Card>
             <Card.Body>
-                <div className="d-flex" style={{width:"100%"}}>
-                    <div className="mr-2" style={{width:"100%", overflow:"auto"}}>
+                <div className="d-flex w-100">
+                    <div className="mr-2 w-100 overflow-auto">
                         <Card.Title><strong>{thisRoom.title}</strong></Card.Title>
                         <Card.Text>{thisRoom.description}</Card.Text>
                     </div>
-                    <Image style={{width:'50px', height:'50px'}} src={(userStatus[thisRoom.author_id] || userStatus[0]).image.thumb.url}  roundedCircle/>
+                    <Image className='user_thumb_size' src={(userStatus[thisRoom.author_id] || userStatus[0]).image.thumb.url}  roundedCircle/>
                 </div>
                 <div className="d-flex justify-content-end mb-2">
                     <Button size='sm' className="mr-2" onClick={()=>history.push(`/talk_rooms/${talkRoomId}`)}>入る</Button>

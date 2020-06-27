@@ -58,7 +58,7 @@ const talkRoomMessageSagas = [
 
     takeEvery(CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,　loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleSubmitTextMessage)),
     takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, talkRoomMessageSaga.changeRoomBgm),
-    talkRoomMessageSaga.handleReceiveChangeRoomBgm()
+    talkRoomMessageSaga.handleReceiveChangeRoomBgm(),
 ]
 
 const userSagas = [
@@ -97,6 +97,7 @@ const SoundSagas = [
     
     takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, soundSaga.playBGM),
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_CHANGE_ROOM_BGM, soundSaga.playBGM),
+
 ]
 
 //rootSaga
