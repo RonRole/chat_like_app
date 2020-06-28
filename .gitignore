@@ -17,7 +17,7 @@ front/coverage
 
 #for heroku
 front/build
-#front/.env.heroku
+front/.env.heroku.ignore
 
 # misc
 .DS_Store
