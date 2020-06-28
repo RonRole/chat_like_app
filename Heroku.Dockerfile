@@ -21,14 +21,14 @@ RUN npm install --save express && \
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
     npm install && \
-    echo $REACT_APP_BACKEND_ADDRESS && \ 
-    echo $REACT_APP_BACKEND_ADDRESS && \
+RUN echo $REACT_APP_BACKEND_ADDRESS
+RUN echo $REACT_APP_BACKEND_ADDRESS 
     echo REACT_APP_BACKEND_ADDRESS=$REACT_APP_BACKEND_ADDRESS >> .env && \
     echo REACT_APP_NOMLISH_ADDRESS=$REACT_APP_NOMLISH_ADDRESS >> .env && \
     echo REACT_APP_SOCKET_ADDRESS=$REACT_APP_SOCKET_ADDRESS >> .env && \
     echo REACT_APP_SOCKET_PATH=$REACT_APP_SOCKET_PATH >> .env && \
-    echo REACT_APP_MAP_APIKEY=$REACT_APP_MAP_API_KEY >> .env && \
-    npm run build
+    echo REACT_APP_MAP_APIKEY=$REACT_APP_MAP_API_KEY >> .env
+RUN npm run build
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
