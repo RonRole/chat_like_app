@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "env-cmd": "^10.1.0",
     "google-maps-react": "^2.0.6",
     "history": "^4.10.1",
     "node-sass": "^4.14.1",
@@ -27,7 +28,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:heroku":"env-cmd front_heroku.env react-scripts build",
+    "build:heroku": "env-cmd -f .env.heroku react-scripts build",
     "test": "react-scripts test --transformIgnorePatterns \"node_modules/(?!your-module-name)/\"",
     "eject": "react-scripts eject",
     "compile:sass": "yarn node-sass ./src/index.scss ./src/index.css -w"

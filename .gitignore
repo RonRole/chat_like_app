@@ -16,7 +16,7 @@ back/public/uploads
 front/coverage
 
 #for heroku
-front/front_heroku.env
+front/.env.heroku
 
 # misc
 .DS_Store
