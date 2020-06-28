@@ -20,7 +20,7 @@ RUN npm install --save express && \
     npm install --save ejs && \ 
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
-    npm install && \
+    npm install
 RUN echo $REACT_APP_BACKEND_ADDRESS
 RUN echo $REACT_APP_BACKEND_ADDRESS 
 RUN echo REACT_APP_BACKEND_ADDRESS=$REACT_APP_BACKEND_ADDRESS >> .env && \
