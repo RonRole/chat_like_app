@@ -15,8 +15,8 @@ back/public/uploads
 # testing
 front/coverage
 
-# production
-front/build
+#for heroku
+front/front_heroku.env
 
 # misc
 .DS_Store
@@ -25,8 +25,7 @@ front/build
 .env.test.local
 .env.production.local
 docker-compose.env
-#for heroku
-front_heroku.env
+
 
 npm-debug.log*
 yarn-debug.log*
