@@ -22,7 +22,12 @@ RUN npm install --save express && \
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
     npm install && \
-    mv front_heroku.env .env && \
+    touch .env && \
+    echo $REACT_APP_BACKEND_ADDRESS >> .env && \
+    echo $REACT_APP_NOMLISH_ADDRESS >> .env && \
+    echo $REACT_APP_SOCKET_ADDRESS >> .env && \
+    echo $REACT_APP_SOCKET_PATH >> .env && \
+    echo $REACT_APP_MAP_API_KEY >> .env && \
     npm run build
 ADD ./heroku-express.js .
 
