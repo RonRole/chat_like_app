@@ -40,7 +40,7 @@ export function* handleGetCurrentUsers() {
     const channel = yield call(createCurrentUserReceiveChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(CurrentRoomStatusActions.refreshCurrentRoomUsers({
+        yield put(CurrentRoomStatusActions.receiveRefreshCurrentRoomUsers({
             talkRoomId : response.roomId,
             userIds : [response.users].flat().map(user => user.id)
         }))

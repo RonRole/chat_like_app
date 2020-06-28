@@ -11,7 +11,7 @@ const CurrentUsersContainer = ({
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const thisRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus.default
-    
+    console.log(thisRoomStatus)
     return (
         <Container className='current_users_container mb-2'>
             <h6><strong>今いる人たち</strong></h6>

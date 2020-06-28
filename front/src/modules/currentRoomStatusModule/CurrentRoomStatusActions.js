@@ -12,7 +12,7 @@ export const CurrentRoomStatusActionTypes = {
     CLEAR_MESSAGE               : "CLEAR_MESSAGE",
     
     EXEC_REFRESH_CURRENT_ROOM_USERS : "EXEC_REFRESH_CURRENT_ROOM_USERS",
-    REFRESH_CURRENT_ROOM_USERS  : "REFRESH_CURRENT_ROOM_USERS",
+    RECEIVE_REFRESH_CURRENT_ROOM_USERS  : "RECEIVE_REFRESH_CURRENT_ROOM_USERS",
 
     CHANGE_CURRENT_USER_STATUS  : "CHANGE_CURRENT_USER_STATUS",
     RECEIVE_CURRENT_USER_STATUS : 'RECEIVE_CURRENT_USER_STATUS',
@@ -167,12 +167,12 @@ const execRefreshCurrentRoomUserIds = ({
     }
 }
 
-const refreshCurrentRoomUsers = ({
+const receiveRefreshCurrentRoomUsers = ({
     talkRoomId,
     userIds
 }) => {
     return {
-        type : CurrentRoomStatusActionTypes.REFRESH_CURRENT_ROOM_USERS,
+        type : CurrentRoomStatusActionTypes.RECEIVE_REFRESH_CURRENT_ROOM_USERS,
         talkRoomId,
         userIds
     }
@@ -264,7 +264,7 @@ export default {
     clearMessage,
 
     execRefreshCurrentRoomUserIds,
-    refreshCurrentRoomUsers,
+    receiveRefreshCurrentRoomUsers,
 
     changeCurrentUserStatus,
     receiveCurrentUserStatus,

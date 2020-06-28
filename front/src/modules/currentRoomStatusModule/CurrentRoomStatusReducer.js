@@ -58,7 +58,7 @@ actionHandler[CurrentRoomStatusActionTypes.CLEAR_MESSAGE] = (state, action) => {
     } 
 }
 
-actionHandler[CurrentRoomStatusActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
+actionHandler[CurrentRoomStatusActionTypes.RECEIVE_REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
     state[action.talkRoomId] = state[action.talkRoomId] || {...initialState.default}
     state[action.talkRoomId]['currentUserIds'] = [...action.userIds]
     return {

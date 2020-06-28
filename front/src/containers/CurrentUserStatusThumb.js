@@ -12,7 +12,6 @@ const CurrentUserStatusThumb = ({
 
     const userStatus = useSelector(state=>state.users)
     const user = userStatus[userId] || userStatus[0]
-    
 
     return (
         <Transparent>
