@@ -16,7 +16,9 @@ express.json({
 
 const server = express()
                 .use(express.static('/usr/src/front/build'))
-                .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`))
+                .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`, {
+                    limit : '50mb'
+                }))
                 .use('/nomlish', proxy(`${process.env.NOMLISH_HOST}:${process.env.NOMLISH_PORT}`, {
                     timeout : 3000000
                 }))
