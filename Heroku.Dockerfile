@@ -21,6 +21,7 @@ RUN npm install --save express && \
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
     npm install
+RUN npm run build:heroku
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket

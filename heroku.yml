@@ -4,7 +4,6 @@ build:
 run:
   web: |    
     cd /usr/src/front
-    npm run build
     node ./heroku-express.js & \
 
     cd /usr/src/nomlish
