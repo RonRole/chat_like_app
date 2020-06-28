@@ -4,8 +4,7 @@ build:
 run:
   web: |    
     cd /usr/src/front
-    echo "SAWAI!!!!" 
-    echo $REACT_APP_MAP_API_KEY
+    npm run build
     node ./heroku-express.js & \
 
     cd /usr/src/nomlish
