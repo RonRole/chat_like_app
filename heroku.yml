@@ -3,9 +3,9 @@ build:
     web: ./Heroku.Dockerfile
 run:
   web: |    
-    cd /usr/src/front & \
-    echo "SAWAI!!!!" & \
-    echo $REACT_APP_MAP_API_KEY & \
+    cd /usr/src/front
+    echo "SAWAI!!!!" 
+    echo $REACT_APP_MAP_API_KEY
     node ./heroku-express.js & \
 
     cd /usr/src/nomlish
