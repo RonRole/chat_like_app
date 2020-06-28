@@ -26,7 +26,7 @@ const CurrentUserThumbs = ({
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const userStatus = useSelector(state=>state.users)
     return (
-        <TransitionGroup>
+        <TransitionGroup className='d-flex'>
             {(currentRoomStatus[talkRoomId] || currentRoomStatus.default).currentUserIds.map((userId,index) => (
                 <CSSTransition key={index} classNames='fade' timeout={100}>
                     <Image className='user_thumb_size' src={(userStatus[userId] || userStatus[0]).image.thumb.url}  roundedCircle/>
