@@ -6,7 +6,7 @@ RUN mkdir /usr/src/front && \
 
 WORKDIR /usr/src
 ADD ./back ./app
-ADD ./front/build ./front
+ADD ./front/build ./front/build
 ADD ./socket ./socket
 ADD ./nomlish ./nomlish
 
