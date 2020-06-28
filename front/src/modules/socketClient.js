@@ -54,6 +54,17 @@ export function* createCurrentUserReceiveChannel() {
     })
 }
 
+export function* createCurrentAllUserReceiveChannel() {
+    return eventChannel(emit => {
+        socketClient.on('currentAllUserIds', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
 //現在ユーザーステータス取得用のイベントチャンネル
 export function* createCurrentUserStatusReceiveChannel() {
     return eventChannel(emit => {
@@ -80,7 +91,6 @@ export function* createCurrentUserPositionReceiveChannel() {
 export function* createReceiveRoomBgmChannel() {
     return eventChannel(emit => {
         socketClient.on('changeRoomBgm', response => {
-            console.log('sawai')
             emit(response)
         })
         return () => {
@@ -108,6 +118,11 @@ export const clientToServerMethods = {
             user
         })
         socketClient.emit('currentUsers', roomId)
+    },
+    fetchCurrentRoomUsers : ({
+        talkRoomId
+    }) => {
+        socketClient.emit('currentUsers', talkRoomId)
     },
     tellLeavedRoom : ({
         roomId,

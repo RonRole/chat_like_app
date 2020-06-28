@@ -59,8 +59,8 @@ actionHandler[CurrentRoomStatusActionTypes.CLEAR_MESSAGE] = (state, action) => {
 }
 
 actionHandler[CurrentRoomStatusActionTypes.REFRESH_CURRENT_ROOM_USERS] = (state,action) => {
-    const room = state[action.talkRoomId] || {...initialState.default}
-    room['currentUserIds'] = [...action.userIds]
+    state[action.talkRoomId] = state[action.talkRoomId] || {...initialState.default}
+    state[action.talkRoomId]['currentUserIds'] = [...action.userIds]
     return {
         ...state
     }

@@ -44,6 +44,7 @@ module.exports = (server) => {
             text
         }) => {
             delete (currentRoomMembers[roomId] || {})[socket.id]
+            socket.leave(roomId)
             socket.to(roomId).broadcast.emit('leaveRoomMessage', {
                 roomId,
                 user,
@@ -70,8 +71,9 @@ module.exports = (server) => {
         })
         //現在のトークルームのメンバーを取得
         socket.on('currentUsers', (roomId) => {
-            users = Object.values(currentRoomMembers[roomId] || {})
-            io.sockets.in(roomId).emit('currentUsers', {
+            const users = Object.values(currentRoomMembers[roomId] || {})
+            console.log(users)
+            io.sockets.emit('currentUsers', {
                 roomId,
                 users
             })

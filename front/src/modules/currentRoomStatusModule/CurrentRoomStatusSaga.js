@@ -1,7 +1,7 @@
-import CurrentRoomStatusActions, {CurrentRoomStatusActionTypes} from "./CurrentRoomStatusActions"
+import CurrentRoomStatusActions from "./CurrentRoomStatusActions"
 import Actions from "./CurrentRoomStatusActions"
 import { call, take, put, fork } from "redux-saga/effects"
-import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel, createCurrentUserPositionReceiveChannel, createReceiveRoomBgmChannel } from "../socketClient"
+import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel, createCurrentUserPositionReceiveChannel, createReceiveRoomBgmChannel, createCurrentAllUserReceiveChannel } from "../socketClient"
 
 export function* handleReceiveJoinRoom() {
     const channel = yield call(createReceiveJoinChannel)
@@ -48,7 +48,11 @@ export function* handleGetCurrentUsers() {
     }
 }
 
-
+export function* handleFetchCurrentRoomUsers(action) {
+    yield call(clientToServerMethods.fetchCurrentRoomUsers,{
+        talkRoomId : action.talkRoomId
+    })
+}
 
 export function* handleGetCurrentUserStatus() {
     const channel = yield call(createCurrentUserStatusReceiveChannel)
@@ -63,63 +67,45 @@ export function* handleGetCurrentUserStatus() {
  * socketサーバーにトークルームへの参加を通知し、
  * 現在ユーザーの更新を依頼する。
  */
-export function* handleJoinRoom() {
+export function* handleJoinRoom(action) {
+    //JOIN_ROOMが発行される毎に起動
+    yield call(serverToClientMothods.readyToRecconect, action)
+    yield call(clientToServerMethods.connectToServer)
+    yield call(clientToServerMethods.tellJoinedRoom,action)
 
-    while(true) {
-        //JOIN_ROOMが発行される毎に起動
-        const action = yield take(CurrentRoomStatusActionTypes.JOIN_ROOM)
-        //reconnectイベントに備えることで、サーバーからの切断=>再接続に対応
-        serverToClientMothods.readyToRecconect(action)
-        clientToServerMethods.connectToServer()
-        clientToServerMethods.tellJoinedRoom(action)
-    }
 }
 
 /**
  * socketサーバーにトークルームからの退出を通知し、
  * 現在ユーザーの更新を依頼する。
- * その後、socketの接続を解除する
  */
-export function* handleLeaveRoom() {
+export function* handleLeaveRoom(action) {
     //退出メッセージを受け取るためにイベントチャンネルを設定する
-    while(true) {
-        const action = yield take(CurrentRoomStatusActionTypes.LEAVE_ROOM)
-        clientToServerMethods.tellLeavedRoom(action)
-        //トークルームの内容をクリアする
-        yield put(Actions.clearMessage(action.roomId))
-        clientToServerMethods.disconnectToServer()
-    }
+    yield call(clientToServerMethods.tellLeavedRoom, action)
+    //トークルームの内容をクリアする
+    yield put(Actions.clearMessage(action.roomId))
 }
 
 /**
  * サーバーから接続を切断された時、トークルーム一覧画面に移る
  */
-export function* handleDisconnectedFromServer() {
-    while(true) {
-        const action = yield take(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER)
-        alert('サーバーから切断されました')
-        action.history.push('/talk_rooms')
-    }
+export function* handleDisconnectedFromServer(action) {
+    alert('サーバーから切断されました')
+    action.history.push('/talk_rooms')
 }
 
 /**
  * socketサーバーにトークルームへのメッセージ追加を通知する
  */
-export function* handleSendMessage() {
-    while(true) {
-        const action = yield take(CurrentRoomStatusActionTypes.SEND_MESSAGE)
-        clientToServerMethods.sendMessage(action)
-    }
+export function* handleSendMessage(action) {
+    yield call(clientToServerMethods.sendMessage, action)
 }
 
 /**
  * socketサーバーにユーザーステータスの変化を通知する
  */
-export function* handleChangeStatus() {
-    while(true) {
-        const action = yield take(CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_STATUS)
-        clientToServerMethods.tellCurrentRoomUserStatusChanged(action)
-    }
+export function* handleChangeStatus(action) {
+    yield call(clientToServerMethods.tellCurrentRoomUserStatusChanged, action)
 }
 
 export function* handleSubmitTextMessage(action) {
@@ -150,10 +136,10 @@ export function* handleReceiveChangeRoomBgm() {
     const channel = yield call(createReceiveRoomBgmChannel)
     while(true) {
         const response = yield take(channel)
-        console.log(response)
         yield put(CurrentRoomStatusActions.receiveChangeRoomBgm({
             talkRoomId : response.talkRoomId,
             bgmSrcUrl : response.bgmSrcUrl
         }))
     }
 }
+

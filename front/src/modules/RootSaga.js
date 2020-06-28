@@ -46,15 +46,20 @@ const talkRoomSagas = [
 ]
 
 const talkRoomMessageSagas = [
-    talkRoomMessageSaga.handleJoinRoom(),
+    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, talkRoomMessageSaga.handleJoinRoom),
     talkRoomMessageSaga.handleReceiveJoinRoom(),
-    talkRoomMessageSaga.handleLeaveRoom(),
+
+    takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, talkRoomMessageSaga.handleLeaveRoom),
     talkRoomMessageSaga.handleReceiveLeaveRoom(),
+
+    takeEvery(CurrentRoomStatusActionTypes.SEND_MESSAGE, talkRoomMessageSaga.handleSendMessage),
     talkRoomMessageSaga.handleReceiveMessage(),
-    talkRoomMessageSaga.handleSendMessage(),
+    
+    takeEvery(CurrentRoomStatusActionTypes.EXEC_REFRESH_CURRENT_ROOM_USERS, talkRoomMessageSaga.handleFetchCurrentRoomUsers),
     talkRoomMessageSaga.handleGetCurrentUsers(),
+
+    takeEvery(CurrentRoomStatusActionTypes.CHANGE_CURRENT_USER_STATUS, talkRoomMessageSaga.handleChangeStatus),
     talkRoomMessageSaga.handleGetCurrentUserStatus(),
-    talkRoomMessageSaga.handleChangeStatus(),
 
     takeEvery(CurrentRoomStatusActionTypes.SUBMIT_TEXT_MESSAGE,　loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleSubmitTextMessage)),
     takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, talkRoomMessageSaga.changeRoomBgm),
