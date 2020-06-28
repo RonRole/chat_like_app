@@ -6,7 +6,7 @@ RUN mkdir /usr/src/front && \
 
 WORKDIR /usr/src
 ADD ./back ./app
-ADD ./front/build ./front/build
+ADD ./front ./front
 ADD ./socket ./socket
 ADD ./nomlish ./nomlish
 
@@ -20,7 +20,8 @@ RUN npm install --save express && \
     npm install --save ejs && \ 
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
-    npm install
+    npm install && \
+RUN npm run build:heroku
 ADD ./heroku-express.js .
 
 WORKDIR /usr/src/socket
