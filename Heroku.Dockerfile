@@ -7,7 +7,6 @@ RUN mkdir /usr/src/front && \
 WORKDIR /usr/src
 ADD ./back ./app
 ADD ./front ./front
-ADD ./front_heroku.env ./front
 ADD ./socket ./socket
 ADD ./nomlish ./nomlish
 
@@ -22,7 +21,6 @@ RUN npm install --save express && \
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
     npm install && \
-    touch .env && \
     echo $REACT_APP_BACKEND_ADDRESS >> .env && \
     echo $REACT_APP_NOMLISH_ADDRESS >> .env && \
     echo $REACT_APP_SOCKET_ADDRESS >> .env && \
