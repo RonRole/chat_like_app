@@ -10,6 +10,10 @@ express.urlencoded({
     extended : true,
     limit: '50mb'
 })
+express.json({
+    limit : '50mb'
+})
+
 const server = express()
                 .use(express.static('/usr/src/front/build'))
                 .use('/api', proxy(`${process.env.API_HOST}:${process.env.API_PORT}`))
