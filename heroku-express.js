@@ -7,7 +7,8 @@ console.log(`api is served on ${process.env.API_HOST}:${process.env.API_PORT}`)
 console.log(`socket is served on ${process.env.SOCKET_HOST}:${process.env.SOCKET_PORT}`)
 console.log(`nomlish is served on ${process.env.NOMLISH_HOST}:${process.env.NOMLISH_PORT}`)
 express.urlencoded({
-    limit : '5000mb'
+    extended : true,
+    limit: '50mb'
 })
 const server = express()
                 .use(express.static('/usr/src/front/build'))
