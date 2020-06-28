@@ -21,6 +21,7 @@ RUN npm install --save express && \
     npm install --save express-http-proxy && \
     npm install --save body-parser && \
     npm install && \
+    echo &REACT_APP_BACKEND_ADDRESS && \
     cat << EOS >> .env
     REACT_APP_BACKEND_ADDRESS=$REACT_APP_BACKEND_ADDRESS
     REACT_APP_NOMLISH_ADDRESS=$REACT_APP_NOMLISH_ADDRESS
