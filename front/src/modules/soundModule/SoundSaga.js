@@ -3,7 +3,7 @@ import { call, put } from "redux-saga/effects"
 import SoundActions from "./SoundActions"
 
 const bgm = new Audio()
-bgm.loop = true
+bgm.loop = false
 
 export function* playBGM(action) {
     bgm.src = action.bgmSrcUrl
