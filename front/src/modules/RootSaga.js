@@ -94,8 +94,8 @@ const SoundSagas = [
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound),
 
     takeLatest(SoundActionTypes.START_BGM, soundSaga.playBGM),
-    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.pauseBGM),
-    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.pauseBGM),
+    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.stopBGM),
+    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.stopBGM),
 
     takeEvery(SoundActionTypes.EXEC_UPLOAD_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.uploadBGM)),
     takeEvery(LogActionTypes.LOG_IN, soundSaga.fetchUserBgms),

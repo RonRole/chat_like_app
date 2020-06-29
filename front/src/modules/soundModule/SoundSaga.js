@@ -12,7 +12,7 @@ export function* playBGM(action) {
     })
 }
 
-export function* pauseBGM() {
+export function* stopBGM() {
     bgm.currentTime = 0.0
     yield bgm.pause()
 }
