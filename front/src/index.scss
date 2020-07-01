@@ -147,9 +147,8 @@ img {
   overflow: scroll;
 }
 
-//talkRoomCardsRow
-.talkRoomCardsRow {
-  .fade-exit-active {
+.clear_exit_anim_children {
+  [class$='-exit-active'] {
     display: none;
   }
 }

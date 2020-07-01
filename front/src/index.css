@@ -98,7 +98,7 @@ img {
   max-height: 60vh;
   overflow: scroll; }
 
-.talkRoomCardsRow .fade-exit-active {
+.clear_exit_anim_children [class$='-exit-active'] {
   display: none; }
 
 .pointer {

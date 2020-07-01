@@ -3,11 +3,9 @@ import MessageImageActions from "./MessageImageActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 import { call, put } from "redux-saga/effects"
 
-const fetchUsersMessageImages = (
-    userId
-) => {
+const fetchUsersMessageImages = () => {
     return DataAccessor.get({
-        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}/message_images`
+        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/message_images`
     })
 }
 
@@ -25,8 +23,7 @@ export function* handleFetchLoginUsersMessageImages(action) {
     }
 }
 
-const createMessageImage = ({
-    userId,
+const createMessageImage = ({   
     messageImageParams
 }) => {
     const formData = Object.keys(messageImageParams).reduce((formData,paramName) => {
@@ -34,7 +31,7 @@ const createMessageImage = ({
         return formData
     }, new FormData())
     return DataAccessor.post({
-        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}/message_images`,
+        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/message_images`,
         parameter: formData,
         headers : {
             'Content-Type' : 'multipart/form-data'

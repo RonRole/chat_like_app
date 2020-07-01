@@ -7,7 +7,6 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
 const SendMessageImageField = ({
     talkRoomId
 }) => {
-    const [underMouseImageId, setUnderMouseImageId] = useState(0);
     const loginUser = useSelector(state=>state.logStatus.loginUser)
     const messageImages = useSelector(state=>state.messageImages)
     const dispatch = useDispatch()
@@ -16,10 +15,8 @@ const SendMessageImageField = ({
         safeMessageImages.map((messageImage,index) => (
             <Image
                 key={index}
-                className='mr-1 pointer opacity_under_mouse'
+                className='mr-1 pointer opacity_under_mouse user_thumb_size'
                 src={messageImage.src.thumb.url} 
-                onMouseOver={()=>setUnderMouseImageId(messageImage.id)}
-                onMouseLeave={()=>setUnderMouseImageId(0)}
                 onClick={() => {
                     dispatch(CurrentRoomStatusModule.actions.addMessage({
                         roomId : talkRoomId,

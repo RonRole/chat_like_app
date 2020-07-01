@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SoundActions from '../modules/soundModule/SoundActions'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
+import SeparateForPatination from '../components/SeparateForPagination'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import BgmUploadFormGroup from './BgmUploadFormGroup'
+
 
 const { useSelector, useDispatch } = require("react-redux")
 const { default: ModalForm } = require("../components/ModalForm")
-const { Modal, ListGroup, Form, Button } = require("react-bootstrap")
+const { Modal, ListGroup, Form, Button, PageItem, FormGroup } = require("react-bootstrap")
 
 const BgmModalFormTitle = () => {
     return (
@@ -18,57 +22,35 @@ const BgmList = ({
     const loginUser = useSelector(state => state.logStatus.loginUser) 
     const dispatch = useDispatch()
     const bgms = useSelector(state => state.bgms)
+    console.log(bgms)
     return (
         <ListGroup className='w-100'>
-            {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm, index) => (
-                <ListGroup.Item key={index} className='pointer opacity_iterate w-100' onClick={() => {
-                    dispatch(CurrentRoomStatusModule.actions.addMessage({
-                        roomId : talkRoomId,
-                        messageClass : 'system',
-                        user : loginUser,
-                        text : `${loginUser.name}さんがBGMを流しました`
-                    }))
-                    dispatch(CurrentRoomStatusModule.actions.sendMessage({
-                        roomId : talkRoomId,
-                        messageClass : 'system',
-                        user : loginUser,
-                        text :`${loginUser.name}さんがBGMを流しました`
-                    }))
-                    dispatch(CurrentRoomStatusModule.actions.changeRoomBgm({
-                        talkRoomId,
-                        bgmSrcUrl : bgm.src.url
-                    }))
-                }}>{bgm.title}</ListGroup.Item>
-            ))}
+            <SeparateForPatination itemLengthPerPage = {5} className='mb-2 clear_exit_anim_children' WrapWith={TransitionGroup}>
+                {Object.values(bgms).filter(bgm => bgm && bgm.id > 0).map((bgm, index) => (
+                    <CSSTransition  key={index} classNames='fade' timeout={100}>
+                        <ListGroup.Item className='pointer opacity_iterate w-100' onClick={() => {
+                            dispatch(CurrentRoomStatusModule.actions.addMessage({
+                                roomId : talkRoomId,
+                                messageClass : 'system',
+                                user : loginUser,
+                                text : `${loginUser.name}さんがBGMを流しました`
+                            }))
+                            dispatch(CurrentRoomStatusModule.actions.sendMessage({
+                                roomId : talkRoomId,
+                                messageClass : 'system',
+                                user : loginUser,
+                                text :`${loginUser.name}さんがBGMを流しました`
+                            }))
+                            dispatch(CurrentRoomStatusModule.actions.changeRoomBgm({
+                                talkRoomId,
+                                bgmId : bgm.id,
+                                bgmSrcUrl : bgm.src.url
+                            }))
+                        }}>{bgm.title}</ListGroup.Item>
+                    </CSSTransition>
+                ))}
+            </SeparateForPatination>
         </ListGroup>
-    )
-}
-
-const BgmUploadFormGroup = () => {
-    const dispatch = useDispatch()
-    const loginUser = useSelector(state => state.logStatus.loginUser)
-    return (
-        <Form.Group>
-            <Form.Control
-                className='invisible position-absolute'
-                id='bgmUploadForm'
-                type='file'
-                name='bgm'
-                onChange={(e) => {
-                    const currentTargetFile = e.currentTarget.files[0]
-                    dispatch(SoundActions.uploadBgm({
-                        userId : loginUser.id,
-                        bgmParams : {
-                            src : currentTargetFile,
-                            title :　currentTargetFile.name.replace(/\.[^.]+$/,'')
-                        }
-                    }))
-                }}
-            />
-            <Button className='ml-2' variant='primary' onClick={() => {
-                document.getElementById('bgmUploadForm').click()
-            }}>新しいBGMをアップロードする</Button>
-        </Form.Group>
     )
 }
 
@@ -92,5 +74,7 @@ const BgmModalForm = ({
         </Modal>
     )
 }
+
+
 
 export default BgmModalForm

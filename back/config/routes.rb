@@ -5,9 +5,10 @@ Rails.application.routes.draw do
     collection do 
       get 'search'
     end
-    resources :message_images, module:"users_message_images"
-    resources :bgms, module:'users_bgms'
   end
+
+  resources :message_images
+  resources :bgms
 
   #session
   get 'login', to: 'sessions#new'

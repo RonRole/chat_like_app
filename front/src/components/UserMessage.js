@@ -47,7 +47,7 @@ MessageTypes.image = {}
 MessageTypes.image.messageImage = ({
     userImageUrl,
     userName,
-    text
+    text,
 }) => (
     <div>
         <div>

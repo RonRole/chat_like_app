@@ -94,11 +94,14 @@ const SoundSagas = [
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound),
 
     takeLatest(SoundActionTypes.START_BGM, soundSaga.playBGM),
+    takeLatest(SoundActionTypes.STOP_BGM, soundSaga.stopBGM),
     takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.stopBGM),
     takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.stopBGM),
 
     takeEvery(SoundActionTypes.EXEC_UPLOAD_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.uploadBGM)),
     takeEvery(LogActionTypes.LOG_IN, soundSaga.fetchUserBgms),
+
+    takeEvery(SoundActionTypes.EXEC_DELETE_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.execDeleteBgm)),
     
     takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, soundSaga.playBGM),
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_CHANGE_ROOM_BGM, soundSaga.playBGM),

@@ -128,6 +128,7 @@ export function* handleSubmitTextMessage(action) {
 export function* changeRoomBgm(action) {
     yield call(clientToServerMethods.tellChangeRoomBgm, {
         talkRoomId : action.talkRoomId,
+        bgmId : action.bgmId,
         bgmSrcUrl : action.bgmSrcUrl
     })
 }
@@ -138,7 +139,8 @@ export function* handleReceiveChangeRoomBgm() {
         const response = yield take(channel)
         yield put(CurrentRoomStatusActions.receiveChangeRoomBgm({
             talkRoomId : response.talkRoomId,
-            bgmSrcUrl : response.bgmSrcUrl
+            bgmId :response.bgmId,
+            bgmSrcUrl : response.bgmSrcUrl,
         }))
     }
 }

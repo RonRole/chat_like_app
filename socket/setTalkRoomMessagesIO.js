@@ -111,10 +111,12 @@ module.exports = (server) => {
         }),
         socket.on('changeRoomBgm',({
             talkRoomId,
+            bgmId,
             bgmSrcUrl
         }) => {
             io.sockets.in(talkRoomId).emit('changeRoomBgm', {
                 talkRoomId,
+                bgmId,
                 bgmSrcUrl
             })
         }),

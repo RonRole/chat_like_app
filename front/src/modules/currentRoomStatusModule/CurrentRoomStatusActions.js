@@ -232,22 +232,26 @@ const changeTranslation = ({
 
 const changeRoomBgm = ({
     talkRoomId,
+    bgmId,
     bgmSrcUrl
 }) => {
     return {
         type : CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM,
         talkRoomId,
+        bgmId,
         bgmSrcUrl
     }
 }
 
 const receiveChangeRoomBgm = ({
     talkRoomId,
+    bgmId,
     bgmSrcUrl
 }) => {
     return {
         type : CurrentRoomStatusActionTypes.RECEIVE_CHANGE_ROOM_BGM,
         talkRoomId,
+        bgmId,
         bgmSrcUrl
     }
 }

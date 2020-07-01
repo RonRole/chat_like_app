@@ -1,6 +1,7 @@
 import DataAccessor from "../DataAccessor"
 import { call, put } from "redux-saga/effects"
 import SoundActions from "./SoundActions"
+import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 
 const bgm = new Audio()
 bgm.loop = false
@@ -10,11 +11,17 @@ export function* playBGM(action) {
     yield bgm.play().catch(err => {
         console.log(err)
     })
+    yield put(SoundActions.changeCurrentBgmId({
+        bgmId : action.bgmId
+    }))
 }
 
 export function* stopBGM() {
     bgm.currentTime = 0.0
     yield bgm.pause()
+    yield put(SoundActions.changeCurrentBgmId({
+        bgmId : 0
+    }))
 }
 
 export function* playAddMessageSound() {
@@ -51,7 +58,7 @@ export function* uploadBGM(action) {
         return formData
     }, new FormData())
     const result = yield call(DataAccessor.post, {
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${action.userId}/bgms`,
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/bgms`,
         parameter : formData,
         headers : {
             'Content-Type' : 'multipart/form-data'
@@ -69,11 +76,27 @@ export function* uploadBGM(action) {
 
 
 export function* fetchUserBgms(action) {
-    const userId = action.userId || action.loginUser.id
     const result = yield call(DataAccessor.get, {
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}/bgms`
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/bgms`
     })
-    yield put(SoundActions.addBgms({
+    yield put(SoundActions.fetchBgms({
         bgms : result.data
     }))
+}
+
+export function* execDeleteBgm(action) {
+    const bgmId = action.bgmId
+    const result = yield call(DataAccessor.delete, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/bgms/${bgmId}`
+    })
+    if(result.isSuccess) {
+        yield put(SoundActions.deleteBgm({
+            bgmId
+        }))
+    }
+    if(result.isError) {
+        ErrorCodeActions.execHandleError({
+            errorResult : result.data
+        })
+    }
 }

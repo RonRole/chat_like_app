@@ -10,26 +10,17 @@ const OwnRoomsArea = ({
 }) => {
     const ownRooms = useSelector(state=>state.talkRooms.ownRooms)
     const ownRoomArray = Object.values(ownRooms)
-    const [selectedPage, setSelectedPage] = useState(1)
+
     return (
-        <>
-            <SeparateForPagination className='row mb-2 talkRoomCardsRow' selectedPage={selectedPage} WrapWith={TransitionGroup}>
-                {ownRoomArray.map((ownRoom,index) => (
-                    <CSSTransition timeout={100} classNames='fade' key={index}>
-                        <Col md={4}>
-                            <TalkRoomCard talkRoomId={ownRoom.id}/>
-                        </Col>
-                    </CSSTransition>
-                ))}
-            </SeparateForPagination>
-            <Pagination>    
-                {[...Array(Math.ceil(ownRoomArray.length/itemLengthPerPage))].map((_, index)=>index+1).map(pageNumber=> (
-                    <Pagination.Item key={pageNumber} active={pageNumber===selectedPage} onClick={() => setSelectedPage(pageNumber)}>
-                        {pageNumber}
-                    </Pagination.Item>
-                ))}
-            </Pagination>
-        </>
+        <SeparateForPagination className='row mb-2 clear_exit_anim_children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
+            {ownRoomArray.map((ownRoom,index) => (
+                <CSSTransition timeout={100} classNames='fade' key={index}>
+                    <Col md={4}>
+                        <TalkRoomCard talkRoomId={ownRoom.id}/>
+                    </Col>
+                </CSSTransition>
+            ))}
+        </SeparateForPagination>
     )
 }
 
@@ -42,26 +33,17 @@ const JoinRoomsArea = ({
 }) => {
     const joinRooms = useSelector(state=>state.talkRooms.joinRooms)
     const joinRoomArray = Object.values(joinRooms)
-    const [selectedPage, setSelectedPage] = useState(1)
+
     return (
-        <>
-            <SeparateForPagination className='row mb-2 talkRoomCardsRow' selectedPage={selectedPage} WrapWith={TransitionGroup}>
-                {joinRoomArray.map((joinRoom,index) => (
-                    <CSSTransition timeout={100} classNames='fade' key={index}>
-                        <Col md={4}>
-                            <TalkRoomCard talkRoomId={joinRoom.id} readOnly/>
-                        </Col>
-                    </CSSTransition>
-                ))}
-            </SeparateForPagination>
-            <Pagination>    
-                {[...Array(Math.ceil(joinRoomArray.length/itemLengthPerPage))].map((_, index)=>index+1).map(pageNumber=> (
-                    <Pagination.Item key={pageNumber} active={pageNumber===selectedPage} onClick={() => setSelectedPage(pageNumber)}>
-                        {pageNumber}
-                    </Pagination.Item>
-                ))}
-            </Pagination>
-        </>
+        <SeparateForPagination className='row mb-2 clear_exit_anim_children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
+            {joinRoomArray.map((joinRoom,index) => (
+                <CSSTransition timeout={100} classNames='fade' key={index}>
+                    <Col md={4}>
+                        <TalkRoomCard talkRoomId={joinRoom.id} readOnly/>
+                    </Col>
+                </CSSTransition>
+            ))}
+        </SeparateForPagination>
     )
 }
 

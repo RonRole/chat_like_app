@@ -23,7 +23,6 @@ class TalkroomUsers::UsersController < ApplicationController
         if(@user)
             @talk_room.users << @user
             render :json => @user
-            return
         else
             render :json => {isFail:true}
         end
