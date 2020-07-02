@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Pagination} from 'react-bootstrap'
+import RenderByCondition from './RenderByCondition'
 
 
 const SeparateForPagination = ({
@@ -9,6 +10,17 @@ const SeparateForPagination = ({
     children
 }) => {
     const [selectedPage, setSelectedPage] = useState(1)
+    //ページ数
+    const pageLength = Math.max(Math.ceil(children.length/itemLengthPerPage), 1)
+    //ページ分けされているかどうか
+    const pageNated = pageLength > 1
+
+    useEffect(() => {
+        if(selectedPage > pageLength) {
+            setSelectedPage(pageLength)
+        }
+    },[children])
+
     return (
         <>
             <WrapWith className={className}>
@@ -17,24 +29,21 @@ const SeparateForPagination = ({
                     return item
                 })}
             </WrapWith>
-            {[children.length/itemLengthPerPage].filter(length => length > 1).map((_,index) => {
-                return (
-                    <Pagination key={index}>
-                        {[...Array(Math.ceil(children.length/itemLengthPerPage))].map((_,index) => index+1).map(pageNumber => (
-                            <Pagination.Item key={pageNumber} active={selectedPage === pageNumber} onClick = {() => setSelectedPage(pageNumber)}>
-                                {pageNumber}
-                            </Pagination.Item>
-                        ))}
-                    </Pagination>
-                )
-            })}
+            <RenderByCondition renderCondition={pageNated}>
+                <Pagination>
+                    {[...Array(pageLength)].map((_,index) => index+1).map(pageNumber => (
+                        <Pagination.Item key={pageNumber} active={selectedPage === pageNumber} onClick = {() => setSelectedPage(pageNumber)}>
+                            {pageNumber}
+                        </Pagination.Item>
+                    ))}
+                </Pagination>
+            </RenderByCondition>
         </>
     )
 }
 
 SeparateForPagination.defaultProps = {
     itemLengthPerPage:3,
-    selectedPage:1,
     WrapWith:'div',
     className:"",
 }

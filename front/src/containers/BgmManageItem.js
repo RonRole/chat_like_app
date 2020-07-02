@@ -80,15 +80,18 @@ const BgmPlayCursor = ({
 BgmManageItem.PlayCursor = BgmPlayCursor
 
 const BgmDeleteIcon = ({
-    bgmId
+    bgmId,
+    bgmTitle
 }) => {
     const dispatch = useDispatch()
     return (
         <OverlayTrigger overlay={<Tooltip>削除</Tooltip>}>
             <div className='pointer' onClick={()=>{
-                dispatch(SoundActions.execDeleteBgm({
-                    bgmId
-                }))
+                if(window.confirm(`${bgmTitle}を削除しますか？`)) {
+                    dispatch(SoundActions.execDeleteBgm({
+                        bgmId
+                    }))
+                }
             }}>×</div>
         </OverlayTrigger>
     )

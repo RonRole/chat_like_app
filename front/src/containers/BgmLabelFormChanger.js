@@ -21,7 +21,7 @@ const LabelFormChanger =  ({
                 <Col xs={10}><BgmManageItem.Form onCancel={() => setMode(modeMap.label)} bgmId={bgm.id} bgmTitle={bgm.title}/></Col>
             </RenderByCondition>
                 <Col xs={1}><BgmManageItem.PlayCursor bgmSrcUrl={bgm.src.url} bgmId={bgm.id}/></Col>
-                <Col xs={1}><BgmManageItem.DeleteIcon bgmId={bgm.id} /></Col>
+                <Col xs={1}><BgmManageItem.DeleteIcon bgmId={bgm.id} bgmTitle={bgm.title} /></Col>
         </Row>
     )
 }

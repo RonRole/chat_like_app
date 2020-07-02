@@ -8,12 +8,11 @@ import SeparateForPagination from '../components/SeparateForPagination'
 const OwnRoomsArea = ({
     itemLengthPerPage
 }) => {
-    const ownRooms = useSelector(state=>state.talkRooms.ownRooms)
-    const ownRoomArray = Object.values(ownRooms)
-
+    const talkRooms = useSelector(state=>state.talkRooms)
+    const ownRooms = Object.values(talkRooms.ownRooms)
     return (
         <SeparateForPagination className='row mb-2 clear_exit_anim_children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
-            {ownRoomArray.map((ownRoom,index) => (
+            {ownRooms.map((ownRoom,index) => (
                 <CSSTransition timeout={100} classNames='fade' key={index}>
                     <Col md={4}>
                         <TalkRoomCard talkRoomId={ownRoom.id}/>

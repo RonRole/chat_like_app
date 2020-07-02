@@ -60,7 +60,10 @@ actionHandler[TalkRoomActionTypes.ADD_TALK_ROOM] = (state, action) => {
 actionHandler[TalkRoomActionTypes.DELETE_TALK_ROOM] = (state, action) => {
     delete state.ownRooms[action.talkRoomId]
     return {
-        ...state
+        ...state,
+        ownRooms : {
+            ...state.ownRooms
+        }
     }
 }
 actionHandler[TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM] = (state, action) => {

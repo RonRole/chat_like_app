@@ -7,7 +7,6 @@ import BgmUploadFormGroup from './BgmUploadFormGroup'
 
 
 const { useSelector, useDispatch } = require("react-redux")
-const { default: ModalForm } = require("../components/ModalForm")
 const { Modal, ListGroup, Form, Button, PageItem, FormGroup } = require("react-bootstrap")
 
 const BgmModalFormTitle = () => {
@@ -22,7 +21,6 @@ const BgmList = ({
     const loginUser = useSelector(state => state.logStatus.loginUser) 
     const dispatch = useDispatch()
     const bgms = useSelector(state => state.bgms)
-    console.log(bgms)
     return (
         <ListGroup className='w-100'>
             <SeparateForPatination itemLengthPerPage = {5} className='mb-2 clear_exit_anim_children' WrapWith={TransitionGroup}>

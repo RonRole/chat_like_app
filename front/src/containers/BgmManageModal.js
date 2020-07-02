@@ -3,6 +3,8 @@ import { Modal, ListGroup, Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import LabelFormChanger from './BgmLabelFormChanger'
 import BgmUploadFormGroup from './BgmUploadFormGroup'
+import { Link } from 'react-router-dom'
+import SeparateForPagination from '../components/SeparateForPagination'
 
 const BgmManageModal = ({
     show,
@@ -15,13 +17,13 @@ const BgmManageModal = ({
                 <h6><strong>BGM管理</strong></h6>
             </Modal.Header>
             <Modal.Body>
-                <ListGroup>
+                <SeparateForPagination itemLengthPerPage={5} WrapWith={ListGroup} className='mb-2'>
                     {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm,index) => 
                         <ListGroup.Item key={index}>
                             <LabelFormChanger bgm={bgm} className='d-none'/>
                         </ListGroup.Item>
                     )}
-                </ListGroup>
+                </SeparateForPagination>
             </Modal.Body>
             <Modal.Footer>
                 <BgmUploadFormGroup />
@@ -45,5 +47,20 @@ const ShowButton = () => {
     )
 }
 BgmManageModal.ShowButton = ShowButton
+
+const ShowLink = ({
+    ...props
+}) => {
+    const [showModal, setShowModal] = useState(false)
+    return (
+        <>
+            <Link onClick={() => {
+                setShowModal(true)
+            }} {...props}>BGM管理</Link>
+            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} />
+        </>
+    )
+}
+BgmManageModal.ShowLink = ShowLink
 
 export default BgmManageModal
