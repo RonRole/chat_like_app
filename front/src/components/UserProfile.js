@@ -29,8 +29,9 @@ const UserProfile = ({
         </div>
     )
     profileContents.image = (
-        <Image style={{objectFit:'contain'}} src={user.image.profile.url} />
+        <Image style={{objectFit:'contain'}} src={(((user || {}).image || {}).profile || {}).url || ''} />
     )
+    
 
     const activeKeys = Object.keys(profileContents).filter(key => !without.includes(key)).reduce((result, key) => {
         result[key] = key

@@ -46,7 +46,7 @@ const talkRoomSagas = [
 ]
 
 const talkRoomMessageSagas = [
-    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, talkRoomMessageSaga.handleJoinRoom),
+    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleJoinRoom)),
     talkRoomMessageSaga.handleReceiveJoinRoom(),
 
     takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, talkRoomMessageSaga.handleLeaveRoom),
