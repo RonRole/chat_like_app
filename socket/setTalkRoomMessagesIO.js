@@ -133,12 +133,13 @@ module.exports = (server) => {
                 const user = currentRoomMembers[roomId][socket.id]
                 io.sockets.in(roomId).emit('receiveMessage', {
                     roomId,
-                    messageClass : "leaveRoomMessage",
+                    messageClass : "leaveRoom",
                     user : user,
                     text : `${user.name}が切断されました`
                 })
                 delete currentRoomMembers[roomId][socket.id]
-                io.sockets.in(roomId).emit('currentUsers', {
+                io.sockets.in(roomId).emit(
+                    'currentUsers', {
                     roomId,
                     users : {...currentRoomMembers[roomId]}
                 })

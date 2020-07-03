@@ -51,6 +51,13 @@ actionHandler[SoundActionTypes.DELETE_BGM] = (state, action) => {
     }
 }
 
+actionHandler[SoundActionTypes.UPDATE_BGM] = (state, action) => {
+    state[action.bgmId].title = action.bgmTitle
+    return {
+        ...state
+    }
+}
+
 const createReducer = createReducerFactory(initialState, actionHandler)
 
 export default {

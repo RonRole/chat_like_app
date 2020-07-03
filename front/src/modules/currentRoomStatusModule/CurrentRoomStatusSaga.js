@@ -80,6 +80,8 @@ export function* handleJoinRoom(action) {
  * 現在ユーザーの更新を依頼する。
  */
 export function* handleLeaveRoom(action) {
+    //トークルームへの再接続をオフに
+    yield call(serverToClientMothods.removeRejoinRoom)
     //退出メッセージを受け取るためにイベントチャンネルを設定する
     yield call(clientToServerMethods.tellLeavedRoom, action)
     //トークルームの内容をクリアする

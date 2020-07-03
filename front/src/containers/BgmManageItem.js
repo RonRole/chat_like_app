@@ -22,18 +22,25 @@ const BgmLabel = ({
 BgmManageItem.Label = BgmLabel
 
 const BgmForm = ({
-    onSubmit,
     onCancel,
     bgmId,
     bgmTitle,
     ...props
 }) => {
+    const dispatch = useDispatch()
     useEffect(() => {
         document.getElementById(`bgmform_${bgmId}`).focus()
     })
     return (
         <OverlayTrigger overlay={<Tooltip>Returnで更新</Tooltip>}>
-            <Form onSubmit={e => onSubmit(e)} {...props}>
+            <Form onSubmit={e => {
+                e.preventDefault()
+                dispatch(SoundActions.execUpdateBgm({
+                    bgmId,
+                    bgmTitle : e.currentTarget.bgm_title.value
+                }))
+                onCancel()
+            }} {...props}>
                 <Form.Control id={`bgmform_${bgmId}`} name='bgm_title' defaultValue={bgmTitle} onBlur={onCancel} required/>
             </Form>
         </OverlayTrigger>
@@ -58,9 +65,6 @@ const BgmPlayCursor = ({
             bgmSrcUrl
         }))
     }
-    useEffect(() => {
-        return stopBgm
-    }, [])
 
     return (
         <>

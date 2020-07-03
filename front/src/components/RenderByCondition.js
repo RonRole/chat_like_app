@@ -9,12 +9,18 @@ import { select } from "redux-saga/effects"
  */
 const RenderByCondition = ({
     renderCondition,
-    children
+    children,
+    WrapWith,
+    ...props
 }) => {
     if(renderCondition) {
-        return children
+        return <WrapWith {...props}>{children}</WrapWith>
     }
     return <></>
+}
+
+RenderByCondition.defaultProps = {
+    WrapWith : 'div'
 }
 
 export default RenderByCondition

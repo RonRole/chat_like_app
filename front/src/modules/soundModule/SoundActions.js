@@ -10,7 +10,10 @@ export const SoundActionTypes = {
     ADD_BGM : 'ADD_BGM',
 
     EXEC_DELETE_BGM : 'EXEC_DELETE_BGM',
-    DELETE_BGM : 'DELETE_BGM'
+    DELETE_BGM : 'DELETE_BGM',
+
+    EXEC_UPDATE_BGM : 'EXEC_UPDATE_BGM',
+    UPDATE_BGM : 'UPDATE_BGM'
 }
 
 export default {
@@ -84,6 +87,28 @@ export default {
         return {
             type : SoundActionTypes.DELETE_BGM,
             bgmId
+        }
+    },
+
+    execUpdateBgm : ({
+        bgmId,
+        bgmTitle
+    }) => {
+        return {
+            type : SoundActionTypes.EXEC_UPDATE_BGM,
+            bgmId,
+            bgmTitle
+        }
+    },
+
+    updateBgm : ({
+        bgmId,
+        bgmTitle
+    }) => {
+        return {
+            type : SoundActionTypes.UPDATE_BGM,
+            bgmId,
+            bgmTitle
         }
     }
 }

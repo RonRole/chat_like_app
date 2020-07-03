@@ -202,12 +202,16 @@ export const clientToServerMethods = {
 //ソケット通信　サーバー=>クライアント
 export const serverToClientMothods = {
     readyToRecconect : ({
-        user,
+        user = {},
         roomId
     }) => {
         socketClient.on('reconnect', () => {
-            socketClient.emit('rejoinRoom',{user, roomId})
+            socketClient.emit('rejoinRoomMessage',{user, roomId})
             socketClient.emit('currentUsers', roomId)
         })
+    },
+
+    removeRejoinRoom : () => {
+        socketClient.off('reconnect')
     }
 }

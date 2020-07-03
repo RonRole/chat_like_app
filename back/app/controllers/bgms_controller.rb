@@ -22,4 +22,13 @@ class BgmsController < ApplicationController
             render :json => @bgm.fail_result
         end
     end
+
+    def update
+        @bgm = current_user.bgms.find(params[:id])
+        if(@bgm.update_attributes(users_bgm_params))
+            render :json => @bgm
+        else
+            render :json => @bgm.fail_result
+        end
+    end
 end

@@ -1,29 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Modal, ListGroup, Button } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import LabelFormChanger from './BgmLabelFormChanger'
 import BgmUploadFormGroup from './BgmUploadFormGroup'
 import { Link } from 'react-router-dom'
 import SeparateForPagination from '../components/SeparateForPagination'
+import SoundActions from '../modules/soundModule/SoundActions'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const BgmManageModal = ({
     show,
     onCancel
 }) => {
     const bgms = useSelector(state => state.bgms)
+    const dispatch = useDispatch()
+    useEffect(() => {
+        if(!show) {
+            dispatch(SoundActions.stopBgm())
+        }
+    }, [show])
     return (
         <Modal show={show}>
             <Modal.Header>
                 <h6><strong>BGM管理</strong></h6>
             </Modal.Header>
             <Modal.Body>
-                <SeparateForPagination itemLengthPerPage={5} WrapWith={ListGroup} className='mb-2'>
-                    {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm,index) => 
-                        <ListGroup.Item key={index}>
-                            <LabelFormChanger bgm={bgm} className='d-none'/>
-                        </ListGroup.Item>
-                    )}
-                </SeparateForPagination>
+                <ListGroup>
+                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} className='mb-2 clear_exit_anim_children'>
+                        {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm,index) => 
+                            <CSSTransition classNames='fade' timeout={100} key={index}>
+                                <ListGroup.Item>
+                                    <LabelFormChanger bgm={bgm} className='d-none'/>
+                                </ListGroup.Item>
+                            </CSSTransition>
+                        )}
+                    </SeparateForPagination>
+                </ListGroup>
             </Modal.Body>
             <Modal.Footer>
                 <BgmUploadFormGroup />

@@ -1,13 +1,27 @@
 import DataAccessor from "../DataAccessor"
-import { call, put } from "redux-saga/effects"
+import { call, put, take } from "redux-saga/effects"
 import SoundActions from "./SoundActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
+import { eventChannel } from "redux-saga"
 
 const bgm = new Audio()
 bgm.loop = false
 
+export function* readyToBgmEnd() {
+    const channel = eventChannel(emit => {
+        bgm.onended = e => emit(e)
+        return () => console.log("SAWAI")
+    })
+    while(true) {
+        yield take(channel)
+        yield put(SoundActions.changeCurrentBgmId({
+            bgmId : 0
+        }))
+    }
+}
+
 export function* playBGM(action) {
-    bgm.src = action.bgmSrcUrl
+    bgm.src = action.bgmSrcUrl 
     yield bgm.play().catch(err => {
         console.log(err)
     })
@@ -75,7 +89,7 @@ export function* uploadBGM(action) {
 }
 
 
-export function* fetchUserBgms(action) {
+export function* fetchUserBgms() {
     const result = yield call(DataAccessor.get, {
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/bgms`
     })
@@ -92,6 +106,27 @@ export function* execDeleteBgm(action) {
     if(result.isSuccess) {
         yield put(SoundActions.deleteBgm({
             bgmId
+        }))
+    }
+    if(result.isError) {
+        ErrorCodeActions.execHandleError({
+            errorResult : result.data
+        })
+    }
+}
+
+export function* execUpdateBgm(action) {
+    const bgmId = action.bgmId
+    const result = yield call(DataAccessor.put, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/bgms/${bgmId}`,
+        parameter : {
+            title : action.bgmTitle
+        }
+    })
+    if(result.isSuccess) {
+        yield put(SoundActions.updateBgm({
+            bgmId,
+            bgmTitle : action.bgmTitle
         }))
     }
     if(result.isError) {

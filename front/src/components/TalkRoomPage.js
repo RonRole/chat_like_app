@@ -8,26 +8,31 @@ import CreateTalkRoomForm from '../containers/CreateTalkRoomForm'
 
 import TalkRoomsArea from '../containers/TalkRoomsArea'
 import TalkRoomAreaLabel from '../containers/TalkRoomAreaLabel'
-import { withRouter } from 'react-router-dom'
+import RenderByCondition from './RenderByCondition'
 
 
-const TalkRoomPage = ({
-    match
-}) => {
+const TalkRoomPage = () => {
     const [createModalShow, changeCreateModalShow] = useState(false);
+    const [isOwnRoom, setOwnRoom] = useState(true)
     return (
         <Container>
-            <TalkRoomAreaLabel.OwnRoomLabel />
-            <Button variant="primary" className='mb-2' onClick={() => changeCreateModalShow(true)}>トークルームを追加</Button>
-            <TalkRoomsArea.OwnRoomsArea itemLengthPerPage={3} />
-            <TalkRoomAreaLabel.JoinRoomLabel />
-            <TalkRoomsArea.JoinRoomsArea itemLengthPerPage={3} />
-            <CreateTalkRoomForm show={createModalShow} 
+            <Button className='mr-2' size='sm' disabled={isOwnRoom} onClick={() => setOwnRoom(true)}>管理ルーム</Button>
+            <Button className='mr-2' size='sm' disabled={!isOwnRoom} onClick={()=>setOwnRoom(false)}>参加ルーム</Button>
+            <RenderByCondition renderCondition={isOwnRoom}>
+                <TalkRoomAreaLabel.OwnRoomLabel />
+                <Button variant="primary" className='mb-2' onClick={() => changeCreateModalShow(true)}>トークルームを追加</Button>
+                <TalkRoomsArea.OwnRoomsArea itemLengthPerPage={3} />
+                <CreateTalkRoomForm show={createModalShow} 
                                 toCloseModalAction ={()=> {
                                     changeCreateModalShow(false)
                                 }}/>
+            </RenderByCondition>
+            <RenderByCondition renderCondition={!isOwnRoom}>
+                <TalkRoomAreaLabel.JoinRoomLabel />
+                <TalkRoomsArea.JoinRoomsArea itemLengthPerPage={3} />
+            </RenderByCondition>
         </Container>
     )
 }
 
-export default withRouter(TalkRoomPage)
+export default TalkRoomPage

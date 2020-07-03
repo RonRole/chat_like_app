@@ -102,10 +102,11 @@ const SoundSagas = [
     takeEvery(LogActionTypes.LOG_IN, soundSaga.fetchUserBgms),
 
     takeEvery(SoundActionTypes.EXEC_DELETE_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.execDeleteBgm)),
-    
+    takeEvery(SoundActionTypes.EXEC_UPDATE_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.execUpdateBgm)),
+
     takeEvery(CurrentRoomStatusActionTypes.CHANGE_ROOM_BGM, soundSaga.playBGM),
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_CHANGE_ROOM_BGM, soundSaga.playBGM),
-
+    soundSaga.readyToBgmEnd()
 ]
 
 //rootSaga
