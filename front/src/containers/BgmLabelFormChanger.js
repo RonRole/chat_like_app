@@ -14,11 +14,11 @@ const LabelFormChanger =  ({
     const [mode, setMode] = useState(modeMap.label)
     return (
         <Row>
-            <RenderByCondition renderCondition={mode===modeMap.label}>
-                <Col xs={10}><BgmManageItem.Label onClick={() => setMode(modeMap.form)} bgmTitle={bgm.title}/></Col>
+            <RenderByCondition renderCondition={mode===modeMap.label} WrapWith={Col} xs={10}>
+                <BgmManageItem.Label onClick={() => setMode(modeMap.form)} bgmTitle={bgm.title}/>
             </RenderByCondition>
-            <RenderByCondition renderCondition={mode===modeMap.form}>
-                <Col xs={10}><BgmManageItem.Form onCancel={() => setMode(modeMap.label)} bgmId={bgm.id} bgmTitle={bgm.title}/></Col>
+            <RenderByCondition renderCondition={mode===modeMap.form} WrapWith={Col} xs={10}>
+                <BgmManageItem.Form onCancel={() => setMode(modeMap.label)} bgmId={bgm.id} bgmTitle={bgm.title}/>
             </RenderByCondition>
                 <Col xs={1}><BgmManageItem.PlayCursor bgmSrcUrl={bgm.src.url} bgmId={bgm.id}/></Col>
                 <Col xs={1}><BgmManageItem.DeleteIcon bgmId={bgm.id} bgmTitle={bgm.title} /></Col>
