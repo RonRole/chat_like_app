@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Modal, ListGroup, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
+import { Link } from 'react-router-dom'
 /**
  * 送信するときの翻訳モードを選択するためのモーダル
  */
@@ -61,6 +62,19 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
      show : false,
      onCancel : () => console.log('please set onCancel function')
  }
+
+ const ShowLink = ({
+     talkRoomId
+ }) => {
+    const [translateModalShow, setTranslateModalShow] = useState(false) 
+    return (
+        <>
+            <Link className = 'nav-link' to='#' onClick ={() => setTranslateModalShow(true)}>翻訳モード変更</Link>
+            <CurrentRoomTranslateModal show = {translateModalShow} talkRoomId={talkRoomId} onCancel = {() => setTranslateModalShow(false)} />
+        </>
+    )
+ }
+ CurrentRoomTranslateModal.ShowLink = ShowLink
 
  export default CurrentRoomTranslateModal
 

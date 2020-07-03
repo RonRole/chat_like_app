@@ -4,10 +4,10 @@ import { Container, Row } from 'react-bootstrap'
 import CurrentUsersContainer from './CurrentUsersContainer'
 import CurrentMessagesContainer from './CurrentMessagesContainer'
 import CurrentMessageFormContainer from './CurrentMessageFormContainer'
-import CurrentMessageImageFormShowButton from './CurrentMessageImageFormShowButton'
 import CurrentUsersMapContainer from './CurrentUsersMapContainer'
 import CurrentRoomUserTracer from './CurrentRoomUserTracer'
 import BgmModalFormShowButton from './BgmModalFormShowButton'
+import CurrentMessageImageModalForm from './CurrentMessageImageModalForm'
 
 
 
@@ -25,7 +25,7 @@ const CurrentRoom = ({
                 <CurrentUsersContainer talkRoomId = {talkRoomId}/>
                 <CurrentMessagesContainer talkRoomId = {talkRoomId} />
                 <CurrentMessageFormContainer talkRoomId = {talkRoomId}/>
-                <CurrentMessageImageFormShowButton className='mr-2' talkRoomId = {talkRoomId} />
+                <CurrentMessageImageModalForm.ShowButton className='mr-2' talkRoomId = {talkRoomId} />
                 <BgmModalFormShowButton talkRoomId = {talkRoomId} />
             </Container>
             <Container className='col-0 col-lg-3 d-none d-lg-block'>

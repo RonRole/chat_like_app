@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import ModalForm from '../components/ModalForm'
 import { Modal, Button, Form, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageImageModule from '../modules/messageImageModule/MessageImageModule'
 import SendMessageImageField from './MessageImageSendField'
+import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
+import { Link } from 'react-router-dom'
 
 const UploadMessageImageFormGroup = () => {
     const dispatch = useDispatch()
@@ -51,5 +53,68 @@ const CurrentMessageImageModalForm = ({
         </Modal>
     )
 }
+
+const ShowButton = ({
+    talkRoomId,
+    className
+}) => {
+    const [messageImageModalShow, setMessageImageModalShow] = useState(false)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
+    const dispatch = useDispatch()
+
+    return (
+        <>
+            <Button variant='primary' className={className} onClick={()=>{
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : '🖼'
+                }))
+                setMessageImageModalShow(true)
+            }}>Image</Button>
+            <CurrentMessageImageModalForm  talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
+                setMessageImageModalShow(false)
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : ''
+                }))
+            }}/>
+        </>
+    )
+}
+CurrentMessageImageModalForm.ShowButton = ShowButton
+
+const ShowLink = ({
+    talkRoomId,
+    className
+}) => {
+    const [messageImageModalShow, setMessageImageModalShow] = useState(false)
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
+    const dispatch = useDispatch()
+
+    return (
+        <>
+            <Link to='#' className={`${className} nav-link`} onClick={()=>{
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : '🖼'
+                }))
+                setMessageImageModalShow(true)
+            }}>画像メッセージ</Link>
+            <CurrentMessageImageModalForm  talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
+                setMessageImageModalShow(false)
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : ''
+                }))
+            }}/>
+        </>
+    )
+}
+CurrentMessageImageModalForm.ShowLink = ShowLink
+
 
 export default CurrentMessageImageModalForm
