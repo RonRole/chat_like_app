@@ -38,7 +38,7 @@ code {
 }
 
 /*Login Page*/
-#login_form {
+#login-form {
   display: grid;
   justify-content: center;
 }
@@ -63,11 +63,11 @@ img {
     z-index: 100;
   }
 
-  .sidebar_open {
+  .sidebar-open {
     display: block;
   }
 
-  .sidebar_items {
+  .sidebar-items {
     display: block;
   }
 
@@ -100,11 +100,11 @@ img {
     transition: all 200ms ease;
   }
 
-  .sidebar_body {
+  .sidebar-body {
     width: 300px;
   }
 
-  .sidebar_cursor {
+  .sidebar-cursor {
     max-width: 30px;
     opacity: 1.0;
     &:hover {
@@ -118,20 +118,20 @@ img {
 .loading {
   z-index: 9998;
 
-  .loading_background {
+  .loading-background {
     background-color: gray;
     opacity: .5;
   }
 
-  .loading_item {
+  .loading-item {
     font-weight:bold; 
     text-shadow:1px 1px 0 black; 
     color:white; 
   }
 }
 
-/*current_users_container*/
-.current_users_container {
+/*current-users-container*/
+.current-users-container {
   border: solid 1px gray;
 }
 
@@ -142,12 +142,7 @@ img {
   overflow: scroll;
 }
 
-#talkRoomMembersModalBody {
-  max-height: 60vh;
-  overflow: scroll;
-}
-
-.clear_exit_anim_children {
+.clear-exit-anim-children {
   [class$='-exit-active'] {
     display: none;
   }
@@ -157,7 +152,7 @@ img {
   cursor: pointer;
 }
 
-@keyframes opacity_iterate {
+@keyframes opacity-iterate {
   0% {
     opacity: 1.0;
   }
@@ -172,15 +167,15 @@ img {
 
 }
 
-.opacity_iterate {
+.opacity-iterate {
   &:hover {
-    animation-name: opacity_iterate;
+    animation-name: opacity-iterate;
     animation-duration: 1.0s;
     animation-iteration-count: infinite;
   }
 }
 
-.opacity_under_mouse {
+.opacity-under-mouse {
   &:hover {
     opacity: 0.5;
   }
@@ -194,7 +189,15 @@ img {
   }
 }
 
-.user_thumb_size {
+.h-user-thumb {
+  height: 50px
+}
+
+.w-user-width {
+  width: 50px;
+}
+
+.user-thumb-size {
   width : 50px;
   height: 50px;
 }
@@ -216,4 +219,41 @@ img {
     z-index: 0;
     position: absolute;
   }
+}
+
+@mixin vw($vwnum) {
+  width : #{$vwnum}vw;
+  max-width: #{$vwnum}vw;
+}
+
+.vw-10 {
+  @include vw(10)
+}
+
+.vw-20 {
+  @include vw(20)
+}
+
+.vw-30 {
+  @include vw(30)
+}
+
+.vw-40 {
+  @include vw(40)
+}
+
+.vw-50 {
+  @include vw(50)
+}
+
+.vw-60 {
+  @include vw(60)
+}
+
+.vw-70 {
+  @include vw(70)
+}
+
+.vw-80 {
+  @include vw(80)
 }

@@ -23,10 +23,10 @@ const BgmList = ({
     const bgms = useSelector(state => state.bgms)
     return (
         <ListGroup className='w-100'>
-            <SeparateForPatination itemLengthPerPage = {5} className='mb-2 clear_exit_anim_children' WrapWith={TransitionGroup}>
+            <SeparateForPatination itemLengthPerPage = {5} className='mb-2 clear-exit-anim-children' WrapWith={TransitionGroup}>
                 {Object.values(bgms).filter(bgm => bgm && bgm.id > 0).map((bgm, index) => (
                     <CSSTransition  key={index} classNames='fade' timeout={100}>
-                        <ListGroup.Item className='pointer opacity_iterate w-100' onClick={() => {
+                        <ListGroup.Item className='pointer opacity-iterate w-100' onClick={() => {
                             dispatch(CurrentRoomStatusModule.actions.addMessage({
                                 roomId : talkRoomId,
                                 messageClass : 'system',

@@ -15,7 +15,7 @@ const SendMessageImageField = ({
         safeMessageImages.map((messageImage,index) => (
             <Image
                 key={index}
-                className='mr-1 pointer opacity_under_mouse user_thumb_size'
+                className='mr-1 pointer opacity-under-mouse user-thumb-size'
                 src={messageImage.src.thumb.url} 
                 onClick={() => {
                     dispatch(CurrentRoomStatusModule.actions.addMessage({
@@ -23,7 +23,8 @@ const SendMessageImageField = ({
                         user : loginUser,
                         messageType : 'image',
                         messageClass : 'messageImage',
-                        text:messageImage.src.profile.url
+                        text:messageImage.src.profile.url,
+                        largeImageSrc:messageImage.src.url
                     }))
                     dispatch(CurrentRoomStatusModule.actions.sendMessage({
                         roomId : talkRoomId,

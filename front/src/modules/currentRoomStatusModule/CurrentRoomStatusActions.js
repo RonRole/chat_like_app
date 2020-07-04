@@ -94,19 +94,11 @@ const receiveLeaveRoom = ({
 }
 
 const addMessage = ({
-    roomId,
-    messageType = 'text',
-    messageClass = 'receiveMessage',
-    user,
-    text,
+    ...props
 }) => {
     return {
         type     : CurrentRoomStatusActionTypes.ADD_MESSAGE,
-        roomId,
-        messageClass,
-        messageType,
-        user,
-        text
+        ...props
     }
 }
 

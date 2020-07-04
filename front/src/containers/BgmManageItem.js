@@ -15,7 +15,7 @@ const BgmLabel = ({
 }) => {
     return (
         <OverlayTrigger overlay={<Tooltip>クリックでタイトルを変更</Tooltip>}>
-            <div className='pointer opacity_iterate w-100' onClick={onClick} {...props}>{bgmTitle}</div>
+            <div className='pointer opacity-iterate w-100' onClick={onClick} {...props}>{bgmTitle}</div>
         </OverlayTrigger>
     )
 }
@@ -29,7 +29,7 @@ const BgmForm = ({
 }) => {
     const dispatch = useDispatch()
     useEffect(() => {
-        document.getElementById(`bgmform_${bgmId}`).focus()
+        document.getElementById(`bgmform-${bgmId}`).focus()
     })
     return (
         <OverlayTrigger overlay={<Tooltip>Returnで更新</Tooltip>}>
@@ -37,11 +37,11 @@ const BgmForm = ({
                 e.preventDefault()
                 dispatch(SoundActions.execUpdateBgm({
                     bgmId,
-                    bgmTitle : e.currentTarget.bgm_title.value
+                    bgmTitle : e.currentTarget['bgm-title'].value
                 }))
                 onCancel()
             }} {...props}>
-                <Form.Control id={`bgmform_${bgmId}`} name='bgm_title' defaultValue={bgmTitle} onBlur={onCancel} required/>
+                <Form.Control id={`bgmform-${bgmId}`} name='bgm-title' defaultValue={bgmTitle} onBlur={onCancel} required/>
             </Form>
         </OverlayTrigger>
     )

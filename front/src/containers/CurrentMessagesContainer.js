@@ -49,15 +49,15 @@ const MessagesContainer = ({
         <Container id = "messagesContainer" className='mb-2 pb-4'>
             <TransitionGroup>
                 {[messages].flat().filter(message=>message).map((message,index) => {
+                    const userId = message.userId || 0
+                    const userMessageProps = {
+                        userName : users[userId].name,
+                        userImageUrl : users[userId].image.thumb.url,
+                        ...message
+                    }
                     return (
                         <CSSTransition key={index} timeout= {100} classNames="fade">
-                            <UserMessage
-                                userName={(users[message.userId] || users[0]).name} 
-                                userImageUrl={(users[message.userId] || users[0]).image.thumb.url} 
-                                text={message.text}
-                                messageType = {message.messageType}
-                                messageClass={message.messageClass}
-                            />
+                            <UserMessage {...userMessageProps}/>
                         </CSSTransition>
                     )
                 })}

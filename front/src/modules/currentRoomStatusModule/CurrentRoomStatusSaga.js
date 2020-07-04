@@ -111,19 +111,22 @@ export function* handleChangeStatus(action) {
 }
 
 export function* handleSubmitTextMessage(action) {
-    const translateMode = action.translateMode || {translate : text=>text}
-    const text = yield　call(translateMode.translate, action.text)
+    const {roomId, user, translateMode, text} = {...action}
+
+    const translatedText = yield　call(translateMode.translate, text)
     yield put(CurrentRoomStatusActions.addMessage({
-        ...action,
+        roomId,
+        user,
         messageType : 'text',
         messageClass : 'myMessage',
-        text
+        text : translatedText
     }))
     yield put(CurrentRoomStatusActions.sendMessage({
-        ...action,
+        roomId,
+        user,
         messageType : 'text',
         messageClass : 'receiveMessage',
-        text
+        text : translatedText
     }))
 } 
 

@@ -25,7 +25,7 @@ import { Link } from 'react-router-dom'
                 <ListGroup>
                     {Object.values(translateModes).map((translateMode, index) => (
                         <ListGroup.Item 
-                            className='pointer opacity_iterate'
+                            className='pointer opacity-iterate'
                             key = {index}
                             onClick = {() => setTranslateMode(translateMode)} 
                             active={selectedTranslateMode === translateMode}

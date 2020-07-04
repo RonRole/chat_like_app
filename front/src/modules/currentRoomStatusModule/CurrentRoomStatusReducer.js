@@ -36,14 +36,13 @@ actionHandler[CurrentRoomStatusActionTypes.RECEIVE_JOIN_ROOM] =
 actionHandler[CurrentRoomStatusActionTypes.RECEIVE_LEAVE_ROOM] =
 actionHandler[CurrentRoomStatusActionTypes.ADD_MESSAGE] = 
 actionHandler[CurrentRoomStatusActionTypes.RECEIVE_MESSAGE] = (state, action) => {
+    const {type, user, ...messageProps} = {...action}
     state[action.roomId] = state[action.roomId] || {...initialState.default}
     state[action.roomId]['messages'] = [
         ...state[action.roomId]['messages'],
         {
-            messageType  : action.messageType,
-            messageClass : action.messageClass,
-            userId       : action.user.id,
-            text         : action.text
+            userId : user.id,
+            ...messageProps
         }
     ]
     return {

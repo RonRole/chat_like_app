@@ -12,8 +12,8 @@ const Loading = () => {
     return (
         <RenderByCondition renderCondition={loadingState > 0}>
             <div className="loading d-flex justify-content-center align-items-center position-fixed h-100 w-100">
-                <div className='loading_background position-absolute h-100 w-100'></div>
-                <div className="loading_item position-absolute d-flex flex-column justify-content-center align-items-center">
+                <div className='loading-background position-absolute h-100 w-100'></div>
+                <div className="loading-item position-absolute d-flex flex-column justify-content-center align-items-center">
                     <Spinner variant="primary" animation="border"/> 
                     読み込み中です...
                 </div> 

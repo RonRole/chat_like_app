@@ -26,7 +26,7 @@ const BgmManageModal = ({
             </Modal.Header>
             <Modal.Body>
                 <ListGroup>
-                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} className='mb-2 clear_exit_anim_children'>
+                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} className='mb-2 clear-exit-anim-children'>
                         {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm,index) => 
                             <CSSTransition classNames='fade' timeout={100} key={index}>
                                 <ListGroup.Item>

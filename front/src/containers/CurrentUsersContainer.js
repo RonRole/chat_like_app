@@ -12,13 +12,12 @@ const CurrentUsersContainer = ({
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const thisRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus.default
     return (
-        <Container className='current_users_container mb-2'>
-            <h6><strong>今いる人たち</strong></h6>
-            <TransitionGroup className='d-flex'>
+        <Container className='current-users-container mb-2 h-user-thumb'>
+            <TransitionGroup className='d-flex'component='div'>
                 {[thisRoomStatus.currentUserIds].flat().map((userId,index) => {
                     return (
                         <CSSTransition key={index} timeout={100} classNames="fade">
-                            <CurrentUserStatusThumb talkRoomId={talkRoomId} userId={userId} />     
+                            <CurrentUserStatusThumb talkRoomId={talkRoomId} userId={userId}/>     
                         </CSSTransition>
                     )
                 })}

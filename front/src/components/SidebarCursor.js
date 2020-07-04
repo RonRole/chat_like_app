@@ -5,7 +5,7 @@ const SidebarCursor = ({
     onClickCursor,
     pointRightSide
 }) => (
-    <div className='sidebar_cursor pointer' onClick={onClickCursor}>
+    <div className='sidebar-cursor pointer' onClick={onClickCursor}>
         <nav className='navbar navbar-dark bg-dark h-100 d-flex justify-content-center'>
             <Nav className='navbar-nav'>
                 <a className='nav-link'>{pointRightSide ? '▶︎' : '◀︎'}</a>

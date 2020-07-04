@@ -16,11 +16,11 @@ const TalkRoomMembersModal = ({
     const users=useSelector(state=>state.users)
     
     return (
-        <Modal show={show}>
+        <Modal show={show} scrollable>
             <Modal.Header>
                 <strong>{thisRoom.title}のメンバー</strong>
             </Modal.Header>
-            <Modal.Body id='talkRoomMembersModalBody'>
+            <Modal.Body>
                 <ListGroup variant='flush'>
                     <ListGroup.Item variant='success'>
                         <strong>管理者</strong>

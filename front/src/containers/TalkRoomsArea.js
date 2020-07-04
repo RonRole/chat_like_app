@@ -11,7 +11,7 @@ const OwnRoomsArea = ({
     const talkRooms = useSelector(state=>state.talkRooms)
     const ownRooms = Object.values(talkRooms.ownRooms)
     return (
-        <SeparateForPagination className='row mb-2 clear_exit_anim_children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
+        <SeparateForPagination className='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
             {ownRooms.map((ownRoom,index) => (
                 <CSSTransition timeout={100} classNames='fade' key={index}>
                     <Col md={4}>
@@ -34,7 +34,7 @@ const JoinRoomsArea = ({
     const joinRoomArray = Object.values(joinRooms)
 
     return (
-        <SeparateForPagination className='row mb-2 clear_exit_anim_children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
+        <SeparateForPagination className='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
             {joinRoomArray.map((joinRoom,index) => (
                 <CSSTransition timeout={100} classNames='fade' key={index}>
                     <Col md={4}>

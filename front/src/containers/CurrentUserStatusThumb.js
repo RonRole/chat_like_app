@@ -19,6 +19,7 @@ const CurrentUserStatusThumb = ({
                 <Image  className="mr-2 mb-2" 
                         src={user.image.thumb.url} 
                         fluid
+                        roundedCircle
                 />
             </Transparent.Front>
             <Transparent.Back>

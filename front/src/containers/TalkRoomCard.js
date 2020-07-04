@@ -29,7 +29,7 @@ const CurrentUserThumbs = ({
         <TransitionGroup className='d-flex'>
             {(currentRoomStatus[talkRoomId] || currentRoomStatus.default).currentUserIds.map((userId,index) => (
                 <CSSTransition key={index} classNames='fade' timeout={100}>
-                    <Image className='user_thumb_size' src={(userStatus[userId] || userStatus[0]).image.thumb.url}  roundedCircle/>
+                    <Image className='user-thumb-size' src={(userStatus[userId] || userStatus[0]).image.thumb.url}  roundedCircle/>
                 </CSSTransition>
             ))}
         </TransitionGroup>
