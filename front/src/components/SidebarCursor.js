@@ -14,7 +14,22 @@ const SidebarCursor = ({
     </div>
 )
 
-SidebarCursor.defaultProps = {
+const SmallCursor = ({
+    onClickCursor,
+    pointRightSide
+}) => (
+    <div className='sidebar-cursor pointer' onClick={onClickCursor}>
+        <nav className='navbar navbar-dark bg-dark d-flex justify-content-center'>
+            <Nav className='navbar-nav'>
+                <a className='nav-link'>{pointRightSide ? '▶︎' : '◀︎'}</a>
+            </Nav>
+        </nav>
+    </div>
+)
+SidebarCursor.SmallCursor = SmallCursor
+
+SidebarCursor.defaultProps = 
+SidebarCursor.SmallCursor.defaultProps = {
     onClickCursor : () => console.log('cursor clicked'),
     pointRightSide : true
 }

@@ -50,17 +50,15 @@ const LargeImageModal = ({
     onCancel
 }) => {
     const [width, setWidth] = useState(0)
-    const [height, setHeight] = useState(0)
     const largeImage = document.createElement('img')
     largeImage.onload = () => {
         setWidth(largeImage.naturalWidth)
-        setHeight(largeImage.naturalHeight)
     }
     largeImage.src = largeImageSrc
     const imageViewWidth = Math.ceil(width/window.parent.screen.width*10)*10
     const dialogWidth = `vw-${Math.min(80, imageViewWidth)}`
     return (
-        <Modal show={show} onHide={onCancel} dialogClassName={dialogWidth}  scrollable>
+        <Modal show={show} onHide={onCancel} dialogClassName={`${dialogWidth}`}  scrollable>
             <Modal.Header closeButton></Modal.Header>
             <div className='d-flex justify-content-center overflow-scroll'>
                 <Image src={largeImageSrc} fluid/>

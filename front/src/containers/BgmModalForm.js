@@ -4,6 +4,7 @@ import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentR
 import SeparateForPatination from '../components/SeparateForPagination'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import BgmUploadFormGroup from './BgmUploadFormGroup'
+import { Link } from 'react-router-dom'
 
 
 const { useSelector, useDispatch } = require("react-redux")
@@ -72,6 +73,41 @@ const BgmModalForm = ({
         </Modal>
     )
 }
+
+const ShowButton = ({
+    talkRoomId,
+    ...props
+}) => {
+    const [bgmModalShow, setBgmModalShow] = useState(false)
+    return (
+        <>
+            <Button variant='primary' {...props} onClick={() => {
+                setBgmModalShow(true)
+            }}>BGM</Button>
+            <BgmModalForm talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>setBgmModalShow(false)}/>
+        </>
+    )
+}
+
+BgmModalForm.ShowButton = ShowButton
+
+
+const ShowLink = ({
+    talkRoomId,
+    ...props
+}) => {
+    const [bgmModalShow, setBgmModalShow] = useState(false)
+    return (
+        <>
+            <Link {...props} onClick={() => {
+                setBgmModalShow(true)
+            }} />
+            <BgmModalForm talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>setBgmModalShow(false)}/>
+        </>
+    )
+}
+
+BgmModalForm.ShowLink = ShowLink
 
 
 

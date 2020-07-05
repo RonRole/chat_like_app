@@ -87,7 +87,7 @@ CurrentMessageImageModalForm.ShowButton = ShowButton
 
 const ShowLink = ({
     talkRoomId,
-    className
+    ...props
 }) => {
     const [messageImageModalShow, setMessageImageModalShow] = useState(false)
     const loginUser = useSelector(state=>state.logStatus.loginUser)
@@ -95,14 +95,14 @@ const ShowLink = ({
 
     return (
         <>
-            <Link to='#' className={`${className} nav-link`} onClick={()=>{
+            <Link {...props} onClick={()=>{
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
                     status : '🖼'
                 }))
                 setMessageImageModalShow(true)
-            }}>画像メッセージ</Link>
+            }} />
             <CurrentMessageImageModalForm  talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
                 setMessageImageModalShow(false)
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
