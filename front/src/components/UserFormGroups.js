@@ -83,7 +83,7 @@ const ProfileImageFormGroup = ({
 
     return (
         <Form.Group controlId="signUpImageForm">
-            <Form.Control className='d-none' type="file" name="image" isInvalid={errorMessages.length > 0} onChange={(e) => {
+            <Form.Control className='d-none' type="file" name="image" accept='image/*' isInvalid={errorMessages.length > 0} onChange={(e) => {
                 const fileReader = new FileReader()
                 const input = e.currentTarget.files[0]
                 fileReader.onload = e => {

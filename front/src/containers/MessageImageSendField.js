@@ -31,7 +31,8 @@ const SendMessageImageField = ({
                         user : loginUser,
                         messageType : 'image',
                         messageClass : 'receiveMessageImage',
-                        text:messageImage.src.profile.url
+                        text:messageImage.src.profile.url,
+                        largeImageSrc:messageImage.src.url
                     }))
                 }}
             />

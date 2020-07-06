@@ -91,7 +91,6 @@ export function* createCurrentUserPositionReceiveChannel() {
 export function* createReceiveRoomBgmChannel() {
     return eventChannel(emit => {
         socketClient.on('changeRoomBgm', response => {
-            console.log(response)
             emit(response)
         })
         return () => {
@@ -176,14 +175,16 @@ export const clientToServerMethods = {
         messageType,
         messageClass,
         text,
-        user
+        user,
+        ...others
     }) => {
         socketClient.emit('sendMessage', {
             roomId, 
             messageType,
             messageClass,
             text,
-            user
+            user,
+            ...others
         })
     },
     tellChangeRoomBgm : ({

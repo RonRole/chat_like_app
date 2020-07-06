@@ -21,7 +21,8 @@ const TalkRoomPage = () => {
             <RenderByCondition renderCondition={isOwnRoom}>
                 <TalkRoomAreaLabel.OwnRoomLabel />
                 <Button variant="primary" className='mb-2' onClick={() => changeCreateModalShow(true)}>トークルームを追加</Button>
-                <TalkRoomsArea.OwnRoomsArea itemLengthPerPage={3} />
+                <TalkRoomsArea.OwnRoomsArea className='d-md-none' itemLengthPerPage={3} />
+                <TalkRoomsArea.OwnRoomsArea className='d-none d-md-block' itemLengthPerPage={6} />
                 <CreateTalkRoomForm show={createModalShow} 
                                 toCloseModalAction ={()=> {
                                     changeCreateModalShow(false)
@@ -29,7 +30,8 @@ const TalkRoomPage = () => {
             </RenderByCondition>
             <RenderByCondition renderCondition={!isOwnRoom}>
                 <TalkRoomAreaLabel.JoinRoomLabel />
-                <TalkRoomsArea.JoinRoomsArea itemLengthPerPage={3} />
+                <TalkRoomsArea.JoinRoomsArea className='d-md-none' itemLengthPerPage={3} />
+                <TalkRoomsArea.JoinRoomsArea className='d-none d-md-block' itemLengthPerPage={6} />
             </RenderByCondition>
         </Container>
     )

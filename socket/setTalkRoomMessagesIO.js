@@ -59,14 +59,17 @@ module.exports = (server) => {
             messageType = 'text', 
             messageClass='receiveMessage', 
             user, 
-            text
+            text,
+            ...others
         }) => {
+            console.log(others)
             socket.to(roomId).broadcast.emit('receiveMessage', {
                 roomId,
                 messageType,
                 messageClass,
                 user,
-                text
+                text,
+                ...others
             })
         })
         //現在のトークルームのメンバーを取得

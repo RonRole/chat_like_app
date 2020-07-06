@@ -100,7 +100,8 @@ export function* handleDisconnectedFromServer(action) {
  * socketサーバーにトークルームへのメッセージ追加を通知する
  */
 export function* handleSendMessage(action) {
-    yield call(clientToServerMethods.sendMessage, action)
+    const {type, ...messageProps} = {...action}
+    yield call(clientToServerMethods.sendMessage, messageProps)
 }
 
 /**

@@ -13,6 +13,7 @@ const BgmUploadFormGroup = () => {
                 id='bgmUploadForm'
                 type='file'
                 name='bgm'
+                accept='.mp3, .m4a, .wav'
                 onChange={(e) => {
                     const currentTargetFile = e.currentTarget.files[0] 
                     if(currentTargetFile) {

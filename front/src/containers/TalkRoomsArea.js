@@ -6,14 +6,15 @@ import TalkRoomCard from './TalkRoomCard'
 import SeparateForPagination from '../components/SeparateForPagination'
 
 const OwnRoomsArea = ({
-    itemLengthPerPage
+    itemLengthPerPage,
+    ...props
 }) => {
     const talkRooms = useSelector(state=>state.talkRooms)
     const ownRooms = Object.values(talkRooms.ownRooms)
     return (
-        <SeparateForPagination className='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
+        <SeparateForPagination wrapperClassName='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup} {...props}>
             {ownRooms.map((ownRoom,index) => (
-                <CSSTransition timeout={100} classNames='fade' key={index}>
+                <CSSTransition timeout={100} className='mb-2' classNames='fade' key={index}>
                     <Col md={4}>
                         <TalkRoomCard talkRoomId={ownRoom.id}/>
                     </Col>
@@ -28,15 +29,15 @@ OwnRoomsArea.defaultProps = {
 }
 
 const JoinRoomsArea = ({
-    itemLengthPerPage
+    itemLengthPerPage,
+    ...props
 }) => {
     const joinRooms = useSelector(state=>state.talkRooms.joinRooms)
     const joinRoomArray = Object.values(joinRooms)
-
     return (
-        <SeparateForPagination className='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup}>
+        <SeparateForPagination wrapperClassName='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup} {...props}>
             {joinRoomArray.map((joinRoom,index) => (
-                <CSSTransition timeout={100} classNames='fade' key={index}>
+                <CSSTransition timeout={100} className='mb-2' classNames='fade' key={index}>
                     <Col md={4}>
                         <TalkRoomCard talkRoomId={joinRoom.id} readOnly/>
                     </Col>

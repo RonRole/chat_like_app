@@ -7,7 +7,8 @@ const SeparateForPagination = ({
     itemLengthPerPage,
     WrapWith,
     className,
-    children
+    wrapperClassName,
+    children,
 }) => {
     const [selectedPage, setSelectedPage] = useState(1)
     //ページ数
@@ -22,8 +23,8 @@ const SeparateForPagination = ({
     },[children])
 
     return (
-        <>
-            <WrapWith className={className}>
+        <div className={className}>
+            <WrapWith className={wrapperClassName}>
                 {[...Array(itemLengthPerPage)].map((_,index) => {
                     const item = children[itemLengthPerPage*(selectedPage-1)+index]
                     return item
@@ -38,7 +39,7 @@ const SeparateForPagination = ({
                     ))}
                 </Pagination>
             </RenderByCondition>
-        </>
+        </div>
     )
 }
 

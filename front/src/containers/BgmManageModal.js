@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Modal, ListGroup, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
-import LabelFormChanger from './BgmLabelFormChanger'
+import BgmUpdateItem from './BgmLabelFormChanger'
 import BgmUploadFormGroup from './BgmUploadFormGroup'
 import { Link } from 'react-router-dom'
 import SeparateForPagination from '../components/SeparateForPagination'
@@ -26,11 +26,11 @@ const BgmManageModal = ({
             </Modal.Header>
             <Modal.Body>
                 <ListGroup>
-                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} className='mb-2 clear-exit-anim-children'>
+                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} wrapperClassName='mb-2 clear-exit-anim-children'>
                         {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm,index) => 
                             <CSSTransition classNames='fade' timeout={100} key={index}>
                                 <ListGroup.Item>
-                                    <LabelFormChanger bgm={bgm} className='d-none'/>
+                                    <BgmUpdateItem bgm={bgm} className='d-none'/>
                                 </ListGroup.Item>
                             </CSSTransition>
                         )}

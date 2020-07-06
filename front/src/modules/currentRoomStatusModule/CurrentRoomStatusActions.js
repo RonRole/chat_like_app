@@ -94,11 +94,21 @@ const receiveLeaveRoom = ({
 }
 
 const addMessage = ({
-    ...props
+    roomId,
+    messageType = 'text',
+    messageClass = 'receiveMessage',
+    user,
+    text,
+    ...others
 }) => {
     return {
         type     : CurrentRoomStatusActionTypes.ADD_MESSAGE,
-        ...props
+        roomId,
+        messageClass,
+        messageType,
+        user,
+        text,
+        ...others
     }
 }
 
@@ -107,7 +117,8 @@ const sendMessage = ({
     messageType = 'text',
     messageClass = 'receiveMessage',
     user,
-    text
+    text,
+    ...others
 }) => {
     return {
         type : CurrentRoomStatusActionTypes.SEND_MESSAGE,
@@ -115,7 +126,8 @@ const sendMessage = ({
         messageClass,
         messageType,
         user,
-        text
+        text,
+        ...others
     }
 }
 
@@ -124,7 +136,8 @@ const receiveMessage = ({
     user,
     messageType,
     messageClass,
-    text
+    text,
+    ...others
 }) => {
     return {
         type     : CurrentRoomStatusActionTypes.RECEIVE_MESSAGE,
@@ -132,7 +145,8 @@ const receiveMessage = ({
         user,
         messageType,
         messageClass,
-        text
+        text,
+        ...others
     }
 }
 

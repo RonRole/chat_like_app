@@ -11,17 +11,25 @@ const MessagesPage = ({
 }) => {
     return (
         <>
-            <Sidebar className='d-none d-sm-block'>
+            <Sidebar className='d-none d-lg-block'>
                 <Link className = "nav-link" to="/talk_rooms">退出する</Link>
                 <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id} />
-                <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-sm-none' to='#'>BGM変更</BgmModalForm.ShowLink>
-                <CurrentMessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-sm-none' to='#'>画像メッセージ送信</CurrentMessageImageModalForm.ShowLink>
+                <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                    BGM変更
+                </BgmModalForm.ShowLink>
+                <CurrentMessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                    画像メッセージ送信
+                </CurrentMessageImageModalForm.ShowLink>
             </Sidebar>
-            <Sidebar.Small className='d-block d-sm-none'>
+            <Sidebar.Small className='d-block d-lg-none'>
                 <Link className = "nav-link" to="/talk_rooms">退出する</Link>
                 <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id} />
-                <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-sm-none' to='#'>BGM変更</BgmModalForm.ShowLink>
-                <CurrentMessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-sm-none' to='#'>画像メッセージ送信</CurrentMessageImageModalForm.ShowLink>
+                <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                    BGM変更
+                </BgmModalForm.ShowLink>
+                <CurrentMessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                    画像メッセージ送信
+                </CurrentMessageImageModalForm.ShowLink>
             </Sidebar.Small>
             <CurrentRoom talkRoomId={match.params.id} />
         </>
