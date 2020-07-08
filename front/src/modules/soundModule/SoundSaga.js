@@ -83,8 +83,9 @@ export function* uploadBGM(action) {
             bgms : result.data
         }))
     }
-    else {
-        alert('bgmのアップロードに失敗しました')
+    if(result.isFail) {
+        const errorMessages = [result.data.src].map(message => `\n・${message}`)
+        alert(`BGMをアップロードできませんでした。${errorMessages}`)
     }
 }
 

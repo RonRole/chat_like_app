@@ -1,45 +1,19 @@
 import React, { useState } from 'react'
-import ModalForm from '../components/ModalForm'
-import { Modal, Button, Form, Image } from 'react-bootstrap'
+import { Modal, Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import MessageImageModule from '../modules/messageImageModule/MessageImageModule'
 import SendMessageImageField from './MessageImageSendField'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import { Link } from 'react-router-dom'
+import MessageImageUploadFormGroup from './MessageImageUploadFormGroup'
 
-const UploadMessageImageFormGroup = () => {
-    const dispatch = useDispatch()
-    const loginUser = useSelector(state=>state.logStatus.loginUser)
-    return (
-        <Form.Group>
-            <Form.Control 
-                className='invisible position-absolute' 
-                id='messageImageUploadForm' 
-                type='file' 
-                name='message_image'
-                onChange={(e) => {
-                    dispatch(MessageImageModule.actions.execUploadMessageImage({
-                        userId:loginUser.id,
-                        messageImageParams: {
-                            src:e.currentTarget.files[0]
-                        }
-                    }))
-                }}
-            />
-            <Button className='ml-2' variant='primary' onClick={() => {
-                document.getElementById('messageImageUploadForm').click()
-            }}>新しい画像をアップロードする</Button>
-        </Form.Group>
-    )
-}
-
-const CurrentMessageImageModalForm = ({
-    show,
+const MessageImageModalForm = ({
     talkRoomId,
-    onCancel
+    onCancel,
+    ...props
 }) => {
     return (
-        <Modal show={show}>
+        <Modal {...props}>
             <Modal.Header>
                 <h6><strong>画像を選択してください</strong></h6>
             </Modal.Header>
@@ -47,7 +21,7 @@ const CurrentMessageImageModalForm = ({
                 <SendMessageImageField talkRoomId={talkRoomId}/>
             </Modal.Body>
             <Modal.Footer>
-                <UploadMessageImageFormGroup />
+                <MessageImageUploadFormGroup />
                 <Button className='ml-2' variant='secondary'　onClick={onCancel}>やめる</Button>
             </Modal.Footer>
         </Modal>
@@ -72,7 +46,7 @@ const ShowButton = ({
                 }))
                 setMessageImageModalShow(true)
             }}>Image</Button>
-            <CurrentMessageImageModalForm  talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
+            <MessageImageModalForm scrollable talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
                 setMessageImageModalShow(false)
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
@@ -83,7 +57,7 @@ const ShowButton = ({
         </>
     )
 }
-CurrentMessageImageModalForm.ShowButton = ShowButton
+MessageImageModalForm.ShowButton = ShowButton
 
 const ShowLink = ({
     talkRoomId,
@@ -103,7 +77,7 @@ const ShowLink = ({
                 }))
                 setMessageImageModalShow(true)
             }} />
-            <CurrentMessageImageModalForm  talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
+            <MessageImageModalForm scrollable talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
                 setMessageImageModalShow(false)
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
@@ -114,7 +88,7 @@ const ShowLink = ({
         </>
     )
 }
-CurrentMessageImageModalForm.ShowLink = ShowLink
+MessageImageModalForm.ShowLink = ShowLink
 
 
-export default CurrentMessageImageModalForm
+export default MessageImageModalForm

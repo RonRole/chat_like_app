@@ -21,6 +21,8 @@ ja:
       talk_room:
         title: タイトル
         description: 説明
+      bgm:
+        src: 音声
   date:
     abbr_day_names:
     - 日

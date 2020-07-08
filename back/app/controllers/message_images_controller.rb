@@ -22,6 +22,12 @@ class MessageImagesController < ApplicationController
     end
 
     def destroy
+        @users_message_image=current_user.message_images.find(params[:id])
+        if(@users_message_image.delete) 
+            render :json => @users_message_image
+        else
+            render :json => @users_message_image.fail_result
+        end
     end
 
 end

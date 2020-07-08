@@ -5,27 +5,25 @@ import UpdateLoginUserForm from '../containers/UpdateLoginUserForm'
 import LogoutButton from '../containers/LogoutButton'
 import BgmManageModal from '../containers/BgmManageModal'
 import Sidebar from './Sidebar'
+import MessageImageManageModal from '../containers/MessageImageManageModal'
 
-const HomePage = () => {
-    const [showUpdateUserForm, setUpdateUserFormShowing] = useState(false)
-
-
+const HomePage = ({
+    ...props
+}) => {
     return (
-        <>
+        <div {...props}>
             <Sidebar>
                 <BgmManageModal.ShowLink to='#' className='nav-link' />
+                <MessageImageManageModal.ShowLink to='#' className='nav-link'/>
             </Sidebar>
             <Container className="justify-content-center">
                 <LoginUserProfile className='mb-2' />
-                <div className='d-flex justify-content-center mb-2'>
-                    <Button onClick={() => setUpdateUserFormShowing(true)}>プロフィールを更新する</Button>
-                </div>
+                <UpdateLoginUserForm.ShowButton wrapperClassName='d-flex justify-content-center mb-2'/>
                 <div className='d-flex justify-content-center mb-2'>
                     <LogoutButton>ログアウト</LogoutButton>
                 </div>
-                <UpdateLoginUserForm show={showUpdateUserForm} onCancel={() => setUpdateUserFormShowing(false)} />
             </Container>
-        </>
+        </div>
     )
 }
 

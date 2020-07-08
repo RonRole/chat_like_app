@@ -122,7 +122,9 @@ const ProfileImageFormGroup = ({
             </Transparent>
 
             <Form.Control.Feedback type="invalid">
-                {errorMessages.find(e=>e)}
+                {errorMessages.filter(e=>e).map(errorMessage=>(
+                    <div>{errorMessage}</div>
+                ))}
             </Form.Control.Feedback>
         </Form.Group>
     )

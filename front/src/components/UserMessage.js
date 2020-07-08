@@ -1,5 +1,6 @@
 import { Image, Alert, Modal, Button } from "react-bootstrap";
 import React, { useState } from 'react'
+import LargeImageModal from "./LargeImageModal";
 
 const MessageTypes = {}
 
@@ -44,30 +45,6 @@ MessageTypes.text.receiveMessage = ({
 )
 
 MessageTypes.image = {}
-const LargeImageModal = ({
-    show,
-    largeImageSrc,
-    onCancel
-}) => {
-    const [width, setWidth] = useState(0)
-    const largeImage = document.createElement('img')
-    largeImage.onload = () => {
-        setWidth(largeImage.naturalWidth)
-    }
-    largeImage.src = largeImageSrc
-    const imageViewWidth = Math.ceil(width/window.parent.screen.width*10)*10
-    const dialogWidth = `vw-${Math.min(80, imageViewWidth)}`
-    return (
-        <Modal show={show} onHide={onCancel} dialogClassName={`${dialogWidth}`}  scrollable>
-            <Modal.Header closeButton></Modal.Header>
-            <div className='d-flex justify-content-center overflow-scroll'>
-                <Image src={largeImageSrc} fluid/>
-            </div>
-        </Modal>
-    )
-}
-
-
 const MessageImage = ({
     userImageUrl,
     userName,
@@ -83,7 +60,12 @@ const MessageImage = ({
                 </div>
                 <Image src={text} className='mb-2 pointer opacity-under-mouse' onClick={()=>setModalShow(true)}/>
             </div>
-            <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)}/>
+            <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
+                <Modal.Header closeButton></Modal.Header>
+                <div className='d-flex justify-content-center overflow-scroll'>
+                    <Image src={largeImageSrc} fluid/>
+                </div>
+            </LargeImageModal>
         </>
     )
 }

@@ -10,7 +10,7 @@ const Sidebar = ({
 }) => {
     const [open, setOpen] = useState(false)
     return (
-        <div className={`sidebar ${className}`}>
+        <div className={`sidebar ${className}`} {...props}>
             <CSSTransition in={open} classNames='slide' timeout={0}>
                 <div className='sidebar-open d-flex position-fixed h-100'>
                     <SidebarBody>
@@ -30,7 +30,7 @@ const SmallSidebar = ({
 }) => {
     const [open, setOpen] = useState(false)
     return (
-        <div className={`sidebar ${className}`}>
+        <div className={`sidebar ${className}`} {...props}>
             <CSSTransition in={open} classNames='slide' timeout={0}>
                 <div className='sidebar-open d-flex position-fixed h-100'>
                     <SidebarBody>

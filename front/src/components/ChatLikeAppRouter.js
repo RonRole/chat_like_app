@@ -16,8 +16,11 @@ import SignUpPage from './SignUpPage';
  * それとコンポーネントの対応を設定するコンポーネント
  */
 
-const ChatLikeAppRouter = ({children}) => (
-    <Router>
+const ChatLikeAppRouter = ({
+    children,
+    ...props
+}) => (
+    <Router {...props}>
         {children}
         <Switch>
             <Route path="/signin" component={LoginPage}/>

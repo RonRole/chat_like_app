@@ -29,7 +29,7 @@ actionHandler[MessageImageActionTypes.CLEAR_MESSAGE_IMAGE] = (state, action) => 
     }
 }
 actionHandler[MessageImageActionTypes.REMOVE_MESSAGE_IMAGE] = (state, action) => {
-    const deleteMessageImageIds = [action.messageImageIds].flat()
+    const deleteMessageImageIds = [action.messageImageId].flat()
     const newState = deleteMessageImageIds.reduce((state,messageImageId) => {
         delete state[messageImageId]
         return state

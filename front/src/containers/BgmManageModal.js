@@ -9,8 +9,9 @@ import SoundActions from '../modules/soundModule/SoundActions'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const BgmManageModal = ({
+    onCancel,
     show,
-    onCancel
+    ...props
 }) => {
     const bgms = useSelector(state => state.bgms)
     const dispatch = useDispatch()
@@ -20,8 +21,8 @@ const BgmManageModal = ({
         }
     }, [show])
     return (
-        <Modal show={show}>
-            <Modal.Header>
+        <Modal show={show} onHide={onCancel} {...props}>
+            <Modal.Header closeButton>
                 <h6><strong>BGM管理</strong></h6>
             </Modal.Header>
             <Modal.Body>
@@ -54,7 +55,7 @@ const ShowButton = () => {
             <Button onClick={() => {
                 setShowModal(true)
             }}>BGM管理</Button>
-            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} />
+            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} scrollable/>
         </>
     )
 }
@@ -69,7 +70,7 @@ const ShowLink = ({
             <Link onClick={() => {
                 setShowModal(true)
             }} {...props}>BGM管理</Link>
-            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} />
+            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} scrollable/>
         </>
     )
 }

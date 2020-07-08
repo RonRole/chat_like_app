@@ -4,13 +4,14 @@ import { Link, withRouter } from 'react-router-dom'
 import CurrentRoom from '../containers/CurrentRoom'
 import CurrentRoomTranslateModal from '../containers/CurrentRoomTranslateModal'
 import BgmModalForm from '../containers/BgmModalForm'
-import CurrentMessageImageModalForm from '../containers/CurrentMessageImageModalForm'
+import CurrentMessageImageModalForm from '../containers/MessageImageModalForm'
 
 const MessagesPage = ({
-    match
+    match,
+    ...props
 }) => {
     return (
-        <>
+        <div {...props}>
             <Sidebar className='d-none d-lg-block'>
                 <Link className = "nav-link" to="/talk_rooms">退出する</Link>
                 <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id} />
@@ -32,7 +33,7 @@ const MessagesPage = ({
                 </CurrentMessageImageModalForm.ShowLink>
             </Sidebar.Small>
             <CurrentRoom talkRoomId={match.params.id} />
-        </>
+        </div>
     )
 }
 

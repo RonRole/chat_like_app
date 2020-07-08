@@ -3,21 +3,23 @@ import { Container, Alert, Row, Col } from 'react-bootstrap'
 import LoginFormWithRouter from './LoginPageForm'
 import LoginPageTitle from './LoginPageTitle'
 import WrapWithFlashMessage from './WrapWithFlashMessage'
+import LinkToSignUpPage from './LinkToSignUpPage'
 
-/**
- * ログインページのデザイン設定・配置を行うコンポーネント
- */
-class LoginPage extends React.Component {
-    render() {
-        return (
-            <Container>
-                <WrapWithFlashMessage>
-                    <LoginPageTitle />
-                    <LoginFormWithRouter />
-                </WrapWithFlashMessage>
-            </Container>
-        )
-    }
+const LoginPage = ({
+    ...props
+}) => {
+    return (
+        <Container {...props}>
+            <WrapWithFlashMessage>
+                <LoginPageTitle />
+                <LoginFormWithRouter className='mb-2' />
+                <div className='d-flex justify-content-center'>
+                    初めての方はこちら：
+                    <LinkToSignUpPage />
+                </div>
+            </WrapWithFlashMessage>
+        </Container>
+    )
 }
 
 

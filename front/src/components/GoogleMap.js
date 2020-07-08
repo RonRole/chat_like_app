@@ -3,7 +3,8 @@ import { GoogleApiWrapper, Map, Marker } from 'google-maps-react';
 
 const GoogleMap = ({
     google,
-    position = {latitude:0, longtitude:0}
+    position = {latitude:0, longtitude:0},
+    ...props
 }) => {
     return (
         <div id='map'>
@@ -12,6 +13,7 @@ const GoogleMap = ({
                 google = { google }
                 center = {{ lat: position.latitude, lng: position.longitude}}
                 initialCenter = {{lat: position.latitude, lng: position.longitude}}
+                {...props}
             >
                 <Marker
                     title = { "現在地" }

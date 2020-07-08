@@ -55,11 +55,11 @@ const BgmList = ({
 
 const BgmModalForm = ({
     talkRoomId,
-    show = false,
-    onCancel
+    onCancel,
+    ...props
 }) => {
     return (
-        <Modal show = {show}>
+        <Modal {...props}>
             <Modal.Header>
                 <BgmModalFormTitle />
             </Modal.Header>
@@ -78,13 +78,27 @@ const ShowButton = ({
     talkRoomId,
     ...props
 }) => {
+    const loginUser = useSelector(state => state.logStatus.loginUser)
     const [bgmModalShow, setBgmModalShow] = useState(false)
+    const dispatch = useDispatch()
     return (
         <>
             <Button variant='primary' {...props} onClick={() => {
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : '♪'
+                }))
                 setBgmModalShow(true)
             }}>BGM</Button>
-            <BgmModalForm talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>setBgmModalShow(false)}/>
+            <BgmModalForm scrollable talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>{
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : ''
+                }))
+                setBgmModalShow(false)
+            }}/>
         </>
     )
 }
@@ -97,12 +111,26 @@ const ShowLink = ({
     ...props
 }) => {
     const [bgmModalShow, setBgmModalShow] = useState(false)
+    const loginUser = useSelector(state => state.logStatus.loginUser)
+    const dispatch = useDispatch()
     return (
         <>
             <Link {...props} onClick={() => {
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : '♪'
+                }))
                 setBgmModalShow(true)
             }} />
-            <BgmModalForm talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>setBgmModalShow(false)}/>
+            <BgmModalForm scrollable talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>{
+                dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
+                    talkRoomId,
+                    userId : loginUser.id,
+                    status : ''
+                }))
+                setBgmModalShow(false)
+            }}/>
         </>
     )
 }

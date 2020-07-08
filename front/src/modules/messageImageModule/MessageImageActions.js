@@ -29,11 +29,9 @@ export default {
     },
     execDeleteMessageImage : ({
         messageImageId,
-        userId
     }) => {
         return {
             type : MessageImageActionTypes.EXEC_DELETE_MESSAGE_IMAGE,
-            userId,
             messageImageId
         }
     },

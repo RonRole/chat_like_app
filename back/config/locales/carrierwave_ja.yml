@@ -1,0 +1,6 @@
+ja:
+  errors:
+    messages:
+      extension_whitelist_error: '%{extention}ファイルはアップロードできません'
+      min_size_error: 'ファイルのサイズは%{min_size}以上です'
+      max_size_error: 'ファイルのサイズは%{max_size}までです'

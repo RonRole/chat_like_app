@@ -15,9 +15,10 @@ const ModalForm = ({
     show,
     onSubmit,
     name,
-    children
+    children,
+    ...props
 }) => (
-    <Modal show={show} size="md" centered>
+    <Modal show={show} size="md" centered {...props}>
         <Form onSubmit={(formEvent) => onSubmit(formEvent)} name={name}>
             {children}
         </Form>

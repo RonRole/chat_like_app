@@ -54,3 +54,18 @@ export function* handleUploadMessageImage(action) {
         yield put(ErrorCodeActions.execHandleError({errorResult:uploadResult.data}))
     }
 }
+
+export function* handleDeleteMessageImage(action) {
+    const deleteResult = yield call(DataAccessor.delete, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/message_images/${action.messageImageId}`
+    })
+    if(deleteResult.isSuccess) {
+        yield put(MessageImageActions.removeMessageImage(deleteResult.data.id))
+    }
+    if(deleteResult.isFail) {
+        alert(deleteResult.data.src)
+    }
+    if(deleteResult.isError) {
+        yield put(ErrorCodeActions.execHandleError({errorResult:deleteResult.data}))
+    }
+}
