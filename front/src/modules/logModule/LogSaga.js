@@ -4,6 +4,7 @@ import DataAccessor from "../DataAccessor"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import UserActions from "../userModule/UserActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
+import FrontAddress from "../../address"
 
 //saga
 export function* handleGetDefLoginStart() {
@@ -30,7 +31,7 @@ export function* handleGetExecLoginStart(loginAction) {
         alert(`ようこそ${accessResult.data.name}さん!`)
         yield put(UserActions.setUser(accessResult.data))
         yield put(LogActions.login(accessResult.data))
-        loginAction.history.push('/home')
+        loginAction.history.push(FrontAddress.home)
     }
     if(accessResult.isFail){
         alert("ログインに失敗しました")
@@ -52,7 +53,7 @@ export function* handleGetExecLogoutStart(logoutAction) {
     if(result.isSuccess) {
         yield put(LogActions.logout());
         alert('ログアウトしました')
-        logoutAction.history.push('/signin')
+        logoutAction.history.push(FrontAddress.signinå)
     }
     if(result.isError) {
         yield put(ErrorCodeActions.execHandleError({

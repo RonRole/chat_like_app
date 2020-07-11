@@ -10,7 +10,7 @@ console.log(`socket client connect to ${process.env.REACT_APP_SOCKET_ADDRESS}`)
 const socketClient = io.connect(process.env.REACT_APP_SOCKET_ADDRESS, {path: (process.env.REACT_APP_SOCKET_PATH || '/socket.io')})
 
 //イベントチャンネル
-export function* createReceiveJoinChannel() {
+export function* createReceiveJoinRoomMessageChannel() {
     return eventChannel(emit => {
         socketClient.on('joinRoomMessage', response => {
             emit(response)
@@ -21,7 +21,7 @@ export function* createReceiveJoinChannel() {
     })
 }
 
-export function* createReceiveLeaveChannel() {
+export function* createReceiveLeaveRoomMessageChannel() {
     return eventChannel(emit => {
         socketClient.on('leaveRoomMessage', response => {
             emit(response)
@@ -97,7 +97,29 @@ export function* createReceiveRoomBgmChannel() {
             socketClient.close()
         }
     })
-} 
+}
+
+export function* createReceiveJoinRoomChannel() {
+    return eventChannel(emit => {
+        socketClient.on('joinRoom', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
+
+export function* createReceiveLeaveRoomChannel() {
+    return eventChannel(emit => {
+        socketClient.on('leaveRoom', response => {
+            emit(response)
+        })
+        return () => {
+            socketClient.close()
+        }
+    })
+}
 
 //ソケット通信　クライアント=>サーバー
 export const clientToServerMethods = {
@@ -110,6 +132,10 @@ export const clientToServerMethods = {
         text,
         user
     }) => {
+        socketClient.emit('joinRoom', {
+            roomId,
+            user
+        })
         socketClient.emit('joinRoomMessage',{
             roomId,
             messageType,
@@ -131,6 +157,10 @@ export const clientToServerMethods = {
         text,
         user
     }) => {
+        socketClient.emit('leaveRoom', {
+            roomId,
+            user
+        })
         socketClient.emit('leaveRoomMessage',{
             roomId,
             messageType,

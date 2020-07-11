@@ -6,6 +6,7 @@ import { withRouter } from "react-router-dom"
 import TalkRoomMembersModal from "./TalkRoomMembersModal"
 import CurrentRoomStatusActions from "../modules/currentRoomStatusModule/CurrentRoomStatusActions"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
+import RenderByCondition from "../components/RenderByCondition"
 
 const TalkRoomParams = ({
     talkRoomId
@@ -78,13 +79,9 @@ const TalkRoomCard = ({
             <Card.Body>
                 <TalkRoomInformation talkRoomId={talkRoomId} />
                 <TalkRoomCardButtons talkRoomId = {talkRoomId} history={history} />
-                <div className="d-flex justify-content-end">
-                    {[readOnly].filter(readOnly => !readOnly).map((_,index) => {
-                        return (
-                            <OwnerDropdown key={index} talkRoomId={talkRoomId}/>
-                        )    
-                    })}
-                </div>
+                <RenderByCondition className="d-flex justify-content-end" renderCondition={!readOnly}>
+                    <OwnerDropdown talkRoomId={talkRoomId}/>
+                </RenderByCondition>
             </Card.Body>
         </Card>
     )

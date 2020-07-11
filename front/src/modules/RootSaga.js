@@ -20,6 +20,7 @@ import * as soundSaga from "./soundModule/SoundSaga"
 import {UserPositionActionTypes} from './userPositionModule/UserPositionActions'
 import * as userPositionSaga from './userPositionModule/UserPositionSaga'
 import { SoundActionTypes } from "./soundModule/SoundActions";
+import * as userMonitorSaga from './userMonitorModule/UserMonitorSaga'
 
 const logSagas = [
     takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
@@ -48,10 +49,10 @@ const talkRoomSagas = [
 
 const talkRoomMessageSagas = [
     takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleJoinRoom)),
-    talkRoomMessageSaga.handleReceiveJoinRoom(),
+    talkRoomMessageSaga.handleReceiveJoinRoomMessage(),
 
     takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, talkRoomMessageSaga.handleLeaveRoom),
-    talkRoomMessageSaga.handleReceiveLeaveRoom(),
+    talkRoomMessageSaga.handleReceiveLeaveRoomMessage(),
 
     takeEvery(CurrentRoomStatusActionTypes.SEND_MESSAGE, talkRoomMessageSaga.handleSendMessage),
     talkRoomMessageSaga.handleReceiveMessage(),
@@ -110,6 +111,11 @@ const SoundSagas = [
     soundSaga.readyToBgmEnd()
 ]
 
+const UserMonitorSagas = [
+    userMonitorSaga.handleReceiveJoinRoom(),
+    userMonitorSaga.handleReceiveLeaveRoom()
+]
+
 //rootSaga
 export default function* rootSaga(){
     yield all([
@@ -120,6 +126,7 @@ export default function* rootSaga(){
         ...userSagas,
         ...ErrorCodeSagas,
         ...SoundSagas,
-        ...userPositionSagas
+        ...userPositionSagas,
+        ...UserMonitorSagas
     ])
 }

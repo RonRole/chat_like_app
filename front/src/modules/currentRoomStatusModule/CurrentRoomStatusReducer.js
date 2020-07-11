@@ -12,7 +12,7 @@ const initialState = {
         currentUserStatus:{
             0 : ''
         },
-        messages:[]
+        messages:[],
     }
 }
 

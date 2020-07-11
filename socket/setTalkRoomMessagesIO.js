@@ -13,6 +13,18 @@ module.exports = (server) => {
     
     io.sockets.on('connection', socket => {
         //トークルーム参加
+        socket.on('joinRoom', ({
+            roomId,
+            user
+        }) => {
+            currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
+            currentRoomMembers[roomId][socket.id] = user
+            socket.join(roomId)
+            io.sockets.emit('joinRoom', {
+                roomId,
+                user
+            })
+        }),
         socket.on('joinRoomMessage', ({
             roomId, 
             messageType = 'text', 
@@ -20,9 +32,6 @@ module.exports = (server) => {
             user, 
             text
         }) => {
-            currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
-            currentRoomMembers[roomId][socket.id] = user
-            socket.join(roomId)
             socket.to(roomId).broadcast.emit('joinRoomMessage', {
                 roomId,
                 user,
@@ -30,12 +39,23 @@ module.exports = (server) => {
                 messageClass,
                 text
             })
-        })
+        }),
         socket.on('rejoinRoomMessage', ({user = {}, roomId }) => {
             currentRoomMembers[roomId] = currentRoomMembers[roomId] || {}
             currentRoomMembers[roomId][socket.id] = user
             socket.join(roomId)
         })
+        socket.on('leaveRoom', ({
+            roomId,
+            user
+        }) => {
+            delete (currentRoomMembers[roomId] || {})[socket.id]
+            socket.leave(roomId)
+            io.sockets.emit('leaveRoom', {
+                roomId,
+                user
+            })
+        }),
         socket.on('leaveRoomMessage', ({
             roomId, 
             messageType = 'text', 
@@ -43,8 +63,6 @@ module.exports = (server) => {
             user, 
             text
         }) => {
-            delete (currentRoomMembers[roomId] || {})[socket.id]
-            socket.leave(roomId)
             socket.to(roomId).broadcast.emit('leaveRoomMessage', {
                 roomId,
                 user,
@@ -62,7 +80,6 @@ module.exports = (server) => {
             text,
             ...others
         }) => {
-            console.log(others)
             socket.to(roomId).broadcast.emit('receiveMessage', {
                 roomId,
                 messageType,
@@ -75,7 +92,6 @@ module.exports = (server) => {
         //現在のトークルームのメンバーを取得
         socket.on('currentUsers', (roomId) => {
             const users = Object.values(currentRoomMembers[roomId] || {})
-            console.log(users)
             io.sockets.emit('currentUsers', {
                 roomId,
                 users

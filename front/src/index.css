@@ -175,3 +175,7 @@ img {
 .vw-80 {
   width: 80vw;
   max-width: 80vw; }
+
+.user-monitor-container {
+  max-height: 80vh;
+  overflow: scroll; }

@@ -257,3 +257,8 @@ img {
 .vw-80 {
   @include vw(80)
 }
+
+.user-monitor-container {
+  max-height: 80vh;
+  overflow: scroll;
+}

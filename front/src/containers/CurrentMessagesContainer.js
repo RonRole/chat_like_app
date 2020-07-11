@@ -39,7 +39,7 @@ const MessagesContainer = ({
                 text : `${loginUser.name}さんが退出しました`
             }))
         }
-    }, [])
+    }, [talkRoomId])
     useEffect(() => {
         const messageArea = document.getElementById("messagesContainer")
         messageArea.scroll(0, document.getElementById("messagesContainer").scrollHeight)
@@ -51,8 +51,8 @@ const MessagesContainer = ({
                 {[messages].flat().filter(message=>message).map((message,index) => {
                     const userId = message.userId || 0
                     const userMessageProps = {
-                        userName : users[userId].name,
-                        userImageUrl : users[userId].image.thumb.url,
+                        userName : (users[userId] || users.default).name,
+                        userImageUrl : (users[userId] || users.default).image.thumb.url,
                         ...message
                     }
                     return (

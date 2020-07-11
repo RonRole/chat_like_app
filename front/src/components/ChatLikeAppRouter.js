@@ -9,6 +9,7 @@ import LoginPage from './LoginPage';
 import TalkRoomPage from './TalkRoomPage'
 import HomePage from './HomePage';
 import SignUpPage from './SignUpPage';
+import FrontAddress from '../address';
 
 
 /**
@@ -23,12 +24,12 @@ const ChatLikeAppRouter = ({
     <Router {...props}>
         {children}
         <Switch>
-            <Route path="/signin" component={LoginPage}/>
-            <Route path="/signup" component={SignUpPage} />
-            <LoginRequiredRoute exact path="/home" component={HomePage}/>
-            <LoginRequiredRoute exact path="/talk_rooms" component={TalkRoomPage} />
-            <LoginRequiredRoute exact path="/talk_rooms/:id" component={CurrentRoomPage}/>
-            <Redirect to="/home" />
+            <Route path={FrontAddress.signin} component={LoginPage}/>
+            <Route path={FrontAddress.signup} component={SignUpPage} />
+            <LoginRequiredRoute exact path={FrontAddress.home} component={HomePage}/>
+            <LoginRequiredRoute exact path={FrontAddress.talk_rooms} component={TalkRoomPage} />
+            <LoginRequiredRoute exact path={FrontAddress.current_talk_room} component={CurrentRoomPage}/>
+            <Redirect to={FrontAddress.home} />
         </Switch>
     </Router>
 )

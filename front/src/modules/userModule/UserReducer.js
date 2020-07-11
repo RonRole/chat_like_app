@@ -23,17 +23,6 @@ const initialState = {
     default      : defaultUser,
     0            : defaultUser,
 }
-/**
- * idからUserを取得する
- * Userのファクトリーメソッドとして使用する
- * @param {*} state 
- */
-const createGetUserById = (state) => (id) => {
-    const user = state["users"][id] || {...defaultUser}
-    user.isAuthorOf = (talkRoomId) => (state.talkRooms.joinRooms[talkRoomId] || state.talkRooms.ownRooms[talkRoomId] || {}).author_id === user.id
-    user.isCurrentUser = () => state.logStatus.loginUser.id === user.id
-    return state["users"][id] || defaultUser
-}
 
 const actionHandler = {}
 actionHandler[LogActionTypes.LOG_IN] = () => {
@@ -65,6 +54,5 @@ const createReducer = createReducerFactory(initialState, actionHandler)
     
 export default {
     defaultUser,
-    getUserById: createGetUserById,
     createReducer
 }

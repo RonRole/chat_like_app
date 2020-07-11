@@ -22,14 +22,6 @@ const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
 
 const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
-const createTalkRoomById = (state) => (id) => {
-    const room = state.talkRooms.ownRooms[id] || state.talkRooms.joinRooms[id] || initialState.default
-    room.getAllUsers = () => [...new Set([...(room.user_ids || []), room.author_id])].map(id => UserModule.reducer.getUserById(state)(id))
-    room.getAuthor = () => UserModule.reducer.getUserById(state)(room.author_id)
-    room.getMembers = () => [...new Set(room.user_ids || [])].filter(id => id !== room.author_id).map(id => UserModule.reducer.getUserById(state)(id))
-    return room
-}
-
 const actionHandler = {}
 actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
     const newOwnRooms = action.talkRooms.reduce((ownRooms, room) => {
@@ -103,6 +95,5 @@ const createReducer = createReducerFactory(initialState, actionHandler)
 export default {
     getOwnRoomIds,
     getJoinRoomIds,
-    getTalkRoomById: createTalkRoomById,
     createReducer
 }

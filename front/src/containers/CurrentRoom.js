@@ -8,6 +8,7 @@ import CurrentUsersMapContainer from './CurrentUsersMapContainer'
 import CurrentRoomUserTracer from './CurrentRoomUserTracer'
 import MessageImageModalForm from './MessageImageModalForm'
 import BgmModalForm from './BgmModalForm'
+import UserMonitorContainer from './UserMonitorContainer'
 
 
 
@@ -19,6 +20,8 @@ const CurrentRoom = ({
     return (
         <Row className='justify-content-center'>
             <Container className='col-0 col-sm-3 d-none d-lg-block'>
+                <h6 className='ml-5'><strong>最近のアクティビティ</strong></h6>
+                <UserMonitorContainer className='ml-4 user-monitor-container'/>
             </Container>
             <Container className="justify-content-center m-1 m-sm-0 col-lg-6">
                 <strong>{thisRoom.title}</strong>

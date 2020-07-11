@@ -1,21 +1,21 @@
 import CurrentRoomStatusActions from "./CurrentRoomStatusActions"
 import Actions from "./CurrentRoomStatusActions"
 import { call, take, put, fork } from "redux-saga/effects"
-import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveChannel, createCurrentUserPositionReceiveChannel, createReceiveRoomBgmChannel, createCurrentAllUserReceiveChannel } from "../socketClient"
+import { createMessageReceiveChannel, createCurrentUserReceiveChannel, clientToServerMethods, serverToClientMothods, createCurrentUserStatusReceiveChannel, createReceiveJoinChannel, createReceiveLeaveRoomMessageChannel, createCurrentUserPositionReceiveChannel, createReceiveRoomBgmChannel, createCurrentAllUserReceiveChannel, createReceiveJoinRoomChannel, createReceiveJoinRoomMessageChannel, createReceiveLeaveRoomChannel } from "../socketClient"
 
-export function* handleReceiveJoinRoom() {
-    const channel = yield call(createReceiveJoinChannel)
+export function* handleReceiveJoinRoomMessage() {
+    const channel = yield call(createReceiveJoinRoomMessageChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(Actions.receiveJoinRoom(response));
+        yield put(Actions.receiveJoinRoomMessage(response));
     }
 }
 
-export function* handleReceiveLeaveRoom() {
-    const channel = yield call(createReceiveLeaveChannel)
+export function* handleReceiveLeaveRoomMessage() {
+    const channel = yield call(createReceiveLeaveRoomMessageChannel)
     while(true) {
         const response = yield take(channel)
-        yield put(Actions.receiveLeaveRoom(response))
+        yield put(Actions.receiveLeaveRoomMessage(response))
     }
 }
 
@@ -44,7 +44,6 @@ export function* handleGetCurrentUsers() {
             talkRoomId : response.roomId,
             userIds : [response.users].flat().map(user => user.id)
         }))
-
     }
 }
 

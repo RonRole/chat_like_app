@@ -21,7 +21,7 @@ export const CurrentRoomStatusActionTypes = {
     CHANGE_TRANSLATION          : "CHANGE_TRANSLATION",
 
     CHANGE_ROOM_BGM : "CHANGE_ROOM_BGM",
-    RECEIVE_CHANGE_ROOM_BGM : "RECEIVE_CHANGE_ROOM_BGM"
+    RECEIVE_CHANGE_ROOM_BGM : "RECEIVE_CHANGE_ROOM_BGM",
 }
 
 //actionCreators
@@ -42,7 +42,7 @@ const joinRoom = ({
     }
 }
 
-const receiveJoinRoom = ({
+const receiveJoinRoomMessage = ({
     roomId,
     messageType = 'text',
     messageClass = 'receiveMessage',
@@ -76,7 +76,7 @@ const leaveRoom = ({
     }
 }
 
-const receiveLeaveRoom = ({
+const receiveLeaveRoomMessages = ({
     roomId,
     user,
     messageType = 'text',
@@ -264,9 +264,9 @@ const receiveChangeRoomBgm = ({
 
 export default {
     joinRoom,
-    receiveJoinRoom,
+    receiveJoinRoomMessage: receiveJoinRoomMessage,
     leaveRoom,
-    receiveLeaveRoom,
+    receiveLeaveRoomMessage: receiveLeaveRoomMessages,
     addMessage,
     sendMessage,
     receiveMessage,
@@ -283,5 +283,5 @@ export default {
     changeTranslation,
 
     changeRoomBgm,
-    receiveChangeRoomBgm
+    receiveChangeRoomBgm,
 }
