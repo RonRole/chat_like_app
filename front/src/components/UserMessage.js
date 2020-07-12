@@ -88,7 +88,12 @@ const ReceiveMessageImage = ({
                 </div>
                 <Image src={text} className='mb-2 pointer opacity-under-mouse' onClick={()=>setModalShow(true)}/>
             </div>
-            <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)}/>
+            <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
+                <Modal.Header closeButton></Modal.Header>
+                <div className='d-flex justify-content-center overflow-scroll'>
+                    <Image src={largeImageSrc} fluid/>
+                </div>
+            </LargeImageModal>
         </div>
     )
 }

@@ -4,6 +4,7 @@ import { Container, ListGroup, Image } from 'react-bootstrap'
 import RenderByCondition from '../components/RenderByCondition'
 import { Link } from 'react-router-dom'
 import FrontAddress from '../address'
+import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const formatDate = date => {
     const pad0len2 = number => ('00' + number).slice(-2)
@@ -66,17 +67,17 @@ const UserMonitorContainer = ({
     const users = useSelector(state => state.users)
     return (
         <Container {...props}>
-            <ListGroup>
+            <TransitionGroup component={ListGroup}>
                 {[userMonitorMessages].flat().map((message,index) => {
                     const talkRoom = talkRooms.ownRooms[message.talkRoomId] || talkRooms.joinRooms[message.talkRoomId] || {}
                     const user = users[message.userId] || {}
                     return (
-                        <RenderByCondition renderCondition={talkRoom.title && user.name}>
-                            <UserMonitorMessage key={index} talkRoom={talkRoom} user={user} action={message.action} date={message.date}/>
+                        <RenderByCondition key={userMonitorMessages.length-index-1} classNames='fade' timeout={100} renderCondition={talkRoom.title && user.name} WrapWith={CSSTransition} >
+                            <UserMonitorMessage talkRoom={talkRoom} user={user} action={message.action} date={message.date}/>
                         </RenderByCondition>
                     )
                 })}
-            </ListGroup>
+            </TransitionGroup>
         </Container>
     )
 }

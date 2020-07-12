@@ -262,3 +262,12 @@ img {
   max-height: 80vh;
   overflow: scroll;
 }
+
+.kanda-exit {
+  opacity: 1.0;
+}
+
+.kanda-exit-active {
+  opacity: 0.8;
+  font-size: large;
+}
