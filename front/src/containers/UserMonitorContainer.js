@@ -10,7 +10,7 @@ const formatDate = date => {
     const pad0len2 = number => ('00' + number).slice(-2)
     const year = date.getFullYear()
     const month = pad0len2(date.getMonth()+1)
-    const day = pad0len2(date.getDay())
+    const day = pad0len2(date.getDate())
     const hour = pad0len2(date.getHours())
     const minutes = pad0len2(date.getMinutes())
     const seconds = pad0len2(date.getSeconds())
