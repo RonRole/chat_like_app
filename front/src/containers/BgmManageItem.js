@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SoundActions from '../modules/soundModule/SoundActions'
 import RenderByCondition from '../components/RenderByCondition'
@@ -28,9 +28,10 @@ const BgmForm = ({
     ...props
 }) => {
     const dispatch = useDispatch()
+    const formRef = useRef(null)
     useEffect(() => {
-        document.getElementById(`bgmform-${bgmId}`).focus()
-    })
+        formRef.current.focus()
+    }, [])
     return (
         <OverlayTrigger overlay={<Tooltip>Returnで更新</Tooltip>}>
             <Form onSubmit={e => {
@@ -41,7 +42,7 @@ const BgmForm = ({
                 }))
                 onCancel()
             }} {...props}>
-                <Form.Control id={`bgmform-${bgmId}`} name='bgm-title' defaultValue={bgmTitle} onBlur={onCancel} required/>
+                <Form.Control ref={formRef} id={`bgmform-${bgmId}`} name='bgm-title' defaultValue={bgmTitle} onBlur={onCancel} required/>
             </Form>
         </OverlayTrigger>
     )

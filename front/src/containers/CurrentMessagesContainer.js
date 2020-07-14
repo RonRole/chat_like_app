@@ -5,14 +5,11 @@ import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import UserMessage from '../components/UserMessage'
 
-const MessagesContainer = ({
+const MessageContainerLifeCycleEffect= ({
     talkRoomId
 }) => {
     const dispatch = useDispatch()
     const loginUser = useSelector(state => state.logStatus.loginUser)
-    const users = useSelector(state => state.users)
-    const currentRoomStatus = useSelector(state => state.currentRoomStatus)
-    const messages = (currentRoomStatus[talkRoomId] || currentRoomStatus.default).messages
     useEffect(() => {
         dispatch(CurrentRoomStatusModule.actions.joinRoom({
             user : loginUser,
@@ -40,13 +37,22 @@ const MessagesContainer = ({
             }))
         }
     }, [talkRoomId])
+}
+
+const MessagesContainer = ({
+    talkRoomId,
+    ...props
+}) => {
+    const users = useSelector(state => state.users)
+    const currentRoomStatus = useSelector(state => state.currentRoomStatus)
+    const messages = (currentRoomStatus[talkRoomId] || currentRoomStatus.default).messages
     useEffect(() => {
         const messageArea = document.getElementById("messagesContainer")
         messageArea.scroll(0, document.getElementById("messagesContainer").scrollHeight)
     }, [messages])
-
+    MessageContainerLifeCycleEffect({talkRoomId})
     return (
-        <Container id = "messagesContainer" className='mb-2 pb-4'>
+        <Container id = "messagesContainer" {...props}>
             <TransitionGroup>
                 {[messages].flat().filter(message=>message).map((message,index) => {
                     const userId = message.userId || 0

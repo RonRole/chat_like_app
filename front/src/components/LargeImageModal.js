@@ -13,7 +13,7 @@ const LargeImageModal = ({
         setWidth(largeImage.naturalWidth)
     }
     largeImage.src = largeImageSrc
-    const imageViewWidth = Math.ceil(width/window.parent.screen.width*10)*10
+    const imageViewWidth = Math.ceil(width/window.parent.screen.width*100)
     const dialogWidth = `vw-${Math.min(80, imageViewWidth)}`
     return (
         <Modal onHide={onCancel} dialogClassName={`${dialogWidth}`} {...props} />

@@ -63,7 +63,7 @@ const BgmModalForm = ({
             <Modal.Header>
                 <BgmModalFormTitle />
             </Modal.Header>
-            <Modal.Body className='d-flex row m-2 overflow-scroll'>
+            <Modal.Body className='d-flex row m-2 overflow-auto'>
                 <BgmList talkRoomId={talkRoomId} />
             </Modal.Body>
             <Modal.Footer>

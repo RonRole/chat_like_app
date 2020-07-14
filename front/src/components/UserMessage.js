@@ -62,7 +62,7 @@ const MessageImage = ({
             </div>
             <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
-                <div className='d-flex justify-content-center overflow-scroll'>
+                <div className='d-flex justify-content-center overflow-auto'>
                     <Image src={largeImageSrc} fluid/>
                 </div>
             </LargeImageModal>
@@ -90,7 +90,7 @@ const ReceiveMessageImage = ({
             </div>
             <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
-                <div className='d-flex justify-content-center overflow-scroll'>
+                <div className='d-flex justify-content-center overflow-auto'>
                     <Image src={largeImageSrc} fluid/>
                 </div>
             </LargeImageModal>

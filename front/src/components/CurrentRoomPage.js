@@ -4,7 +4,7 @@ import { Link, withRouter } from 'react-router-dom'
 import CurrentRoom from '../containers/CurrentRoom'
 import CurrentRoomTranslateModal from '../containers/CurrentRoomTranslateModal'
 import BgmModalForm from '../containers/BgmModalForm'
-import CurrentMessageImageModalForm from '../containers/MessageImageModalForm'
+import MessageImageModalForm from '../containers/MessageImageModalForm'
 
 const MessagesPage = ({
     match,
@@ -18,9 +18,9 @@ const MessagesPage = ({
                 <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
                     BGM変更
                 </BgmModalForm.ShowLink>
-                <CurrentMessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                <MessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
                     画像メッセージ送信
-                </CurrentMessageImageModalForm.ShowLink>
+                </MessageImageModalForm.ShowLink>
             </Sidebar>
             <Sidebar.Small className='d-block d-lg-none'>
                 <Link className = "nav-link" to="/talk_rooms">退出する</Link>
@@ -28,9 +28,9 @@ const MessagesPage = ({
                 <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
                     BGM変更
                 </BgmModalForm.ShowLink>
-                <CurrentMessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                <MessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
                     画像メッセージ送信
-                </CurrentMessageImageModalForm.ShowLink>
+                </MessageImageModalForm.ShowLink>
             </Sidebar.Small>
             <CurrentRoom talkRoomId={match.params.id} />
         </div>

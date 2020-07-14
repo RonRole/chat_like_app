@@ -7,12 +7,13 @@ import CurrentUserStatusThumb from './CurrentUserStatusThumb'
 
 
 const CurrentUsersContainer = ({
-    talkRoomId
+    talkRoomId,
+    ...props
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const thisRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus.default
     return (
-        <Container className='current-users-container mb-2 h-user-thumb'>
+        <Container {...props}>
             <TransitionGroup className='d-flex'component='div'>
                 {[thisRoomStatus.currentUserIds].flat().map((userId,index) => {
                     return (

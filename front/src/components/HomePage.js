@@ -6,6 +6,7 @@ import LogoutButton from '../containers/LogoutButton'
 import BgmManageModal from '../containers/BgmManageModal'
 import Sidebar from './Sidebar'
 import MessageImageManageModal from '../containers/MessageImageManageModal'
+import DotsDots from './DotsDots'
 
 const HomePage = ({
     ...props
@@ -15,6 +16,7 @@ const HomePage = ({
             <Sidebar>
                 <BgmManageModal.ShowLink to='#' className='nav-link' />
                 <MessageImageManageModal.ShowLink to='#' className='nav-link'/>
+                <DotsDots.ShowLink to='#' className='nav-link' />
             </Sidebar>
             <Container className="justify-content-center">
                 <LoginUserProfile className='mb-2' />

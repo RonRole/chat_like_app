@@ -33,7 +33,7 @@ const LoginForm = ({
         }}>
             <UserFormGroups.NameFormGroup errorMessages={loginErrorMessages} />
             <UserFormGroups.PasswordFormGroup errorMessages={loginErrorMessages} />
-            <Button variant="primary" type="submit">ログイン</Button>
+            <Button variant="primary" type="submit"　block>ログイン</Button>
         </Form>
     )
 }

@@ -32,7 +32,7 @@ const MessageImageManageModal = ({
             </Modal.Footer>
             <LargeImageModal show={largeImageModalShow} largeImageSrc={largeImage.src.url} onCancel={()=>setLargeImageModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body className='d-flex justify-content-center overflow-scroll'>
+                <Modal.Body className='d-flex justify-content-center overflow-auto'>
                     <Image src={largeImage.src.url} fluid/>
                 </Modal.Body>
                 <Modal.Footer>
