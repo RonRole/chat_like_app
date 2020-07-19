@@ -16,14 +16,14 @@ const CurrentUserStatusThumb = ({
     return (
         <Transparent>
             <Transparent.Front transParent={thisRoomStatus.currentUserStatus[userId]}>
-                <Image  className="mr-2 mb-2" 
+                <Image  className="mr-2 mb-2 contain w-px-50 h-px-50" 
                         src={user.image.thumb.url} 
                         fluid
                         roundedCircle
                 />
             </Transparent.Front>
             <Transparent.Back>
-                {thisRoomStatus.currentUserStatus[userId]}
+                <i className='material-icons font-px-30'>{thisRoomStatus.currentUserStatus[userId]}</i>
             </Transparent.Back>                                        
         </Transparent>  
     )

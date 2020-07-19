@@ -7,11 +7,7 @@ const LoginFormWithRouter = ({
     history,
     ...props
 }) => (
-    <Row {...props}>
-        <Col xs={{span:10, offset:1}} sm={{span:8, offset:2}} md={{span:6,offset:3}} lg={{span:4,offset:4}}>
-            <LoginForm history={history}/>
-        </Col>
-    </Row>
+    <LoginForm history={history} {...props}/>
 )
 
 export default withRouter(LoginFormWithRouter)

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
 import { Container} from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
@@ -46,13 +46,13 @@ const MessagesContainer = ({
     const users = useSelector(state => state.users)
     const currentRoomStatus = useSelector(state => state.currentRoomStatus)
     const messages = (currentRoomStatus[talkRoomId] || currentRoomStatus.default).messages
+    const messageArea = useRef(null)
     useEffect(() => {
-        const messageArea = document.getElementById("messagesContainer")
-        messageArea.scroll(0, document.getElementById("messagesContainer").scrollHeight)
+        messageArea.current.scroll(0, messageArea.current.scrollHeight)
     }, [messages])
     MessageContainerLifeCycleEffect({talkRoomId})
     return (
-        <Container id = "messagesContainer" {...props}>
+        <Container ref={messageArea} {...props}>
             <TransitionGroup>
                 {[messages].flat().filter(message=>message).map((message,index) => {
                     const userId = message.userId || 0

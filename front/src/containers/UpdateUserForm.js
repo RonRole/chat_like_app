@@ -9,7 +9,7 @@ import UserFormGroups from '../components/UserFormGroups'
 const UpdateUserForm = ({
     userId,
     show,
-    onCancel,
+    onHide,
 }) => {
     const users = useSelector(state=>state.users)
     const updateTargetUser = users[userId] || users.default
@@ -28,6 +28,7 @@ const UpdateUserForm = ({
     return (
         <ModalForm
             show = {show}
+            onHide={onHide}
             onSubmit={e => {
                 e.preventDefault()
                 const inputParams = {
@@ -42,19 +43,19 @@ const UpdateUserForm = ({
                 }))
             }}
         >
-            <ModalForm.Header>
+            <Modal.Header closeButton>
                 <strong>プロフィール更新</strong>
-            </ModalForm.Header>
-            <ModalForm.Body>
+            </Modal.Header>
+            <Modal.Body>
                 <UserFormGroups.IdFormGroup defaultValue={updateTargetUser.self_id} errorMessages={updateUserFormErrors.self_id}/>
                 <UserFormGroups.NameFormGroup defaultValue={updateTargetUser.name} errorMessages={updateUserFormErrors.name}/>
                 <UserFormGroups.ProfileImageFormGroup defaultValue={updateTargetUser.image.profile.url} errorMessages={updateUserFormErrors.image}/>
-            </ModalForm.Body>
+            </Modal.Body>
             <Modal.Footer className="d-flex justify-content-end">
                 <Button type='submit' className='mr-2'>更新</Button>
                 <Button variant='secondary' onClick={() => {
                     dispatch(FormErrorModule.actions.clearErrorByName("updateUserForm"))
-                    onCancel()
+                    onHide()
                 }}>やめる</Button>
             </Modal.Footer>
         </ModalForm>

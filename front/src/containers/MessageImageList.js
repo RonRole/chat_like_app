@@ -17,7 +17,7 @@ const MessageImageList = ({
             {safeMessageImages.map((messageImage,index) => (
                 <Image
                     key={index}
-                    className='mr-1 pointer opacity-under-mouse user-thumb-size'
+                    className='mr-1 pointer opacity-under-mouse h-px-50 w-px-50 contain'
                     src={messageImage.src.thumb.url} 
                     onClick={()=>onClickImage(messageImage)}
                 />

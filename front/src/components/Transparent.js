@@ -26,9 +26,11 @@ Transparent.Front = ({
 )
 
 Transparent.Back = ({
-    children
+    children,
+    className,
+    ...props
 }) => (
-    <div className='back'>
+    <div className={`back ${className}`} {...props}>
         {children}
     </div>
 )

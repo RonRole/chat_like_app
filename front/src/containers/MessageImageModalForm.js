@@ -9,12 +9,12 @@ import MessageImageUploadFormGroup from './MessageImageUploadFormGroup'
 
 const MessageImageModalForm = ({
     talkRoomId,
-    onCancel,
+    onHide,
     ...props
 }) => {
     return (
-        <Modal {...props}>
-            <Modal.Header>
+        <Modal onHide={onHide} {...props}>
+            <Modal.Header closeButton>
                 <h6><strong>画像を選択してください</strong></h6>
             </Modal.Header>
             <Modal.Body className="d-flex row m-2 overflow-auto">
@@ -22,7 +22,7 @@ const MessageImageModalForm = ({
             </Modal.Body>
             <Modal.Footer>
                 <MessageImageUploadFormGroup />
-                <Button className='ml-2' variant='secondary'　onClick={onCancel}>やめる</Button>
+                <Button className='ml-2' variant='secondary'　onClick={onHide}>やめる</Button>
             </Modal.Footer>
         </Modal>
     )
@@ -42,11 +42,11 @@ const ShowButton = ({
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
-                    status : '🖼'
+                    status : 'collections'
                 }))
                 setMessageImageModalShow(true)
             }}>Image</Button>
-            <MessageImageModalForm scrollable talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
+            <MessageImageModalForm scrollable talkRoomId={talkRoomId} show={messageImageModalShow} onHide={() => {
                 setMessageImageModalShow(false)
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
@@ -73,11 +73,11 @@ const ShowLink = ({
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
-                    status : '🖼'
+                    status : 'collections'
                 }))
                 setMessageImageModalShow(true)
             }} />
-            <MessageImageModalForm scrollable talkRoomId={talkRoomId} show={messageImageModalShow} onCancel={() => {
+            <MessageImageModalForm scrollable talkRoomId={talkRoomId} show={messageImageModalShow} onHide={() => {
                 setMessageImageModalShow(false)
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,

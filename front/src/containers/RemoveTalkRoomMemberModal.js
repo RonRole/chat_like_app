@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import ModalForm from "../components/ModalForm"
 import React, { useState } from 'react'
-import { ListGroup, Modal, Button } from "react-bootstrap"
+import { ListGroup, Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap"
 import UserProfile from "../components/UserProfile"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
@@ -9,7 +9,7 @@ import { TransitionGroup, CSSTransition } from "react-transition-group"
 const RemoveTalkRoomMembersModal = ({
     talkRoomId,
     show,
-    onCancel
+    onHide
 }) => {
     const dispatch = useDispatch()
     const talkRooms=useSelector(state=>state.talkRooms)
@@ -17,14 +17,14 @@ const RemoveTalkRoomMembersModal = ({
     const users=useSelector(state=>state.users)
     const [selectedUserIds, addSelectedUserId] = useState({})
     return (
-        <ModalForm show={show} onSubmit={(e) => {
+        <ModalForm show={show} onHide={onHide} onSubmit={(e) => {
             e.preventDefault()
             dispatch(TalkRoomModule.actions.execRemoveUsersFromTalkRoom({
                 talkRoomId,
                 userIds : Object.keys(selectedUserIds).map(userId => parseInt(userId))
             }))
         }}>
-            <Modal.Header>
+            <Modal.Header closeButton>
                 <h6><strong>「{thisRoom.title}」から別れるメンバーを選択してください</strong></h6>
             </Modal.Header>
             <Modal.Body id='talkRoomMembersModalBody'>
@@ -49,11 +49,33 @@ const RemoveTalkRoomMembersModal = ({
                 <Button variant='danger' type='submit' disabled={Object.keys(selectedUserIds).length===0}>別れる</Button>
                 <Button variant='secondary' onClick={()=>{
                     addSelectedUserId({})
-                    onCancel()}}
+                    onHide()}}
                 >閉じる</Button>
             </Modal.Footer>
         </ModalForm>
     )
 }
+
+const ShowIcon = ({
+    talkRoomId,
+    className,
+    onClick=()=>{},
+    ...props
+}) => {
+    const [removeUserModalShow, changeRemoveUserModalShow] = useState(false)
+    return (
+        <>
+            <OverlayTrigger overlay={<Tooltip>ユーザーを削除する</Tooltip>}>
+                <i className={`material-icons pointer opacity-under-mouse font-px-30 ${className}`} onClick={(e)=>{
+                    onClick(e)
+                    changeRemoveUserModalShow(true)
+                }} {...props}>person_remove</i>
+            </OverlayTrigger>
+            <RemoveTalkRoomMembersModal show={removeUserModalShow} talkRoomId={talkRoomId} onHide={()=>changeRemoveUserModalShow(false)}/>
+        </>
+    )
+}
+
+RemoveTalkRoomMembersModal.ShowIcon = ShowIcon
 
 export default RemoveTalkRoomMembersModal

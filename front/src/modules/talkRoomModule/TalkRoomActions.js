@@ -35,29 +35,21 @@ export default {
         }
     },
     execAddTalkRoom:({
-        history,
-        title="New Room",
-        description="This is a new talk room",
-        authorId
+        authorId,
+        ...params
     }) => {
         return {
             type:TalkRoomActionTypes.EXEC_ADD_ROOM,
-            history,
-            title,
-            description,
             authorId,
+            ...params
         }
     },
     execUpdateTalkRoom:({
-        talkRoomId,
-        title,
-        description
+        ...params
     }) => {
         return {
             type : TalkRoomActionTypes.EXEC_UPDATE_ROOM,
-            talkRoomId,
-            title,
-            description,
+            ...params
         }
     },
     execDeleteTalkRoom:(
@@ -129,12 +121,12 @@ export default {
     },
     updateTalkRoom:({
         talkRoomId,
-        talkRoom
+        ...params
     })  => {
         return {
             type : TalkRoomActionTypes.UPDATE_TALK_ROOM,
             talkRoomId,
-            talkRoom
+            ...params
         }
     },
     deleteTalkRoom:({

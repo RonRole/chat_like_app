@@ -55,12 +55,12 @@ const BgmList = ({
 
 const BgmModalForm = ({
     talkRoomId,
-    onCancel,
+    onHide,
     ...props
 }) => {
     return (
-        <Modal {...props}>
-            <Modal.Header>
+        <Modal onHide={onHide} {...props}>
+            <Modal.Header closeButton>
                 <BgmModalFormTitle />
             </Modal.Header>
             <Modal.Body className='d-flex row m-2 overflow-auto'>
@@ -68,7 +68,7 @@ const BgmModalForm = ({
             </Modal.Body>
             <Modal.Footer>
                 <BgmUploadFormGroup />
-                <Button className='ml-2' variant='secondary'　onClick={onCancel}>やめる</Button>
+                <Button className='ml-2' variant='secondary'　onClick={onHide}>やめる</Button>
             </Modal.Footer>
         </Modal>
     )
@@ -87,11 +87,11 @@ const ShowButton = ({
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
-                    status : '♪'
+                    status : 'music_note'
                 }))
                 setBgmModalShow(true)
             }}>BGM</Button>
-            <BgmModalForm scrollable talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>{
+            <BgmModalForm scrollable talkRoomId={talkRoomId} show={bgmModalShow} onHide={()=>{
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
@@ -119,11 +119,11 @@ const ShowLink = ({
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,
-                    status : '♪'
+                    status : 'music_note'
                 }))
                 setBgmModalShow(true)
             }} />
-            <BgmModalForm scrollable talkRoomId={talkRoomId} show={bgmModalShow} onCancel={()=>{
+            <BgmModalForm scrollable talkRoomId={talkRoomId} show={bgmModalShow} onHide={()=>{
                 dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
                     talkRoomId,
                     userId : loginUser.id,

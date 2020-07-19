@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Container, Row } from 'react-bootstrap'
+import { Container, Row, ButtonGroup, ToggleButtonGroup } from 'react-bootstrap'
 import CurrentUsersContainer from './CurrentUsersContainer'
 import CurrentMessagesContainer from './CurrentMessagesContainer'
 import CurrentMessageFormContainer from './CurrentMessageFormContainer'
@@ -32,7 +32,7 @@ const CurrnetRoomContainer = ({
             <strong>{thisRoom.title}</strong>
             <CurrentUsersContainer talkRoomId = {talkRoomId} className='simple-border mb-2 h-user-thumb'/>
             <div className='h-100per-minus-user-thumb' >
-                <CurrentMessagesContainer talkRoomId = {talkRoomId} className='mb-2 pb-4 simple-border overflow-auto h-per-80'/>
+                <CurrentMessagesContainer talkRoomId = {talkRoomId} className='mb-2 pb-4 simple-border overflow-auto h-per-80 bg-sawai'/>
                 <div className='h-per-20'>
                     <CurrentMessageFormContainer talkRoomId = {talkRoomId}/>
                     <MessageImageModalForm.ShowButton className='mr-2 d-none d-md-inline' talkRoomId = {talkRoomId} />

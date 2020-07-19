@@ -5,11 +5,11 @@ import { Button } from 'react-bootstrap'
 
 const UpdateLoginUserForm = ({
     show,
-    onCancel
+    onHide
 }) => {
     const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
-        <UpdateUserForm userId={loginUser.id} show={show} onCancel={onCancel} />
+        <UpdateUserForm userId={loginUser.id} show={show} onHide={onHide} />
     )
 }
 
@@ -32,7 +32,7 @@ const ShowButton = ({
             }} {...props}>
                 プロフィールを更新する
             </Button>
-            <UpdateLoginUserForm show={showUpdateUserForm} onCancel={() => setUpdateUserFormShowing(false)} />
+            <UpdateLoginUserForm show={showUpdateUserForm} onHide={() => setUpdateUserFormShowing(false)} />
         </div>
     )
 }

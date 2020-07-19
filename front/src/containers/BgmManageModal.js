@@ -9,7 +9,7 @@ import SoundActions from '../modules/soundModule/SoundActions'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 
 const BgmManageModal = ({
-    onCancel,
+    onHide,
     show,
     ...props
 }) => {
@@ -21,7 +21,7 @@ const BgmManageModal = ({
         }
     }, [show])
     return (
-        <Modal show={show} onHide={onCancel} {...props}>
+        <Modal show={show} onHide={onHide} {...props}>
             <Modal.Header closeButton>
                 <h6><strong>BGM管理</strong></h6>
             </Modal.Header>
@@ -41,7 +41,7 @@ const BgmManageModal = ({
             <Modal.Footer>
                 <BgmUploadFormGroup />
                 <Button variant='secondary' onClick={()=>{
-                    onCancel()
+                    onHide()
                 }}>閉じる</Button>
             </Modal.Footer>
         </Modal>
@@ -55,7 +55,7 @@ const ShowButton = () => {
             <Button onClick={() => {
                 setShowModal(true)
             }}>BGM管理</Button>
-            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} scrollable/>
+            <BgmManageModal show={showModal} onHide={() => setShowModal(false)} scrollable/>
         </>
     )
 }
@@ -70,7 +70,7 @@ const ShowLink = ({
             <Link onClick={() => {
                 setShowModal(true)
             }} {...props}>BGM管理</Link>
-            <BgmManageModal show={showModal} onCancel={() => setShowModal(false)} scrollable/>
+            <BgmManageModal show={showModal} onHide={() => setShowModal(false)} scrollable/>
         </>
     )
 }

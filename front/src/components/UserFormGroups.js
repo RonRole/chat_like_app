@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Form, NavItem } from 'react-bootstrap'
 import Transparent from './Transparent'
+import ImageUploadFormGroup from './ImageUploadForm'
 
 const UserFormGroups = {}
 
@@ -78,55 +79,14 @@ const ProfileImageFormGroup = ({
     defaultValue,
     errorMessages
 }) => {
-    const [uploadFileImage, setUploadFileImage] = useState(defaultValue)
-    const [transParentProfile, setTransParentProfile] = useState(false)
-
     return (
-        <Form.Group controlId="signUpImageForm">
-            <Form.Control className='d-none' type="file" name="image" accept='image/*' isInvalid={errorMessages.length > 0} onChange={(e) => {
-                const fileReader = new FileReader()
-                const input = e.currentTarget.files[0]
-                fileReader.onload = e => {
-                    setUploadFileImage(e.target.result)
-                }
-                input ? fileReader.readAsDataURL(input) : setUploadFileImage(null)
-            }}/>
-            <Transparent>
-                <Transparent.Front transParent={transParentProfile}>
-                    <img
-                        style={{
-                            backgroundColor:uploadFileImage ? "white" : "",
-                        }}　 
-                        onClick={()=>document.getElementById("signUpImageForm").click()}
-                        onMouseOver={() => setTransParentProfile(true)}
-                        onMouseLeave={() => setTransParentProfile(false)}
-                        className="mb-2" 
-                        src={uploadFileImage} 
-                        width="200px" 
-                        height="200px"
-                    />
-                </Transparent.Front>
-                <Transparent.Back>
-                    <div className='d-flex align-items-center'
-                        style={{
-                            fontWeight:"bold", 
-                            color:"gray",
-                            height:'200px',
-                            width:'200px',
-                    }}>
-                        <div className = 'w-100'>
-                            プロフィール画像変更
-                        </div>
-                    </div>
-                </Transparent.Back>
-            </Transparent>
-
-            <Form.Control.Feedback type="invalid">
-                {errorMessages.filter(e=>e).map(errorMessage=>(
-                    <div>{errorMessage}</div>
-                ))}
-            </Form.Control.Feedback>
-        </Form.Group>
+        <ImageUploadFormGroup defaultValue={defaultValue} 
+                              errorMessages={errorMessages} 
+                              controlId='userProfileImage'
+                              imgClassName='h-px-200 w-px-200 opacity-under-mouse contain'
+                              backClassName='h-px-200 w-px-200'
+                              backText='プロフィール画像変更'
+        />
     )
 }
 

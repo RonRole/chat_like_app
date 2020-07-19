@@ -17,7 +17,7 @@ const MessageFormContainer = ({
     const startInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
         talkRoomId,
         userId : loginUser.id,
-        status : '✍️'
+        status : 'create'
     }))
     const finishInputting = () => dispatch(CurrentRoomStatusModule.actions.changeCurrentUserStatus({
         talkRoomId,

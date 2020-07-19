@@ -26,27 +26,31 @@ const getAllRooms = () => {
 
 
 const createTalkRoom = ({
-    title,
-    description,
-    authorId
+    ...talkRoomParams
 }) => {
+    const formData = Object.keys(talkRoomParams).reduce((formData, paramName) => {
+        formData.append(`talkroom[${paramName}]`, talkRoomParams[paramName])
+        return formData
+    }, new FormData());
     return DataAccessor.post({
         url       : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms`,
-        parameter : {
-            talkroom : {
-                title,
-                description,
-                author_id   :authorId
-            }
-        } 
+        parameter : formData,
+        headers : {
+            'Content-Type' : 'multipart/form-data'
+        }
     })
 }
 
-const updateTalkRoom = talkRoom => {
+const updateTalkRoom = (talkRoomParams) => {
+    const formData = Object.keys(talkRoomParams).reduce((formData, paramName) => {
+        formData.append(`talkroom[${paramName}]`, talkRoomParams[paramName])
+        return formData
+    }, new FormData());
     return DataAccessor.put({
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoom.id}`,
-        parameter : {
-            talkroom : talkRoom
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomParams.id}`,
+        parameter : formData,
+        headers : {
+            'Content-Type' : 'multipart/form-data'
         }
     })
 }
@@ -76,7 +80,12 @@ const addMemberToTalkRoom = ({
 export function* handleGetOwnRooms() {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
-        yield put(TalkRoomActions.setOwnRooms(result.data))
+        const talkRooms = Object.values(result.data).reduce((result, talkRoom) => {
+            talkRoom.user_ids = talkRoom.users.map(user=>user.id)
+            delete talkRoom.users
+            return [...result, talkRoom]
+        }, [])
+        yield put(TalkRoomActions.setOwnRooms(talkRooms))
     }
     if(result.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
@@ -84,23 +93,28 @@ export function* handleGetOwnRooms() {
 }
 
 export function* handleGetJoinedTalkRooms() {
-    const talkRoomResult = yield call(getJoinRooms)
-    if(talkRoomResult.isSuccess) {
-        yield put(TalkRoomActions.setJoinedRooms(talkRoomResult.data))
+    const result = yield call(getJoinRooms)
+    const talkRooms = Object.values(result.data).reduce((result, talkRoom) => {
+        talkRoom.user_ids = talkRoom.users.map(user=>user.id)
+        delete talkRoom.users
+        return [...result, talkRoom]
+    }, [])
+    if(result.isSuccess) {
+        yield put(TalkRoomActions.setJoinedRooms(talkRooms))
     }
-    if(talkRoomResult.isFail) {
+    if(result.isFail) {
         alert('トークルームを取得できませんでした')
     }
-    if(talkRoomResult.isError) {
-        yield put(ErrorCodeActions.execHandleError({errorResult:talkRoomResult.data}))
+    if(result.isError) {
+        yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
     }
 }
 
 export function* handleAddTalkRoom(action) {
+    const {type, authorId, ...params} = {...action}
     const addTalkRoomResult = yield call(createTalkRoom, {
-        title       : action.title,
-        description : action.description,
-        authorId    : action.authorId
+        author_id : authorId,
+        ...params
     })
     if(addTalkRoomResult.isSuccess) {
         alert(`「${addTalkRoomResult.data.title}」を追加しました`)
@@ -119,15 +133,14 @@ export function* handleAddTalkRoom(action) {
 }
 
 export function* handleUpdateTalkRoom(action) {
+    const {type, ...params} = {...action}
     const updateTalkRoomResult = yield call(updateTalkRoom, {
-        id : action.talkRoomId,
-        title : action.title,
-        description : action.description,
+        ...params
     })
     if(updateTalkRoomResult.isSuccess) {
         yield put(TalkRoomActions.updateTalkRoom({
-            talkRoomId : action.talkRoomId,
-            talkRoom : updateTalkRoomResult.data
+            talkRoomId : updateTalkRoomResult.data.id,
+            ...updateTalkRoomResult.data
         }))
     }
     if(updateTalkRoomResult.isFail) {

@@ -1,10 +1,7 @@
 /**
- * UserInviteFormの設計
- * ・ModalFormを使用する
- * ・ModalFormのBodyがメインになる
- * ・
+ *
  */
-import React from 'react'
+import React, { useState } from 'react'
 import UserFormGroups from '../components/UserFormGroups'
 import ModalForm from '../components/ModalForm'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,12 +10,12 @@ import UserModule from '../modules/userModule/UserModule'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import UserProfile from '../components/UserProfile'
-import { Button } from 'react-bootstrap'
+import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 const UserInviteForm = ({
     show,
     talkRoomId,
-    onCancel
+    onHide
 }) => {
     const dispatch = useDispatch()
     const users = useSelector(state=>state.users)
@@ -29,6 +26,7 @@ const UserInviteForm = ({
     return (
         <ModalForm 
             show={show}
+            onHide={onHide}
             onSubmit = {e => {
                 e.preventDefault()
                 dispatch(FormErrorModule.actions.clearErrorByName('userInviteForm'))
@@ -38,10 +36,10 @@ const UserInviteForm = ({
                 }))
             }}
         >
-            <ModalForm.Header>
+            <Modal.Header closeButton>
                 <strong>ユーザーを誘う</strong>
-            </ModalForm.Header>
-            <ModalForm.Body>
+            </Modal.Header>
+            <Modal.Body>
                 <UserFormGroups.IdFormGroup errorMessages={userInviteFormError.messages} required/>
                 <UserFormGroups.NameFormGroup errorMessages={userInviteFormError.messages} required/>
                 <TransitionGroup>
@@ -59,18 +57,43 @@ const UserInviteForm = ({
                         )
                     })}
                 </TransitionGroup>
-            </ModalForm.Body>
-            <ModalForm.Footer>
+            </Modal.Body>
+            <Modal.Footer>
                 <Button className="mr-2" type="submit">さがす</Button>
                 <Button variant="secondary" onClick={()=>{
-                    onCancel()
+                    onHide()
                     dispatch(UserModule.actions.clearSearchedUsers())
                     dispatch(FormErrorModule.actions.clearErrorByName("userInviteForm"))
                 }}>やめる</Button>
-            </ModalForm.Footer>
+            </Modal.Footer>
         </ModalForm>
     )
 }
+
+const ShowIcon = ({
+    talkRoomId,
+    className,
+    onClick = () =>{},
+    props
+}) => {
+    const [inviteUserModalShow, setUserInviteModalShow] = useState(false)
+    return (
+        <>
+            <OverlayTrigger overlay={<Tooltip>ユーザーを追加する</Tooltip>}>
+                <i className={`material-icons pointer opacity-under-mouse font-px-30 ${className}`} onClick={()=>{
+                    onClick()
+                    setUserInviteModalShow(true)
+                }} {...props}>person_add</i>
+            </OverlayTrigger>
+            <UserInviteForm talkRoomId={talkRoomId} show = {inviteUserModalShow} onHide = {() => {
+                    setUserInviteModalShow(false)
+                }}
+            />
+        </>
+    )
+}
+
+UserInviteForm.ShowIcon = ShowIcon
 
 export default UserInviteForm
 

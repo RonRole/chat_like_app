@@ -9,7 +9,7 @@ const Dot = ({
     ...props
 }) => {
     return (
-        <div className='opacity-under-mouse position-relative pointer bg-green h-10px w-10px rounded-circle' style={{
+        <div className='opacity-under-mouse position-relative pointer bg-green h-px-10 w-px-10 rounded-circle' style={{
             left,
             top
         }} {...props} />
@@ -108,7 +108,7 @@ const DotsDots = ({
     return (
         <Modal show={show} {...props} onHide={onHide} dialogClassName='w-500px'>
             <Modal.Header closeButton>{`${limitSeconds}秒以内に5回クリック!`}</Modal.Header>
-            <Modal.Body className='h-500px m-0 p-0'>
+            <Modal.Body className='h-px-500 m-0 p-0'>
                 <div className='h-100 w-100 position-absolute d-flex justify-content-center align-items-center'>
                     <Timer className={started ? 'd-none' : ''} limitSeconds={limitSeconds} onTimeUp={onHide} interrupt={!show} onClick={() => setStarted(true)} />
                 </div>

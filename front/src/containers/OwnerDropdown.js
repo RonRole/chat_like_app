@@ -3,35 +3,8 @@ import { Dropdown, Modal, ListGroup, Button } from "react-bootstrap"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import { useDispatch, useSelector } from "react-redux"
-import UserInviteFormNeo from "./UserInviteForm"
+import UserInviteForm from "./UserInviteForm"
 import RemoveTalkRoomMembersModal from "./RemoveTalkRoomMemberModal"
-
-
-const UpdateTalkRoomItem = ({talkRoomId}) => {
-    const [updateRoomModalShow, setUpdateRoomModalShow] = useState(false)
-    return (
-        <>
-            <Dropdown.Item style={{color:"orange"}} onClick={()=>setUpdateRoomModalShow(true)}>作り直す</Dropdown.Item>
-            <UpdateTalkRoomForm talkRoomId={talkRoomId} show = {updateRoomModalShow} onCancel = {() => {
-                    setUpdateRoomModalShow(false)
-                }}
-            />
-        </>
-    )
-}
-
-const UserInviteItem = ({talkRoomId}) => {
-    const [inviteUserModalShow, setUserInviteModalShow] = useState(false)
-    return (
-        <>
-            <Dropdown.Item style={{color:"blue"}} onClick={() => setUserInviteModalShow(true)}>誘う</Dropdown.Item>
-            <UserInviteFormNeo talkRoomId={talkRoomId} show = {inviteUserModalShow} onCancel = {() => {
-                    setUserInviteModalShow(false)
-                }}
-            />
-        </>
-    )
-}
 
 const DeleteTalkRoomItem = ({talkRoomId}) => {
     const talkRoomsStatus = useSelector(state=>state.talkRooms)
@@ -47,19 +20,6 @@ const DeleteTalkRoomItem = ({talkRoomId}) => {
     )
 }
 
-
-const RemoveUserForm = ({talkRoomId}) => {
-    const [removeUserModalShow, changeRemoveUserModalShow] = useState(false)
-    return (
-        <>
-            <Dropdown.Item onClick={() => changeRemoveUserModalShow(true)}>
-                別れる
-            </Dropdown.Item>
-            <RemoveTalkRoomMembersModal show={removeUserModalShow} talkRoomId={talkRoomId} onCancel={()=>changeRemoveUserModalShow(false)}/>
-        </>
-    )
-}
-
 /**
  * オーナー専用のドロップダウンメニュー
  */
@@ -72,9 +32,6 @@ const OwnerDropdown = ({
                 ルーム設定
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <UserInviteItem talkRoomId = {talkRoomId}/>
-                <RemoveUserForm talkRoomId = {talkRoomId} />
-                <UpdateTalkRoomItem talkRoomId = {talkRoomId}/>
                 <DeleteTalkRoomItem talkRoomId = {talkRoomId} />
             </Dropdown.Menu>
         </Dropdown>
