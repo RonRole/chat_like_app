@@ -27,11 +27,11 @@ const BgmManageModal = ({
             </Modal.Header>
             <Modal.Body>
                 <ListGroup>
-                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} wrapperClassName='mb-2 clear-exit-anim-children'>
+                    <SeparateForPagination itemLengthPerPage={5} WrapWith={TransitionGroup} wrapperClassName='mt-3 mb-2 clear-exit-anim-children'>
                         {Object.values(bgms).filter(bgm => bgm.id > 0).map((bgm,index) => 
                             <CSSTransition classNames='fade' timeout={100} key={index}>
                                 <ListGroup.Item>
-                                    <BgmUpdateItem bgm={bgm} className='d-none'/>
+                                    <BgmUpdateItem bgm={bgm} />
                                 </ListGroup.Item>
                             </CSSTransition>
                         )}

@@ -3,6 +3,7 @@ import { Modal, ListGroup, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import { Link } from 'react-router-dom'
+import OpacityIterate from '../style-components/OpacityIterate'
 /**
  * 送信するときの翻訳モードを選択するためのモーダル
  */
@@ -25,12 +26,13 @@ import { Link } from 'react-router-dom'
                 <ListGroup>
                     {Object.values(translateModes).map((translateMode, index) => (
                         <ListGroup.Item 
-                            className='pointer opacity-iterate'
                             key = {index}
                             onClick = {() => setTranslateMode(translateMode)} 
                             active={selectedTranslateMode === translateMode}
                         >
-                            {translateMode.modeName}
+                            <OpacityIterate>
+                                {translateMode.modeName}
+                            </OpacityIterate>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>

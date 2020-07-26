@@ -4,6 +4,7 @@ import TalkRoomFormGroups from "../components/TalkRoomFormGroups"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { useSelector, useDispatch } from "react-redux"
 import { Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap"
+import OpacityIterate from "../style-components/OpacityIterate"
 
 const UpdateTalkRoomForm = ({
     talkRoomId,
@@ -19,11 +20,16 @@ const UpdateTalkRoomForm = ({
     return (
         <ModalForm onHide={onHide} show={show} onSubmit = {(e) => {
             e.preventDefault()
-            dispatch(TalkRoomModule.actions.execUpdateTalkRoom({
+            const updateParams = {
                 id : talkRoomId,
                 title : e.currentTarget.title.value || updateTargetRoom.title,
                 description : e.currentTarget.description.value || updateTargetRoom.description,
-                image : e.currentTarget.image.files[0]
+            }
+            if(e.currentTarget.image.files[0]) {
+                updateParams.image = e.currentTarget.image.files[0]
+            }
+            dispatch(TalkRoomModule.actions.execUpdateTalkRoom({
+                ...updateParams
             }))
             onHide()
         }}>
@@ -45,19 +51,20 @@ const UpdateTalkRoomForm = ({
 
 const ShowIcon = ({
     talkRoomId,
-    className,
     onClick=()=>{},
     ...props
 }) => {
     const [updateRoomModalShow, setUpdateRoomModalShow] = useState(false)
     return (
         <>
-            <OverlayTrigger overlay={<Tooltip>トークルームを更新する</Tooltip>}>
-                <i className={`material-icons pointer opacity-under-mouse font-px-30 ${className}`} onClick={(e)=>{
-                    onClick(e)
-                    setUpdateRoomModalShow(true)
-                }} {...props}>subject</i>
-            </OverlayTrigger>
+            <OpacityIterate as='span' {...props}>
+                <OverlayTrigger overlay={<Tooltip>トークルームを更新する</Tooltip>}>
+                    <i className='material-icons' onClick={(e)=>{
+                        onClick(e)
+                        setUpdateRoomModalShow(true)
+                    }}>subject</i>
+                </OverlayTrigger>
+            </OpacityIterate>
             <UpdateTalkRoomForm talkRoomId={talkRoomId} show = {updateRoomModalShow} onHide = {() => {
                     setUpdateRoomModalShow(false)
                 }}

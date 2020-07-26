@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import { Form, NavItem } from 'react-bootstrap'
-import Transparent from './Transparent'
 import ImageUploadFormGroup from './ImageUploadForm'
 
 const UserFormGroups = {}
 
 UserFormGroups.IdFormGroup = ({
-    className = "",
-    style = "",
     defaultValue = "",
     errorMessages = [],
-    required = false
+    required = false,
+    ...props
 }) => {
     return (
-        <Form.Group controlId="idForm" className={className} style = {{...style}}>
+        <Form.Group controlId="idForm" {...props}>
             <Form.Label>ユーザーID</Form.Label>
             <Form.Control type="text" name="id" placeholder="ID" isInvalid={errorMessages.length > 0} defaultValue={defaultValue} required={required}/>
             <Form.Control.Feedback type="invalid">
@@ -24,14 +22,13 @@ UserFormGroups.IdFormGroup = ({
 }
 
 UserFormGroups.NameFormGroup = ({
-    className = "",
-    style = "",
     defaultValue = "",
     errorMessages = [],
-    required = false
+    required = false,
+    ...props
 }) => {
     return (
-        <Form.Group controlId="nameForm" className={className} style={{...style}}>
+        <Form.Group controlId="nameForm" {...props}>
             <Form.Label>名前</Form.Label>
             <Form.Control type="text" name="name" placeholder="名前" isInvalid={errorMessages.length > 0} defaultValue={defaultValue} required={required}/>
             <Form.Control.Feedback type="invalid">
@@ -42,13 +39,12 @@ UserFormGroups.NameFormGroup = ({
 }
 
 UserFormGroups.PasswordFormGroup = ({
-    className = "",
-    style = "",
     defaultValue = "",
     errorMessages = [],
+    ...props
 }) => {
     return (
-        <Form.Group controlId="passwordForm" className={className} style={{...style}}>
+        <Form.Group controlId="passwordForm" {...props}>
             <Form.Label>パスワード</Form.Label>
             <Form.Control type="password" name="password" placeholder="パスワード" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
@@ -59,13 +55,12 @@ UserFormGroups.PasswordFormGroup = ({
 }
 
 UserFormGroups.PasswordConfirmationFormGroup = ({
-    className = "",
-    style = "",
     defaultValue = "",
-    errorMessages = []
+    errorMessages = [],
+    ...props
 }) => {
     return (
-        <Form.Group controlId="passwordConfirmationForm" className={className} style={{...style}}>
+        <Form.Group controlId="passwordConfirmationForm" {...props}>
             <Form.Label>パスワード確認</Form.Label>
             <Form.Control type="password" name="password_confirmation" placeholder="もう一度パスワードを入力してください" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
@@ -75,6 +70,7 @@ UserFormGroups.PasswordConfirmationFormGroup = ({
     )
 }
 
+
 const ProfileImageFormGroup = ({
     defaultValue,
     errorMessages
@@ -83,9 +79,7 @@ const ProfileImageFormGroup = ({
         <ImageUploadFormGroup defaultValue={defaultValue} 
                               errorMessages={errorMessages} 
                               controlId='userProfileImage'
-                              imgClassName='h-px-200 w-px-200 opacity-under-mouse contain'
-                              backClassName='h-px-200 w-px-200'
-                              backText='プロフィール画像変更'
+                              placeholder='プロフィール画像'
         />
     )
 }

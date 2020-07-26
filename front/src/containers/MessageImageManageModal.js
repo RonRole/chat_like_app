@@ -4,9 +4,20 @@ import MessageImageList from './MessageImageList'
 import LargeImageModal from '../components/LargeImageModal'
 import MessageImageActions from '../modules/messageImageModule/MessageImageActions'
 import MessageImageUploadFormGroup from './MessageImageUploadFormGroup'
+import styled from 'styled-components'
 
 const { useSelector, useDispatch } = require("react-redux")
 const { Modal, Image, Button } = require("react-bootstrap")
+
+const LargeImageModalBody = styled(Modal.Body)`
+    display:flex;
+    justify-content:center;
+    overflow:auto;
+`
+
+const StyledImage = styled(Image)`
+    object-fit:contain;
+`
 
 const MessageImageManageModal = ({
     onCancel,
@@ -32,9 +43,9 @@ const MessageImageManageModal = ({
             </Modal.Footer>
             <LargeImageModal show={largeImageModalShow} largeImageSrc={largeImage.src.url} onCancel={()=>setLargeImageModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body className='d-flex justify-content-center overflow-auto'>
-                    <Image src={largeImage.src.url} fluid/>
-                </Modal.Body>
+                <LargeImageModalBody>
+                    <StyledImage src={largeImage.src.url} fluid/>
+                </LargeImageModalBody>
                 <Modal.Footer>
                     <Button variant='danger' onClick={() => {
                         dispatch(MessageImageActions.execDeleteMessageImage({

@@ -27,7 +27,7 @@ const DescriptionFormGroup = ({
     return (
         <Form.Group controlId="descriptionForm" {...props}>
             <Form.Label>説明</Form.Label>
-            <Form.Control type="text" name="description" placeholder="説明" isInvalid={errorMessages.length > 0} defaultValue={defaultValue}/>
+            <Form.Control as="textarea" name="description" placeholder="説明" isInvalid={errorMessages.length > 0} defaultValue={defaultValue}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages}
             </Form.Control.Feedback>
@@ -38,13 +38,15 @@ const DescriptionFormGroup = ({
 const ImageFormGroup = ({
     defaultValue,
     errorMessages = [],
+    height = '9rem',
+    width = '18rem'
 }) => {
     return (
         <ImageUploadFormGroup defaultValue={defaultValue} 
                         errorMessages={errorMessages}
                         controlId='talkRoomImageForm'
-                        imgClassName='w-px-200 h-px-150 contain opacity-under-mouse'
-                        backClassName='w-px-200 h-px-150'
+                        height={height}
+                        width={width}
         />
     )
 }

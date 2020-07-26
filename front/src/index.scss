@@ -8,7 +8,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  // background: linear-gradient(to bottom, rgba(200, 200, 200, 0.4) 0%, rgba(200, 200, 200, 0.4) 100%);
 }
 
 code {
@@ -51,7 +50,6 @@ input {
   grid-template-columns: 1fr;
   grid-template-rows: 1fr 1fr 1fr;
 }
-
 
 /*sidebar*/
 .sidebar {
@@ -173,16 +171,9 @@ input {
   }
 }
 
-#map {
-  height: 20vh;
-  .map {
-    max-width: 80%;
-    max-height: 20vh;
-  }
-}
-
 .h-user-thumb {
   height: #{$user-thumb-px};
+  align-items: ;
 }
 
 .w-user-width {
@@ -223,6 +214,13 @@ input {
     @include vw(#{$vw-val})
   }
 }
+
+@for $w-per-val from 0 through 100 {
+  .w-per-#{$w-per-val} {
+    width: percentage($w-per-val/100);
+  }
+}
+
 
 @mixin vh($vhnum) {
   height : #{$vhnum}vh;
@@ -265,6 +263,12 @@ input {
   }
 }
 
+@for $font-rem from 0 through 20 {
+  .font-rem-#{$font-rem} {
+    font-size : #{$font-rem/10}rem;
+  }
+}
+
 .h-100per-minus-user-thumb {
   height : calc(100% - #{$user-thumb-px})
 }
@@ -299,4 +303,8 @@ input {
 
 .cover {
   object-fit: cover;
+}
+
+.align-text-center {
+  text-align: center;
 }

@@ -3,12 +3,9 @@ class UsersController < ApplicationController
 
     skip_before_action :is_user_logged_in?, only:[:create]
 
-    # 自身が管理者・メンバーであるトークルーム全ての管理者・メンバーを取得する
     def index
-        @talk_rooms = 
-            current_user.own_rooms.includes(:author).includes(:users) +
-            current_user.talk_rooms.includes(:author).includes(:users)
-        render :json => @talk_rooms.flat_map(&:author).uniq + @talk_rooms.flat_map(&:users).uniq
+        @users = current_user.related_users
+        render :json => @users
     end
 
     def create
@@ -16,7 +13,6 @@ class UsersController < ApplicationController
         if(@user.save)
             render :json => @user
         else
-            puts @user.fail_result
             render :json => @user.fail_result
         end
     end

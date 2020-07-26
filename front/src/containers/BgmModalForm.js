@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import SoundActions from '../modules/soundModule/SoundActions'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import SeparateForPatination from '../components/SeparateForPagination'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import BgmUploadFormGroup from './BgmUploadFormGroup'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import OpacityIterate from '../style-components/OpacityIterate'
 
 
 const { useSelector, useDispatch } = require("react-redux")
@@ -16,6 +17,10 @@ const BgmModalFormTitle = () => {
     )
 }
 
+const BgmListGroup = styled(ListGroup)`
+    width : 100%;
+`
+
 const BgmList = ({
     talkRoomId
 }) => {
@@ -23,11 +28,11 @@ const BgmList = ({
     const dispatch = useDispatch()
     const bgms = useSelector(state => state.bgms)
     return (
-        <ListGroup className='w-100'>
+        <BgmListGroup>
             <SeparateForPatination itemLengthPerPage = {5} wrapperClassName='mb-2 clear-exit-anim-children' WrapWith={TransitionGroup}>
                 {Object.values(bgms).filter(bgm => bgm && bgm.id > 0).map((bgm, index) => (
                     <CSSTransition  key={index} classNames='fade' timeout={100}>
-                        <ListGroup.Item className='pointer opacity-iterate w-100' onClick={() => {
+                        <ListGroup.Item onClick={() => {
                             dispatch(CurrentRoomStatusModule.actions.addMessage({
                                 roomId : talkRoomId,
                                 messageClass : 'system',
@@ -45,11 +50,15 @@ const BgmList = ({
                                 bgmId : bgm.id,
                                 bgmSrcUrl : bgm.src.url
                             }))
-                        }}>{bgm.title}</ListGroup.Item>
+                        }}>
+                            <OpacityIterate>
+                                {bgm.title}
+                            </OpacityIterate>
+                        </ListGroup.Item>
                     </CSSTransition>
                 ))}
             </SeparateForPatination>
-        </ListGroup>
+        </BgmListGroup>
     )
 }
 

@@ -35,8 +35,8 @@ const SignUpForm = ({
             <UserFormGroups.NameFormGroup errorMessages = {signUpFormErrors.name}/>
             <UserFormGroups.PasswordFormGroup errorMessages = {signUpFormErrors.password} />
             <UserFormGroups.PasswordConfirmationFormGroup errorMessages = {signUpFormErrors.password_confirmation} />
-            <UserFormGroups.ProfileImageFormGroup errorMessages = {signUpFormErrors.image}/>
-            <Button variant="primary" type="submit">登録する</Button>
+            <UserFormGroups.ProfileImageFormGroup errorMessages={signUpFormErrors.image}/>
+            <Button variant="primary" type="submit" block>登録する</Button>
         </Form>
     )
 

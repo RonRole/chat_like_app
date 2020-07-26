@@ -5,6 +5,8 @@ import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap"
 import TalkRoomFormGroups from '../components/TalkRoomFormGroups'
 import FormErrorModule from '../modules/FormErrorModule/FormErrorModule'
+import OpacityIterate from '../style-components/OpacityIterate'
+import styled from 'styled-components'
 
 /**
  * 
@@ -55,20 +57,25 @@ const CreateTalkRoomForm = ({
     )
 }
 
+const SizedIcon = styled.i`
+    font-size:${props=>props.size || '2.5rem'};
+`
 const ShowIcon = ({
-    className,
+    size,
     ...props
 }) => {
     const [createModalShow, changeCreateModalShow] = useState(false);
     return (
-        <>
-            <OverlayTrigger overlay={<Tooltip>トークルームを追加する</Tooltip>}>
-                <i className={`material-icons pointer opacity-under-mouse font-px-30 ${className}`} onClick={()=>{
-                    changeCreateModalShow(true)
-                }} {...props}>add</i>
-            </OverlayTrigger>
+        <div {...props}>
+            <OpacityIterate>
+                <OverlayTrigger overlay={<Tooltip>トークルームを追加する</Tooltip>}>
+                    <SizedIcon size={size} className='material-icons' onClick={()=>{
+                        changeCreateModalShow(true)
+                    }}>add</SizedIcon>
+                </OverlayTrigger>
+            </OpacityIterate>
             <CreateTalkRoomForm show={createModalShow} onHide={()=>changeCreateModalShow(false)} />
-        </>
+        </div>
     )   
 }
 

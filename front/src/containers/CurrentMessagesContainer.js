@@ -4,6 +4,7 @@ import { Container} from 'react-bootstrap'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import UserMessage from '../components/UserMessage'
+import styled from 'styled-components'
 
 const MessageContainerLifeCycleEffect= ({
     talkRoomId
@@ -72,4 +73,7 @@ const MessagesContainer = ({
     )
 }
 
-export default MessagesContainer
+export default styled(MessagesContainer)`
+    height:${props=>props.height};
+    width:${props=>props.width};
+`

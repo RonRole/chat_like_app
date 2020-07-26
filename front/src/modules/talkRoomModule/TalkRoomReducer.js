@@ -15,7 +15,10 @@ initialState.default = {
     id: 0,
     title: '',
     updated_at: '',
-    user_ids: []
+    user_ids: [],
+    image: {
+        url : ''
+    }
 }
 
 const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)

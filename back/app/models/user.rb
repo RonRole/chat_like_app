@@ -23,6 +23,14 @@ class User < ApplicationRecord
     #デフォルトのself_idを設定する
     before_create :set_default_self_id
 
+    scope :room_author, -> (talk_room_id) {
+        joins(:own_rooms).where('talk_rooms.id=?', talk_room_id)
+    }
+
+    scope :room_member, -> (talk_room_id) {
+        joins(:talk_rooms).where('talk_rooms.id=?', talk_room_id)
+    }
+
     #受け取った文字列をハッシュにして返す
     class << self
         def digest(string)
@@ -43,6 +51,24 @@ class User < ApplicationRecord
         remember_token = User.new_token
         #ハッシュ化してデータベースに保存
         update_attribute(:remember_digest, User.digest(remember_token))
+    end
+
+    # 自身が管理者・メンバーであるトークルーム
+    def related_rooms
+        own_rooms = self.own_rooms.includes(:author).includes(:users)
+        join_rooms = self.talk_rooms.includes(:author).includes(:users)
+        own_rooms + join_rooms
+    end
+
+    # 自身が管理者・メンバーであるトークルーム全ての管理者とユーザー
+    def related_users
+        self.related_rooms.map(&:author) + self.related_rooms.map(&:users)
+    end
+
+    def join_rooms
+        own_rooms = self.own_rooms.includes(:author).includes(:users)
+        join_rooms = self.talk_rooms.includes(:author).includes(:users)
+        join_rooms - own_rooms
     end
 
     private

@@ -1,31 +1,38 @@
-import React from 'react'
-import { Image } from 'react-bootstrap'
+import React, { useRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import Transparent from '../components/Transparent'
+import Overlap from '../style-components/Overlap'
+import UserImage from './UserImage'
+import styled from 'styled-components'
+
+const StyledUserImage = styled(UserImage)`
+    opacity:${props=>props.opacity};
+    transition: opacity 0.5s ease
+`
 
 const CurrentUserStatusThumb = ({
     talkRoomId,
+    height,
+    width,
     userId
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
     const thisRoomStatus = currentRoomStatus[talkRoomId] || currentRoomStatus.default
-
-    const userStatus = useSelector(state=>state.users)
-    const user = userStatus[userId] || userStatus[0]
-
+    const currentUserStatus = thisRoomStatus.currentUserStatus[userId]
+    
+    const [userHasStatus, setUserStatus] = useState(false)
+    useEffect(() => {
+        setUserStatus(currentUserStatus)
+    }, [currentUserStatus])
+    
     return (
-        <Transparent>
-            <Transparent.Front transParent={thisRoomStatus.currentUserStatus[userId]}>
-                <Image  className="mr-2 mb-2 contain w-px-50 h-px-50" 
-                        src={user.image.thumb.url} 
-                        fluid
-                        roundedCircle
-                />
-            </Transparent.Front>
-            <Transparent.Back>
-                <i className='material-icons font-px-30'>{thisRoomStatus.currentUserStatus[userId]}</i>
-            </Transparent.Back>                                        
-        </Transparent>  
+        <Overlap height={height} width={width} alignItems='start' justifyContent='start'>
+            <Overlap.Item zIndex={0}>
+                <StyledUserImage height={height} width={width} userId={userId} opacity={userHasStatus ? '0.2' : ''} thumb roundedCircle/>
+            </Overlap.Item>
+            <Overlap.Item zIndex={1}>
+                <i className='material-icons'>{currentUserStatus}</i>
+            </Overlap.Item>
+        </Overlap>  
     )
 } 
 

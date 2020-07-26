@@ -20,6 +20,8 @@ Rails.application.routes.draw do
     collection do
       get 'own'
       get 'join'
+      post 'search_own'
+      post 'search_join'
     end
 
     resources :users, module:"talkroom_users", only: [:index, :create, :destroy] do

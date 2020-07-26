@@ -2,9 +2,10 @@ import { useDispatch, useSelector } from "react-redux"
 import ModalForm from "../components/ModalForm"
 import React, { useState } from 'react'
 import { ListGroup, Modal, Button, OverlayTrigger, Tooltip } from "react-bootstrap"
-import UserProfile from "../components/UserProfile"
+import UserProfile from "./UserProfile"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
+import OpacityIterate from "../style-components/OpacityIterate"
 
 const RemoveTalkRoomMembersModal = ({
     talkRoomId,
@@ -14,7 +15,6 @@ const RemoveTalkRoomMembersModal = ({
     const dispatch = useDispatch()
     const talkRooms=useSelector(state=>state.talkRooms)
     const thisRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
-    const users=useSelector(state=>state.users)
     const [selectedUserIds, addSelectedUserId] = useState({})
     return (
         <ModalForm show={show} onHide={onHide} onSubmit={(e) => {
@@ -32,13 +32,15 @@ const RemoveTalkRoomMembersModal = ({
                     <TransitionGroup>
                         {[...new Set(thisRoom.user_ids)].map((userId,index) => (
                             <CSSTransition key={index} timeout={200} classNames='fade'>
-                                <ListGroup.Item variant={selectedUserIds[userId]} className='pointer opacity-iterate' onClick={() => {
+                                <ListGroup.Item variant={selectedUserIds[userId]} onClick={() => {
                                     selectedUserIds[userId] ? delete selectedUserIds[userId] : selectedUserIds[userId] = 'danger'
                                     addSelectedUserId({
                                         ...selectedUserIds
                                     })
                                 }}>
-                                    <UserProfile user = {users[userId] || users[0]} without='self-id'/>
+                                    <OpacityIterate>
+                                        <UserProfile userId={userId} without='self-id' className='d-flex justify-content-center'/>
+                                    </OpacityIterate>
                                 </ListGroup.Item>
                             </CSSTransition>
                         ))}
@@ -66,7 +68,7 @@ const ShowIcon = ({
     return (
         <>
             <OverlayTrigger overlay={<Tooltip>ユーザーを削除する</Tooltip>}>
-                <i className={`material-icons pointer opacity-under-mouse font-px-30 ${className}`} onClick={(e)=>{
+                <i className={`material-icons pointer opacity-under-mouse ${className}`} onClick={(e)=>{
                     onClick(e)
                     changeRemoveUserModalShow(true)
                 }} {...props}>person_remove</i>

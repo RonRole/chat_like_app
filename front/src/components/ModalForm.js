@@ -33,29 +33,5 @@ ModalForm.defaultProps = {
     }
 }
 
-ModalForm.Header = ({
-    children = []
-}) => (
-    <Modal.Header>
-        {children}
-    </Modal.Header>
-)
-
-ModalForm.Body = ({
-    children = []
-}) => (
-    <Modal.Body>
-        {children}
-    </Modal.Body>
-)
-
-ModalForm.Footer = ({
-    children = []
-}) => (
-    <Modal.Footer>
-        {children}
-    </Modal.Footer>
-)
-
 export default ModalForm
     

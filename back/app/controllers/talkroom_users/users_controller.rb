@@ -2,19 +2,19 @@ class TalkroomUsers::UsersController < ApplicationController
     include TalkRoomHelper
     include UserHelper
     def author
-        @author = User.joins(:own_rooms).where('talk_rooms.id=?', params[:talk_room_id])
+        @author = User.room_author(params[:talk_room_id])
         render :json => @author
     end
 
     def member
-        @members = User.joins(:talk_rooms).where('talk_rooms.id=?', params[:talk_room_id])
+        @members = User.room_member(params[:talk_room_id])
         render :json => @members
     end
 
     def index
-        @author = User.joins(:own_rooms).where('talk_rooms.id=?', params[:talk_room_id])
-        @members = User.joins(:talk_rooms).where('talk_rooms.id=?', params[:talk_room_id])
-        render :json => [@author] + @members
+        @author = User.room_author(params[:talk_room_id])
+        @member = User.room_member(params[:talk_room_id])
+        render :json => @author + @member
     end
 
     def create

@@ -6,24 +6,29 @@ import LogoutButton from '../containers/LogoutButton'
 import BgmManageModal from '../containers/BgmManageModal'
 import Sidebar from './Sidebar'
 import MessageImageManageModal from '../containers/MessageImageManageModal'
-import DotsDots from './DotsDots'
+import Size from '../style-components/Size'
 
 const HomePage = ({
     ...props
 }) => {
     return (
         <div {...props}>
-            <Sidebar>
+            <Sidebar className='d-none d-md-flex'>
                 <BgmManageModal.ShowLink to='#' className='nav-link' />
                 <MessageImageManageModal.ShowLink to='#' className='nav-link'/>
-                <DotsDots.ShowLink to='#' className='nav-link' />
             </Sidebar>
-            <Container className="justify-content-center">
-                <LoginUserProfile className='mb-2' />
-                <UpdateLoginUserForm.ShowButton wrapperClassName='d-flex justify-content-center mb-2'/>
-                <div className='d-flex justify-content-center mb-2'>
-                    <LogoutButton>ログアウト</LogoutButton>
-                </div>
+            <Sidebar className='d-md-none' small>
+                <BgmManageModal.ShowLink to='#' className='nav-link' />
+                <MessageImageManageModal.ShowLink to='#' className='nav-link'/>
+            </Sidebar>
+            <Container className="d-flex justify-content-center">
+                <Size width='50%'>
+                    <LoginUserProfile className='justify-content-center' />
+                    <UpdateLoginUserForm.ShowButton wrapperClassName='d-flex justify-content-center mb-2' block/>
+                    <div className='d-flex justify-content-center mb-2'>
+                        <LogoutButton block>ログアウト</LogoutButton>
+                    </div>
+                </Size>
             </Container>
         </div>
     )

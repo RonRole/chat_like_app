@@ -1,14 +1,14 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import UserProfile from '../components/UserProfile'
+import UserProfile from './UserProfile'
 
 const LoginUserProfile = ({
     without,
-    className
+    ...props
 }) => {
     const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
-        <UserProfile className={className} user={loginUser} without={without} />
+        <UserProfile userId={loginUser.id} without={without} {...props}/>
     )   
 }
 LoginUserProfile.defaultProps = {

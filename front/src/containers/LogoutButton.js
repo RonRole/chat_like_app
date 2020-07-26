@@ -6,11 +6,12 @@ import { useDispatch } from 'react-redux'
 
 const LogoutButton = ({
     children,
-    history
+    history,
+    ...props
 }) => {
     const dispatch = useDispatch()
     return (
-        <Button variant='danger' onClick={() => dispatch(LogModule.actions.execLogout({history}))}>{children}</Button>
+        <Button variant='danger' onClick={() => dispatch(LogModule.actions.execLogout({history}))} {...props}>{children}</Button>
     )
 }
 

@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import SoundActions from '../modules/soundModule/SoundActions'
 import RenderByCondition from '../components/RenderByCondition'
+import OpacityIterate from '../style-components/OpacityIterate'
 
 const { OverlayTrigger, Tooltip, Form } = require("react-bootstrap")
 const { useEffect } = require("react")
@@ -15,7 +16,7 @@ const BgmLabel = ({
 }) => {
     return (
         <OverlayTrigger overlay={<Tooltip>クリックでタイトルを変更</Tooltip>}>
-            <div className='pointer opacity-iterate w-100' onClick={onClick} {...props}>{bgmTitle}</div>
+            <OpacityIterate {...props} onClick={onClick}>{bgmTitle}</OpacityIterate>
         </OverlayTrigger>
     )
 }
@@ -71,12 +72,12 @@ const BgmPlayCursor = ({
         <>
             <RenderByCondition renderCondition={isPlaying}>
                 <OverlayTrigger overlay={<Tooltip>終了</Tooltip>}>
-                    <div className='pointer w-100' {...props} onClick={stopBgm}>■</div>
+                    <OpacityIterate onClick={stopBgm}>■</OpacityIterate>
                 </OverlayTrigger>
             </RenderByCondition>
             <RenderByCondition renderCondition={!isPlaying}>
                 <OverlayTrigger overlay={<Tooltip>再生</Tooltip>}>
-                    <div className='pointer w-100' onClick={playBgm} {...props}>▶︎</div>
+                    <OpacityIterate onClick={playBgm} {...props}>▶︎</OpacityIterate>
                 </OverlayTrigger>
             </RenderByCondition>
         </>
@@ -91,13 +92,13 @@ const BgmDeleteIcon = ({
     const dispatch = useDispatch()
     return (
         <OverlayTrigger overlay={<Tooltip>削除</Tooltip>}>
-            <div className='pointer' onClick={()=>{
+            <OpacityIterate onClick={()=>{
                 if(window.confirm(`${bgmTitle}を削除しますか？`)) {
                     dispatch(SoundActions.execDeleteBgm({
                         bgmId
                     }))
                 }
-            }}>×</div>
+            }}>×</OpacityIterate>
         </OverlayTrigger>
     )
 }

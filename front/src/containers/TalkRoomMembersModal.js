@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Modal, ListGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import UserProfile from '../components/UserProfile'
+import UserProfile from './UserProfile'
 import { useSelector } from 'react-redux'
+import OpacityIterate from '../style-components/OpacityIterate'
 
 
 
@@ -12,7 +13,6 @@ const TalkRoomMembersModal = ({
 }) => {
     const talkRooms=useSelector(state=>state.talkRooms)
     const thisRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
-    const users=useSelector(state=>state.users)
     return (
         <Modal show={show}　onHide={onHide} scrollable>
             <Modal.Header closeButton>
@@ -22,11 +22,11 @@ const TalkRoomMembersModal = ({
                 <ListGroup variant='flush'>
                     <ListGroup.Item variant='success'>
                         <strong>管理者</strong>
-                        <UserProfile user={users[thisRoom.author_id] || users[0]} without='self_id'/>
+                        <UserProfile userId={thisRoom.author_id} without='self_id' className='d-flex'/>
                     </ListGroup.Item>
                     {[...new Set(thisRoom.user_ids)].map((userId,index) => (
                         <ListGroup.Item key={index}>
-                            <UserProfile user = {users[userId] || users[0]} without='self_id'/>
+                            <UserProfile userId={userId} without='self_id' className='d-flex'/>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>
@@ -57,11 +57,13 @@ const ShowIcon = ({
     const [showTalkRoomMemberModal, setShowTalkRoomMemberModal] = useState(false)
     return (
         <>
-            <OverlayTrigger overlay={<Tooltip>メンバー一覧</Tooltip>}>
-                <i className='material-icons pointer opacity-under-mouse font-px-30 text-primary' onClick={() => {
-                    setShowTalkRoomMemberModal(true)
-                }}>people</i>
-            </OverlayTrigger>
+            <OpacityIterate as='span'>
+                <OverlayTrigger overlay={<Tooltip>メンバー一覧</Tooltip>}>
+                    <i className='material-icons text-primary' onClick={() => {
+                        setShowTalkRoomMemberModal(true)
+                    }}>people</i>            
+                </OverlayTrigger>
+            </OpacityIterate>
             <TalkRoomMembersModal show={showTalkRoomMemberModal} talkRoomId={talkRoomId} onHide={() => setShowTalkRoomMemberModal(false)}/>
         </>
     )

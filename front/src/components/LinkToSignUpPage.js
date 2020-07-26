@@ -5,7 +5,7 @@ const LinkToSignUpPage = ({
     ...props
 }) => {
     return (
-        <Link to='/signup'>新規登録</Link>
+        <Link to='/signup' {...props}>新規登録</Link>
     )
 }
 

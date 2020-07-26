@@ -1,11 +1,14 @@
 import React from 'react'
 import { Container, Alert, Row, Col, Card } from 'react-bootstrap'
-import LoginFormWithRouter from './LoginPageForm'
-import LoginPageTitle from './LoginPageTitle'
 import WrapWithFlashMessage from './WrapWithFlashMessage'
-import LinkToSignUpPage from './LinkToSignUpPage'
 import ChatLikeAppLogoRow from './ChatLikeAppLogoPage'
-import ChatLikeAppLogo from './ChatLikeAppLogo'
+import styled from 'styled-components'
+import LoginForm from '../containers/LoginForm'
+import { withRouter, Link } from 'react-router-dom'
+
+const InlineBlock = styled.div`
+    display:inline-block;
+`
 
 const LoginFormCard = ({
     ...props
@@ -14,30 +17,33 @@ const LoginFormCard = ({
         <Card {...props}>
             <Card.Body>
                 <WrapWithFlashMessage>
-                    <LoginPageTitle />
-                    <LoginFormWithRouter className='mb-2' />
-                    <div className='d-flex justify-content-center'>
-                        初めての方はこちら：
-                        <LinkToSignUpPage />
-                    </div>
+                    <InlineBlock as='strong'>ログイン</InlineBlock>
+                    <LoginForm />
+                    <InlineBlock>初めての方はこちら：</InlineBlock>
+                    <InlineBlock><Link to='/signup' {...props}>新規登録</Link></InlineBlock>
                 </WrapWithFlashMessage>
             </Card.Body>
         </Card>
     )
 }
 
+const StyledChatLikeAppLogoRow = styled(ChatLikeAppLogoRow)`
+    height: 80vh;
+    align-items: center;
+`
+
 
 const LoginPage = () => {
     return (
         <Container>
-            <ChatLikeAppLogoRow className='vh-80 align-items-center'>
+            <StyledChatLikeAppLogoRow>
                 <Col xs={12} sm={{span:8, offset:2}} md={{span:6, offset:3}} lg={{span:4, offset:0}}>
                     <LoginFormCard />
                 </Col>
-            </ChatLikeAppLogoRow>
+            </StyledChatLikeAppLogoRow>
         </Container>
     )
 }
 
 
-export default LoginPage
+export default withRouter(LoginPage)

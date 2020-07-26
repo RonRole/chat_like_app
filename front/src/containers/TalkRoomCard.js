@@ -1,43 +1,76 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { Card, Button, Row, Dropdown, Image, OverlayTrigger, Tooltip } from "react-bootstrap"
 import {  useSelector, useDispatch } from "react-redux"
+
 import { withRouter } from "react-router-dom"
 import TalkRoomMembersModal from "./TalkRoomMembersModal"
 import CurrentRoomStatusActions from "../modules/currentRoomStatusModule/CurrentRoomStatusActions"
 import { TransitionGroup, CSSTransition } from "react-transition-group"
-import RenderByCondition from "../components/RenderByCondition"
+
 import FrontAddress from "../address"
 import UserInviteForm from "./UserInviteForm"
 import RemoveTalkRoomMembersModal from "./RemoveTalkRoomMemberModal"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
+import Visible from "../style-components/Visible"
+import StyledCard from "../style-components/StyledCard"
+import styled from "styled-components"
+import OpacityIterate from "../style-components/OpacityIterate"
+import FontSize from "../style-components/FontSize"
+import Size from "../style-components/Size"
+import UserImage from "./UserImage"
+
+
+const TalkRoomCardTitle = styled(Card.Title)`
+    margin:0;
+    height:${props=>props.height};
+    overflow:auto;
+    font-size:${props=>props.fontSize};
+`
+
+const TalkRoomCardText = styled(Card.Text)`
+    height:${props=>props.height};
+    overflow:auto;
+    font-size:${props=>props.fontSize}
+`
+
+const CardTextLine = styled.p`
+    margin : 0;
+    padding : 0;
+`
 
 const TalkRoomParams = ({
-    talkRoomId
+    talkRoomId,
+    ...props
 }) => {
     const talkRoomsStatus = useSelector(state=>state.talkRooms)
     const thisRoom = talkRoomsStatus.joinRooms[talkRoomId] || talkRoomsStatus.ownRooms[talkRoomId] || talkRoomsStatus.default
     return (
-        <div className="mb-2 w-100 overflow-auto">
-            <Card.Title className='mb-0'><strong>{thisRoom.title}</strong></Card.Title>
-            <Card.Text>{thisRoom.description}</Card.Text>
-        </div>
+        <Size {...props}>
+            <TalkRoomCardTitle height='1.5rem' fontSize='.9rem'><strong>{thisRoom.title}</strong></TalkRoomCardTitle>
+            <TalkRoomCardText as='div' height='calc(100% - 1.5rem)' fontSize='0.8rem'>
+                {thisRoom.description.split('\n').map((textline,index)=> {
+                    return <CardTextLine key={index}>{textline}</CardTextLine>
+                })}
+            </TalkRoomCardText>
+        </Size>
     )
 }
 
 const CurrentUserThumbs = ({
-    talkRoomId
+    talkRoomId,
+    size,
+    ...props
 }) => {
     const currentRoomStatus = useSelector(state=>state.currentRoomStatus)
-    const userStatus = useSelector(state=>state.users)
     return (
-        <TransitionGroup className='d-flex h-px-50'>
+        <Size height={size} {...props}>
             {(currentRoomStatus[talkRoomId] || currentRoomStatus.default).currentUserIds.map((userId,index) => (
                 <CSSTransition key={index} classNames='fade' timeout={100}>
-                    <Image className='user-thumb-size' src={(userStatus[userId] || userStatus[0]).image.thumb.url}  roundedCircle/>
+                    <UserImage userId={userId} height='100%' width={size} roundedCircle thumb/>
                 </CSSTransition>
             ))}
-        </TransitionGroup>
+        </Size>
     )
 }
 
@@ -46,11 +79,13 @@ const IntoTalkRoomIconComp = ({
     history
 }) => {
     return (
-        <OverlayTrigger overlay={<Tooltip>入室</Tooltip>}>
-            <i className='material-icons pointer opacity-under-mouse font-px-30 text-primary' onClick={()=>{
-                history.push(`${FrontAddress.talk_rooms}/${talkRoomId}`)
-            }}>sensor_door</i>
-        </OverlayTrigger>
+        <OpacityIterate as='span'>
+            <OverlayTrigger overlay={<Tooltip>入室</Tooltip>}>
+                <i className='material-icons text-primary' onClick={()=>{
+                    history.push(`${FrontAddress.talk_rooms}/${talkRoomId}`)
+                }}>sensor_door</i>
+            </OverlayTrigger>
+        </OpacityIterate>
     )
 }
 
@@ -65,7 +100,7 @@ const DeleteTalkRoomIcon = ({
     const dispatch = useDispatch()
     return (
         <OverlayTrigger overlay={<Tooltip>トークルームを削除する</Tooltip>}>
-            <i className={`material-icons pointer opacity-under-mouse font-px-30 text-primary ${className}`} onClick={()=>{
+            <i className={`material-icons pointer opacity-under-mouse text-primary ${className}`} onClick={()=>{
                 if(!window.confirm(`${thisRoom.title}を削除しますか?`)){
                     return
                 }
@@ -77,46 +112,69 @@ const DeleteTalkRoomIcon = ({
 
 const TalkRoomCardImgComp = ({
     talkRoomId,
-    history
+    history,
+    ...props
 }) => {
     const talkRoomsStatus = useSelector(state => state.talkRooms)
     const thisRoom = talkRoomsStatus.joinRooms[talkRoomId] || talkRoomsStatus.ownRooms[talkRoomId] || talkRoomsStatus.default
     return (
-        <Card.Img className='h-px-150 contain opacity-under-mouse pointer' src={(thisRoom.image || {}).url} onClick={() => {
+        <Card.Img src={(thisRoom.image || {}).url} onClick={() => {
             history.push(`${FrontAddress.talk_rooms}/${talkRoomId}`)
-        }}/>
+        }} {...props}/>
     )
 }
 
 const TalkRoomCardImg = withRouter(TalkRoomCardImgComp)
 
+const StyledTalkRoomCardImg = styled(TalkRoomCardImg)`
+    object-fit: contain;
+    height:${props=>props.height};
+    transition:opacity 0.2s ease;
+    cursor: pointer;
+    :hover {
+        opacity:0.5;
+        transition:opacity 0.2s ease;
+    }
+`
+
+const StyledCardBody = styled(Card.Body)`
+    height:${props=>props.height};
+`
 
 const TalkRoomCard = ({
     talkRoomId,
-    readOnly
+    height,
+    readOnly,
+    ...props
 }) => {
+    const cardBodyRef = useRef()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(CurrentRoomStatusActions.execRefreshCurrentRoomUserIds({
             talkRoomId
         }))
     },[])
+
     return (
-        <Card>
-            <TalkRoomCardImg talkRoomId={talkRoomId} />
-            <Card.Body>
-                <CurrentUserThumbs talkRoomId={talkRoomId} />
-                <TalkRoomParams talkRoomId={talkRoomId} />
-                <IntoTalkRoomIcon　talkRoomId={talkRoomId} />
-                <TalkRoomMembersModal.ShowIcon talkRoomId={talkRoomId}/>
-                <RenderByCondition renderCondition={!readOnly} WrapWith={'span'}>
-                    <UserInviteForm.ShowIcon className='text-success' talkRoomId={talkRoomId} />
-                    <RemoveTalkRoomMembersModal.ShowIcon className='text-success' talkRoomId={talkRoomId} />
-                    <UpdateTalkRoomForm.ShowIcon className='text-success' talkRoomId={talkRoomId} />
-                    <DeleteTalkRoomIcon className='text-danger' talkRoomId={talkRoomId} />
-                </RenderByCondition>
-            </Card.Body>
-        </Card>
+        <StyledCard size={20} {...props}>
+            <StyledTalkRoomCardImg talkRoomId={talkRoomId} height='40%'/>
+            <StyledCardBody ref={cardBodyRef} height='60%'>
+                <CurrentUserThumbs size='25%' talkRoomId={talkRoomId} className='d-flex overflow-auto'/>
+                <TalkRoomParams talkRoomId={talkRoomId} height='65%'/>
+                <Size height='15%'>
+                    <FontSize as='span' size='1.5rem'>
+                        <IntoTalkRoomIcon　talkRoomId={talkRoomId} />
+                        <TalkRoomMembersModal.ShowIcon talkRoomId={talkRoomId}/>
+                        <Visible as='span' aria-hidden={readOnly}>
+                                <UserInviteForm.ShowIcon className='text-success' talkRoomId={talkRoomId} />
+                                <RemoveTalkRoomMembersModal.ShowIcon className='text-success' talkRoomId={talkRoomId} />
+                                <UpdateTalkRoomForm.ShowIcon className='text-success' talkRoomId={talkRoomId} />
+                                <DeleteTalkRoomIcon className='text-danger' talkRoomId={talkRoomId} />                    
+                        </Visible>
+                    </FontSize>
+                </Size>
+            </StyledCardBody>
+        </StyledCard>
     )
 }
 

@@ -215,6 +215,32 @@ export function* handleRemoveUsersFromTalkRoom(action) {
     }
 }
 
+export function* handleSearchOwnRooms(action) {
+    const {type, q} = {...action}
+    const result = yield call(DataAccessor.post, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/search_own`,
+        parameter : {
+            q
+        }
+    })
+    if(result.isSuccess) {
+        yield put(TalkRoomActions.setOwnRooms(result.data))
+    }
+}
+
+export function* handleSearchJoinRooms(action) {
+    const {type, q} = {...action}
+    const result = yield call(DataAccessor.post, {
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/search_join`,
+        parameter : {
+            q
+        }
+    })
+    if(result.isSuccess) {
+        yield put(TalkRoomActions.setJoinedRooms(result.data))
+    }
+}
+
 
 
 

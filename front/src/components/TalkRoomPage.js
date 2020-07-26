@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { Container, Button } from 'react-bootstrap'
+import React, { useState, useRef } from 'react'
+import { Container, Button, Form } from 'react-bootstrap'
 import CreateTalkRoomForm from '../containers/CreateTalkRoomForm'
 import TalkRoomsArea from '../containers/TalkRoomsArea'
 import TalkRoomAreaLabel from '../containers/TalkRoomAreaLabel'
 import RenderByCondition from './RenderByCondition'
+import TalkRoomSearchForm from '../containers/TalkRoomSearchForm'
 
 
 const TalkRoomPage = ({
@@ -27,8 +28,12 @@ const Own = ({
     return (
         <RenderByCondition renderCondition={renderCondition}>
             <TalkRoomAreaLabel.OwnRoomLabel />
-            <CreateTalkRoomForm.ShowIcon className='text-success' />
-            <TalkRoomsArea.OwnRoomsArea className='d-md-none' itemLengthPerPage={2} />
+            <div className='d-flex'>
+                <CreateTalkRoomForm.ShowIcon size='2.0rem' className='text-success' />    
+                <TalkRoomSearchForm.Own className='d-flex' />
+            </div>
+            <TalkRoomsArea.OwnRoomsArea className='d-sm-none' itemLengthPerPage={1} />
+            <TalkRoomsArea.OwnRoomsArea className='d-none d-sm-block d-md-none' itemLengthPerPage={2} />
             <TalkRoomsArea.OwnRoomsArea className='d-none d-md-block d-lg-none' itemLengthPerPage={3} />
             <TalkRoomsArea.OwnRoomsArea className='d-none d-lg-block' itemLengthPerPage={4} />
             <CreateTalkRoomForm show={createModalShow} onHide ={()=> {changeCreateModalShow(false)}}/>
@@ -43,7 +48,9 @@ const Join = ({
     return (
         <RenderByCondition renderCondition={renderCondition}>
             <TalkRoomAreaLabel.JoinRoomLabel />
-            <TalkRoomsArea.JoinRoomsArea className='d-md-none' itemLengthPerPage={2} />
+            <TalkRoomSearchForm.Join className='d-flex' />
+            <TalkRoomsArea.JoinRoomsArea className='d-sm-none' itemLengthPerPage={1} />
+            <TalkRoomsArea.JoinRoomsArea className='d-none d-sm-block d-md-none' itemLengthPerPage={2} />
             <TalkRoomsArea.JoinRoomsArea className='d-none d-md-block d-lg-none' itemLengthPerPage={3} />
             <TalkRoomsArea.JoinRoomsArea className='d-none d-lg-block' itemLengthPerPage={4} />
         </RenderByCondition>

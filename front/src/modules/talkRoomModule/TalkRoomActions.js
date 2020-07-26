@@ -6,6 +6,9 @@ export const TalkRoomActionTypes = {
     EXEC_DELETE_ROOM          : "EXEC_DELETE_ROOM",
     EXEC_UPDATE_ROOM          : "EXEC_UPDATE_ROOM",
 
+    EXEC_SEARCH_JOIN_ROOMS    : "EXEC_SEARCH_JOIN_ROOMS",
+    EXEC_SEARCH_OWN_ROOMS     : "EXEC_SEARCH_OWN_ROOMS",
+
     SET_OWN_ROOMS          : "SET_OWN_ROOMS",
     SET_JOINED_ROOMS       : "SET_JOINED_ROOMS",
     ADD_TALK_ROOM          : "ADD_TALK_ROOM",
@@ -98,6 +101,24 @@ export default {
         return {
             type : TalkRoomActionTypes.EXEC_GET_TALKROOM_MEMBERS,
             talkRoomId,
+        }
+    },
+
+    execSearchOwnRooms:({
+        q
+    }) => {
+        return {
+            type : TalkRoomActionTypes.EXEC_SEARCH_OWN_ROOMS,
+            q
+        }
+    },
+
+    execSearchJoinRooms:({
+        q
+    }) => {
+        return {
+            type : TalkRoomActionTypes.EXEC_SEARCH_JOIN_ROOMS,
+            q
         }
     },
 

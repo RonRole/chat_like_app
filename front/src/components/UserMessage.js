@@ -1,25 +1,30 @@
-import { Image, Alert, Modal, Button } from "react-bootstrap";
+import { Image, Alert, Modal, Button, Col } from "react-bootstrap";
 import React, { useState } from 'react'
 import LargeImageModal from "./LargeImageModal";
+import styled from "styled-components";
+import UserHeader from "./UserHeader";
+
+const CenterTextAlert = styled(Alert)`
+    text-align: center;
+`
 
 const MessageTypes = {}
-
 MessageTypes.text = {}
 MessageTypes.text.system = ({
     text,
 }) => (
-    <Alert variant='warning' className='col-sm-6 offset-sm-3 text-center'>{text}</Alert>
+    <CenterTextAlert variant='warning' className='col-sm-6 offset-sm-3'>{text}</CenterTextAlert>
 )
 
 MessageTypes.text.joinRoom = ({
     text,
 }) => (
-    <Alert variant='primary' className='col-sm-6 offset-sm-3 text-center'>{text}</Alert>
+    <CenterTextAlert variant='primary' className='col-sm-6 offset-sm-3'>{text}</CenterTextAlert>
 )
 MessageTypes.text.leaveRoom = ({
     text
 }) => (
-    <Alert variant='danger' className='col-sm-6 offset-sm-3 text-center'>{text}</Alert>
+    <CenterTextAlert variant='danger' className='col-sm-6 offset-sm-3'>{text}</CenterTextAlert>
 )
 MessageTypes.text.myMessage = ({
     userImageUrl,
@@ -27,7 +32,7 @@ MessageTypes.text.myMessage = ({
     text
 }) => (
     <>
-        <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+        <UserHeader userImageUrl={userImageUrl} userName={userName} />
         <Alert variant='success' className='col-sm-6'>{text}</Alert>
     </>
 )
@@ -37,14 +42,30 @@ MessageTypes.text.receiveMessage = ({
     text
 }) => (
     <>
-        <div className='offset-sm-6'>
-            <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
-        </div>
+        <Col sm={{offset:6}}>
+            <UserHeader userImageUrl={userImageUrl} userName={userName} />
+         </Col>
         <Alert variant='secondary' className='col-sm-6 offset-sm-6'>{text}</Alert>
     </>
 )
 
 MessageTypes.image = {}
+
+const AppliedImage = styled(Image)`
+    opacity:1.0;
+    transition: all 0.2s;
+    cursor:pointer;
+    :hover {
+        opacity:0.5;
+        transition: all 0.2s;
+    }
+`
+
+const LargeImageWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    overflow: auto;
+`
 const MessageImage = ({
     userImageUrl,
     userName,
@@ -56,22 +77,20 @@ const MessageImage = ({
         <>
             <div>
                 <div>
-                    <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+                    <UserHeader userImageUrl={userImageUrl} userName={userName} />
                 </div>
-                <Image src={text} className='mb-2 pointer opacity-under-mouse' onClick={()=>setModalShow(true)}/>
+                <AppliedImage src={text} className='mb-2' onClick={()=>setModalShow(true)}/>
             </div>
             <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
-                <div className='d-flex justify-content-center overflow-auto'>
+                <LargeImageWrapper>
                     <Image src={largeImageSrc} fluid/>
-                </div>
+                </LargeImageWrapper>
             </LargeImageModal>
         </>
     )
 }
 MessageTypes.image.messageImage = MessageImage
-
-
 
 const ReceiveMessageImage = ({
     userImageUrl,
@@ -81,12 +100,12 @@ const ReceiveMessageImage = ({
 }) => {
     const [modalShow, setModalShow] = useState(false)
     return (
-        <div className='d-flex justify-content-end offset-sm-6 col-sm-6'>
+        <div className='offset-sm-6 col-sm-6'>
             <div>
                 <div>
-                    <Image src={userImageUrl} roundedCircle/><strong className="ml-2">{userName}</strong>
+                    <UserHeader userImageUrl={userImageUrl} userName={userName} />
                 </div>
-                <Image src={text} className='mb-2 pointer opacity-under-mouse' onClick={()=>setModalShow(true)}/>
+                <AppliedImage src={text} onClick={()=>setModalShow(true)}/>
             </div>
             <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
@@ -97,7 +116,10 @@ const ReceiveMessageImage = ({
         </div>
     )
 }
-MessageTypes.image.receiveMessageImage = ReceiveMessageImage
+MessageTypes.image.receiveMessageImage = styled(ReceiveMessageImage)`
+    display: flex;
+    justify-content: center;
+`
 
 /**
  * 
