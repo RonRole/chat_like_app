@@ -6,6 +6,7 @@ import Overlap from '../style-components/Overlap'
 
 const StyledImage = styled.img`
     padding: 1px;
+    background-color:${props=>props.backgroundColor};
     object-fit : contain;
     transition: opacity 0.1s ease;
     height:${props=>props.height};
@@ -25,7 +26,6 @@ const PlaceHolder = styled.div`
 const StyledOverlap = styled(Overlap)`
     cursor:pointer;
     transition: opacity 0.1s ease;
-    border: 1px solid gray;
     &:hover {
         opacity:0.5;
         transition: opacity 0.1s ease;
@@ -57,7 +57,7 @@ const ImageUploadFormGroup = ({
             </Visible>
             <StyledOverlap align-items='center' justify-content='center' height={height} width={width} onClick={()=>formRef.current.click()} >
                 <Overlap.Item zIndex={1}>
-                    <StyledImage src={uploadFileImage} height={height} width={width} />
+                    <StyledImage src={uploadFileImage} height={height} width={width} backgroundColor={uploadFileImage ? 'white' : ''} />
                 </Overlap.Item>
                 <Overlap.Item zIndex={0}>
                     <PlaceHolder>{placeholder}</PlaceHolder>

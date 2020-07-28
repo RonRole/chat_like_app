@@ -32,16 +32,16 @@ const RemoveTalkRoomMembersModal = ({
                     <TransitionGroup>
                         {[...new Set(thisRoom.user_ids)].map((userId,index) => (
                             <CSSTransition key={index} timeout={200} classNames='fade'>
-                                <ListGroup.Item variant={selectedUserIds[userId]} onClick={() => {
-                                    selectedUserIds[userId] ? delete selectedUserIds[userId] : selectedUserIds[userId] = 'danger'
-                                    addSelectedUserId({
-                                        ...selectedUserIds
-                                    })
-                                }}>
-                                    <OpacityIterate>
-                                        <UserProfile userId={userId} without='self-id' className='d-flex justify-content-center'/>
-                                    </OpacityIterate>
-                                </ListGroup.Item>
+                                <OpacityIterate>
+                                    <ListGroup.Item variant={selectedUserIds[userId]} onClick={() => {
+                                        selectedUserIds[userId] ? delete selectedUserIds[userId] : selectedUserIds[userId] = 'danger'
+                                        addSelectedUserId({
+                                            ...selectedUserIds
+                                        })
+                                    }}>
+                                        <UserProfile userId={userId} without='self-id' className='d-flex justify-content-center'/>    
+                                    </ListGroup.Item>
+                                </OpacityIterate>
                             </CSSTransition>
                         ))}
                     </TransitionGroup>
@@ -60,19 +60,20 @@ const RemoveTalkRoomMembersModal = ({
 
 const ShowIcon = ({
     talkRoomId,
-    className,
     onClick=()=>{},
     ...props
 }) => {
     const [removeUserModalShow, changeRemoveUserModalShow] = useState(false)
     return (
         <>
-            <OverlayTrigger overlay={<Tooltip>ユーザーを削除する</Tooltip>}>
-                <i className={`material-icons pointer opacity-under-mouse ${className}`} onClick={(e)=>{
-                    onClick(e)
-                    changeRemoveUserModalShow(true)
-                }} {...props}>person_remove</i>
-            </OverlayTrigger>
+            <OpacityIterate as='span' {...props}>
+                <OverlayTrigger overlay={<Tooltip>ユーザーを削除する</Tooltip>}>
+                    <i className='material-icons' onClick={(e)=>{
+                        onClick(e)
+                        changeRemoveUserModalShow(true)
+                    }}>person_remove</i>
+                </OverlayTrigger>
+            </OpacityIterate>
             <RemoveTalkRoomMembersModal show={removeUserModalShow} talkRoomId={talkRoomId} onHide={()=>changeRemoveUserModalShow(false)}/>
         </>
     )

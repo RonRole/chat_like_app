@@ -25,10 +25,10 @@ const CurrentUsersMapContainer = ({
         <Container className='mb-2' {...props}>
             {[thisRoomStatus.currentUserIds].flat().map((userId,index) => {
                 return (
-                    <>
+                    <div key={index}>
                         <UserHeader userImageUrl={(users[userId] || users[0]).image.thumb.url} userName={(users[userId] || users[0]).name} />
                         <GoogleMap position={(userPositions[userId] || userPositions.default)} height='20vh' />
-                    </>
+                    </div>
                 )
             })}
         </Container>

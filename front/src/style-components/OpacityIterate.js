@@ -3,13 +3,13 @@ import styled from "styled-components";
 
 const OpacityIterate = styled.div`
     cursor: pointer;
-    @keyframes opaticy-iterate {
+    @keyframes opacity-iterate {
         0% {
             opacity: 1.0;
         }
 
         50% {
-            opacity: 0.5;
+            opacity: 0.2;
         }
 
         100% {

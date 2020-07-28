@@ -13,7 +13,6 @@ import RemoveTalkRoomMembersModal from "./RemoveTalkRoomMemberModal"
 import UpdateTalkRoomForm from "./UpdateTalkRoomForm"
 import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import Visible from "../style-components/Visible"
-import StyledCard from "../style-components/StyledCard"
 import styled from "styled-components"
 import OpacityIterate from "../style-components/OpacityIterate"
 import FontSize from "../style-components/FontSize"
@@ -93,20 +92,22 @@ const IntoTalkRoomIcon = withRouter(IntoTalkRoomIconComp)
 
 const DeleteTalkRoomIcon = ({
     talkRoomId,
-    className,
+    ...props
 }) => {
     const talkRoomsStatus = useSelector(state=>state.talkRooms)
     const thisRoom = talkRoomsStatus.joinRooms[talkRoomId] || talkRoomsStatus.ownRooms[talkRoomId] || talkRoomsStatus.default
     const dispatch = useDispatch()
     return (
-        <OverlayTrigger overlay={<Tooltip>トークルームを削除する</Tooltip>}>
-            <i className={`material-icons pointer opacity-under-mouse text-primary ${className}`} onClick={()=>{
-                if(!window.confirm(`${thisRoom.title}を削除しますか?`)){
-                    return
-                }
-                dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
-            }}>delete</i>
-        </OverlayTrigger>
+        <OpacityIterate as='span' {...props}>
+            <OverlayTrigger overlay={<Tooltip>トークルームを削除する</Tooltip>}>
+                <i className='material-icons' onClick={()=>{
+                    if(!window.confirm(`${thisRoom.title}を削除しますか?`)){
+                        return
+                    }
+                    dispatch(TalkRoomModule.actions.execDeleteTalkRoom(talkRoomId))
+                }}>delete</i>
+            </OverlayTrigger>
+        </OpacityIterate>
     )
 }
 
@@ -140,6 +141,17 @@ const StyledTalkRoomCardImg = styled(TalkRoomCardImg)`
 const StyledCardBody = styled(Card.Body)`
     height:${props=>props.height};
 `
+
+const StyledCard = styled(Card)`
+    height:${props => props.size}rem;
+    transition: all 0.2s;
+    &:hover {
+        border-color : orange;
+        transform: scale(1.1, 1.1);
+        transition: all 0.2s;
+    }
+`
+
 
 const TalkRoomCard = ({
     talkRoomId,

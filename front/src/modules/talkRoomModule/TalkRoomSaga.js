@@ -24,14 +24,20 @@ const getAllRooms = () => {
     })
 }
 
+const createTalkRoomFormData = ({
+    ...params
+}) => {
+    return Object.keys(params).reduce((formData, paramName) => {
+        formData.append(`talkroom[${paramName}]`, params[paramName])
+        return formData
+    }, new FormData())
+}
+
 
 const createTalkRoom = ({
     ...talkRoomParams
 }) => {
-    const formData = Object.keys(talkRoomParams).reduce((formData, paramName) => {
-        formData.append(`talkroom[${paramName}]`, talkRoomParams[paramName])
-        return formData
-    }, new FormData());
+    const formData = createTalkRoomFormData(talkRoomParams)
     return DataAccessor.post({
         url       : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms`,
         parameter : formData,
@@ -41,11 +47,10 @@ const createTalkRoom = ({
     })
 }
 
-const updateTalkRoom = (talkRoomParams) => {
-    const formData = Object.keys(talkRoomParams).reduce((formData, paramName) => {
-        formData.append(`talkroom[${paramName}]`, talkRoomParams[paramName])
-        return formData
-    }, new FormData());
+const updateTalkRoom = ({
+    ...talkRoomParams
+}) => {
+    const formData = createTalkRoomFormData(talkRoomParams)
     return DataAccessor.put({
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomParams.id}`,
         parameter : formData,

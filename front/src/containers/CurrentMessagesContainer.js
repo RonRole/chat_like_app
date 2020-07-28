@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import { Container} from 'react-bootstrap'
-import { TransitionGroup, CSSTransition } from 'react-transition-group'
+import { Container, Fade} from 'react-bootstrap'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import UserMessage from '../components/UserMessage'
 import styled from 'styled-components'
+import FadeIn from '../style-components/FadeIn'
+
 
 const MessageContainerLifeCycleEffect= ({
     talkRoomId
@@ -54,26 +55,27 @@ const MessagesContainer = ({
     MessageContainerLifeCycleEffect({talkRoomId})
     return (
         <Container ref={messageArea} {...props}>
-            <TransitionGroup>
-                {[messages].flat().filter(message=>message).map((message,index) => {
-                    const userId = message.userId || 0
-                    const userMessageProps = {
-                        userName : (users[userId] || users.default).name,
-                        userImageUrl : (users[userId] || users.default).image.thumb.url,
-                        ...message
-                    }
-                    return (
-                        <CSSTransition key={index} timeout= {100} classNames="fade">
-                            <UserMessage {...userMessageProps}/>
-                        </CSSTransition>
-                    )
-                })}
-            </TransitionGroup>
+            {[messages].flat().filter(message=>message).map((message,index) => {
+                const userId = message.userId || 0
+                const userMessageProps = {
+                    userName : (users[userId] || users.default).name,
+                    userImageUrl : (users[userId] || users.default).image.thumb.url,
+                    ...message
+                }
+                return (
+                    <FadeIn key={index} duration={0.2}>
+                        <UserMessage {...userMessageProps}/>
+                    </FadeIn>
+                )
+            })}
         </Container>
     )
 }
 
-export default styled(MessagesContainer)`
+const StyledMessagesContainer = styled(MessagesContainer)`
     height:${props=>props.height};
     width:${props=>props.width};
+    border: 1px solid gray;
 `
+
+export default StyledMessagesContainer

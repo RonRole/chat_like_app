@@ -1,4 +1,4 @@
-import { Image, Alert, Modal, Button, Col } from "react-bootstrap";
+import { Image, Alert, Modal, Button, Col, Fade } from "react-bootstrap";
 import React, { useState } from 'react'
 import LargeImageModal from "./LargeImageModal";
 import styled from "styled-components";
