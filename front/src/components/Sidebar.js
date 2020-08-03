@@ -29,7 +29,7 @@ const SidebarWrapper = styled.nav`
     height:100%;
     left:-16rem; 
     transition: all 0.5s;
-    z-index:1;
+    z-index:10;
     &[open] {
         left:0;
         transition:all 0.5s;

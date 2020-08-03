@@ -27,6 +27,15 @@ const CurrentUsersContainer = ({
         </Container>
     )
 }
+
+CurrentUsersContainer.Fixed = styled(CurrentUsersContainer)`
+    height:${props => props.height};
+    width:${props => props.width};
+    position : fixed;
+    background-color: rgba(255,255,255,0.8);
+    z-index: 1;
+`
+
 export default styled(CurrentUsersContainer)`
     height:${props => props.height};
     width:${props => props.width};

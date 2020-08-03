@@ -38,8 +38,11 @@ const CurrnetRoomContainer = styled(({
     const thisRoom = roomsStatus.ownRooms[talkRoomId] || roomsStatus.joinRooms[talkRoomId] || roomsStatus.default
     return (
         <Container {...props}>
-            <strong>{thisRoom.title}</strong>
-            <CurrentUsersContainer talkRoomId = {talkRoomId} className='mb-2' height='2.7rem' />
+            <div className='d-none d-sm-block'>
+                <strong>{thisRoom.title}</strong>
+                <CurrentUsersContainer talkRoomId = {talkRoomId} className='mb-2' height='2.7rem' />
+            </div>
+            <CurrentUsersContainer.Fixed talkRoomId = {talkRoomId} className='d-sm-none' height='2.7rem'/>
             <Size height='calc(100% - 3.0rem)'>
                 <CurrentMessagesContainer talkRoomId = {talkRoomId} className='mb-2 pb-4 simple-border overflow-auto' height='80%'/>
                 <Size height='20%'>
