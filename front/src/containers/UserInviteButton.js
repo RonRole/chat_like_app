@@ -2,12 +2,14 @@ import React from 'react'
 import { Button } from 'react-bootstrap'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import { useSelector, useDispatch } from 'react-redux'
+import NewsActions from '../modules/newsModule/NewsActions'
 
 
 const UserInviteButton = ({
     userId,
     talkRoomId,
 }) => {
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     const talkRooms = useSelector(state=>state.talkRooms)
     const inviteRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
     const dispatch = useDispatch()
@@ -17,6 +19,7 @@ const UserInviteButton = ({
     }
     return <Button variant="success" onClick={() => {
         dispatch(TalkRoomModule.actions.execAddUserToTalkRoom({
+            authorId:loginUser.id,
             userId,
             talkRoomId
         }))

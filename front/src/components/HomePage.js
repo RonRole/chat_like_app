@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Container, Col } from 'react-bootstrap'
+import { Button, Container, Col, Row } from 'react-bootstrap'
 import LoginUserProfile from '../containers/LoginUserProfile'
 import UpdateLoginUserForm from '../containers/UpdateLoginUserForm'
 import LogoutButton from '../containers/LogoutButton'
@@ -7,6 +7,8 @@ import BgmManageModal from '../containers/BgmManageModal'
 import Sidebar from './Sidebar'
 import MessageImageManageModal from '../containers/MessageImageManageModal'
 import Size from '../style-components/Size'
+import NewsList from '../containers/NewsList'
+import SimpleBorder from '../style-components/SimpleBorder'
 
 const HomePage = ({
     ...props
@@ -22,12 +24,22 @@ const HomePage = ({
                 <MessageImageManageModal.ShowLink to='#' className='nav-link'/>
             </Sidebar>
             <Container className="d-flex justify-content-center">
-                <Size width='50%'>
-                    <LoginUserProfile className='justify-content-center' />
-                    <UpdateLoginUserForm.ShowButton wrapperClassName='d-flex justify-content-center mb-2' block/>
-                    <div className='d-flex justify-content-center mb-2'>
-                        <LogoutButton block>ログアウト</LogoutButton>
-                    </div>
+                <Size width='100%'>
+                    <Row>
+                        <Col xs={12} md={6}>
+                            <LoginUserProfile infoWidth='50%' imageWidth='50%' className='justify-content-center' />
+                            <UpdateLoginUserForm.ShowButton wrapperClassName='d-flex justify-content-center mb-2' block/>
+                            <div className='d-flex justify-content-center mb-2'>
+                                <LogoutButton block>ログアウト</LogoutButton>
+                            </div>
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <SimpleBorder as='h6' position='bottom'><strong>新着情報</strong></SimpleBorder>
+                            <Size height='80vh' className='overflow-auto'>
+                                <NewsList />
+                            </Size>
+                        </Col>
+                    </Row>
                 </Size>
             </Container>
         </div>

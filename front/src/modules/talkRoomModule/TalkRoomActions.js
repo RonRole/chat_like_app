@@ -65,22 +65,26 @@ export default {
     },
 
     execAddUserToTalkRoom:({
+        authorId,
         userId,
         talkRoomId
     }) => {
         return {
             type : TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM,
+            authorId,
             userId,
             talkRoomId,
         }
     },
 
     execRemoveUsersFromTalkRoom:({
+        authorId,
         talkRoomId,
         userIds
     }) => {
         return {
             type : TalkRoomActionTypes.EXEC_REMOVE_USERS_FROM_TALKROOM,
+            authorId,
             userIds,
             talkRoomId
         }
@@ -160,22 +164,26 @@ export default {
     },
 
     addMembersToTalkRoom : ({
+        authorId,
         talkRoomId,
         userIds
     }) => {
         return {
             type : TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM,
+            authorId,
             talkRoomId,
             userIds,
         }
     },
 
     removeUsersFromTalkRoom : ({
+        authorId,
         talkRoomId,
         userIds
     }) => {
         return {
             type : TalkRoomActionTypes.REMOVE_USERS_FROM_TALKROOM,
+            authorId,
             userIds,
             talkRoomId
         }

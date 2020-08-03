@@ -1,10 +1,13 @@
 import DataAccessor from "../DataAccessor"
 import TalkRoomActions from "./TalkRoomActions"
-import { put, call, fork} from "redux-saga/effects"
+import { put, call, fork, actionChannel} from "redux-saga/effects"
 
 import UserActions from "../userModule/UserActions"
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
+import NewsActions from "../newsModule/NewsActions"
+import FormNames from "../FormErrorModule/FormNames"
+import NewsTypes from "../newsModule/NewsTypes"
 
 const getOwnRooms = () => {
     return DataAccessor.get({
@@ -128,7 +131,7 @@ export function* handleAddTalkRoom(action) {
     if(addTalkRoomResult.isFail) {
         alert('トークルームを追加できませんでした')
         yield put(FormErrorActions.setError({
-            formName : "createTalkRoomForm",
+            formName : FormNames.createTalkRoomForm,
             errorJson : addTalkRoomResult.data
         }))
     }
@@ -151,7 +154,7 @@ export function* handleUpdateTalkRoom(action) {
     if(updateTalkRoomResult.isFail) {
         alert(`${action.talkRoom.title}の更新ができませんでした`)
         yield put(FormErrorActions.setError({
-            formName : "updateTalkRoomForm",
+            formName : FormNames.updateTalkRoomForm,
             errorJson : updateTalkRoomResult.data
         }))
     }
@@ -177,19 +180,21 @@ export function* handleDeleteTalkRoom(action) {
 }
 
 export function* handleAddTalkRoomMember(action) {
-    const result = yield call(addMemberToTalkRoom, {talkRoomId:action.talkRoomId, userId:action.userId})
+    const {type, authorId, talkRoomId, userId} = {...action}
+    const result = yield call(addMemberToTalkRoom, {talkRoomId, userId})
     if(result.isSuccess) {
         alert(`${result.data.name}を追加しました`)
         yield put(UserActions.setUser(result.data))
         yield put(TalkRoomActions.addMembersToTalkRoom({
-            talkRoomId : action.talkRoomId,
-            userIds : [action.userId]
+            authorId,
+            talkRoomId,
+            userIds : [userId]
         }))
     }
     if(result.isFail) {
         alert("そんなユーザーいません")
         yield put(FormErrorActions.setError({
-            formName : "userInviteForm",
+            formName : FormNames.userInviteForm,
             errorJson : {
                 messages : ["このID,名前の組合わせが存在しません"]
             }
@@ -201,15 +206,19 @@ export function* handleAddTalkRoomMember(action) {
 }
 
 export function* handleRemoveUsersFromTalkRoom(action) {
+    const {type, authorId, talkRoomId, userIds} = {...action}
     const result = yield call(DataAccessor.delete, {
-        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${action.talkRoomId}/users/destroy_multiple`,
-        parameter : {'ids': action.userIds}
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/${talkRoomId}/users/destroy_multiple`,
+        parameter : {
+            ids: userIds
+        }
     })
     if(result.isSuccess) {
         alert("ユーザーをトークルームから追い出しました")
         yield put(TalkRoomActions.removeUsersFromTalkRoom({
-            userIds : action.userIds,
-            talkRoomId : action.talkRoomId
+            authorId,
+            userIds,
+            talkRoomId
         }))
     }
     if(result.isFail) {

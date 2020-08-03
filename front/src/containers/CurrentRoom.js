@@ -12,13 +12,20 @@ import UserMonitorContainer from './UserMonitorContainer'
 import styled from 'styled-components'
 import Size from '../style-components/Size'
 
+const StyledUserMonitorContainer = styled(UserMonitorContainer)`
+    height:${props=>props.height};
+    overflow:auto;
+`
+
 const UserActivityContainer = ({
+    height,
+    talkRoomId,
     ...props
 }) => {
     return (
         <Container {...props}>
             <h6 className='ml-5'><strong>最近のアクティビティ</strong></h6>
-            <UserMonitorContainer className='ml-4 vh-80 overflow-auto'/>
+            <StyledUserMonitorContainer className='ml-4' height={height}/>
         </Container>
     )
 }
@@ -45,6 +52,7 @@ const CurrnetRoomContainer = styled(({
     )
 })`
     height:${props=>props.height};
+    overflow:hidden;
 `
 
 
@@ -61,6 +69,7 @@ const UserMapContainer = styled(({
 })`
     height:${props=>props.height};
     width:${props=>props.width};
+    overflow:auto;
 `
 
 const CurrentRoom = ({

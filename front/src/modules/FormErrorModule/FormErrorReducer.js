@@ -1,20 +1,20 @@
 import { FormErrorActionTypes } from "./FormErrorActions"
 import { LogActionTypes } from "../logModule/LogActions"
 import createReducerFactory from "../CreateReducerFactory"
+import FormNames from "./FormNames"
 
 
-const initialState = {
-
-}
+const initialState = Object.keys(FormNames).reduce((result, key) => {
+    result[key] = {
+        message:[]
+    }
+    return result
+}, {})
 
 initialState.default = {
-    "formCategory" : {
-        "formName" : ""
+    "formName" : {
+        "paramName" : []
     }
-}
-
-const getErrorsOf = (state) => (formCategory) => (formName) => {
-    return (state["formErrors"][formCategory] || [])[formName] || []
 }
 
 const actionHandler = {}
@@ -33,6 +33,5 @@ actionHandler[FormErrorActionTypes.CLEAR_ERROR_BY_NAME] = (state, action) => {
 const createReducer = createReducerFactory(initialState, actionHandler)
 
 export default {
-    getErrorsOf,
     createReducer 
 }

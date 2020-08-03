@@ -21,6 +21,9 @@ import {UserPositionActionTypes} from './userPositionModule/UserPositionActions'
 import * as userPositionSaga from './userPositionModule/UserPositionSaga'
 import { SoundActionTypes } from "./soundModule/SoundActions";
 import * as userMonitorSaga from './userMonitorModule/UserMonitorSaga'
+import * as newsSaga from './newsModule/NewsSaga'
+import { NewsActionTypes } from "./newsModule/NewsActions";
+import NewsTypes from "./newsModule/NewsTypes";
 
 const logSagas = [
     takeEvery(LogActionTypes.EXEC_DEF_LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(logSaga.handleGetDefLoginStart)),
@@ -118,6 +121,13 @@ const UserMonitorSagas = [
     userMonitorSaga.handleReceiveLeaveRoom()
 ]
 
+const NewsSagas = [
+    takeEvery(LogActionTypes.LOG_IN, newsSaga.handleFetchReceivedNews),
+    takeEvery(NewsActionTypes.EXEC_FETCH_RECEIVED_NEWS, newsSaga.handleFetchReceivedNews),
+    takeEvery(TalkRoomActionTypes.ADD_USERS_TO_TALK_ROOM, newsSaga.handleSendAddMemberNews),
+    takeEvery(TalkRoomActionTypes.REMOVE_USERS_FROM_TALKROOM, newsSaga.handleSendRemoveMemberNews),
+]
+
 //rootSaga
 export default function* rootSaga(){
     yield all([
@@ -129,6 +139,7 @@ export default function* rootSaga(){
         ...ErrorCodeSagas,
         ...SoundSagas,
         ...userPositionSagas,
-        ...UserMonitorSagas
+        ...UserMonitorSagas,
+        ...NewsSagas
     ])
 }

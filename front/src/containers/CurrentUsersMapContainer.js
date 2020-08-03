@@ -7,10 +7,6 @@ import GoogleMap from '../components/GoogleMap'
 import styled from 'styled-components'
 import UserHeader from '../components/UserHeader'
 
-const StyledTransitionGroup = styled(TransitionGroup)`
-    height:100%;
-    width:100%;
-`
 
 const CurrentUsersMapContainer = ({
     talkRoomId,
@@ -26,7 +22,7 @@ const CurrentUsersMapContainer = ({
             {[thisRoomStatus.currentUserIds].flat().map((userId,index) => {
                 return (
                     <div key={index}>
-                        <UserHeader userImageUrl={(users[userId] || users[0]).image.thumb.url} userName={(users[userId] || users[0]).name} />
+                        <UserHeader userImageUrl={(users[userId] || users[0]).image.thumb.url} userName={(users[userId] || users[0]).name} imageSize='2.5rem'/>
                         <GoogleMap position={(userPositions[userId] || userPositions.default)} height='20vh' />
                     </div>
                 )

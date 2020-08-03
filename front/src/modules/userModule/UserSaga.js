@@ -7,6 +7,7 @@ import { createCurrentUserReceiveChannel, createMessageReceiveChannel } from "..
 
 import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
+import FormNames from "../FormErrorModule/FormNames"
 
 const getSelf = () => {
     return DataAccessor.get(({
@@ -75,15 +76,6 @@ export function* handleReceiveMessage() {
     }
 }
 
-
-//saga
-export function* handleGetSelf() {
-    const result = yield call(getSelf)
-    if(result.isSuccess) {
-    }
-}
-
-
 export function* handleCreateUser(action) {
     const result = yield call(createUser, action.userParams)
     if(result.isSuccess) {
@@ -98,7 +90,7 @@ export function* handleCreateUser(action) {
     if(result.isFail) {
         alert("ユーザーを作成できませんでした")
         yield put(FormErrorActions.setError({
-            formName : "signUpForm",
+            formName : FormNames.signUpForm,
             errorJson : result.data
         }))
     }
@@ -116,7 +108,7 @@ export function* handleUpdateUser(action) {
     }
     if(result.isFail) {
         yield put(FormErrorActions.setError({
-            formName: 'updateUserForm',
+            formName: FormNames.updateUserForm,
             errorJson : result.data
         }))
     }
@@ -145,7 +137,7 @@ export function* handleExecSearchUser(action) {
         alert("ユーザーが見つかりませんでした")
         yield put(UserActions.setSearchedUsers())
         yield put(FormErrorActions.setError({
-            formName : "userInviteForm",
+            formName : FormNames.userInviteForm,
             errorJson : searchResult.data
         }))
     }

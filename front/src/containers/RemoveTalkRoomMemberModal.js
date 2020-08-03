@@ -13,6 +13,7 @@ const RemoveTalkRoomMembersModal = ({
     onHide
 }) => {
     const dispatch = useDispatch()
+    const loginUser = useSelector(state=>state.logStatus.loginUser)
     const talkRooms=useSelector(state=>state.talkRooms)
     const thisRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
     const [selectedUserIds, addSelectedUserId] = useState({})
@@ -20,6 +21,7 @@ const RemoveTalkRoomMembersModal = ({
         <ModalForm show={show} onHide={onHide} onSubmit={(e) => {
             e.preventDefault()
             dispatch(TalkRoomModule.actions.execRemoveUsersFromTalkRoom({
+                authorId : loginUser.id,
                 talkRoomId,
                 userIds : Object.keys(selectedUserIds).map(userId => parseInt(userId))
             }))

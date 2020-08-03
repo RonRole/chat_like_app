@@ -1,27 +1,25 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
+import SimpleBorder from '../style-components/SimpleBorder'
 
-const LabelBorder = styled.h6`
-    border-bottom:1px solid gray;
-`
 
 const TalkRoomAreaLabel = {}
 const OwnRoomLabel = () => {
     const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
-        <LabelBorder>
+        <SimpleBorder as='h6' position='bottom'>
             <strong>{loginUser.name}</strong>さんが管理しているトークルーム
-        </LabelBorder>
+        </SimpleBorder>
     )
 }
 
 const JoinRoomLabel = () => {
     const loginUser = useSelector(state=>state.logStatus.loginUser)
     return (
-        <LabelBorder>
+        <SimpleBorder as='h6' position='bottom'>
             <strong>{loginUser.name}</strong>さんが参加しているトークルーム
-        </LabelBorder>
+        </SimpleBorder>
     )
 }
 

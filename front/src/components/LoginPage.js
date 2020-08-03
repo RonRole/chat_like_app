@@ -10,6 +10,11 @@ const InlineBlock = styled.div`
     display:inline-block;
 `
 
+const JustifyCenter = styled.div`
+    justify-content: center;
+    text-align: center;
+`
+
 const LoginFormCard = ({
     ...props
 }) => {
@@ -19,8 +24,10 @@ const LoginFormCard = ({
                 <WrapWithFlashMessage>
                     <InlineBlock as='strong'>ログイン</InlineBlock>
                     <LoginForm />
-                    <InlineBlock>初めての方はこちら：</InlineBlock>
-                    <InlineBlock><Link to='/signup' {...props}>新規登録</Link></InlineBlock>
+                    <JustifyCenter>
+                        <InlineBlock>初めての方はこちら：</InlineBlock>
+                        <InlineBlock><Link to='/signup' {...props}>新規登録</Link></InlineBlock>
+                    </JustifyCenter>
                 </WrapWithFlashMessage>
             </Card.Body>
         </Card>

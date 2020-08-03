@@ -26,7 +26,8 @@ const Join = ({
 }) => {
     return (
         <div {...props}>
-            <Link to={`${FrontAddress.talk_rooms}/${talkRoom.id}`}>{talkRoom.title}</Link>に{user.name}さんが参加しました
+            <Link to={`${FrontAddress.talk_rooms}/${talkRoom.id}`}>{talkRoom.title}</Link>
+            <span className='text-success'>に{user.name}さんが参加しました</span>
         </div>
     )
 }
@@ -37,7 +38,8 @@ const Leave = ({
 }) => {
     return (
         <div {...props}>
-            <Link to={`${FrontAddress.talk_rooms}/${talkRoom.id}`} {...props}>{talkRoom.title}</Link>から{user.name}さんが退出しました
+            <Link to={`${FrontAddress.talk_rooms}/${talkRoom.id}`} {...props}>{talkRoom.title}</Link>
+            <span className='text-danger'>から{user.name}さんが退出しました</span>
         </div>
     )
 }
@@ -53,19 +55,20 @@ const MessageHeader = ({user,date,...props}) => {
 
 const UserMonitorMessage = ({
     action,
+    talkRoom,
     ...props
 }) => {
     const messageMap = {
         join : (
             <>
                 <MessageHeader className='text-success' {...props}/>
-                <Join className='text-success' {...props} />
+                <Join talkRoom={talkRoom} {...props} />
             </>
         ),
         leave : (
             <>
                 <MessageHeader className='text-danger' {...props}/>
-                <Leave className='text-danger' {...props} />
+                <Leave talkRoom={talkRoom} {...props} />
             </>
         )
     }

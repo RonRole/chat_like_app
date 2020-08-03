@@ -3,20 +3,11 @@ import { Image, Container } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
 import UserImage from "./UserImage"
-
-const BorderdStrong = styled.strong`
-    border-bottom: 1px solid gray;
-`
+import SimpleBorder from "../style-components/SimpleBorder"
+import Size from "../style-components/Size"
 
 const FlexContainer = styled(Container)`
     display: flex;
-`
-
-const UserInfoWrapper = styled.div`
-    width: ${props=>props.width};
-`
-const UserImageWrapper = styled.div`
-    width: ${props=>props.width};
 `
 
 const UserProfile = ({
@@ -28,17 +19,16 @@ const UserProfile = ({
 }) => {
     const users = useSelector(state=>state.users)
     const user = users[userId] || users[0]
-
     const profileContents = {}
     profileContents.self_id = (
         <div id="loginUserID">
-            <BorderdStrong>ユーザーID</BorderdStrong>
+            <SimpleBorder as='strong' position='bottom'>ユーザーID</SimpleBorder>
             <div>{user.self_id}</div>
         </div>
     )
     profileContents.name = (
         <div id="loginUserName">
-            <BorderdStrong>お名前</BorderdStrong>
+            <SimpleBorder as='strong' position='bottom'>お名前</SimpleBorder>
             <div>{user.name}</div>
         </div>
     )
@@ -52,13 +42,13 @@ const UserProfile = ({
     
     return (
         <FlexContainer　{...props}>
-            <UserInfoWrapper width={infoWidth}>
+            <Size width={infoWidth}>
                 {profileContents[activeKeys.self_id]}
                 {profileContents[activeKeys.name]}
-            </UserInfoWrapper>
-            <UserImageWrapper width={imageWidth}>
+            </Size>
+            <Size width={imageWidth}>
                 {profileContents[activeKeys.image]}
-            </UserImageWrapper>
+            </Size>
         </FlexContainer>
     )
 }

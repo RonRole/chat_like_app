@@ -8,7 +8,7 @@ class TalkRoomsController < ApplicationController
 
     # 自身がメンバーであるトークルームを取得する
     def join
-        @talk_rooms = current_user.join_rooms
+        @talk_rooms = current_user.join_rooms.includes(:users)
         render :json => @talk_rooms.to_json(include: [:users])
     end
 
@@ -19,8 +19,8 @@ class TalkRoomsController < ApplicationController
     end
     
     def create
-        @talk_room = current_user.talk_rooms.new(talkroom_params)
-        if(@talk_room.save)
+        @talk_room = TalkRoom.new(talkroom_params)
+        if(current_user.own_rooms << @talk_room)
             render :json => @talk_room
         else
             render :json => @talk_room.fail_result
@@ -51,7 +51,7 @@ class TalkRoomsController < ApplicationController
     end
 
     def search_join
-        @talk_rooms = current_user.talk_rooms.ransack(search_params).result
+        @talk_rooms = current_user.join_rooms.ransack(search_params).result
         render :json => @talk_rooms
     end
 end

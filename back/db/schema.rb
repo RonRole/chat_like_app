@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_19_010120) do
+ActiveRecord::Schema.define(version: 2020_08_01_044958) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,25 @@ ActiveRecord::Schema.define(version: 2020_07_19_010120) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_message_images_on_user_id"
+  end
+
+  create_table "news", force: :cascade do |t|
+    t.string "type"
+    t.bigint "sender_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "talk_room_id"
+    t.index ["sender_id"], name: "index_news_on_sender_id"
+    t.index ["talk_room_id"], name: "index_news_on_talk_room_id"
+  end
+
+  create_table "news_receiver_refs", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "news_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["news_id"], name: "index_news_receiver_refs_on_news_id"
+    t.index ["user_id"], name: "index_news_receiver_refs_on_user_id"
   end
 
   create_table "talk_rooms", force: :cascade do |t|
@@ -63,6 +82,10 @@ ActiveRecord::Schema.define(version: 2020_07_19_010120) do
     t.index ["self_id"], name: "index_users_on_self_id"
   end
 
+  add_foreign_key "news", "talk_rooms"
+  add_foreign_key "news", "users", column: "sender_id"
+  add_foreign_key "news_receiver_refs", "news"
+  add_foreign_key "news_receiver_refs", "users"
   add_foreign_key "user_talk_room_refs", "talk_rooms"
   add_foreign_key "user_talk_room_refs", "users"
 end

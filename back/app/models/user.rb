@@ -13,9 +13,12 @@ class User < ApplicationRecord
     # リレーション
     has_many :own_rooms, foreign_key: :author_id, class_name: 'TalkRoom'
     has_many :user_talk_room_refs
-    has_many :talk_rooms, through: :user_talk_room_refs
+    has_many :join_rooms, through: :user_talk_room_refs, source: :talk_room
     has_many :message_images
     has_many :bgms
+    has_many :sended_news, foreign_key: :sender_id, class_name:'News'
+    has_many :news_receiver_refs
+    has_many :received_news, through: :news_receiver_refs, source: :news
 
     #イメージ画像
     mount_uploader :image, ImageUploader
@@ -55,22 +58,20 @@ class User < ApplicationRecord
 
     # 自身が管理者・メンバーであるトークルーム
     def related_rooms
-        own_rooms = self.own_rooms.includes(:author).includes(:users)
-        join_rooms = self.talk_rooms.includes(:author).includes(:users)
-        own_rooms + join_rooms
+        [self.own_rooms, self.join_rooms].map {|room|
+            room.includes(:author).includes(:users)
+        }.inject(&:+)
     end
 
-    # 自身が管理者・メンバーであるトークルーム全ての管理者とユーザー
+    # 自身が管理者・メンバーであるトークルーム全ての管理者とユーザー + 自身へのニュースの送信者
     def related_users
-        self.related_rooms.map(&:author) + self.related_rooms.map(&:users)
+        room_user = self.related_rooms.map {|room|
+            [room.author] + room.users
+        }.flatten
+        news_sender = self.received_news.map(&:sender)
+        room_user + news_sender
     end
-
-    def join_rooms
-        own_rooms = self.own_rooms.includes(:author).includes(:users)
-        join_rooms = self.talk_rooms.includes(:author).includes(:users)
-        join_rooms - own_rooms
-    end
-
+    
     private
         def set_default_self_id
             while self.self_id.blank? || User.find_by(self_id: self.self_id).present? do

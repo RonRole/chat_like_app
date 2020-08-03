@@ -5,6 +5,7 @@ import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import UserActions from "../userModule/UserActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 import FrontAddress from "../../address"
+import FormNames from "../FormErrorModule/FormNames"
 
 //saga
 export function* handleGetDefLoginStart() {
@@ -36,7 +37,7 @@ export function* handleGetExecLoginStart(loginAction) {
     if(accessResult.isFail){
         alert("ログインに失敗しました")
         yield put(FormErrorActions.setError({
-            formName:"loginForm",
+            formName : FormNames.loginForm,
             errorJson: accessResult.data
         }))
     }

@@ -45,16 +45,14 @@ const ImageUploadFormGroup = ({
     const formRef = useRef(null)
     return (
         <Form.Group controlId={controlId} {...props}>
-            <Visible aria-hidden='true'>
-                <Form.Control ref={formRef} type="file" name="image" accept='image/*' isInvalid={errorMessages.length > 0} onChange={(e) => {
-                    const fileReader = new FileReader()
-                    const input = e.currentTarget.files[0]
-                    fileReader.onload = e => {
-                        setUploadFileImage(e.target.result)
-                    }
-                    input ? fileReader.readAsDataURL(input) : setUploadFileImage(null)
-                }}/>
-            </Visible>
+            <Form.Control className='d-none' ref={formRef} type="file" name="image" accept='image/*' isInvalid={errorMessages.length > 0} onChange={(e) => {
+                const fileReader = new FileReader()
+                const input = e.currentTarget.files[0]
+                fileReader.onload = e => {
+                    setUploadFileImage(e.target.result)
+                }
+                input ? fileReader.readAsDataURL(input) : setUploadFileImage(null)
+            }}/>
             <StyledOverlap align-items='center' justify-content='center' height={height} width={width} onClick={()=>formRef.current.click()} >
                 <Overlap.Item zIndex={1}>
                     <StyledImage src={uploadFileImage} height={height} width={width} backgroundColor={uploadFileImage ? 'white' : ''} />
@@ -64,8 +62,8 @@ const ImageUploadFormGroup = ({
                 </Overlap.Item>
             </StyledOverlap>
             <Form.Control.Feedback type="invalid">
-                {errorMessages.filter(e=>e).map(errorMessage=>(
-                    <div>{errorMessage}</div>
+                {errorMessages.filter(e=>e).map((errorMessage, index)=>(
+                    <div key={index}>{errorMessage}</div>
                 ))}
             </Form.Control.Feedback>
         </Form.Group>

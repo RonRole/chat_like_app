@@ -18,6 +18,7 @@ import UserPositionModule from './modules/userPositionModule/UserPositionModule'
 import TranslateModule from './modules/translateModeModule/TranslateModule'
 import SoundReducer from './modules/soundModule/SoundReducer'
 import UserMonitorReducer from './modules/userMonitorModule/UserMonitorReducer'
+import NewsReducer from './modules/newsModule/NewsReducer'
 
 //middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -35,7 +36,8 @@ const store = createStore(
         formErrors: FormErrorModule.reducer.createReducer,
         errorCodes : ErrorCodeModule.reducer.createReducer,
         translateModes : TranslateModule.reducer.createReducer,
-        userMonitorMessages : UserMonitorReducer.createReducer
+        userMonitorMessages : UserMonitorReducer.createReducer,
+        news : NewsReducer.createReducer
     }), 
     applyMiddleware(sagaMiddleware)
 )

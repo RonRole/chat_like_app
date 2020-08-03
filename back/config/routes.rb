@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   #user
   resources :users do
     collection do 
       get 'search'
     end
+    resources :news, module:'user_news', only:[:create]
   end
 
   resources :message_images
   resources :bgms
+
 
   #session
   get 'login', to: 'sessions#new'
@@ -32,4 +35,7 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  #news
+  resources :news, only: [:index]
 end
