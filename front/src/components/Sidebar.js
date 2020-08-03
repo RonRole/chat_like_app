@@ -4,7 +4,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 
 const SidebarNavbar = styled(Navbar)`
     height:100%;
-    width:20rem;
+    width:16rem;
     display:block;
 `
 
@@ -27,7 +27,7 @@ const SidebarWrapper = styled.nav`
     position:fixed;
     display: flex;
     height:100%;
-    left:-20rem; 
+    left:-16rem; 
     transition: all 0.5s;
     z-index:1;
     &[open] {

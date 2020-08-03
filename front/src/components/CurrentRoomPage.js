@@ -12,7 +12,17 @@ const MessagesPage = ({
 }) => {
     return (
         <div>
-            <Sidebar>
+            <Sidebar className='d-none d-md-flex'>
+                <Link className = "nav-link" to="/talk_rooms">退出する</Link>
+                <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id} />
+                <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                    BGM変更
+                </BgmModalForm.ShowLink>
+                <MessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
+                    画像メッセージ送信
+                </MessageImageModalForm.ShowLink>
+            </Sidebar>
+            <Sidebar className='d-md-none' small>
                 <Link className = "nav-link" to="/talk_rooms">退出する</Link>
                 <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id} />
                 <BgmModalForm.ShowLink　talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>

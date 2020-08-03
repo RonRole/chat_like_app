@@ -20,7 +20,7 @@ const OwnRoomsArea = ({
         <SeparateForPagination wrapperClassName='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup} {...props}>
             {ownRooms.map((ownRoom,index) => (
                 <CSSTransition timeout={100} className='mb-2' classNames='fade' key={index}>
-                    <Col xs={12} sm={6} md={4} lg={3}>
+                    <Col xs={{span:10, offset:1}} sm={{span:6,offset:0}} md={4} lg={3}>
                         <TalkRoomCard talkRoomId={ownRoom.id} height='20rem'/>
                     </Col>
                 </CSSTransition>
@@ -47,7 +47,7 @@ const JoinRoomsArea = ({
         <SeparateForPagination wrapperClassName='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup} {...props}>
             {joinRoomArray.map((joinRoom,index) => (
                 <CSSTransition timeout={100} className='mb-2' classNames='fade' key={index}>
-                    <Col xs={12} sm={6} md={4} lg={3}>
+                    <Col xs={{span:10,offset:1}} sm={{span:6,offset:0}} md={4} lg={3}>
                         <TalkRoomCard talkRoomId={joinRoom.id} readOnly/>
                     </Col>
                 </CSSTransition>

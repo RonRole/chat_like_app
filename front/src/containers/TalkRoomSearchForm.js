@@ -1,11 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row } from 'react-bootstrap'
 import RenderByCondition from '../components/RenderByCondition'
 import { useDispatch, useSelector } from 'react-redux'
 import TalkRoomModule from '../modules/talkRoomModule/TalkRoomModule'
 import OpacityIterate from '../style-components/OpacityIterate'
 import styled from 'styled-components'
 import FontSize from '../style-components/FontSize'
+import Size from '../style-components/Size'
 
 const TalkRoomSearchForm = {}
 
@@ -27,15 +28,14 @@ const FormTemplate = ({
                     <Form.Text>{formText}</Form.Text>
                 </RenderByCondition>
             </Form.Group>
-            <FontSize as='span' size='2.0rem'>
-                <OpacityIterate as='span'>
+            <FontSize as='span' size='2.0rem' className='overflow-hidden d-flex'>
+                <OpacityIterate as='div'>
                     <i className='material-icons' onClick={()=>submitButton.current.click()}>search</i>
                 </OpacityIterate>
-                <OpacityIterate as='span'>
+                <OpacityIterate as='div'>
                     <i className='material-icons' onClick={onSearchOff}>search_off</i>
                 </OpacityIterate>
             </FontSize>
-
             <Button ref={submitButton} type='submit' className='d-none' />
         </Form>
     )
