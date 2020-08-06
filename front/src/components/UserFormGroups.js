@@ -39,13 +39,15 @@ UserFormGroups.NameFormGroup = ({
 }
 
 UserFormGroups.PasswordFormGroup = ({
+    controlId="passwordForm",
+    label="パスワード",
     defaultValue = "",
     errorMessages = [],
     ...props
 }) => {
     return (
-        <Form.Group controlId="passwordForm" {...props}>
-            <Form.Label>パスワード</Form.Label>
+        <Form.Group controlId={controlId} {...props}>
+            <Form.Label>{label}</Form.Label>
             <Form.Control type="password" name="password" placeholder="パスワード" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">
                 {errorMessages.find(e=>e)}
@@ -55,12 +57,13 @@ UserFormGroups.PasswordFormGroup = ({
 }
 
 UserFormGroups.PasswordConfirmationFormGroup = ({
+    controlId = 'passwordConfirmationForm',
     defaultValue = "",
     errorMessages = [],
     ...props
 }) => {
     return (
-        <Form.Group controlId="passwordConfirmationForm" {...props}>
+        <Form.Group controlId={controlId} {...props}>
             <Form.Label>パスワード確認</Form.Label>
             <Form.Control type="password" name="password_confirmation" placeholder="もう一度パスワードを入力してください" isInvalid={errorMessages.length > 0}/>
             <Form.Control.Feedback type="invalid">

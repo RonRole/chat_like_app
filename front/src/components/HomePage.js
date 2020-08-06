@@ -9,6 +9,7 @@ import MessageImageManageModal from '../containers/MessageImageManageModal'
 import Size from '../style-components/Size'
 import NewsList from '../containers/NewsList'
 import SimpleBorder from '../style-components/SimpleBorder'
+import UpdatePasswordForm from '../containers/UpdatePasswordForm'
 
 const HomePage = ({
     ...props
@@ -28,10 +29,15 @@ const HomePage = ({
                     <Row>
                         <Col xs={12} md={6}>
                             <LoginUserProfile infoWidth='50%' imageWidth='50%' className='justify-content-center' />
-                            <UpdateLoginUserForm.ShowButton wrapperClassName='d-flex justify-content-center mb-2' block/>
-                            <div className='d-flex justify-content-center mb-2'>
-                                <LogoutButton block>ログアウト</LogoutButton>
-                            </div>
+                            <UpdateLoginUserForm.ShowButton className='mb-2' block>
+                                プロフィール更新
+                            </UpdateLoginUserForm.ShowButton>
+                            <UpdatePasswordForm.ShowButton className='mb-2'block>
+                                パスワード変更
+                            </UpdatePasswordForm.ShowButton>
+                            <LogoutButton block>
+                                ログアウト
+                            </LogoutButton>
                         </Col>
                         <Col xs={12} md={6}>
                             <SimpleBorder as='h6' position='bottom'><strong>新着情報</strong></SimpleBorder>

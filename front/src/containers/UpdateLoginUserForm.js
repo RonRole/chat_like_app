@@ -19,28 +19,22 @@ UpdateLoginUserForm.defaultProps = {
 }
 
 const ShowButton = ({
-    onClick,
-    wrapperClassName,
+    children,
     ...props
 }) => {
     const [showUpdateUserForm, setUpdateUserFormShowing] = useState(false)
     return (
-        <div className={wrapperClassName}>
+        <>
             <Button onClick={() => {
                 setUpdateUserFormShowing(true)
-                onClick()
             }} {...props}>
-                プロフィールを更新する
+                {children}
             </Button>
             <UpdateLoginUserForm show={showUpdateUserForm} onHide={() => setUpdateUserFormShowing(false)} />
-        </div>
+        </>
     )
 }
 
-ShowButton.defaultProps={
-    onClick : (e) => console.log(e),
-    wrapperClassName :'',
-}
 
 UpdateLoginUserForm.ShowButton = ShowButton
 

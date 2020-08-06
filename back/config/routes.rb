@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     collection do 
       get 'search'
     end
+    put 'update_password'
     resources :news, module:'user_news', only:[:create]
   end
 

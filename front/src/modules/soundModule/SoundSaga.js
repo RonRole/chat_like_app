@@ -10,7 +10,7 @@ bgm.loop = false
 export function* readyToBgmEnd() {
     const channel = eventChannel(emit => {
         bgm.onended = e => emit(e)
-        return () => console.log("SAWAI")
+        return () => console.log("end of bgm channel")
     })
     while(true) {
         yield take(channel)

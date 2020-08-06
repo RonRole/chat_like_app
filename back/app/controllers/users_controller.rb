@@ -35,6 +35,24 @@ class UsersController < ApplicationController
         end
     end
 
+    def update_password
+        @user = current_user.authenticate(update_password_params[:old_password])
+        
+        unless(@user)
+            render :json => {
+                isFail:true,
+                old_password:['現在のパスワードが誤っています']
+            }
+            return
+        end
+
+        if(@user.update(password:update_password_params[:password], password_confirmation:update_password_params[:password_confirmation]))
+          render :json => @user
+        else
+          render :json => @user.fail_result
+        end
+    end
+
     def destroy
     end
 

@@ -9,11 +9,6 @@ import FormErrorActions from "../FormErrorModule/FormErrorActions"
 import ErrorCodeActions from "../errorCodeModule/ErrorCodeActions"
 import FormNames from "../FormErrorModule/FormNames"
 
-const getSelf = () => {
-    return DataAccessor.get(({
-        url:`${process.env.REACT_APP_BACKEND_ADDRESS}/users/self`
-    }))
-}
 
 /**
  * Tips
@@ -114,6 +109,26 @@ export function* handleUpdateUser(action) {
     }
     if(result.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
+    }
+}
+
+export function* handleUpdatePassword(action) {
+    const {userId, oldPassword, newPassword, newPasswordConfirmation} = {...action}
+    const result = yield call(DataAccessor.put, ({
+        url : `${process.env.REACT_APP_BACKEND_ADDRESS}/users/${userId}/update_password`,
+        parameter : {
+            password : {
+                old_password : oldPassword,
+                password : newPassword,
+                password_confirmation : newPasswordConfirmation
+            }
+        }
+    }))
+    if(result.isSuccess) {
+        alert('パスワードを更新しました')  
+    }
+    if(result.isFail) {
+        alert('パスワードの更新に失敗しました')
     }
 }
 
