@@ -15,6 +15,9 @@ export const TalkRoomActionTypes = {
     DELETE_TALK_ROOM       : "DELETE_TALK_ROOM",
     UPDATE_TALK_ROOM       : "UPDATE_TALK_ROOM",
 
+    SET_OWNROOM_SEARCH_TEXT : 'SET_OWNROOM_SEARCH_TEXT',
+    SET_JOINROOM_SEARCH_TEXT : 'SET_JOINROOM_SEARCH_TEXT',
+
     //talkRoomUsersSaga
     EXEC_ADD_USER_TO_TALKROOM : "EXEC_ADD_USER_TO_TALKROOM",
     EXEC_REMOVE_USERS_FROM_TALKROOM : "EXEC_REMOVE_USERS_FROM_TALKROOM",
@@ -123,6 +126,20 @@ export default {
         return {
             type : TalkRoomActionTypes.EXEC_SEARCH_JOIN_ROOMS,
             q
+        }
+    },
+
+    setOwnRoomSearchText: (text) => {
+        return {
+            type : TalkRoomActionTypes.SET_OWNROOM_SEARCH_TEXT,
+            text
+        }
+    },
+
+    setJoinRoomSearchText: (text) => {
+        return {
+            type : TalkRoomActionTypes.SET_JOINROOM_SEARCH_TEXT,
+            text
         }
     },
 

@@ -2,7 +2,7 @@
 /**
  * ActionTypeとSagaを結びつける
  */
-import { all, takeEvery, takeLatest　} from "redux-saga/effects";
+import { all, takeEvery } from "redux-saga/effects";
 import * as loadingSaga from "./loadingModule/LoadingSaga"
 import { LogActionTypes } from "./logModule/LogActions";
 import * as logSaga from "./logModule/LogSaga";
@@ -39,24 +39,24 @@ const messageImageSagas = [
 
 const talkRoomSagas = [
     //talkRoomSaga
-    takeLatest(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetOwnRooms)),
-    takeLatest(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleGetJoinedTalkRooms)),
-    takeLatest(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, talkRoomSaga.handleGetOwnRooms),
-    takeLatest(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, talkRoomSaga.handleGetJoinedTalkRooms),
-    takeLatest(TalkRoomActionTypes.EXEC_ADD_ROOM, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleAddTalkRoom)),
-    takeLatest(TalkRoomActionTypes.EXEC_UPDATE_ROOM, talkRoomSaga.handleUpdateTalkRoom),
-    takeLatest(TalkRoomActionTypes.EXEC_DELETE_ROOM, talkRoomSaga.handleDeleteTalkRoom),
-    takeLatest(TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM, talkRoomSaga.handleAddTalkRoomMember),
-    takeLatest(TalkRoomActionTypes.EXEC_REMOVE_USERS_FROM_TALKROOM, talkRoomSaga.handleRemoveUsersFromTalkRoom),
-    takeLatest(TalkRoomActionTypes.EXEC_SEARCH_OWN_ROOMS, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleSearchOwnRooms)),
-    takeLatest(TalkRoomActionTypes.EXEC_SEARCH_JOIN_ROOMS, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleSearchJoinRooms))
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleSearchOwnRooms)),
+    takeEvery(LogActionTypes.LOG_IN, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleSearchJoinRooms)),
+    takeEvery(TalkRoomActionTypes.EXEC_GET_OWN_ROOMS, talkRoomSaga.handleGetOwnRooms),
+    takeEvery(TalkRoomActionTypes.EXEC_GET_JOINED_ROOMS, talkRoomSaga.handleGetJoinedTalkRooms),
+    takeEvery(TalkRoomActionTypes.EXEC_ADD_ROOM, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleAddTalkRoom)),
+    takeEvery(TalkRoomActionTypes.EXEC_UPDATE_ROOM, talkRoomSaga.handleUpdateTalkRoom),
+    takeEvery(TalkRoomActionTypes.EXEC_DELETE_ROOM, talkRoomSaga.handleDeleteTalkRoom),
+    takeEvery(TalkRoomActionTypes.EXEC_ADD_USER_TO_TALKROOM, talkRoomSaga.handleAddTalkRoomMember),
+    takeEvery(TalkRoomActionTypes.EXEC_REMOVE_USERS_FROM_TALKROOM, talkRoomSaga.handleRemoveUsersFromTalkRoom),
+    takeEvery(TalkRoomActionTypes.EXEC_SEARCH_OWN_ROOMS, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleSearchOwnRooms)),
+    takeEvery(TalkRoomActionTypes.EXEC_SEARCH_JOIN_ROOMS, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomSaga.handleSearchJoinRooms))
 ]
 
 const talkRoomMessageSagas = [
-    takeLatest(CurrentRoomStatusActionTypes.JOIN_ROOM, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleJoinRoom)),
+    takeEvery(CurrentRoomStatusActionTypes.JOIN_ROOM, loadingSaga.addLoadingStateUntilSagaFinish(talkRoomMessageSaga.handleJoinRoom)),
     talkRoomMessageSaga.handleReceiveJoinRoomMessage(),
 
-    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, talkRoomMessageSaga.handleLeaveRoom),
+    takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, talkRoomMessageSaga.handleLeaveRoom),
     talkRoomMessageSaga.handleReceiveLeaveRoomMessage(),
 
     takeEvery(CurrentRoomStatusActionTypes.SEND_MESSAGE, talkRoomMessageSaga.handleSendMessage),
@@ -100,10 +100,10 @@ const SoundSagas = [
     takeEvery(CurrentRoomStatusActionTypes.ADD_MESSAGE, soundSaga.playAddMessageSound),
     takeEvery(CurrentRoomStatusActionTypes.RECEIVE_MESSAGE, soundSaga.playReceiveMessageSound),
 
-    takeLatest(SoundActionTypes.START_BGM, soundSaga.playBGM),
-    takeLatest(SoundActionTypes.STOP_BGM, soundSaga.stopBGM),
-    takeLatest(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.stopBGM),
-    takeLatest(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.stopBGM),
+    takeEvery(SoundActionTypes.START_BGM, soundSaga.playBGM),
+    takeEvery(SoundActionTypes.STOP_BGM, soundSaga.stopBGM),
+    takeEvery(CurrentRoomStatusActionTypes.LEAVE_ROOM, soundSaga.stopBGM),
+    takeEvery(CurrentRoomStatusActionTypes.DISCONNECTED_FROM_SERVER, soundSaga.stopBGM),
 
     takeEvery(SoundActionTypes.EXEC_UPLOAD_BGM, loadingSaga.addLoadingStateUntilSagaFinish(soundSaga.uploadBGM)),
     takeEvery(LogActionTypes.LOG_IN, soundSaga.fetchUserBgms),

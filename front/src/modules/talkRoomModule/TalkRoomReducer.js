@@ -1,11 +1,15 @@
 import { TalkRoomActionTypes } from "./TalkRoomActions";
 import createReducerFactory from "../CreateReducerFactory";
-import UserModule from "../userModule/UserModule";
+import { LogActionTypes } from "../logModule/LogActions";
 
 //reducer
 const initialState = {
+    searchText : {
+        own : '',
+        join : ''
+    },
     ownRooms : {},
-    joinRooms: {}
+    joinRooms: {},
 }
 
 initialState.default = {
@@ -26,6 +30,16 @@ const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
 const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
 const actionHandler = {}
+
+actionHandler[LogActionTypes.LOG_IN] = (state, action) => {
+    return {
+        ...state,
+        searchText : {
+            ...initialState.searchText
+        }
+    }
+}
+
 actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
     const newOwnRooms = action.talkRooms.reduce((ownRooms, room) => {
         ownRooms[room.id] = room
@@ -91,6 +105,28 @@ actionHandler[TalkRoomActionTypes.UPDATE_TALK_ROOM ] = (state, action) => {
     }
     return {
         ...state,
+    }
+}
+
+actionHandler[TalkRoomActionTypes.SET_OWNROOM_SEARCH_TEXT] = (state, action) => {
+    const {text} = {...action}
+    return {
+        ...state,
+        searchText : {
+            ...state.searchText,
+            own : text
+        }
+    }
+}
+
+actionHandler[TalkRoomActionTypes.SET_JOINROOM_SEARCH_TEXT] = (state, action) => {
+    const {text} = {...action}
+    return {
+        ...state,
+        searchText : {
+            ...state.searchText,
+            join : text
+        }
     }
 }
 

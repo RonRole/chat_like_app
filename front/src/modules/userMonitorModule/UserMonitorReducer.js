@@ -13,6 +13,9 @@ actionHandler[UserMonitorActionTypes.ADD_USER_MONITOR_MESSAGE] = (state,action) 
     const messages = [action.message, ...state]
     return [...messages]
 }
+actionHandler[UserMonitorActionTypes.CLEAR_USER_MONITOR_MESSAGE] = (state, action) => {
+    return initialState
+}
 
 const createReducer = createReducerFactory(initialState, actionHandler)
 

@@ -11,7 +11,6 @@ const NewsList = ({
     const users = useSelector(state=>state.users)
     const dispatch = useDispatch()
     useEffect(() => {
-        console.log('sawai')
         dispatch(NewsActions.fetchReceivedNews())
     }, [])
     return (

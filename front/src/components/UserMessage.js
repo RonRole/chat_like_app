@@ -42,7 +42,7 @@ MessageTypes.text.receiveMessage = ({
     text
 }) => (
     <>
-        <Col sm={{offset:6}}>
+        <Col sm={{span:6,offset:6}}>
             <UserHeader userImageUrl={userImageUrl} userName={userName} />
          </Col>
         <Alert variant='secondary' className='col-sm-6 offset-sm-6'>{text}</Alert>

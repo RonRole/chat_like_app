@@ -10,11 +10,7 @@ const initialState = {
 }
 
 const actionHandler = {}
-actionHandler[LogActionTypes.TRY_LOG_IN] = (state) => {
-    return {
-        ...state
-    }
-}
+
 actionHandler[LogActionTypes.FINISH_DEF_LOG_IN] = (state) => {
     return {
         ...state,

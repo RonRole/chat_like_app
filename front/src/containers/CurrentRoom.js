@@ -58,7 +58,6 @@ const CurrnetRoomContainer = styled(({
     )
 })`
     height:${props=>props.height};
-    overflow:hidden;
 `
 
 

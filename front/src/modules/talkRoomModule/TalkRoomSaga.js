@@ -230,7 +230,7 @@ export function* handleRemoveUsersFromTalkRoom(action) {
 }
 
 export function* handleSearchOwnRooms(action) {
-    const {type, q} = {...action}
+    const {q={title_or_description_cont:''}} = {...action}
     const result = yield call(DataAccessor.post, {
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/search_own`,
         parameter : {
@@ -238,12 +238,14 @@ export function* handleSearchOwnRooms(action) {
         }
     })
     if(result.isSuccess) {
+        const {title_or_description_cont} = {...q}
         yield put(TalkRoomActions.setOwnRooms(result.data))
+        yield put(TalkRoomActions.setOwnRoomSearchText(title_or_description_cont))
     }
 }
 
 export function* handleSearchJoinRooms(action) {
-    const {type, q} = {...action}
+    const {q={title_or_description_cont:''}} = {...action}
     const result = yield call(DataAccessor.post, {
         url : `${process.env.REACT_APP_BACKEND_ADDRESS}/talk_rooms/search_join`,
         parameter : {
@@ -251,7 +253,9 @@ export function* handleSearchJoinRooms(action) {
         }
     })
     if(result.isSuccess) {
+        const {title_or_description_cont} = {...q}
         yield put(TalkRoomActions.setJoinedRooms(result.data))
+        yield put(TalkRoomActions.setJoinRoomSearchText(title_or_description_cont))
     }
 }
 

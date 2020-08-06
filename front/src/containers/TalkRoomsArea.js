@@ -13,9 +13,6 @@ const OwnRoomsArea = ({
     const talkRooms = useSelector(state=>state.talkRooms)
     const ownRooms = Object.values(talkRooms.ownRooms)
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(TalkRoomModule.actions.execGetOwnRooms()) 
-    },[])
     return (
         <SeparateForPagination wrapperClassName='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup} {...props}>
             {ownRooms.map((ownRoom,index) => (
@@ -39,10 +36,6 @@ const JoinRoomsArea = ({
 }) => {
     const joinRooms = useSelector(state=>state.talkRooms.joinRooms)
     const joinRoomArray = Object.values(joinRooms)
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(TalkRoomModule.actions.execGetJoinedRooms()) 
-    },[])
     return (
         <SeparateForPagination wrapperClassName='row mb-2 clear-exit-anim-children' itemLengthPerPage={itemLengthPerPage} WrapWith={TransitionGroup} {...props}>
             {joinRoomArray.map((joinRoom,index) => (
