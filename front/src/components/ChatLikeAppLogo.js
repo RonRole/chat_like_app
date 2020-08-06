@@ -36,7 +36,7 @@ const ChatLikeAppLogo = ({
             <LogoTitle>
                 <InlineSpan>CHAT</InlineSpan> <InlineSpan>LIKE</InlineSpan> <InlineSpan>APP</InlineSpan>
             </LogoTitle>
-            <LogoSubTitle>アプリの中で一期一会</LogoSubTitle>
+            <LogoSubTitle>チャット風アプリケーション</LogoSubTitle>
         </h1>
     )
 }
