@@ -21,7 +21,7 @@
 1. トークルームに追加したいユーザーの「ユーザーID」と「ユーザー名」を入力し、「さがす」ボタンをクリックします。
 ![search](https://user-images.githubusercontent.com/50513757/89731633-5ee15380-d9fd-11ea-94d0-255b4652f11f.png)
 1. ユーザーが存在すれば確認画面が現れます。「誘う」ボタンをクリックし、ユーザーをトークルームのメンバーに追加します。
-！[invite](https://user-images.githubusercontent.com/50513757/89731629-5c7ef980-d9fd-11ea-83d7-f879aad862c9.png)
+![invite](https://user-images.githubusercontent.com/50513757/89731629-5c7ef980-d9fd-11ea-83d7-f879aad862c9.png)
 
 【使用技術】
 フロントエンド：HTML5, CSS3, Javascript(React, Redux),
