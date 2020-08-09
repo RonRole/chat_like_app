@@ -1,4 +1,5 @@
 # 概要
+![chat-like-app-toppage](https://user-images.githubusercontent.com/50513757/89727048-4873d180-d9d6-11ea-94af-539b65fd5f3c.png)
 複数人でチャットを行えるWebアプリケーションです。
 
 誰かが「トークルーム」を作成し、そこに参加できるユーザーを指定することで、
