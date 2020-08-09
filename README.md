@@ -7,6 +7,7 @@
 
 # 使用方法
 1. 「Sign Up」リンクから新規登録画面に移動し、アカウントを作成します。
+！[chat-like-app-signuppage](https://user-images.githubusercontent.com/50513757/89727116-d8b21680-d9d6-11ea-988d-7b44941fe97d.png)
 1. 「Talk Rooms」リンクからトークルーム一覧画面に移動します。
 1. 「管理ルーム」ボタンをクリックし、表示を管理ルーム一覧に変更します。
 1. 「+」アイコンをクリックします。
