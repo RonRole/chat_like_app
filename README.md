@@ -22,9 +22,17 @@
 ![search](https://user-images.githubusercontent.com/50513757/89731633-5ee15380-d9fd-11ea-94d0-255b4652f11f.png)
 1. ユーザーが存在すれば確認画面が現れます。「誘う」ボタンをクリックし、ユーザーをトークルームのメンバーに追加します。
 ![invite](https://user-images.githubusercontent.com/50513757/89731629-5c7ef980-d9fd-11ea-83d7-f879aad862c9.png)
+1. 誘われたユーザーの「参加ルーム」にトークルームが追加されます。
+![member_room](https://user-images.githubusercontent.com/50513757/89732387-728fb880-da03-11ea-8c88-d61af2d39aec.png)
+1. あとはトークルームに「入室」してチャットをするだけです。
+！[chat_room](https://user-images.githubusercontent.com/50513757/89732382-6ad01400-da03-11ea-9002-78fc9bf38fe9.png)
 
-【使用技術】
-フロントエンド：HTML5, CSS3, Javascript(React, Redux),
-サーバーサイド：Ruby(Ruby on Rails), Javascript(Express)
-DB                    ：PostgreSQL
-その他　　　　：Docker, Git, GitHub, GCP, Heroku
+# 使用技術
+## フロントエンド
+HTML5, CSS3, Javascript(React, Redux)
+## サーバーサイド
+Ruby(Ruby on Rails), Javascript(Express)
+## DB
+PostgreSQL
+## その他
+Docker, Git, GitHub, GCP, Heroku
