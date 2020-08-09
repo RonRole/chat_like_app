@@ -29,7 +29,7 @@
 
 # 使用技術
 ## フロントエンド
-HTML5, CSS3, Javascript(React, Redux)
+HTML5, CSS3, Javascript(React, Redux), Bootstrap
 ## サーバーサイド
 Ruby(Ruby on Rails), Javascript(Express)
 ## DB
