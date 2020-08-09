@@ -30,6 +30,7 @@ export function* handleGetExecLoginStart(loginAction) {
     })
     if(accessResult.isSuccess){
         alert(`ようこそ${accessResult.data.name}さん!`)
+        console.log(accessResult.data)
         yield put(UserActions.setUser(accessResult.data))
         yield put(LogActions.login(accessResult.data))
         loginAction.history.push(FrontAddress.home)

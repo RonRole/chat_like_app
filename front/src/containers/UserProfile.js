@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { Image, Container } from "react-bootstrap"
 import { useSelector } from "react-redux"
 import styled from "styled-components"
@@ -18,18 +18,17 @@ const UserProfile = ({
     ...props
 }) => {
     const users = useSelector(state=>state.users)
-    const user = users[userId] || users[0]
     const profileContents = {}
     profileContents.self_id = (
         <div id="loginUserID">
             <SimpleBorder as='strong' position='bottom'>ユーザーID</SimpleBorder>
-            <div>{user.self_id}</div>
+            <div>{(users[userId] || users[0]).self_id}</div>
         </div>
     )
     profileContents.name = (
         <div id="loginUserName">
             <SimpleBorder as='strong' position='bottom'>お名前</SimpleBorder>
-            <div>{user.name}</div>
+            <div>{(users[userId] || users[0]).name}</div>
         </div>
     )
     profileContents.image = (
@@ -39,7 +38,6 @@ const UserProfile = ({
         result[key] = key
         return result
     }, {})
-    
     return (
         <FlexContainer　{...props}>
             <Size width={infoWidth}>

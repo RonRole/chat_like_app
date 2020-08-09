@@ -29,7 +29,8 @@ actionHandler[LogActionTypes.LOG_IN] = () => {
     return {...initialState}
 }
 actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
-    const newState = action.users.reduce((state, user) => {
+    const {users} = {...action}
+    const newState = users.reduce((state, user) => {
         state[user.id] = user
         return state
     }, state)
