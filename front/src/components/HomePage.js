@@ -40,7 +40,9 @@ const HomePage = ({
                             </LogoutButton>
                         </Col>
                         <Col xs={12} md={6}>
-                            <SimpleBorder as='h6' position='bottom'><strong>新着情報</strong></SimpleBorder>
+                            <SimpleBorder as='h6' position='bottom'>
+                                <strong>新着情報</strong>
+                            </SimpleBorder>
                             <Size height='80vh' className='overflow-auto'>
                                 <NewsList />
                             </Size>
