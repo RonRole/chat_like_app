@@ -4,6 +4,7 @@ const FrontAddress = {
     home : '/home',
     talk_rooms : '/talk_rooms',
     current_talk_room : '/talk_rooms/:id',
+    help : '/help'
 }
 
 export default FrontAddress

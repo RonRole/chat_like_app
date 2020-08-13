@@ -10,6 +10,7 @@ import TalkRoomPage from './TalkRoomPage'
 import HomePage from './HomePage';
 import SignUpPage from './SignUpPage';
 import FrontAddress from '../address';
+import ChatLikeAppHelpPage from './ChatLikeAppHelpPage';
 
 
 /**
@@ -26,6 +27,7 @@ const ChatLikeAppRouter = ({
         <Switch>
             <Route path={FrontAddress.signin} component={LoginPage}/>
             <Route path={FrontAddress.signup} component={SignUpPage} />
+            <Route path={FrontAddress.help} component={ChatLikeAppHelpPage} />
             <LoginRequiredRoute exact path={FrontAddress.home} component={HomePage}/>
             <LoginRequiredRoute exact path={FrontAddress.talk_rooms} component={TalkRoomPage} />
             <LoginRequiredRoute exact path={FrontAddress.current_talk_room} component={CurrentRoomPage}/>
