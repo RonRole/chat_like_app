@@ -8,14 +8,15 @@ const StyledImageWrapper = styled.div`
     height:calc(100vh - 56px);
     display:flex;
     justify-content: center;
-    align-items:start;
+    align-items: center;
     background-color:rgba(0,0,0,0.8);
-
 `
 
 const StyledImage = styled(Image)`
     width:80%;
     display:block;
+    opacity: 0.5;
+    position: absolute;
     object-fit:contain;
 `
 
