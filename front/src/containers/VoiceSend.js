@@ -21,21 +21,6 @@ const VoiceSend = ({
     const currentRoom = currentRoomStatus[talkRoomId] || currentRoomStatus.default
     const translateModes = useSelector(state=>state.translateModes)
 
-    const SpeechRecognition = window.webkitSpeechRecognition
-    const recognition = new SpeechRecognition();
-    recognition.lang = RecognitionLangs.JAPANESE
-    recognition.continuous = true
-    recognition.onresult = (event) => { 
-        [...event.results].map(e => e[0].transcript).forEach(e => {
-            dispatch(CurrentRoomStatusModule.actions.submitTextMessage({
-                roomId : talkRoomId,
-                user : loginUser,
-                text : e,
-                translateMode : translateModes[currentRoom.translateMode]
-            }))
-        })
-    }
-
     useEffect(() => {
         if(!window.webkitSpeechRecognition){
             return
@@ -43,6 +28,20 @@ const VoiceSend = ({
         if(!listening) {
             recognition.stop()
             return
+        }
+        const SpeechRecognition = window.webkitSpeechRecognition
+        const recognition = new SpeechRecognition();
+        recognition.lang = RecognitionLangs.JAPANESE
+        recognition.continuous = true
+        recognition.onresult = (event) => { 
+            [...event.results].map(e => e[0].transcript).forEach(e => {
+                dispatch(CurrentRoomStatusModule.actions.submitTextMessage({
+                    roomId : talkRoomId,
+                    user : loginUser,
+                    text : e,
+                    translateMode : translateModes[currentRoom.translateMode]
+                }))
+            })
         }
         recognition.start();
         return () => recognition.stop();
