@@ -26,7 +26,7 @@ const VoiceSend = ({
     recognition.lang = RecognitionLangs.JAPANESE
     recognition.continuous = true
     recognition.onresult = (event) => { 
-        [...event.results].map(e => e[0].transcript).forEach(e => {
+        [...event.results].slice(-1).map(e => e[0].transcript).forEach(e => {
             dispatch(CurrentRoomStatusModule.actions.submitTextMessage({
                 roomId : talkRoomId,
                 user : loginUser,
