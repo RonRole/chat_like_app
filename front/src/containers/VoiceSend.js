@@ -26,14 +26,13 @@ const VoiceSend = ({
     recognition.lang = RecognitionLangs.JAPANESE
     recognition.continuous = true
     recognition.onresult = (event) => { 
-        [...event.results].slice(-1).map(e => e[0].transcript).forEach(e => {
-            dispatch(CurrentRoomStatusModule.actions.submitTextMessage({
-                roomId : talkRoomId,
-                user : loginUser,
-                text : e,
-                translateMode : translateModes[currentRoom.translateMode]
-            }))
-        })
+        const recorded = [...event.results].slice(-1)[0]
+        dispatch(CurrentRoomStatusModule.actions.submitTextMessage({
+            roomId : talkRoomId,
+            user : loginUser,
+            text : recorded[0].transcript,
+            translateMode : translateModes[currentRoom.translateMode]
+        }))
     }
 
     useEffect(() => {
