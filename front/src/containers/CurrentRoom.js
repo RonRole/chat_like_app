@@ -11,6 +11,7 @@ import BgmModalForm from './BgmModalForm'
 import UserMonitorContainer from './UserMonitorContainer'
 import styled from 'styled-components'
 import Size from '../style-components/Size'
+import VoiceSend from './VoiceSend'
 
 const StyledUserMonitorContainer = styled(UserMonitorContainer)`
     height:${props=>props.height};
@@ -51,7 +52,8 @@ const CurrnetRoomContainer = styled(({
                 <Size height='20%'>
                     <CurrentMessageFormContainer talkRoomId = {talkRoomId}/>
                     <MessageImageModalForm.ShowButton className='mr-2 d-none d-md-inline' talkRoomId = {talkRoomId} />
-                    <BgmModalForm.ShowButton className='d-none d-md-inline' talkRoomId = {talkRoomId} />
+                    <BgmModalForm.ShowButton className='mr-2 d-none d-md-inline' talkRoomId = {talkRoomId} />
+                    <VoiceSend talkRoomId={talkRoomId} />
                 </Size>
             </Size>
         </Container>

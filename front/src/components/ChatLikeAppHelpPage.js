@@ -1,6 +1,5 @@
 import React from 'react'
 import { Carousel, Image } from 'react-bootstrap'
-import Size from '../style-components/Size'
 import styled from 'styled-components'
 
 const StyledImageWrapper = styled.div`
@@ -23,6 +22,7 @@ const StyledImage = styled(Image)`
 const ChatLikeAppHelpPage = ({
     ...props
 }) => {
+
     return (
         <Carousel {...props}z>
             <Carousel.Item >
