@@ -27,6 +27,12 @@
 1. あとはトークルームに「入室」してチャットをするだけです。
 ![chat_room](https://user-images.githubusercontent.com/50513757/89732382-6ad01400-da03-11ea-9002-78fc9bf38fe9.png)
 
+# 主な機能
+- トークルームの表示・作成・更新・削除機能 
+- ユーザーの表示・作成・更新機能
+- ログイン機能
+- トークルームメンバーの表示・追加・削除機能
+
 # 使用技術
 ## フロントエンド
 HTML5, CSS3, Javascript(React, Redux), Bootstrap
