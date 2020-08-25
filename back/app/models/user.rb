@@ -1,10 +1,11 @@
 class User < ApplicationRecord
     include FailResultHelper
     # バリデーション
-    validates :name, presence: true
+    validates :name, presence: true, uniqueness: true
     validates :password, presence: true, on: :create
     validates :password, confirmation: true, on: :create
     validates :password_confirmation, presence: true, on: :create
+
     validates :self_id, uniqueness: true
 
     has_secure_password
