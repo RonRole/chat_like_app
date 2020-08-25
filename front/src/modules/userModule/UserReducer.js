@@ -6,14 +6,24 @@ const defaultUser = {
     "id" : 0,
     "name" : "",
     "image" : {
-        "url" : "",
+        "url" : `${process.env.PUBLIC_URL}/pictures/default_profile.png`,
         "profile" : {
-            "url" : ""
+            "url" : `${process.env.PUBLIC_URL}/pictures/default_profile.png`
         },
         "thumb" : {
-            "url" : ""
+            "url" : `${process.env.PUBLIC_URL}/pictures/default_profile.png`
         }
     }
+}
+
+const selectUserImage = (user) => {
+    if(!user.image) {
+        return defaultUser.image
+    }
+    if(!user.image.url) {
+        return defaultUser.image
+    }
+    return user.image
 }
 
 const initialState = {
@@ -31,6 +41,7 @@ actionHandler[LogActionTypes.LOG_IN] = () => {
 actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
     const {users} = {...action}
     const newState = users.reduce((state, user) => {
+        user.image = selectUserImage(user)
         state[user.id] = user
         return state
     }, state)
@@ -41,6 +52,7 @@ actionHandler[UserActionTypes.ADD_USER] = (state, action) => {
 }
 actionHandler[UserActionTypes.SET_SEARCHED_USER_IDS] = (state, action) => {
     const newState = action.users.reduce((state, user) => {
+        user.image = selectUserImage(user)
         state[user.id] = user
         return state
     }, state)
