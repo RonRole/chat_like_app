@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import CurrentRoomStatusModule from '../modules/currentRoomStatusModule/CurrentRoomStatusModule'
 import { Button } from 'react-bootstrap'
+import Visible from '../style-components/Visible'
 
 const RecognitionLangs = {
     JAPANESE : 'ja-JP',
     ENGLISH : 'en-EN'
 }
 
-const VoiceSend = ({
+const VoiceSendButton = ({
     talkRoomId,
     ...props
 }) => {
@@ -22,7 +23,7 @@ const VoiceSend = ({
     const translateModes = useSelector(state=>state.translateModes)
 
     const SpeechRecognition = window.webkitSpeechRecognition
-    const recognition = new SpeechRecognition();
+    const recognition = SpeechRecognition ? new SpeechRecognition() : {};
     recognition.lang = RecognitionLangs.JAPANESE
     recognition.continuous = true
     recognition.onresult = (event) => { 
@@ -46,11 +47,14 @@ const VoiceSend = ({
         recognition.start();
         return () => recognition.stop();
     }, [listening])
+
     return (
-        <Button onClick={() => setListening(!listening)} {...props}>
-            {listening ? '音声受付中' : '音声で入力する'}
-        </Button>
+        <Visible aria-hidden={!SpeechRecognition} {...props}>
+            <Button onClick={() => setListening(!listening)}>
+                {listening ? '音声受付中' : '音声で入力する'}
+            </Button>
+        </Visible>
     )
 }
 
-export default VoiceSend
+export default VoiceSendButton
