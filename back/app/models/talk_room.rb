@@ -2,7 +2,6 @@ class TalkRoom < ApplicationRecord
     include FailResultHelper
     
     validates :title, presence: true
-    validates :image, presence: true
 
     has_many :user_talk_room_refs, dependent: :destroy
     has_many :users, through: :user_talk_room_refs

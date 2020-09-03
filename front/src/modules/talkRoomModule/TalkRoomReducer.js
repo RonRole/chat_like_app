@@ -21,13 +21,9 @@ initialState.default = {
     updated_at: '',
     user_ids: [],
     image: {
-        url : ''
+        url : `${process.env.PUBLIC_URL}/pictures/default_talkroom.png`
     }
 }
-
-const getOwnRoomIds = (state) => Object.keys(state.talkRooms.ownRooms)
-
-const getJoinRoomIds = (state) => Object.keys(state.talkRooms.joinRooms)
 
 const actionHandler = {}
 
@@ -43,6 +39,8 @@ actionHandler[LogActionTypes.LOG_IN] = (state, action) => {
 actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
     const newOwnRooms = action.talkRooms.reduce((ownRooms, room) => {
         ownRooms[room.id] = room
+        ownRooms[room.id].image.url = ownRooms[room.id].image.url || initialState.default.image.url
+        console.log(ownRooms[room.id].image)
         return ownRooms
     }, {})
     return {
@@ -53,6 +51,7 @@ actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
 actionHandler[TalkRoomActionTypes.SET_JOINED_ROOMS] = (state, action) => {
     const newJoinRooms = action.talkRooms.reduce((joinRooms, room) => {
         joinRooms[room.id] = room
+        joinRooms[room.id].image.url = joinRooms[room.id].image.url || initialState.default.image.url
         return joinRooms
     }, {})
     return {
@@ -133,7 +132,5 @@ actionHandler[TalkRoomActionTypes.SET_JOINROOM_SEARCH_TEXT] = (state, action) =>
 const createReducer = createReducerFactory(initialState, actionHandler)
 
 export default {
-    getOwnRoomIds,
-    getJoinRoomIds,
     createReducer
 }
