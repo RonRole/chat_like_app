@@ -69,7 +69,7 @@ class User < ApplicationRecord
             [room.author] + room.users
         }.flatten
         news_sender = self.received_news.map(&:sender)
-        [*room_user,*news_sender,self] 
+        [*room_user,*news_sender].uniq
     end
     
     private
