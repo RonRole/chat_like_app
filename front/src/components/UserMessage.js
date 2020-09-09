@@ -75,11 +75,11 @@ const MessageImage = ({
     const [modalShow, setModalShow] = useState(false)
     return (
         <>
-            <div>
+            <div className='mb-2'>
                 <div>
                     <UserHeader userImageUrl={userImageUrl} userName={userName} />
                 </div>
-                <AppliedImage src={text} className='mb-2' onClick={()=>setModalShow(true)}/>
+                <AppliedImage src={text} onClick={()=>setModalShow(true)}/>
             </div>
             <LargeImageModal show={modalShow} largeImageSrc={largeImageSrc} onCancel={() => setModalShow(false)} scrollable>
                 <Modal.Header closeButton></Modal.Header>
@@ -100,7 +100,7 @@ const ReceiveMessageImage = ({
 }) => {
     const [modalShow, setModalShow] = useState(false)
     return (
-        <div className='offset-sm-6 col-sm-6'>
+        <div className='offset-sm-6 col-sm-6 d-flex justify-content-end mb-2'>
             <div>
                 <div>
                     <UserHeader userImageUrl={userImageUrl} userName={userName} />
