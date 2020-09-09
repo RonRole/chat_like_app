@@ -40,7 +40,6 @@ actionHandler[TalkRoomActionTypes.SET_OWN_ROOMS] = (state, action) => {
     const newOwnRooms = action.talkRooms.reduce((ownRooms, room) => {
         ownRooms[room.id] = room
         ownRooms[room.id].image.url = ownRooms[room.id].image.url || initialState.default.image.url
-        console.log(ownRooms[room.id].image)
         return ownRooms
     }, {})
     return {

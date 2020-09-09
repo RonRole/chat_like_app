@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from "react"
 import UserActions from '../modules/userModule/UserActions'
 import { useDispatch, useSelector } from 'react-redux'
+import FormNames from '../modules/FormErrorModule/FormNames'
+import FormErrorActions from '../modules/FormErrorModule/FormErrorActions'
 
 const { default: ModalForm } = require("../components/ModalForm")
 const { Modal, Button } = require("react-bootstrap")
@@ -13,7 +15,17 @@ const UpdatePasswordForm = ({
     ...props
 }) => {
     const loginUser = useSelector(state=>state.logStatus.loginUser)
+    const formErrors = useSelector(state=>state.formErrors)
+    const updatePasswordFormErrors = formErrors[FormNames.updatePasswordForm] || {}
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        return () => {
+            if(!show) {
+                dispatch(FormErrorActions.clearErrorByName(FormNames.updatePasswordForm))
+            }
+        }
+    }, [show])
     return (
         <ModalForm onHide={onHide} show={show} onSubmit={e => {
             e.preventDefault()
@@ -29,9 +41,9 @@ const UpdatePasswordForm = ({
                 パスワード変更
             </Modal.Header>
             <Modal.Body>
-                <UserFormGroups.PasswordFormGroup controlId='oldPassword' label='現在のパスワード'/>
-                <UserFormGroups.PasswordFormGroup controlId='newPassword' label='新しいパスワード'/>
-                <UserFormGroups.PasswordConfirmationFormGroup controlId='newPasswordConfirmation' />
+                <UserFormGroups.PasswordFormGroup errorMessages={updatePasswordFormErrors.old_password} controlId='oldPassword' label='現在のパスワード'/>
+                <UserFormGroups.PasswordFormGroup errorMessages={updatePasswordFormErrors.password} controlId='newPassword' label='新しいパスワード'/>
+                <UserFormGroups.PasswordConfirmationFormGroup errorMessages={updatePasswordFormErrors.password_confirmation} controlId='newPasswordConfirmation' />
             </Modal.Body>
             <Modal.Footer>
                 <Button type='submit'>更新</Button>

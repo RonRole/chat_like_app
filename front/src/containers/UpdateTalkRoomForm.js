@@ -5,6 +5,7 @@ import TalkRoomModule from "../modules/talkRoomModule/TalkRoomModule"
 import { useSelector, useDispatch } from "react-redux"
 import { Button, Modal, OverlayTrigger, Tooltip } from "react-bootstrap"
 import OpacityIterate from "../style-components/OpacityIterate"
+import FormNames from "../modules/FormErrorModule/FormNames"
 
 const UpdateTalkRoomForm = ({
     talkRoomId,
@@ -14,7 +15,7 @@ const UpdateTalkRoomForm = ({
     const talkRooms = useSelector(state=>state.talkRooms)
     const updateTargetRoom = talkRooms.ownRooms[talkRoomId] || talkRooms.joinRooms[talkRoomId] || talkRooms.default
     const formErrors = useSelector(state=>state.formErrors)
-    const updateTalkRoomFormErrors = formErrors["updateTalkRoomForm"] || {title:[], description:[]}
+    const updateTalkRoomFormErrors = formErrors[FormNames.updateTalkRoomForm] || {title:[], description:[]}
     const dispatch = useDispatch()
     
     return (

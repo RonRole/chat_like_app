@@ -22,7 +22,10 @@ class UsersController < ApplicationController
         if(@user) 
             render :json => @user
         else
-            render :json => self.fail_search_json
+            result = FailResultHelper.fail_result do |hash|
+                hash[:messages]=["この#{User.human_attribute_name(:self_id)}、#{User.human_attribute_name(:name)}の組み合わせのユーザーがいません"]
+            end
+            render :json => result
         end
     end
 
@@ -37,19 +40,19 @@ class UsersController < ApplicationController
 
     def update_password
         @user = current_user.authenticate(update_password_params[:old_password])
-        
         unless(@user)
-            render :json => {
-                isFail:true,
-                old_password:['現在のパスワードが誤っています']
-            }
+            result = FailResultHelper.fail_result do |hash|
+                hash[:old_password]=['現在のパスワードが違います']
+            end
+            render :json => result
             return
         end
 
-        if(@user.update(password:update_password_params[:password], password_confirmation:update_password_params[:password_confirmation]))
-          render :json => @user
+        @user.assign_attributes(update_password_params.except(:old_password))
+        if(@user.save(context: :update_password))
+            render :json => @user
         else
-          render :json => @user.fail_result
+            render :json => @user.fail_result
         end
     end
 
@@ -59,14 +62,4 @@ class UsersController < ApplicationController
     def self
         render :json => current_user
     end
-
-    private
-        #ユーザー検索失敗時にフロントに渡すjson
-        def fail_search_json
-            {
-                isFail: true,
-                messages: ["この#{User.human_attribute_name(:self_id)}、#{User.human_attribute_name(:name)}の組み合わせのユーザーがいません"]
-            }
-        end
-
 end

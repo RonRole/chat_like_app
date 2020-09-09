@@ -129,6 +129,10 @@ export function* handleUpdatePassword(action) {
     }
     if(result.isFail) {
         alert('パスワードの更新に失敗しました')
+        yield put(FormErrorActions.setError({
+            formName : FormNames.updatePasswordForm,
+            errorJson : result.data
+        }))
     }
 }
 

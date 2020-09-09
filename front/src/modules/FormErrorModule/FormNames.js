@@ -6,7 +6,7 @@ const FormNames = {
     signUpForm : 'signUpForm',
     updateUserForm : 'updateUserForm',
     userInviteForm : 'userInviteForm',
-    oldPasswordForm : 'oldPasswordForm'
+    updatePasswordForm : 'updatePasswordForm'
 }
 
 export default FormNames

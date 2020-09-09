@@ -1,14 +1,15 @@
 class User < ApplicationRecord
     include FailResultHelper
     # バリデーション
-    validates :name, presence: true, uniqueness: true
-    validates :password, presence: true, on: :create
-    validates :password, confirmation: true, on: :create
-    validates :password_confirmation, presence: true, on: :create
-
-    validates :self_id, uniqueness: true
-
     has_secure_password
+    validates :name, presence: true, uniqueness: true
+    validates :self_id, uniqueness: true
+    
+    with_options on: [:create, :update_password] do |registration|
+        registration.validates :password, presence: true
+        registration.validates :password, confirmation: true
+        registration.validates :password_confirmation, presence: true
+    end
 
     # リレーション
     has_many :own_rooms, foreign_key: :author_id, class_name: 'TalkRoom'
