@@ -17,7 +17,10 @@ class SessionsController < ApplicationController
             session[:user_id] = @current_user.id
             render :json => @current_user
         else
-            render :json => self.fail_login_json
+            result = FailResultHelper.fail_result do |hash|
+                hash[:messages] = ["#{User.human_attribute_name(:name)}か#{User.human_attribute_name(:password)}が間違っています"]
+            end
+            render :json => result
         end
     end
 
@@ -29,13 +32,4 @@ class SessionsController < ApplicationController
         def session_params
             params.require(:session).permit(:name, :password, :password_confirmation)
         end
-        
-        #ログイン失敗時にフロントに渡すjson
-        def fail_login_json
-            {
-                isFail: true, 
-                messages: ["#{User.human_attribute_name(:name)}か#{User.human_attribute_name(:password)}が間違っています"]
-            }
-        end
-        
 end
