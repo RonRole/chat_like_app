@@ -30,6 +30,7 @@ const UpdatePasswordForm = ({
         <ModalForm onHide={onHide} show={show} onSubmit={e => {
             e.preventDefault()
             const inputs = e.currentTarget
+            dispatch(FormErrorActions.clearErrorByName(FormNames.updatePasswordForm))
             dispatch(UserActions.execUpdatePassword({
                 userId : loginUser.id,
                 oldPassword : inputs.oldPassword.value,

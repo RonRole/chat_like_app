@@ -73,6 +73,22 @@ class User < ApplicationRecord
         [*room_user,*news_sender].uniq
     end
     
+    def update_password(params={old_password:'', password:'',password_confirmation:''})
+        unless(self.authenticate(params[:old_password]))
+            result = self.fail_result do |hash|
+                hash[:old_password]=['現在のパスワードが違います']
+            end
+            return result
+        end
+
+        self.assign_attributes(password: params[:password], password_confirmation: params[:password_confirmation])
+        if(self.save(context: :update_password))
+            return self
+        else
+            return self.fail_result
+        end
+    end
+
     private
         def set_default_self_id
             while self.self_id.blank? || User.find_by(self_id: self.self_id).present? do

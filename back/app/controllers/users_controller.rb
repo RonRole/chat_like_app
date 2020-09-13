@@ -39,21 +39,8 @@ class UsersController < ApplicationController
     end
 
     def update_password
-        @user = current_user.authenticate(update_password_params[:old_password])
-        unless(@user)
-            result = FailResultHelper.fail_result do |hash|
-                hash[:old_password]=['現在のパスワードが違います']
-            end
-            render :json => result
-            return
-        end
-
-        @user.assign_attributes(update_password_params.except(:old_password))
-        if(@user.save(context: :update_password))
-            render :json => @user
-        else
-            render :json => @user.fail_result
-        end
+        result = current_user.update_password(update_password_params)
+        render :json => result
     end
 
     def destroy
