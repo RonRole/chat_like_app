@@ -66,12 +66,13 @@ import OpacityIterate from '../style-components/OpacityIterate'
  }
 
  const ShowLink = ({
-     talkRoomId
+     talkRoomId,
+     ...props
  }) => {
     const [translateModalShow, setTranslateModalShow] = useState(false) 
     return (
         <>
-            <Link className = 'nav-link' to='#' onClick ={() => setTranslateModalShow(true)}>翻訳モード変更</Link>
+            <Link {...props} className = 'nav-link' to='#' onClick ={() => setTranslateModalShow(true)} />
             <CurrentRoomTranslateModal show = {translateModalShow} talkRoomId={talkRoomId} onCancel = {() => setTranslateModalShow(false)} />
         </>
     )

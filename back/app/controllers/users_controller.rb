@@ -39,8 +39,13 @@ class UsersController < ApplicationController
     end
 
     def update_password
-        result = current_user.update_password(update_password_params)
-        render :json => result
+        @user = current_user
+        params = update_password_params
+        if(current_user.update_password(old_password: params[:old_password], password:params[:password], password_confirmation:params[:password_confirmation]))
+            render :json => @user
+        else
+            render :json => @user.fail_result
+        end
     end
 
     def destroy

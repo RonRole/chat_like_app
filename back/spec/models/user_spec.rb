@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     expect(user).not_to be_valid
   end
   
-  it 'is invalid without a password_confirmatiomn' do
+  it 'is invalid without a password_confirmation' do
     user = build(:user, password_confirmation: '')
     user.valid?
     expect(user).not_to be_valid
@@ -90,6 +90,36 @@ RSpec.describe User, type: :model do
       news = create(:news, sender:duplicated_user)
       news.users << test_user
       expect(test_user.related_users.count).to eq(2)
+    end
+  end
+
+  describe 'User update password' do
+    it 'returns true when update_password with valid old_password and password, password_confirmation' do
+      test_user = create(:user, password:'test', password_confirmation:'test')
+      expect(test_user.update_password(old_password: 'test', password:'test2', password_confirmation:'test2')).to be_truthy
+    end
+
+    it 'changes password when update_password with valid old_password and password, password_confirmation' do
+      test_user = create(:user, password:'test', password_confirmation:'test')
+      test_user.update_password(old_password:'test', password:'test_next', password_confirmation:'test_next')
+      expect(test_user.authenticate('test_next')).to be_truthy
+    end
+
+    it 'is return false when update_password with invalid old_password' do
+      test_user = create(:user)
+      expect(test_user.update_password(old_password:'invalid password', password:'test', password_confirmation:'test')).to be_falsy
+    end
+
+    it 'add error on old_password after update_password with invalid old_password' do
+      test_user = create(:user)
+      test_user.update_password(old_password:'invalid password', password:'sawai', password_confirmation:'sawai')
+      expect(test_user.errors[:old_password]).to be_truthy
+    end
+
+    it 'is invalid after update_password without password' do
+      test_user = create(:user)
+      test_user.update_password(old_password:'user_test', password: '', password_confirmation:'test_next')
+      expect(test_user.valid?).to be_falsy
     end
   end
 end

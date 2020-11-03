@@ -72,21 +72,15 @@ class User < ApplicationRecord
         news_sender = self.received_news.map(&:sender)
         [*room_user,*news_sender].uniq
     end
-    
-    def update_password(params={old_password:'', password:'',password_confirmation:''})
-        unless(self.authenticate(params[:old_password]))
-            result = self.fail_result do |hash|
-                hash[:old_password]=['現在のパスワードが違います']
-            end
-            return result
-        end
 
-        self.assign_attributes(password: params[:password], password_confirmation: params[:password_confirmation])
-        if(self.save(context: :update_password))
-            return self
-        else
-            return self.fail_result
+    
+    def update_password(old_password:'', password:'',password_confirmation:'')
+        unless(self.authenticate(old_password))
+            self.errors.add(:old_password, 'が違います')
+            return false
         end
+        self.assign_attributes(password: password, password_confirmation: password_confirmation)
+        return self.save(context: :update_password)
     end
 
     private
