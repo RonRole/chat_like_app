@@ -20,7 +20,7 @@ const MessagesPage = ({
                 <MessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
                     画像メッセージ送信
                 </MessageImageModalForm.ShowLink>
-                <CurrentRoomTranslateModal.ShowLink>
+                <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id}>
                     ノムリッシュ翻訳
                 </CurrentRoomTranslateModal.ShowLink>
             </Sidebar>
@@ -32,6 +32,9 @@ const MessagesPage = ({
                 <MessageImageModalForm.ShowLink talkRoomId={match.params.id} className='nav-link d-md-none' to='#'>
                     画像メッセージ送信
                 </MessageImageModalForm.ShowLink>
+                <CurrentRoomTranslateModal.ShowLink talkRoomId={match.params.id}>
+                    ノムリッシュ翻訳
+                </CurrentRoomTranslateModal.ShowLink>
             </Sidebar>
             <CurrentRoom talkRoomId={match.params.id} />
         </div>
