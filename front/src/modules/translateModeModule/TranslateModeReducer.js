@@ -19,12 +19,12 @@ const initialState = {
         placeholder : '翻訳モード:ノムリッシュLv1',
         description : '翻訳モード:ノムリッシュLv1',
         translate : (text) => DataAccessor.get({
-            url :`${process.env.REACT_APP_NOMLISH_ADDRESS}/translate/1?text=${text}`
-        })
-        .then(response => response.data)
-        .catch(err=>{console.error(err)
-            return ''
-        })
+                url :`${process.env.REACT_APP_NOMLISH_ADDRESS}/translate/1?text=${text}`
+            })
+            .then(response => response.data)
+            .catch(err=>{console.error(err)
+                return ''
+            })
     },
     nomlishLv2 : {
         modeId : 'nomlishLv2',
