@@ -97,7 +97,7 @@ actionHandler[TalkRoomActionTypes.REMOVE_USERS_FROM_TALKROOM] = (state, action) 
 
 actionHandler[TalkRoomActionTypes.UPDATE_TALK_ROOM ] = (state, action) => {
     const {type, talkRoomId, ...params} = {...action}
-    state.ownRooms[action.talkRoomId]　= {
+    state.ownRooms[action.talkRoomId] = {
         ...state.ownRooms[talkRoomId],
         ...params
     }

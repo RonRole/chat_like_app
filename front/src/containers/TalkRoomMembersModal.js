@@ -24,9 +24,9 @@ const TalkRoomMembersModal = ({
                         <strong>管理者</strong>
                         <UserProfile userId={thisRoom.author_id} without='self_id' className='d-flex'/>
                     </ListGroup.Item>
-                    {[...new Set(thisRoom.user_ids)].map((userId,index) => (
+                    {[...new Set(thisRoom.users)].map((user,index) => (
                         <ListGroup.Item key={index}>
-                            <UserProfile userId={userId} without='self_id' className='d-flex'/>
+                            <UserProfile userId={user.id} without='self_id' className='d-flex'/>
                         </ListGroup.Item>
                     ))}
                 </ListGroup>

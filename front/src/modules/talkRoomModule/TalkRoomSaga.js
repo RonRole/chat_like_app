@@ -88,12 +88,7 @@ const addMemberToTalkRoom = ({
 export function* handleGetOwnRooms() {
     const result = yield call(getOwnRooms)
     if(result.isSuccess) {
-        const talkRooms = Object.values(result.data).reduce((result, talkRoom) => {
-            talkRoom.user_ids = talkRoom.users.map(user=>user.id)
-            delete talkRoom.users
-            return [...result, talkRoom]
-        }, [])
-        yield put(TalkRoomActions.setOwnRooms(talkRooms))
+        yield put(TalkRoomActions.setOwnRooms(result.data))
     }
     if(result.isError) {
         yield put(ErrorCodeActions.execHandleError({errorResult:result.data}))
@@ -102,13 +97,8 @@ export function* handleGetOwnRooms() {
 
 export function* handleGetJoinedTalkRooms() {
     const result = yield call(getJoinRooms)
-    const talkRooms = Object.values(result.data).reduce((result, talkRoom) => {
-        talkRoom.user_ids = talkRoom.users.map(user=>user.id)
-        delete talkRoom.users
-        return [...result, talkRoom]
-    }, [])
     if(result.isSuccess) {
-        yield put(TalkRoomActions.setJoinedRooms(talkRooms))
+        yield put(TalkRoomActions.setJoinedRooms(result.data))
     }
     if(result.isFail) {
         alert('トークルームを取得できませんでした')
